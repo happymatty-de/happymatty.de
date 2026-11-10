@@ -185,6 +185,11 @@ Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bil
   Kennzeichen der Bildungsgänge und Zahl der Themeneinheiten („2 Themeneinheiten“). Keine Titel
   einzelner Arbeitsblätter auf der Startseite. Auch ältere Themen bleiben stehen, damit jedes
   Material auffindbar bleibt.
+  **Reihenfolge** (Entscheidung 10.11.2026): erst alle Themen der BF1, dann der BF2, dann des BGY
+  (danach FSTM, DBOS); innerhalb eines Bildungsgangs in der Reihenfolge, in der die Reihen
+  unterrichtet werden, nicht alphabetisch. Zwischen den Bildungsgängen eine gestrichelte Linie
+  in Akzentlila (`<hr class="trenner">`, je Bildungsgang eine eigene `<ul class="liste">`),
+  zwischen Themen desselben Bildungsgangs keine. Ein Thema für mehrere Bildungsgänge: Claude fragt.
   Zwischen Titel und Kennzeichen kann eine **Unterzeile** (Klasse `unterzeile`, im Standardgrau
   wie der Text darunter) stehen: die Teile des Themas, mit Mittelpunkt getrennt, so wie Patrick sie vorgibt
   (Rechnen mit Zahlen: „Rationale Zahlen · Rechenregeln · Überschlagen und Schätzen“).

@@ -82,6 +82,10 @@ h1{
 .liste{list-style:none;margin:1.8rem 0 0;padding:0}
 .themenkopf + .liste{margin-top:0}
 .liste li{margin:0 0 .7rem}
+
+/* Startseite: Trennlinie zwischen den Themen verschiedener Bildungsgänge (BF1, BF2, BGY); oben .4rem + .7rem Abstand der letzten Karte = 1.1rem wie unten */
+.trenner{margin:.4rem 0 1.1rem;border:0;border-top:2px dashed var(--lila)}
+.trenner + .liste{margin-top:0}
 .liste a{
   display:block;
   padding:.75rem 1rem .8rem;
