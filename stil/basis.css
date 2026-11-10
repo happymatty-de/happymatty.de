@@ -87,7 +87,7 @@ h1{
   color:inherit;
   text-decoration:none;
 }
-.liste a:hover,.liste a:focus-visible{background:#DCEAF5} /* kräftigere Füllung aus dem Skill mathe */
+.liste a:hover,.liste a:focus-visible{background:#D1E6F1} /* Akzentblau 82 % aufgehellt */
 .liste .titel{display:block;font-family:var(--hand);font-size:1.45rem;line-height:1.2;color:var(--blau)}
 .liste .text{display:block;margin-top:.2rem;font-size:1rem;color:var(--grau)}
 
@@ -109,7 +109,7 @@ h1{
 
 /* Notentabellen: Zusatz, helleres Akzentblau (35 % zu Weiß aufgehellt), etwas kleiner */
 .liste a.notentabelle{border-left-color:#59A3CD}
-.liste a.notentabelle:hover,.liste a.notentabelle:focus-visible{background:#F5F9FC}
+.liste a.notentabelle:hover,.liste a.notentabelle:focus-visible{background:#E6F1F8} /* Hellblau 85 % aufgehellt */
 .liste a.notentabelle .titel{color:#59A3CD;font-size:1.3rem}
 
 /* Noch nicht verfügbar (Lösung nicht freigeschaltet, interaktive Seite fehlt):
