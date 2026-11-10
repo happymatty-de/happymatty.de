@@ -77,8 +77,23 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
   eine neue Themenseite.
 - Innerhalb eines Themas stehen die Arbeitsblätter in der Reihenfolge der Lernreihe. Jeder Eintrag hat
   Titel und eine kurze Beschreibung in einer Zeile.
-- Gemeinsame Gestaltung liegt in `stil/` (`basis.css`, Schrift Libertinus Sans, Farben wie in den
-  Unterrichtsseiten). `stil` ist kein Thema und wird nie als Link-Ordner vergeben.
+- Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften). `stil` ist kein Thema
+  und wird nie als Link-Ordner vergeben.
+
+## Gestaltung
+
+Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
+(Skill `mathe`, Gestaltung: Schriften, Farben, Kopf- und Fußzeile, Überschrift):
+
+- Kopfzeile mittig in Indie Flower: immer erst das Fach, dann das Thema, getrennt durch
+  einen Mittelpunkt: „Mathematik · Lineare Funktionen“. Fach grau `#767676`, Thema grün `#26870C`.
+  Darunter eine dünne Linie in Blau `#0072B2`.
+- Überschrift mittig in Indie Flower, Blau `#0072B2`.
+- Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul“, Name grün, Rest grau,
+  darüber eine dünne blaue Linie.
+- Fließtext Libertinus Sans. Einträge als Karten mit blauem Rand links, Titel in Indie Flower blau.
+- Die Musterlösung bekommt die Lösungsfarbe `#D55E00` (Klasse `loesung` in `basis.css`).
+- Ändern sich die Farben oder die Kopfzeile im Skill `mathe`, zieht die Website nach.
 
 ## Inhalte auf den öffentlichen Seiten
 
