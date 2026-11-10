@@ -317,6 +317,7 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 | `/rechnen-mit-zahlen/zahlenjagd/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Zahlenjagd_Probetest_Loesung_v2.pdf` | 10.11.2026 |
 | `/rechnen-mit-zahlen/zahlenjagd/probetest-notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Zahlenjagd_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
 | `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Mal_geteilt_und_das_Minus_Aufgabenblatt_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/loesung.pdf` | Musterlösung, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Loesung_v2.pdf` | 10.11.2026 |
 | `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest.pdf` | Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_v2.pdf` | 10.11.2026 |
 | `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Loesung_v2.pdf` | 10.11.2026 |
 | `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest-notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
@@ -330,6 +331,6 @@ Kurztest LF1 Fassung 3 und 4 (v17) mit Lösungen: nicht veröffentlichen, im Ein
 Kurztest LF1 Fassung 5 für Nachschreiber: folgt, nur ins Backup, nie veröffentlichen
 (Fassung 1 und 2 sind öffentlich und taugen nicht mehr zum Nachschreiben).
 Interaktive Seiten zu LF1 (Artifacts „Steil-Check“, „Steigung ablesen“): vorerst nicht veröffentlichen.
-Rechnen mit Zahlen (BF1): Lösungen der Aufgabenblätter Ausschuss? (v11.1) und
-Mal, geteilt – und das Minus? (v2) noch nicht freigegeben (Zahlenjagd freigegeben 10.11.2026). Kurztests aller drei Einheiten nur im
+Rechnen mit Zahlen (BF1): Lösung des Aufgabenblatts Ausschuss? (v11.1) noch nicht freigegeben
+(Zahlenjagd und Mal, geteilt – und das Minus? freigegeben 10.11.2026). Kurztests aller drei Einheiten nur im
 Backup.
