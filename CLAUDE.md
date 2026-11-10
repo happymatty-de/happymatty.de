@@ -142,6 +142,9 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 - Auf den Einstiegsseiten der Bildungsgänge steht in der Kopfzeile der volle Name (grau),
   die Überschrift ist das Kürzel („BF2“). Kacheln der Bildungsgänge auf der Startseite: Kürzel grün fett.
 - Überschrift mittig in Indie Flower, Blau `#0072B2`.
+- **Seitentitel** (`<title>`, erscheint im Tab und als Name von Lesezeichen), immer mit
+  „happymatty“ klein und zusammen vorn: Startseite `happymatty`, Bildungsgang `happymatty/bf2`,
+  Thema `happymatty/Lineare Funktionen`, Arbeitsblatt `happymatty/Mehr als nur steil`.
 - Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul“, Name grün, Rest grau,
   darüber eine dünne blaue Linie.
 - Fließtext Libertinus Sans. Einträge als Karten mit blauem Rand links, Titel in Indie Flower blau.
