@@ -174,7 +174,7 @@ Bildungsgänge:
 
 | Kürzel | Link | Name | Stand |
 |---|---|---|---|
-| BF1 | `/bf1` | Berufsfachschule I | aktiv, noch kein Material |
+| BF1 | `/bf1` | Berufsfachschule I | aktiv |
 | BF2 | `/bf2` | Berufsfachschule II | aktiv |
 | BGY | `/bgy` | Berufliches Gymnasium | aktiv, ein Jahrgang, noch kein Material |
 | FSTM | `/fstm` | Techniker-Abendschule (BWL) | ab Januar 2027, Seite dann anlegen |
@@ -274,11 +274,22 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 | `/lineare-funktionen/wie-steil-ist-das/kurztest-notentabelle.pdf` | Notentabelle zum Kurztest | BF2 | `LF1_Kurztest_Notentabelle_v17.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
+| `/rationale-zahlen/ausschuss/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Ausschuss_Aufgabenblatt_v10.pdf` | 10.11.2026 |
+| `/rationale-zahlen/zahlenjagd/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Zahlenjagd_Aufgabenblatt_v01.pdf` | 10.11.2026 |
+| `/rationale-zahlen/zahlenjagd/probetest.pdf` | Probetest | BF1 | `Zahlenjagd_Probetest_v1.pdf` | 10.11.2026 |
+| `/rationale-zahlen/zahlenjagd/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Zahlenjagd_Probetest_Loesung_v1.pdf` | 10.11.2026 |
+| `/rationale-zahlen/mal-geteilt-und-das-minus/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Mal_geteilt_und_das_Minus_Aufgabenblatt_v1.pdf` | 10.11.2026 |
+| `/rationale-zahlen/mal-geteilt-und-das-minus/probetest.pdf` | Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_v1.2.pdf` | 10.11.2026 |
+| `/rationale-zahlen/mal-geteilt-und-das-minus/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Loesung_v1.2.pdf` | 10.11.2026 |
 
-Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2.
+Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2, die Reihe Rationale Zahlen nur in der BF1.
 
 Noch nicht freigegeben: Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`).
 Kurztest LF1 Fassung 3 und 4 (v17) mit Lösungen: nicht veröffentlichen, im Einsatz ab 11.11.2026.
 Kurztest LF1 Fassung 5 für Nachschreiber: folgt, nur ins Backup, nie veröffentlichen
 (Fassung 1 und 2 sind öffentlich und taugen nicht mehr zum Nachschreiben).
 Interaktive Seiten zu LF1 (Artifacts „Steil-Check“, „Steigung ablesen“): vorerst nicht veröffentlichen.
+Rationale Zahlen (BF1): Lösungen der Aufgabenblätter Ausschuss? (v10), Zahlenjagd (v01) und
+Mal, geteilt – und das Minus? (v1) noch nicht freigegeben. Kurztests aller drei Einheiten nur im
+Backup. Notentabellen zu den Probetests Zahlenjagd und Mal, geteilt – und das Minus? fehlen noch;
+sie kommen online, sobald es sie gibt.
