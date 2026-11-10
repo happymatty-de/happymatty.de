@@ -89,7 +89,7 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
 Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bildungsgang für die Schüler.
 
 - **Startseite** `index.html` (`happymatty.de`): oben „Meine Klasse“ mit einer Kachel je
-  Bildungsgang, darunter je Fach die **Themen** als grüne Karten (Klasse `thema-karte`) mit
+  Bildungsgang, darunter unter „Themenbereiche“ die **Themen** als grüne Karten (Klasse `thema-karte`) mit
   Kennzeichen der Bildungsgänge und Zahl der Arbeitsblätter. Keine Titel einzelner Arbeitsblätter
   auf der Startseite. Auch ältere Themen bleiben stehen, damit jedes Material auffindbar bleibt.
 - **Themenseite** `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`): alle
