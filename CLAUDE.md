@@ -4,6 +4,13 @@ Dieses Repository ist die Website `happymatty.de`. Sie wird über GitHub Pages a
 Hier liegen Arbeitsblätter (PDF) und interaktive Seiten für den Unterricht.
 Sie sind ohne Login per Link erreichbar und hängen nicht an Claude.
 
+## Rückmeldung im Chat
+
+Nach erledigter Arbeit nur eine kurze Statusmeldung („Alles umgesetzt.“). Details nur, wenn etwas
+nicht funktioniert hat, wenn Claude deutlich vom Auftrag abgewichen ist oder wenn Patrick etwas
+entscheiden oder tun muss. Kleine Verbesserungen, die Claude selbst vornimmt, werden nicht
+gemeldet (Entscheidung 10.11.2026: Viel Text lässt Wichtiges untergehen).
+
 ## Begriffe
 
 - **Thema**: das Gebiet einer Lernreihe, z. B. Lineare Funktionen (`/lineare-funktionen`).
