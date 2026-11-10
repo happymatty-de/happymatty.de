@@ -99,6 +99,19 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
   So sehen die Schüler, dass eine Lösung kommt (Entscheidung 10.11.2026).
 - Kommt etwas hinzu, wird die graue Karte zur aktiven Karte; die freigeschaltete Musterlösung
   bekommt die Klasse `loesung` (orange).
+- **Text unter dem Kartentitel** sagt, wozu die Schüler die Datei nutzen, nicht was man technisch
+  damit tun kann; dahinter in Klammern Dateiart und Seitenzahl (Entscheidung 10.11.2026: Kaum ein
+  Schüler druckt selbst aus, sie laden die PDFs aufs iPad):
+
+  | Karte | Text |
+  |---|---|
+  | Aufgabenblatt | „Zum Arbeiten und Lernen (PDF, n Seiten)“ |
+  | Musterlösung, Lösungen zu Tests | „Zum Vergleichen (PDF, n Seiten)“ |
+  | Probetest | „Zum Üben vor dem Kurztest (PDF, n Seiten)“ |
+  | Kurztest-Fassung | „Zum Üben (PDF, n Seiten)“ |
+  | Notentabelle | „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“ |
+
+  Die Seitenzahl prüft Claude bei jedem neuen oder ersetzten PDF gegen die Datei.
 
 ## Tests: Probetest, Kurztest, Klassenarbeit
 
@@ -157,8 +170,8 @@ Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bil
   Kennzeichen der Bildungsgänge und Zahl der Themeneinheiten („2 Themeneinheiten“). Keine Titel
   einzelner Arbeitsblätter auf der Startseite. Auch ältere Themen bleiben stehen, damit jedes
   Material auffindbar bleibt.
-  Zwischen Titel und Kennzeichen kann eine **Unterzeile** (Klasse `unterzeile`, grau wie der
-  Text) stehen: die Teile des Themas, mit Mittelpunkt getrennt, so wie Patrick sie vorgibt
+  Zwischen Titel und Kennzeichen kann eine **Unterzeile** (Klasse `unterzeile`, im Standardgrau
+  wie der Text darunter) stehen: die Teile des Themas, mit Mittelpunkt getrennt, so wie Patrick sie vorgibt
   (Rechnen mit Zahlen: „Rationale Zahlen · Rechenregeln · Überschlagen und Schätzen“).
 - **Themenseite** `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`), Überschrift
   „Alle Themeneinheiten“: alle Themeneinheiten des Themas in der Reihenfolge der Lernreihe, je mit Titel, Kennzeichen der
@@ -250,7 +263,9 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   des Akzentblaus angehoben), Füllung `#EBE5EF` (Klasse `test`);
   Lösungen orange `#D55E00` (Klasse `loesung`); interaktive Seiten grün `#26870C` (Klasse
   `interaktiv`); Notentabellen als Zusatz hellblau `#59A3CD` (Akzentblau 35 % aufgehellt), Titel etwas kleiner (Klasse
-  `notentabelle`); nicht Veröffentlichtes grau gestrichelt (Klasse `gesperrt`).
+  `notentabelle`); nicht Veröffentlichtes grau gestrichelt (Klasse `gesperrt`): Titel in hellerem
+  Grau `#9A9A9A`, deutlich heller als das Standardgrau, damit die Karte als „noch nicht da“ zurücktritt;
+  der Hinweis darunter („Noch nicht freigeschaltet“) im Standardgrau (Entscheidung 10.11.2026: so lassen).
   Füllungen beim Darüberfahren im Farbton ihrer Schrift und gleich hell wie die Füllungen zu
   Orange und Grün aus dem Skill (Aufgabenblatt `#E0EDF8`); die Notentabelle heller (`#F3F8FB`).
   Beim Aufhellen in OKLCH rechnen, nicht mit Weiß mischen: Gemischtes Blau kippt ins Türkis.
