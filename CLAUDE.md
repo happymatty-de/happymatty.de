@@ -194,9 +194,12 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 
 | Link | Inhalt | Bildungsgang | Quelle | Stand |
 |---|---|---|---|---|
+| `/lineare-funktionen/wie-steil-ist-das/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF1_Wie_steil_ist_das_Aufgabenblatt_v24.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
 
 Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2.
 
-Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`): noch nicht freigegeben.
+Noch nicht freigegeben: Lösung zu „Wie steil ist das?“ (`LF1_Wie_steil_ist_das_Loesung_v24.pdf`),
+Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`).
+Interaktive Seiten zu LF1 (Artifacts „Steil-Check“, „Steigung ablesen“): vorerst nicht veröffentlichen.
