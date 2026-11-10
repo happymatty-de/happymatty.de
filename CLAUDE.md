@@ -225,6 +225,9 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   Lösungen orange `#D55E00` (Klasse `loesung`); interaktive Seiten grün `#26870C` (Klasse
   `interaktiv`); Notentabellen als Zusatz hellblau `#59A3CD` (Akzentblau 35 % aufgehellt), Titel etwas kleiner (Klasse
   `notentabelle`); nicht Veröffentlichtes grau gestrichelt (Klasse `gesperrt`).
+  Füllungen beim Darüberfahren im Farbton ihrer Schrift und gleich hell wie die Füllungen zu
+  Orange und Grün aus dem Skill (Aufgabenblatt `#E0EDF8`); die Notentabelle heller (`#EEF5FA`).
+  Beim Aufhellen in OKLCH rechnen, nicht mit Weiß mischen: Gemischtes Blau kippt ins Türkis.
 - Ändern sich die Farben oder die Kopfzeile im Skill `mathe`, zieht die Website nach.
 
 ## Inhalte auf den öffentlichen Seiten
