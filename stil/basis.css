@@ -77,7 +77,7 @@ h1{
   color:var(--grau);
 }
 .themenkopf a{color:inherit;text-decoration:none}
-.themenkopf .thema{color:var(--gruen)}
+.themenkopf .thema{color:var(--gruen);white-space:nowrap} /* Umbruch am Mittelpunkt, nicht im Namen */
 
 .liste{list-style:none;margin:1.8rem 0 0;padding:0}
 .themenkopf + .liste{margin-top:0}

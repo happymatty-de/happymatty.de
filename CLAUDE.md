@@ -108,6 +108,7 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
   | Aufgabenblatt | „Zum Arbeiten und Lernen (PDF, n Seiten)“ |
   | Musterlösung, Lösungen zu Tests | „Zum Vergleichen (PDF, n Seiten)“ |
   | Probetest | „Zum Üben vor dem Kurztest (PDF, n Seiten)“ |
+  | Probeklassenarbeit | „Zum Üben vor der Klassenarbeit (PDF, n Seiten)“ |
   | Kurztest-Fassung | „Zum Üben (PDF, n Seiten)“ |
   | Notentabelle | „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“ |
 
@@ -125,8 +126,19 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
   Es gibt dann keinen Abschnitt und keine graue Karte. Nur wenn Patrick Fassungen ausdrücklich
   freigibt, entsteht der Abschnitt „Kurztest“ mit diesen Fassungen, ihren Lösungen und der
   Notentabelle. **Fassungen, die noch eine Klasse schreibt, kommen nie auf die Website.**
-- **Klassenarbeiten** (z. B. BGY) decken meist mehrere Themeneinheiten ab. Sie stehen auf der
-  Ebene des Themas; Aufbau und Link legen Claude und Patrick fest, wenn die erste kommt.
+- **Klassenarbeiten** (z. B. BGY) decken meist mehrere Themeneinheiten ab und stehen auf der
+  Ebene des Themas (Entscheidung 10.11.2026, erste: Quadratische Funktionen):
+  - Veröffentlicht wird nur die **Probeklassenarbeit**, immer mit Lösung und Notentabelle
+    (wie der Probetest). Die Klassenarbeit selbst kommt nie auf die Website.
+  - Auf der Themenseite unter den Themeneinheiten der Abschnitt „Probeklassenarbeit“
+    (`themenkopf` mit `id="probeklassenarbeit"`), Karten wie beim Probetest:
+    Probeklassenarbeit (violett, `test`), Lösung zur Probeklassenarbeit (orange),
+    Notentabelle zur Probeklassenarbeit (hellblau).
+  - Die PDFs liegen im Ordner `<thema>/probeklassenarbeit/`. Dessen `index.html` leitet auf
+    `/<thema>/#probeklassenarbeit` weiter; `/<thema>/probeklassenarbeit` ist der Link zum Verschicken.
+  - Einstiegsseite des Bildungsgangs: unter den Themeneinheiten des Themas eine violette Karte
+    „Probeklassenarbeit“ – „Die ganze Reihe zum Üben vor der Klassenarbeit“, Link auf den Abschnitt.
+    Startseite und Beschreibungen der Themeneinheiten nennen sie nicht.
 
 | Datei | Inhalt | PDF-Titel |
 |---|---|---|
@@ -136,6 +148,9 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
 | `kurztest-fassung-<n>.pdf` | freigegebene Fassung des Kurztests | `happymatty/<Titel>/Kurztest Fassung <n>` |
 | `kurztest-fassung-<n>-loesung.pdf` | Lösung dazu | `happymatty/<Titel>/Lösung Kurztest Fassung <n>` |
 | `kurztest-notentabelle.pdf` | Notentabelle zum Kurztest | `happymatty/<Titel>/Notentabelle Kurztest` |
+| `probeklassenarbeit/probeklassenarbeit.pdf` | Probeklassenarbeit (im Ordner des Themas) | `happymatty/<Thema>/Probeklassenarbeit` |
+| `probeklassenarbeit/probeklassenarbeit-loesung.pdf` | Lösung zur Probeklassenarbeit | `happymatty/<Thema>/Lösung Probeklassenarbeit` |
+| `probeklassenarbeit/probeklassenarbeit-notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | `happymatty/<Thema>/Notentabelle Probeklassenarbeit` |
 
 - **Notentabellen werden immer mit veröffentlicht**, wenn der zugehörige Test online geht.
   Karte „Notentabelle zum …“, Text „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“.
@@ -200,7 +215,7 @@ Bildungsgänge:
 |---|---|---|---|
 | BF1 | `/bf1` | Berufsfachschule I | aktiv |
 | BF2 | `/bf2` | Berufsfachschule II | aktiv |
-| BGY | `/bgy` | Berufliches Gymnasium | aktiv, ein Jahrgang, noch kein Material |
+| BGY | `/bgy` | Berufliches Gymnasium | aktiv, ein Jahrgang |
 | FSTM | `/fstm` | Techniker-Abendschule (BWL) | ab Januar 2027, Seite dann anlegen |
 | DBOS | `/dbos` | Duale Berufsoberschule | ab Schuljahr 2027/28, Seite dann anlegen |
 
@@ -322,8 +337,22 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 | `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest.pdf` | Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_v2.pdf` | 10.11.2026 |
 | `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Loesung_v2.pdf` | 10.11.2026 |
 | `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest-notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/vom-term-zur-parabel/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF1_Vom_Term_zur_Parabel_Aufgabenblatt_v13.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/vom-term-zur-parabel/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF1_Vom_Term_zur_Parabel_Loesung_v13.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/nullstellen-ohne-formel/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF2_Nullstellen_ohne_Formel_Aufgabenblatt_v16.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/nullstellen-ohne-formel/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF2_Nullstellen_ohne_Formel_Loesung_v16.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/die-pq-formel/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF3_Die_pq-Formel_Aufgabenblatt_v12.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/die-pq-formel/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF3_Die_pq-Formel_Loesung_v12.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/nullstellen-bestimmen-die-funktion/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF4_Nullstellen_bestimmen_die_Funktion_Aufgabenblatt_v26.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/nullstellen-bestimmen-die-funktion/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF4_Nullstellen_bestimmen_die_Funktion_Loesung_v26.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/der-korbwurf/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF5_Der_Korbwurf_Aufgabenblatt_v47.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/der-korbwurf/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF5_Der_Korbwurf_Loesung_v47.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/probeklassenarbeit/probeklassenarbeit.pdf` | Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_v6.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/probeklassenarbeit/probeklassenarbeit-loesung.pdf` | Lösung zur Probeklassenarbeit, freigegeben | BGY | `QF_Probeklassenarbeit_Loesung_v6.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/probeklassenarbeit/probeklassenarbeit-notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_Notentabelle_v6.pdf` | 10.11.2026 |
 
-Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2, die Reihe Rechnen mit Zahlen nur in der BF1.
+Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2, die Reihe Rechnen mit Zahlen nur in der BF1, die Reihe
+Quadratische Funktionen nur im BGY (alle Musterlösungen freigegeben 10.11.2026).
 Rechnen mit Zahlen hieß bis 10.11.2026 „Rationale Zahlen“ (`/rationale-zahlen`); der alte Link war
 nirgends weitergegeben und hat deshalb keine Weiterleitung (Entscheidung 10.11.2026).
 
