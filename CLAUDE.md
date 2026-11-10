@@ -18,6 +18,10 @@ gemeldet (Entscheidung 10.11.2026: Viel Text lässt Wichtiges untergehen).
   „Wie steil ist das?“ (`/lineare-funktionen/wie-steil-ist-das`). Zu ihr gehören Aufgabenblatt,
   Lösung, interaktive Seite, Probetest mit Lösung und Notentabelle. Auf Startseite und
   Themenseite werden Themeneinheiten gezählt und aufgelistet (Entscheidung 10.11.2026).
+- **Teilthema**: der Fachbegriff des Abschnitts, um den es in einer Themeneinheit geht, wie in der
+  Kopfzeile des Blatts (Skill `mathe`, Gestaltung, Kopf- und Fußzeile), z. B. „Addition und
+  Subtraktion“ für „Zahlenjagd“. Es steht in der Kopfzeile der Übersicht und am Anfang ihrer
+  Beschreibung auf der Themenseite. Fehlt es für eine Themeneinheit, fragt Claude nach.
 - **Aufgabenblatt** (Mehrzahl Aufgabenblätter): das PDF für die Schüler, in Karten, Seitentiteln
   und Dateinamen. Sagt Patrick „Arbeitsblatt“ oder „Übungsblatt“, meint er dasselbe; Claude
   schreibt trotzdem „Aufgabenblatt“ (Entscheidung 10.11.2026). „Arbeitsblatt“ in diesen Regeln
@@ -150,19 +154,26 @@ Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bil
 
 - **Startseite** `index.html` (`happymatty.de`): oben „Meine Klasse“ mit einer Kachel je
   Bildungsgang, darunter unter „Themenbereiche“ die **Themen** als grüne Karten (Klasse `thema-karte`) mit
-  Kennzeichen der Bildungsgänge und Zahl der Themeneinheiten („2 Themeneinheiten“). Keine Titel einzelner Arbeitsblätter
-  auf der Startseite. Auch ältere Themen bleiben stehen, damit jedes Material auffindbar bleibt.
+  Kennzeichen der Bildungsgänge und Zahl der Themeneinheiten („2 Themeneinheiten“). Keine Titel
+  einzelner Arbeitsblätter auf der Startseite. Auch ältere Themen bleiben stehen, damit jedes
+  Material auffindbar bleibt.
+  Zwischen Titel und Kennzeichen kann eine **Unterzeile** (Klasse `unterzeile`, grau wie der
+  Text) stehen: die Teile des Themas, mit Mittelpunkt getrennt, so wie Patrick sie vorgibt
+  (Rechnen mit Zahlen: „Rationale Zahlen · Rechenregeln · Überschlagen und Schätzen“).
 - **Themenseite** `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`), Überschrift
   „Alle Themeneinheiten“: alle Themeneinheiten des Themas in der Reihenfolge der Lernreihe, je mit Titel, Kennzeichen der
   Bildungsgänge und einer kurzen Beschreibung. Laufen in einem Thema mehrere Bildungsgänge mit
   eigenen Blättern (etwa BGY als Wiederholung auf höherem Niveau), stehen sie hier nebeneinander.
+  Die Beschreibung beginnt mit dem Teilthema, danach ein Gedankenstrich: „Addition und
+  Subtraktion – Zahlenkarten, Wege und Zahlenmauern“. Die Einstiegsseiten der Bildungsgänge
+  übernehmen dieselbe Beschreibung.
 - **Einstiegsseite je Bildungsgang** `<kürzel>/index.html` (z. B. `happymatty.de/bf2`): nur die
   Arbeitsblätter, die dieser Bildungsgang bearbeitet, je Fach und Thema in der Reihenfolge der
   Reihe. Ohne Material eine graue Karte „Noch kein Material“. Die Schüler speichern sich diesen
   einen Link.
 - **Übersicht des Arbeitsblatts**: unter der Überschrift die Kennzeichen der Bildungsgänge.
-- **Kennzeichen** (Klasse `badge`) wie die Badges auf den Blättern: grüner Rahmen, hellgrün
-  gefüllt, Indie Flower.
+- **Kennzeichen** (Klasse `badge`) in der Form der Badges auf den Blättern, aber in Akzentlila:
+  Rahmen und Schrift `#85609E`, gefüllt `#EBE5EF`, Indie Flower (Skill `mathe`, Stand 10.11.2026).
 - Wird ein Arbeitsblatt neu veröffentlicht, umbenannt oder bekommt es einen neuen Titel oder
   Bildungsgang, trägt Claude das im selben Schritt überall ein: Übersicht, Themenseite,
   Einstiegsseiten der Bildungsgänge und Startseite (Zahl, Kennzeichen). Ein neues Thema bekommt
@@ -197,11 +208,21 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 (Skill `mathe`, Gestaltung: Schriften, Farben, Kopf- und Fußzeile, Überschrift):
 
 - Kopfzeile mittig in Indie Flower: immer erst das Fach, dann das Thema, getrennt durch
-  einen Mittelpunkt: „Mathematik · Lineare Funktionen“. Fach grau `#767676`, Thema grün `#26870C`.
+  einen Mittelpunkt: „Mathematik · Lineare Funktionen“. Fach grau, Thema grün `#26870C`.
+  Auf der Übersicht einer Themeneinheit folgt das Teilthema in Akzentlila `#85609E`:
+  „Mathematik · Rechnen mit Zahlen · Addition und Subtraktion“ (Klasse `teilthema`).
+  Themenseite und Einstiegsseiten der Bildungsgänge zeigen nur Fach und Thema.
+- **Ein Grau** `#6E6E6E` überall, wo Text grau ist (Kopf- und Fußzeile, Beschreibungen,
+  Unterzeilen), wie im Skill `mathe` (Variable `--grau`). Das frühere `#767676` war heller als
+  Blau, Grün und Lila und wirkte daneben am schwächsten (Skill `mathe`, 10.11.2026).
+- **Akzentlila** `#85609E`, Füllung `#EBE5EF` (Variablen `--lila`, `--lilahell`): trägt die
+  genauere Einordnung: Grün nennt das Thema, Lila den Teil davon. Auf der Website trägt es das
+  Teilthema, Kennzeichen und Kacheln der Bildungsgänge und die Karten der Tests.
   Darunter eine dünne Linie in Blau `#0072B2`.
 - Auf der Startseite steht in der Kopfzeile nur „happymatty.de“, in Libertinus Sans fett, schwarz (Textfarbe `#1F2933`).
 - Auf den Einstiegsseiten der Bildungsgänge steht in der Kopfzeile der volle Name (grau),
-  die Überschrift ist das Kürzel („BF2“). Kacheln der Bildungsgänge auf der Startseite: Kürzel grün fett.
+  die Überschrift ist das Kürzel („BF2“). Kacheln der Bildungsgänge auf der Startseite in
+  Akzentlila: Rand oben, Kürzel fett, Füllung beim Darüberfahren `#EBE5EF`.
 - Überschrift mittig in Indie Flower, Blau `#0072B2`.
 - **Seitentitel** (`<title>`, erscheint im Tab und als Name von Lesezeichen), immer mit
   „happymatty“ klein und zusammen vorn, getrennt durch Schrägstriche ohne Leerzeichen:
@@ -225,7 +246,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   darüber eine dünne blaue Linie.
 - Fließtext Libertinus Sans. Einträge als Karten mit blauem Rand links, Titel in Indie Flower blau.
 - Farben der Karten (Entscheidung 10.11.2026): Aufgabenblatt blau `#0072B2`; Probetest und
-  Kurztest-Fassungen violett `#85609E` (Violett `#7A5195` aus dem Skill `mathe`, auf die Helligkeit
+  Kurztest-Fassungen Akzentlila `#85609E` (Violett `#7A5195` aus dem Skill `mathe`, auf die Helligkeit
   des Akzentblaus angehoben), Füllung `#EBE5EF` (Klasse `test`);
   Lösungen orange `#D55E00` (Klasse `loesung`); interaktive Seiten grün `#26870C` (Klasse
   `interaktiv`); Notentabellen als Zusatz hellblau `#59A3CD` (Akzentblau 35 % aufgehellt), Titel etwas kleiner (Klasse
@@ -274,22 +295,25 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 | `/lineare-funktionen/wie-steil-ist-das/kurztest-notentabelle.pdf` | Notentabelle zum Kurztest | BF2 | `LF1_Kurztest_Notentabelle_v17.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
-| `/rationale-zahlen/ausschuss/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Ausschuss_Aufgabenblatt_v10.pdf` | 10.11.2026 |
-| `/rationale-zahlen/zahlenjagd/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Zahlenjagd_Aufgabenblatt_v01.pdf` | 10.11.2026 |
-| `/rationale-zahlen/zahlenjagd/probetest.pdf` | Probetest | BF1 | `Zahlenjagd_Probetest_v1.pdf` | 10.11.2026 |
-| `/rationale-zahlen/zahlenjagd/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Zahlenjagd_Probetest_Loesung_v1.pdf` | 10.11.2026 |
-| `/rationale-zahlen/mal-geteilt-und-das-minus/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Mal_geteilt_und_das_Minus_Aufgabenblatt_v1.pdf` | 10.11.2026 |
-| `/rationale-zahlen/mal-geteilt-und-das-minus/probetest.pdf` | Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_v1.2.pdf` | 10.11.2026 |
-| `/rationale-zahlen/mal-geteilt-und-das-minus/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Loesung_v1.2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/ausschuss/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Ausschuss_Aufgabenblatt_v11.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/zahlenjagd/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Zahlenjagd_Aufgabenblatt_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/zahlenjagd/probetest.pdf` | Probetest | BF1 | `Zahlenjagd_Probetest_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/zahlenjagd/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Zahlenjagd_Probetest_Loesung_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/zahlenjagd/probetest-notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Zahlenjagd_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Mal_geteilt_und_das_Minus_Aufgabenblatt_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest.pdf` | Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Loesung_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest-notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
 
-Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2, die Reihe Rationale Zahlen nur in der BF1.
+Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2, die Reihe Rechnen mit Zahlen nur in der BF1.
+Rechnen mit Zahlen hieß bis 10.11.2026 „Rationale Zahlen“ (`/rationale-zahlen`); der alte Link war
+nirgends weitergegeben und hat deshalb keine Weiterleitung (Entscheidung 10.11.2026).
 
 Noch nicht freigegeben: Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`).
 Kurztest LF1 Fassung 3 und 4 (v17) mit Lösungen: nicht veröffentlichen, im Einsatz ab 11.11.2026.
 Kurztest LF1 Fassung 5 für Nachschreiber: folgt, nur ins Backup, nie veröffentlichen
 (Fassung 1 und 2 sind öffentlich und taugen nicht mehr zum Nachschreiben).
 Interaktive Seiten zu LF1 (Artifacts „Steil-Check“, „Steigung ablesen“): vorerst nicht veröffentlichen.
-Rationale Zahlen (BF1): Lösungen der Aufgabenblätter Ausschuss? (v10), Zahlenjagd (v01) und
-Mal, geteilt – und das Minus? (v1) noch nicht freigegeben. Kurztests aller drei Einheiten nur im
-Backup. Notentabellen zu den Probetests Zahlenjagd und Mal, geteilt – und das Minus? fehlen noch;
-sie kommen online, sobald es sie gibt.
+Rechnen mit Zahlen (BF1): Lösungen der Aufgabenblätter Ausschuss? (v11), Zahlenjagd (v2) und
+Mal, geteilt – und das Minus? (v2) noch nicht freigegeben. Kurztests aller drei Einheiten nur im
+Backup.

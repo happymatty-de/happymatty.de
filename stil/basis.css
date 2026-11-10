@@ -1,6 +1,6 @@
 /* Gemeinsame Gestaltung für Startseite, Themenseiten und Übersichten der Arbeitsblätter.
    Schriften und Farben wie auf den Arbeitsblättern (Skill mathe, Gestaltung):
-   Kopfzeile „Mathematik ·“ grau, Thema grün; Überschrift Indie Flower blau;
+   Kopfzeile „Mathematik ·“ grau, Thema grün, Teilthema Akzentlila; Überschrift Indie Flower blau;
    Fußzeile „CC BY-NC-SA 4.0 · Patrick Saul“ mit grünem Namen. */
 
 @font-face{font-family:'Libertinus Sans';font-style:normal;font-weight:400;font-display:swap;src:url(/stil/libertinus-sans-400.woff2) format('woff2')}
@@ -9,13 +9,15 @@
 
 :root{
   --text:#1F2933;
-  --grau:#767676;      /* Kopf- und Fußzeilentext */
+  --grau:#6E6E6E;      /* das eine Grau: Kopf- und Fußzeilentext (Skill mathe, Gestaltung, Farben) */
   --blau:#0072B2;      /* Akzentfarbe A: Überschriften, Linien, Titel */
   --blauhell:#EDF4FA;
   --gruen:#26870C;     /* Akzentfarbe B: Thema, Autor */
   --gruenhell:#E3EFDF;
   --orange:#D55E00;    /* Lösungen */
   --orangehell:#F9E7D9;
+  --lila:#85609E;      /* Akzentlila: Teilthema, Bildungsgänge, Tests */
+  --lilahell:#EBE5EF;
   --linie:#D9DFE6;
   --hand:'Indie Flower',cursive;
 }
@@ -47,6 +49,8 @@ body{
 }
 .kopf a{color:inherit;text-decoration:none}
 .kopf .thema{color:var(--gruen)}
+.kopf .teilthema{color:var(--lila)}
+.kopf .thema,.kopf .teilthema{white-space:nowrap} /* Umbruch am Mittelpunkt, nicht im Namen */
 /* Name der Website: normale Schrift, fett, schwarz (Textfarbe) */
 .kopf .marke{font-family:'Libertinus Sans',system-ui,sans-serif;font-weight:700;font-size:1.05rem;color:var(--text)}
 
@@ -96,11 +100,11 @@ h1{
 .liste a.loesung:hover,.liste a.loesung:focus-visible{background:var(--orangehell)}
 .liste a.loesung .titel{color:var(--orange)}
 
-/* Tests (Probetest, Kurztest): Violett aus dem Skill mathe (#7A5195), auf die Helligkeit des Akzentblaus
-   angehoben und leicht entsättigt (OKLab: L wie #0072B2 + 0,02, Chroma 90 %), Füllung #EBE5EF */
-.liste a.test{border-left-color:#85609E}
-.liste a.test:hover,.liste a.test:focus-visible{background:#EBE5EF}
-.liste a.test .titel{color:#85609E}
+/* Tests (Probetest, Kurztest): Akzentlila (Violett #7A5195 aus dem Skill mathe, auf die Helligkeit
+   des Akzentblaus angehoben), Füllung #EBE5EF */
+.liste a.test{border-left-color:var(--lila)}
+.liste a.test:hover,.liste a.test:focus-visible{background:var(--lilahell)}
+.liste a.test .titel{color:var(--lila)}
 
 /* Interaktive Seiten: Akzentgrün */
 .liste a.interaktiv{border-left-color:var(--gruen)}
@@ -126,39 +130,41 @@ h1{
 .liste .gesperrt .titel{color:#9A9A9A}
 .liste .gesperrt .text{color:var(--grau)}
 
-/* Einstieg nach Bildungsgang (Startseite): Kacheln nebeneinander */
+/* Einstieg nach Bildungsgang (Startseite): Kacheln nebeneinander, in Akzentlila */
 .klassen{list-style:none;margin:.2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
 .klassen a{
   display:block;
   padding:.6rem .4rem .55rem;
   border:1px solid var(--linie);
-  border-top:4px solid var(--gruen);
+  border-top:4px solid var(--lila);
   border-radius:6px;
   text-align:center;
   color:inherit;
   text-decoration:none;
 }
-.klassen a:hover,.klassen a:focus-visible{background:var(--gruenhell)}
-.klassen .kuerzel{display:block;font-weight:700;font-size:1.35rem;color:var(--gruen)}
+.klassen a:hover,.klassen a:focus-visible{background:var(--lilahell)}
+.klassen .kuerzel{display:block;font-weight:700;font-size:1.35rem;color:var(--lila)}
 .klassen .name{display:block;font-size:.85rem;line-height:1.2;color:var(--grau)}
 
 /* Themen auf der Startseite: Karten in Grün wie das Thema in der Kopfzeile */
 .liste a.thema-karte{border-left-color:var(--gruen)}
 .liste a.thema-karte:hover,.liste a.thema-karte:focus-visible{background:var(--gruenhell)}
 .liste a.thema-karte .titel{color:var(--gruen)}
+/* Unterzeile der Themenkarte: die Teile des Themas, grau wie der Text darunter */
+.liste a.thema-karte .unterzeile{display:block;margin:.15rem 0 0;text-align:left;font-size:1rem;color:var(--grau)}
 
-/* Bildungsgang-Kennzeichen wie die Badges auf dem Blatt (Skill mathe, Gestaltung) */
+/* Bildungsgang-Kennzeichen wie die Badges auf dem Blatt, in Akzentlila (Skill mathe, Gestaltung) */
 .badge{
   display:inline-block;
   margin:0 .25rem 0 0;
   padding:0 .4rem;
-  border:1px solid var(--gruen);
+  border:1px solid var(--lila);
   border-radius:4px;
-  background:var(--gruenhell);
+  background:var(--lilahell);
   font-family:var(--hand);
   font-size:.95rem;
   line-height:1.4;
-  color:var(--gruen);
+  color:var(--lila);
   vertical-align:.1em;
 }
 .liste .titel .badge{margin-left:1.2rem} /* gut doppelt so breit wie ein Leerzeichen im Titel */
