@@ -95,6 +95,20 @@ h1{
 .liste a.loesung:hover,.liste a.loesung:focus-visible{background:var(--orangehell)}
 .liste a.loesung .titel{color:var(--orange)}
 
+/* Noch nicht verfügbar (Lösung nicht freigeschaltet, interaktive Seite fehlt):
+   graue Karte ohne Link, mit Hinweis */
+.liste .gesperrt{
+  display:block;
+  padding:.75rem 1rem .8rem;
+  border:1px dashed #BFBFBF;
+  border-left:4px solid #BFBFBF;
+  border-radius:6px;
+  background:#F7F7F7;
+  cursor:default;
+}
+.liste .gesperrt .titel{color:#9A9A9A}
+.liste .gesperrt .text{color:var(--grau)}
+
 /* Fußzeile wie auf dem Blatt */
 footer{
   margin-top:3rem;

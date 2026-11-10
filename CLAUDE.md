@@ -61,13 +61,23 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
 
 - Die Dateinamen tragen keine Version. Eine neue Version ersetzt die alte unter demselben Namen;
   ältere Stände bleiben im Git-Verlauf.
-- Kommt etwas hinzu, wird es auf der Übersicht des Arbeitsblatts eingetragen.
+- Die Übersicht zeigt immer drei Karten in dieser Reihenfolge: Aufgabenblatt, Musterlösung,
+  Interaktiv. Was es noch nicht gibt, steht als graue Karte ohne Link (Klasse `gesperrt`):
+  Musterlösung „Noch nicht freigeschaltet“, Interaktiv „Noch nicht vorhanden“.
+  So sehen die Schüler, dass eine Lösung kommt (Entscheidung 10.11.2026).
+- Kommt etwas hinzu, wird die graue Karte zur aktiven Karte; die freigeschaltete Musterlösung
+  bekommt die Klasse `loesung` (orange).
 
 ## Lösungen
 
 - Das Repository ist öffentlich: Alles, was darin liegt, kann jeder finden, auch ohne Link.
   Lösungen kommen deshalb erst ins Repository, wenn Patrick sie ausdrücklich freigibt.
   Bis dahin liegen sie nur im privaten Backup `happymatty-de/unterrichtsmaterial`.
+  Ein ausgegrauter Link schützt nicht: Die Adresse `…/loesung.pdf` ist erratbar, und das
+  Repository ist öffentlich einsehbar.
+- Freischalten: Patrick schreibt z. B. „Lösung LF2 freigeben“. Claude kopiert die Lösung
+  aus dem Backup als `loesung.pdf`, macht die Karte aktiv und orange und trägt sie in
+  „Veröffentlichtes Material“ ein.
 - Ein passwortgeschützter Bereich für Lehrkräfte ist geplant, aber noch nicht gebaut.
 
 ## Startseite und Themenseiten
