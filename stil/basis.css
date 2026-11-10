@@ -96,6 +96,11 @@ h1{
 .liste a.loesung:hover,.liste a.loesung:focus-visible{background:var(--orangehell)}
 .liste a.loesung .titel{color:var(--orange)}
 
+/* Tests (Probetest, Kurztest): Violett aus dem Skill mathe (Kurvenfarbe 5), Füllung #EBE5EF */
+.liste a.test{border-left-color:#7A5195}
+.liste a.test:hover,.liste a.test:focus-visible{background:#EBE5EF}
+.liste a.test .titel{color:#7A5195}
+
 /* Interaktive Seiten: Akzentgrün */
 .liste a.interaktiv{border-left-color:var(--gruen)}
 .liste a.interaktiv:hover,.liste a.interaktiv:focus-visible{background:var(--gruenhell)}
