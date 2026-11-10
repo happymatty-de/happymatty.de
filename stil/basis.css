@@ -106,10 +106,10 @@ h1{
 .liste a.interaktiv:hover,.liste a.interaktiv:focus-visible{background:var(--gruenhell)}
 .liste a.interaktiv .titel{color:var(--gruen)}
 
-/* Notentabellen: Zusatz, helleres Akzentblau (25 % zu Weiß aufgehellt), etwas kleiner */
-.liste a.notentabelle{border-left-color:#4095C5}
+/* Notentabellen: Zusatz, helleres Akzentblau (35 % zu Weiß aufgehellt), etwas kleiner */
+.liste a.notentabelle{border-left-color:#59A3CD}
 .liste a.notentabelle:hover,.liste a.notentabelle:focus-visible{background:#F5F9FC}
-.liste a.notentabelle .titel{color:#4095C5;font-size:1.3rem}
+.liste a.notentabelle .titel{color:#59A3CD;font-size:1.3rem}
 
 /* Noch nicht verfügbar (Lösung nicht freigeschaltet, interaktive Seite fehlt):
    graue Karte ohne Link, mit Hinweis */

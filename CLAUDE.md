@@ -222,7 +222,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 - Farben der Karten (Entscheidung 10.11.2026): Aufgabenblatt blau `#0072B2`; Probetest und
   Kurztest-Fassungen violett `#7A5195`, Füllung `#EBE5EF` (Klasse `test`, Skill `mathe`, Violett);
   Lösungen orange `#D55E00` (Klasse `loesung`); interaktive Seiten grün `#26870C` (Klasse
-  `interaktiv`); Notentabellen als Zusatz hellblau `#4095C5`, Titel etwas kleiner (Klasse
+  `interaktiv`); Notentabellen als Zusatz hellblau `#59A3CD` (Akzentblau 35 % aufgehellt), Titel etwas kleiner (Klasse
   `notentabelle`); nicht Veröffentlichtes grau gestrichelt (Klasse `gesperrt`).
 - Ändern sich die Farben oder die Kopfzeile im Skill `mathe`, zieht die Website nach.
 
