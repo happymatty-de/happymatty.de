@@ -123,6 +123,13 @@ Bildungsgänge:
 Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`.
 Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
 
+**Nach jeder Änderung an `basis.css`** und bei jeder neuen Seite führt Claude
+`python3 _werkzeuge/stil_version.py` aus. Das Skript hängt an jeden Verweis auf
+`/stil/basis.css` eine Kennung aus dem Inhalt der Datei an (`?v=…`). Sonst zeigen Browser
+bis zu einigen Stunden die alte Gestaltung aus dem Zwischenspeicher (Anlass 10.11.2026:
+Safari zeigte den alten Abstand am Kennzeichen noch nach mehreren Minuten).
+Ordner, die mit `_` beginnen, veröffentlicht GitHub Pages nicht.
+
 ## Gestaltung
 
 Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
