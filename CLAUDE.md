@@ -67,7 +67,7 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
 
 - Das Repository ist öffentlich: Alles, was darin liegt, kann jeder finden, auch ohne Link.
   Lösungen kommen deshalb erst ins Repository, wenn Patrick sie ausdrücklich freigibt.
-  Bis dahin liegen sie nur im privaten Backup.
+  Bis dahin liegen sie nur im privaten Backup `happymatty-de/unterrichtsmaterial`.
 - Ein passwortgeschützter Bereich für Lehrkräfte ist geplant, aber noch nicht gebaut.
 
 ## Startseite und Themenseiten
@@ -114,6 +114,8 @@ Möglichst keine Inhalte von fremden Servern laden (Datenschutz der Schüler).
 
 Die PDFs entstehen in Patricks Claude-Projekten; Claude Code sieht diese Dateien nicht.
 Patrick lädt sie hier im Chat oder auf GitHub hoch, Claude legt sie unter dem festen Namen ab.
+Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im privaten Repository
+`happymatty-de/unterrichtsmaterial`; Ablauf dort in `CLAUDE.md`.
 
 ## Veröffentlichtes Material
 
