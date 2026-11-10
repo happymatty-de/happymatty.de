@@ -1,7 +1,7 @@
 # happymatty.de
 
 Dieses Repository ist die Website `happymatty.de`. Sie wird über GitHub Pages ausgeliefert.
-Hier liegen dynamische Inhalte für den Unterricht (interaktive Webseiten zu Arbeitsblättern).
+Hier liegen Arbeitsblätter (PDF) und interaktive Seiten für den Unterricht.
 Sie sind ohne Login per Link erreichbar und hängen nicht an Claude.
 
 ## Grundsatz: Links bleiben dauerhaft gültig
@@ -28,7 +28,7 @@ Beispiel: `happymatty.de/lineare-funktionen/mehr-als-nur-steil`
 
 - `<thema>` ist das übergeordnete Thema der Lernreihe, z. B. `lineare-funktionen`.
 - `<titel-des-arbeitsblatts>` ist der Titel des Arbeitsblatts, zu dem die Seite gehört.
-- Jede Seite ist ein Ordner mit einer `index.html`, z. B. `lineare-funktionen/mehr-als-nur-steil/index.html`.
+- Jede Adresse ist ein Ordner mit einer `index.html`.
 
 Schreibweise:
 - nur Kleinbuchstaben
@@ -44,16 +44,38 @@ Nicht in den Link gehören, weil sie sich ändern:
 Die Dateinamen der Arbeitsblätter (z. B. `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf`)
 folgen eigenen Regeln und sind davon unabhängig.
 
+## Aufbau pro Arbeitsblatt
+
+Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter festen Namen:
+
+| Datei | Link | Inhalt |
+|---|---|---|
+| `index.html` | `…/<titel>` | Übersicht des Arbeitsblatts: listet alles auf, was es dazu gibt |
+| `interaktiv/index.html` | `…/<titel>/interaktiv` | interaktive Seite |
+| `aufgabenblatt.pdf` | `…/<titel>/aufgabenblatt.pdf` | Arbeitsblatt |
+| `loesung.pdf` | `…/<titel>/loesung.pdf` | Musterlösung, nur nach Freigabe (siehe unten) |
+
+- Die Dateinamen tragen keine Version. Eine neue Version ersetzt die alte unter demselben Namen;
+  ältere Stände bleiben im Git-Verlauf.
+- Kommt etwas hinzu, wird es auf der Übersicht des Arbeitsblatts eingetragen.
+
+## Lösungen
+
+- Das Repository ist öffentlich: Alles, was darin liegt, kann jeder finden, auch ohne Link.
+  Lösungen kommen deshalb erst ins Repository, wenn Patrick sie ausdrücklich freigibt,
+  jeweils in einem eigenen Pull Request.
+- Ein passwortgeschützter Bereich für Lehrkräfte ist geplant, aber noch nicht gebaut.
+
 ## Startseite und Themenseiten
 
-- `index.html` im Hauptordner ist die Startseite (`happymatty.de`). Sie listet alle Seiten auf,
+- `index.html` im Hauptordner ist die Startseite (`happymatty.de`). Sie listet alle Arbeitsblätter auf,
   gruppiert nach Fach und Thema, auch ältere, damit Schüler jedes Material wiederfinden.
 - Jedes Thema hat eine Themenseite `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`)
-  mit allen Seiten des Themas.
-- Wird eine Seite neu veröffentlicht, umbenannt oder bekommt sie einen neuen Titel, trägt Claude das
+  mit allen Arbeitsblättern des Themas.
+- Wird ein Arbeitsblatt neu veröffentlicht, umbenannt oder bekommt es einen neuen Titel, trägt Claude das
   im selben Pull Request auf der Startseite und auf der Themenseite ein. Ein neues Thema bekommt
   eine neue Themenseite.
-- Innerhalb eines Themas stehen die Seiten in der Reihenfolge der Lernreihe. Jeder Eintrag hat
+- Innerhalb eines Themas stehen die Arbeitsblätter in der Reihenfolge der Lernreihe. Jeder Eintrag hat
   Titel und eine kurze Beschreibung in einer Zeile.
 - Gemeinsame Gestaltung liegt in `stil/` (`basis.css`, Schrift Libertinus Sans, Farben wie in den
   Unterrichtsseiten). `stil` ist kein Thema und wird nie als Link-Ordner vergeben.
@@ -66,12 +88,15 @@ folgen eigenen Regeln und sind davon unabhängig.
 
 ## Herkunft der Seiten
 
-Die Seiten entstehen meist als Artifact in einem Claude-Projekt auf claude.ai und werden von hier
+Die interaktiven Seiten entstehen meist als Artifact in einem Claude-Projekt auf claude.ai und werden von hier
 übernommen. Jede Seite muss ohne Claude laufen: kein `window.claude`, keine Artifact-Datenbank.
 Möglichst keine Inhalte von fremden Servern laden (Datenschutz der Schüler).
 
-## Veröffentlichte Seiten
+Die PDFs entstehen in Patricks Claude-Projekten; Claude Code sieht diese Dateien nicht.
+Patrick lädt sie hier im Chat oder auf GitHub hoch, Claude legt sie unter dem festen Namen ab.
 
-| Link | Quelle | übernommen |
-|---|---|---|
-| `/lineare-funktionen/mehr-als-nur-steil` | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
+## Veröffentlichtes Material
+
+| Link | Inhalt | Quelle | seit |
+|---|---|---|---|
+| `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
