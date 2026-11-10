@@ -109,7 +109,7 @@ wird nie neu vergeben. Kennungen wie `LF1` stehen nicht im Link, nur in den Rege
 
 | Kurztest | Kennung | deckt ab | Probetest | Kurztest |
 |---|---|---|---|---|
-| `kurztest-1` | LF1 | Wie steil ist das? | v14 online, Lösung nicht freigegeben | v17 folgt |
+| `kurztest-1` | LF1 | Wie steil ist das? | v14 online, Lösung freigegeben | v17 folgt |
 
 ## Lösungen
 
@@ -229,6 +229,7 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 | `/lineare-funktionen/wie-steil-ist-das/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF1_Wie_steil_ist_das_Aufgabenblatt_v24.pdf` | 10.11.2026 |
 | `/lineare-funktionen/wie-steil-ist-das/loesung.pdf` | Musterlösung, freigegeben | BF2 | `LF1_Wie_steil_ist_das_Loesung_v24.pdf` | 10.11.2026 |
 | `/lineare-funktionen/kurztest-1/probetest.pdf` | Probetest | BF2 | `LF1_Probetest_v14.pdf` | 10.11.2026 |
+| `/lineare-funktionen/kurztest-1/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF2 | `LF1_Probetest_Loesung_v14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
 
