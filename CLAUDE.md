@@ -220,7 +220,8 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   darüber eine dünne blaue Linie.
 - Fließtext Libertinus Sans. Einträge als Karten mit blauem Rand links, Titel in Indie Flower blau.
 - Farben der Karten (Entscheidung 10.11.2026): Aufgabenblatt blau `#0072B2`; Probetest und
-  Kurztest-Fassungen violett `#7A5195`, Füllung `#EBE5EF` (Klasse `test`, Skill `mathe`, Violett);
+  Kurztest-Fassungen violett `#85609E` (Violett `#7A5195` aus dem Skill `mathe`, auf die Helligkeit
+  des Akzentblaus angehoben), Füllung `#EBE5EF` (Klasse `test`);
   Lösungen orange `#D55E00` (Klasse `loesung`); interaktive Seiten grün `#26870C` (Klasse
   `interaktiv`); Notentabellen als Zusatz hellblau `#59A3CD` (Akzentblau 35 % aufgehellt), Titel etwas kleiner (Klasse
   `notentabelle`); nicht Veröffentlichtes grau gestrichelt (Klasse `gesperrt`).
