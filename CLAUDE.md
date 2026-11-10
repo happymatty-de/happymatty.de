@@ -45,6 +45,10 @@ Nicht in den Link gehören, weil sie sich ändern:
 - Versionsnummern
 - Klassen, Bildungsgänge oder Schuljahre
 
+Ausnahme: die Einstiegsseiten der Bildungsgänge (`happymatty.de/bf2` usw., siehe unten).
+Sie sind Übersichten, deren Inhalt sich jedes Jahr ändern darf; die Blätter selbst bleiben
+unter ihrem Thema.
+
 Die Dateinamen der Arbeitsblätter (z. B. `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf`)
 folgen eigenen Regeln und sind davon unabhängig.
 
@@ -80,19 +84,44 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
   „Veröffentlichtes Material“ ein.
 - Ein passwortgeschützter Bereich für Lehrkräfte ist geplant, aber noch nicht gebaut.
 
-## Startseite und Themenseiten
+## Startseite, Themenseiten und Bildungsgänge
 
-- `index.html` im Hauptordner ist die Startseite (`happymatty.de`). Sie listet alle Arbeitsblätter auf,
-  gruppiert nach Fach und Thema, auch ältere, damit Schüler jedes Material wiederfinden.
-- Jedes Thema hat eine Themenseite `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`)
-  mit allen Arbeitsblättern des Themas.
-- Wird ein Arbeitsblatt neu veröffentlicht, umbenannt oder bekommt es einen neuen Titel, trägt Claude das
-  im selben Schritt auf der Startseite und auf der Themenseite ein. Ein neues Thema bekommt
-  eine neue Themenseite.
-- Innerhalb eines Themas stehen die Arbeitsblätter in der Reihenfolge der Lernreihe. Jeder Eintrag hat
-  Titel und eine kurze Beschreibung in einer Zeile.
-- Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften). `stil` ist kein Thema
-  und wird nie als Link-Ordner vergeben.
+Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bildungsgang für die Schüler.
+
+- **Startseite** `index.html` (`happymatty.de`): oben „Meine Klasse“ mit einer Kachel je
+  Bildungsgang, darunter je Fach die **Themen** als grüne Karten (Klasse `thema-karte`) mit
+  Kennzeichen der Bildungsgänge und Zahl der Arbeitsblätter. Keine Titel einzelner Arbeitsblätter
+  auf der Startseite. Auch ältere Themen bleiben stehen, damit jedes Material auffindbar bleibt.
+- **Themenseite** `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`): alle
+  Arbeitsblätter des Themas in der Reihenfolge der Lernreihe, je mit Titel, Kennzeichen der
+  Bildungsgänge und einer kurzen Beschreibung. Laufen in einem Thema mehrere Bildungsgänge mit
+  eigenen Blättern (etwa BGY als Wiederholung auf höherem Niveau), stehen sie hier nebeneinander.
+- **Einstiegsseite je Bildungsgang** `<kürzel>/index.html` (z. B. `happymatty.de/bf2`): nur die
+  Arbeitsblätter, die dieser Bildungsgang bearbeitet, je Fach und Thema in der Reihenfolge der
+  Reihe. Ohne Material eine graue Karte „Noch kein Material“. Die Schüler speichern sich diesen
+  einen Link.
+- **Übersicht des Arbeitsblatts**: unter der Überschrift die Kennzeichen der Bildungsgänge.
+- **Kennzeichen** (Klasse `badge`) wie die Badges auf den Blättern: grüner Rahmen, hellgrün
+  gefüllt, Indie Flower.
+- Wird ein Arbeitsblatt neu veröffentlicht, umbenannt oder bekommt es einen neuen Titel oder
+  Bildungsgang, trägt Claude das im selben Schritt überall ein: Übersicht, Themenseite,
+  Einstiegsseiten der Bildungsgänge und Startseite (Zahl, Kennzeichen). Ein neues Thema bekommt
+  eine Themenseite und eine Karte auf der Startseite.
+- Welcher Bildungsgang ein Blatt bearbeitet, steht im Namen des Reihenplans
+  (`BF2_Reihenplan_…`); im Zweifel fragt Claude.
+
+Bildungsgänge:
+
+| Kürzel | Link | Name | Stand |
+|---|---|---|---|
+| BF1 | `/bf1` | Berufsfachschule I | aktiv, noch kein Material |
+| BF2 | `/bf2` | Berufsfachschule II | aktiv |
+| BGY | `/bgy` | Berufliches Gymnasium | aktiv, ein Jahrgang, noch kein Material |
+| FSTM | `/fstm` | Techniker-Abendschule (BWL) | ab Januar 2027, Seite dann anlegen |
+| DBOS | `/dbos` | Duale Berufsoberschule | ab Schuljahr 2027/28, Seite dann anlegen |
+
+Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`.
+Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
 
 ## Gestaltung
 
@@ -103,6 +132,8 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   einen Mittelpunkt: „Mathematik · Lineare Funktionen“. Fach grau `#767676`, Thema grün `#26870C`.
   Darunter eine dünne Linie in Blau `#0072B2`.
 - Auf der Startseite steht in der Kopfzeile nur „happymatty.de“, in Libertinus Sans fett, schwarz (Textfarbe `#1F2933`).
+- Auf den Einstiegsseiten der Bildungsgänge steht in der Kopfzeile der volle Name (grau),
+  die Überschrift ist das Kürzel („BF2“). Kacheln der Bildungsgänge auf der Startseite: Kürzel grün fett.
 - Überschrift mittig in Indie Flower, Blau `#0072B2`.
 - Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul“, Name grün, Rest grau,
   darüber eine dünne blaue Linie.
@@ -129,9 +160,11 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 
 ## Veröffentlichtes Material
 
-| Link | Inhalt | Quelle | Stand |
-|---|---|---|---|
-| `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
-| `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
+| Link | Inhalt | Bildungsgang | Quelle | Stand |
+|---|---|---|---|---|
+| `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
+| `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
+
+Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2.
 
 Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`): noch nicht freigegeben.

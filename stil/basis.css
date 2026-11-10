@@ -109,6 +109,44 @@ h1{
 .liste .gesperrt .titel{color:#9A9A9A}
 .liste .gesperrt .text{color:var(--grau)}
 
+/* Einstieg nach Bildungsgang (Startseite): Kacheln nebeneinander */
+.klassen{list-style:none;margin:.2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}
+.klassen a{
+  display:block;
+  padding:.6rem .4rem .55rem;
+  border:1px solid var(--linie);
+  border-top:4px solid var(--gruen);
+  border-radius:6px;
+  text-align:center;
+  color:inherit;
+  text-decoration:none;
+}
+.klassen a:hover,.klassen a:focus-visible{background:var(--gruenhell)}
+.klassen .kuerzel{display:block;font-weight:700;font-size:1.35rem;color:var(--gruen)}
+.klassen .name{display:block;font-size:.85rem;line-height:1.2;color:var(--grau)}
+
+/* Themen auf der Startseite: Karten in Grün wie das Thema in der Kopfzeile */
+.liste a.thema-karte{border-left-color:var(--gruen)}
+.liste a.thema-karte:hover,.liste a.thema-karte:focus-visible{background:var(--gruenhell)}
+.liste a.thema-karte .titel{color:var(--gruen)}
+
+/* Bildungsgang-Kennzeichen wie die Badges auf dem Blatt (Skill mathe, Gestaltung) */
+.badge{
+  display:inline-block;
+  margin:0 .25rem 0 0;
+  padding:0 .4rem;
+  border:1px solid var(--gruen);
+  border-radius:4px;
+  background:var(--gruenhell);
+  font-family:var(--hand);
+  font-size:.95rem;
+  line-height:1.4;
+  color:var(--gruen);
+  vertical-align:.1em;
+}
+.liste .titel .badge{margin-left:.45rem}
+.badges{margin:.5rem 0 0;text-align:center}
+
 /* Fußzeile wie auf dem Blatt */
 footer{
   margin-top:3rem;
