@@ -179,9 +179,10 @@ Bildungsgänge:
 Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`.
 Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
 
-**Nach jeder Änderung an `basis.css`** und bei jeder neuen Seite führt Claude
-`python3 _werkzeuge/stil_version.py` aus. Das Skript hängt an jeden Verweis auf
-`/stil/basis.css` eine Kennung aus dem Inhalt der Datei an (`?v=…`). Sonst zeigen Browser
+**Nach jeder Änderung an `basis.css`** und bei jeder neuen Seite (auch bei jeder Übernahme
+eines Artifacts) führt Claude `python3 _werkzeuge/stil_version.py` aus. Das Skript hängt an
+jeden Verweis auf `/stil/basis.css` eine Kennung aus dem Inhalt der Datei an (`?v=…`) und
+ergänzt fehlende Verweise auf das Symbol der Website. Sonst zeigen Browser
 bis zu einigen Stunden die alte Gestaltung aus dem Zwischenspeicher (Anlass 10.11.2026:
 Safari zeigte den alten Abstand am Kennzeichen noch nach mehreren Minuten).
 Ordner, die mit `_` beginnen, veröffentlicht GitHub Pages nicht.
@@ -228,6 +229,10 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   Füllungen beim Darüberfahren im Farbton ihrer Schrift und gleich hell wie die Füllungen zu
   Orange und Grün aus dem Skill (Aufgabenblatt `#E0EDF8`); die Notentabelle heller (`#F3F8FB`).
   Beim Aufhellen in OKLCH rechnen, nicht mit Weiß mischen: Gemischtes Blau kippt ins Türkis.
+- **Symbol der Website** (Tab, Lesezeichen, Home-Bildschirm): weißes „hm“ in Indie Flower auf
+  Akzentblau, Schrift waagerecht und senkrecht mittig (Entscheidung 10.11.2026). Dateien:
+  `favicon.ico` und `apple-touch-icon.png` (180 px) im Hauptordner, `stil/icon-32.png`,
+  `stil/icon-192.png`.
 - Ändern sich die Farben oder die Kopfzeile im Skill `mathe`, zieht die Website nach.
 
 ## Inhalte auf den öffentlichen Seiten
