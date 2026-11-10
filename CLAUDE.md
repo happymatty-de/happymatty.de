@@ -119,7 +119,7 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
 - **Notentabellen werden immer mit veröffentlicht**, wenn der zugehörige Test online geht.
   Karte „Notentabelle zum …“, Text „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“.
   Zwischen Zahl und „Seite(n)“ steht immer ein geschütztes Leerzeichen (`&nbsp;`).
-- Karten je Abschnitt: Test (blau), Lösung (orange), Notentabelle (blau); beim Kurztest je
+- Karten je Abschnitt: Test (blau), Lösung (orange), Notentabelle (hellblau, Klasse `notentabelle`); beim Kurztest je
   Fassung Test und Lösung, danach die Notentabelle.
 - Themenseite und Einstiegsseite des Bildungsgangs: in der Beschreibung der Themeneinheit
   „· mit Probetest“ bzw. „· mit Probetest und Kurztest“.
@@ -219,7 +219,10 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 - Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul“, Name grün, Rest grau,
   darüber eine dünne blaue Linie.
 - Fließtext Libertinus Sans. Einträge als Karten mit blauem Rand links, Titel in Indie Flower blau.
-- Die Musterlösung bekommt die Lösungsfarbe `#D55E00` (Klasse `loesung` in `basis.css`).
+- Farben der Karten (Entscheidung 10.11.2026): Aufgabenblatt und Tests blau `#0072B2`;
+  Lösungen orange `#D55E00` (Klasse `loesung`); interaktive Seiten grün `#26870C` (Klasse
+  `interaktiv`); Notentabellen als Zusatz hellblau `#4095C5`, Titel etwas kleiner (Klasse
+  `notentabelle`); nicht Veröffentlichtes grau gestrichelt (Klasse `gesperrt`).
 - Ändern sich die Farben oder die Kopfzeile im Skill `mathe`, zieht die Website nach.
 
 ## Inhalte auf den öffentlichen Seiten
