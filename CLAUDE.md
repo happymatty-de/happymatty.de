@@ -66,8 +66,8 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
 ## Lösungen
 
 - Das Repository ist öffentlich: Alles, was darin liegt, kann jeder finden, auch ohne Link.
-  Lösungen kommen deshalb erst ins Repository, wenn Patrick sie ausdrücklich freigibt,
-  jeweils in einem eigenen Pull Request.
+  Lösungen kommen deshalb erst ins Repository, wenn Patrick sie ausdrücklich freigibt.
+  Bis dahin liegen sie nur im privaten Backup.
 - Ein passwortgeschützter Bereich für Lehrkräfte ist geplant, aber noch nicht gebaut.
 
 ## Startseite und Themenseiten
@@ -77,7 +77,7 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
 - Jedes Thema hat eine Themenseite `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`)
   mit allen Arbeitsblättern des Themas.
 - Wird ein Arbeitsblatt neu veröffentlicht, umbenannt oder bekommt es einen neuen Titel, trägt Claude das
-  im selben Pull Request auf der Startseite und auf der Themenseite ein. Ein neues Thema bekommt
+  im selben Schritt auf der Startseite und auf der Themenseite ein. Ein neues Thema bekommt
   eine neue Themenseite.
 - Innerhalb eines Themas stehen die Arbeitsblätter in der Reihenfolge der Lernreihe. Jeder Eintrag hat
   Titel und eine kurze Beschreibung in einer Zeile.
