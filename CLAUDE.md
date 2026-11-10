@@ -13,6 +13,13 @@ auch über mehrere Schuljahre und für mehrere Klassen.
   eine Weiterleitung auf die neue Adresse bleibt.
 - Vor jeder Umbenennung oder Verschiebung fragt Claude nach.
 
+## Ablauf bei Änderungen
+
+- Online ist nur, was auf `main` liegt. Claude schreibt nie direkt auf `main`.
+- Claude arbeitet auf einem eigenen Zweig, lädt ihn hoch und legt selbst einen Pull Request an.
+- Patrick gibt frei, indem er den Pull Request auf GitHub mergt. Erst dann geht die Änderung online.
+- Im Pull Request steht kurz, welche Links neu sind oder sich ändern.
+
 ## Aufbau der Links
 
 `happymatty.de/<thema>/<titel-des-arbeitsblatts>`
