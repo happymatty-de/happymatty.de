@@ -27,7 +27,8 @@ auch über mehrere Schuljahre und für mehrere Klassen.
 - Claude speichert Änderungen direkt auf `main` und lädt sie hoch. Kein Pull Request, kein Merge
   durch Patrick (Entscheidung 10.11.2026: Jeder Klick kostet Aufmerksamkeit).
 - Vor dem Hochladen prüft Claude lokal: die geänderten Seiten im Browser (Handy-Ansicht),
-  alle Links darauf, die Schriften, und dass keine Lösung und kein `.tex` im Repository liegt.
+  alle Links darauf, die Schriften, und dass kein `.tex` und keine Lösung im Repository liegt,
+  die nicht in „Veröffentlichtes Material“ als freigegeben steht.
 - Danach nennt Claude im Chat kurz, welche Links neu sind oder sich geändert haben.
 - Claude fragt vorher nach, bevor ein veröffentlichter Link umbenannt oder verschoben wird,
   bevor eine Lösung veröffentlicht wird und bevor etwas gelöscht wird.
@@ -88,8 +89,9 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
   Ein ausgegrauter Link schützt nicht: Die Adresse `…/loesung.pdf` ist erratbar, und das
   Repository ist öffentlich einsehbar.
 - Freischalten: Patrick schreibt z. B. „Lösung LF2 freigeben“. Claude kopiert die Lösung
-  aus dem Backup als `loesung.pdf`, macht die Karte aktiv und orange und trägt sie in
-  „Veröffentlichtes Material“ ein.
+  aus dem Backup als `loesung.pdf`, trägt den PDF-Titel ein, macht die Karte aktiv und orange
+  („Zum Vergleichen (PDF, n Seiten)“) und trägt sie in „Veröffentlichtes Material“ ein.
+  Kommt später eine neue Version des Blatts, ersetzt Claude eine freigegebene Lösung mit.
 - Ein passwortgeschützter Bereich für Lehrkräfte ist geplant, aber noch nicht gebaut.
 
 ## Startseite, Themenseiten und Bildungsgänge
@@ -195,11 +197,11 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 | Link | Inhalt | Bildungsgang | Quelle | Stand |
 |---|---|---|---|---|
 | `/lineare-funktionen/wie-steil-ist-das/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF1_Wie_steil_ist_das_Aufgabenblatt_v24.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/loesung.pdf` | Musterlösung, freigegeben | BF2 | `LF1_Wie_steil_ist_das_Loesung_v24.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
 
 Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2.
 
-Noch nicht freigegeben: Lösung zu „Wie steil ist das?“ (`LF1_Wie_steil_ist_das_Loesung_v24.pdf`),
-Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`).
+Noch nicht freigegeben: Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`).
 Interaktive Seiten zu LF1 (Artifacts „Steil-Check“, „Steigung ablesen“): vorerst nicht veröffentlichen.
