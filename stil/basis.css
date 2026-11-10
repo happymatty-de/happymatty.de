@@ -62,6 +62,7 @@ h1{
   color:var(--blau);
 }
 .unterzeile{margin:.3rem 0 0;text-align:center;color:var(--grau)}
+.unterzeile a{color:var(--blau);text-decoration:none}
 
 /* Thema auf der Startseite: Zeile wie die Kopfzeile, ohne Linie */
 .themenkopf{

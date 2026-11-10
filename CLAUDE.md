@@ -81,6 +81,36 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
 - Kommt etwas hinzu, wird die graue Karte zur aktiven Karte; die freigeschaltete Musterlösung
   bekommt die Klasse `loesung` (orange).
 
+## Kurztests
+
+Ein Kurztest deckt oft mehrere Aufgabenblätter ab. Er bekommt deshalb einen eigenen Ordner
+im Thema, nummeriert in der Reihenfolge, in der die Kurztests eines Themas online gehen:
+`<thema>/kurztest-<n>/`, z. B. `happymatty.de/lineare-funktionen/kurztest-1`. Die Nummer
+wird nie neu vergeben. Kennungen wie `LF1` stehen nicht im Link, nur in den Regeln.
+
+| Datei | Inhalt | Seitentitel bzw. PDF-Titel |
+|---|---|---|
+| `index.html` | Übersicht: „zu …“ mit Link auf die Aufgabenblätter, vier Karten | `happymatty/Kurztest 1` |
+| `probetest.pdf` | Probetest | `happymatty/Kurztest 1/Probetest` |
+| `probetest-loesung.pdf` | Lösung zum Probetest, nur nach Freigabe | `happymatty/Kurztest 1/Lösung Probetest` |
+| `kurztest.pdf` | freigegebene Fassung(en) des Kurztests, nur nach Freigabe | `happymatty/Kurztest 1/Kurztest` |
+| `kurztest-loesung.pdf` | Lösung dazu, nur nach Freigabe | `happymatty/Kurztest 1/Lösung Kurztest` |
+
+- Vier Karten in dieser Reihenfolge: Probetest, Lösung zum Probetest, Kurztest, Lösung zum
+  Kurztest. Nicht Freigegebenes grau „Noch nicht freigeschaltet“, Lösungen orange.
+- **Fassungen, die noch eine Klasse schreibt, kommen nie auf die Website**, nur ins Backup.
+  Welche Fassungen online dürfen, sagt Patrick ausdrücklich. Gehen mehrere Fassungen online,
+  heißen sie `kurztest-fassung-1.pdf` usw., mit eigener Karte.
+- Die Übersicht jedes abgedeckten Aufgabenblatts bekommt unter den drei Karten eine vierte
+  Karte „Kurztest <n>“. Die Themenseite listet die Kurztests im Abschnitt „Kurztests“, die
+  Einstiegsseite des Bildungsgangs direkt nach dem letzten abgedeckten Aufgabenblatt.
+  Die Startseite zählt sie mit („2 Aufgabenblätter · 1 Kurztest“).
+- Die Notentabelle ist Material der Lehrkraft und kommt nur ins Backup.
+
+| Kurztest | Kennung | deckt ab | Probetest | Kurztest |
+|---|---|---|---|---|
+| `kurztest-1` | LF1 | Wie steil ist das? | v14 online, Lösung nicht freigegeben | v17 folgt |
+
 ## Lösungen
 
 - Das Repository ist öffentlich: Alles, was darin liegt, kann jeder finden, auch ohne Link.
@@ -198,6 +228,7 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 |---|---|---|---|---|
 | `/lineare-funktionen/wie-steil-ist-das/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF1_Wie_steil_ist_das_Aufgabenblatt_v24.pdf` | 10.11.2026 |
 | `/lineare-funktionen/wie-steil-ist-das/loesung.pdf` | Musterlösung, freigegeben | BF2 | `LF1_Wie_steil_ist_das_Loesung_v24.pdf` | 10.11.2026 |
+| `/lineare-funktionen/kurztest-1/probetest.pdf` | Probetest | BF2 | `LF1_Probetest_v14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
 
