@@ -6,11 +6,15 @@ Sie sind ohne Login per Link erreichbar und hängen nicht an Claude.
 
 ## Begriffe
 
-- Auf der Website heißt es immer **Aufgabenblatt** (Mehrzahl Aufgabenblätter): das PDF für die
-  Schüler, das Blatt mit allem Material auf Startseite und Themenseite, in Seitentiteln und
-  Dateinamen. Sagt Patrick „Arbeitsblatt“ oder „Übungsblatt“, meint er dasselbe; Claude schreibt
-  trotzdem „Aufgabenblatt“ (Entscheidung 10.11.2026). „Arbeitsblatt“ in diesen Regeln meint
-  dasselbe und kommt auf öffentlichen Seiten nicht vor.
+- **Thema**: das Gebiet einer Lernreihe, z. B. Lineare Funktionen (`/lineare-funktionen`).
+- **Themeneinheit**: ein Abschnitt der Reihe mit genau einem Aufgabenblatt, z. B. LF1
+  „Wie steil ist das?“ (`/lineare-funktionen/wie-steil-ist-das`). Zu ihr gehören Aufgabenblatt,
+  Lösung, interaktive Seite, Probetest mit Lösung und Notentabelle. Auf Startseite und
+  Themenseite werden Themeneinheiten gezählt und aufgelistet (Entscheidung 10.11.2026).
+- **Aufgabenblatt** (Mehrzahl Aufgabenblätter): das PDF für die Schüler, in Karten, Seitentiteln
+  und Dateinamen. Sagt Patrick „Arbeitsblatt“ oder „Übungsblatt“, meint er dasselbe; Claude
+  schreibt trotzdem „Aufgabenblatt“ (Entscheidung 10.11.2026). „Arbeitsblatt“ in diesen Regeln
+  meint die Themeneinheit und kommt auf öffentlichen Seiten nicht vor.
 
 ## Grundsatz: Links bleiben dauerhaft gültig
 
@@ -83,32 +87,34 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
 
 ## Tests: Probetest, Kurztest, Klassenarbeit
 
-Tests stehen auf der Übersicht des Aufgabenblatts, das sie abdecken, unter den drei Karten,
-je Testart in einem eigenen Abschnitt (Überschrift `themenkopf` mit `id`, z. B. „Probetest“,
-„Kurztest“). Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
-(Entscheidung 10.11.2026). Deckt ein Test mehrere Blätter ab, steht er beim letzten; die
-früheren Blätter bekommen im Abschnitt eine Karte, die dorthin verweist.
+In BF1 und BF2 gehört jeder Test zu genau einer Themeneinheit. Er steht auf ihrer Übersicht
+unter den drei Karten, je Testart in einem eigenen Abschnitt (Überschrift `themenkopf` mit `id`).
+Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1.
+
+- **Probetest: wird immer veröffentlicht**, zusammen mit Lösung und Notentabelle, sobald
+  Patrick ihn schickt (Entscheidung 10.11.2026: Der Probetest dient der Selbstkontrolle).
+- **Kurztest: wird normalerweise nicht veröffentlicht**, weil Patrick ihn wieder einsetzt.
+  Es gibt dann keinen Abschnitt und keine graue Karte. Nur wenn Patrick Fassungen ausdrücklich
+  freigibt, entsteht der Abschnitt „Kurztest“ mit diesen Fassungen, ihren Lösungen und der
+  Notentabelle. **Fassungen, die noch eine Klasse schreibt, kommen nie auf die Website.**
+- **Klassenarbeiten** (z. B. BGY) decken meist mehrere Themeneinheiten ab. Sie stehen auf der
+  Ebene des Themas; Aufbau und Link legen Claude und Patrick fest, wenn die erste kommt.
 
 | Datei | Inhalt | PDF-Titel |
 |---|---|---|
 | `probetest.pdf` | Probetest (es gibt nur eine Fassung) | `happymatty/<Titel>/Probetest` |
-| `probetest-loesung.pdf` | Lösung zum Probetest, nach Freigabe | `happymatty/<Titel>/Lösung Probetest` |
+| `probetest-loesung.pdf` | Lösung zum Probetest | `happymatty/<Titel>/Lösung Probetest` |
 | `probetest-notentabelle.pdf` | Notentabelle zum Probetest | `happymatty/<Titel>/Notentabelle Probetest` |
 | `kurztest-fassung-<n>.pdf` | freigegebene Fassung des Kurztests | `happymatty/<Titel>/Kurztest Fassung <n>` |
-| `kurztest-fassung-<n>-loesung.pdf` | Lösung dazu, nach Freigabe | `happymatty/<Titel>/Lösung Kurztest Fassung <n>` |
+| `kurztest-fassung-<n>-loesung.pdf` | Lösung dazu | `happymatty/<Titel>/Lösung Kurztest Fassung <n>` |
 | `kurztest-notentabelle.pdf` | Notentabelle zum Kurztest | `happymatty/<Titel>/Notentabelle Kurztest` |
 
-Klassenarbeiten und Probeklassenarbeiten entsprechend (`klassenarbeit-…`, `probeklassenarbeit-…`).
-
-- **Notentabellen werden immer mit veröffentlicht**, bei Probetests, Kurztests, Tests und
-  Klassenarbeiten (Entscheidung 10.11.2026). Karte „Notentabelle zum …“, Text
-  „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“. Zwischen Zahl und „Seite(n)“ steht immer
-  ein geschütztes Leerzeichen (`&nbsp;`).
-- **Fassungen, die noch eine Klasse schreibt, kommen nie auf die Website**, nur ins Backup.
-  Welche Fassungen online dürfen, sagt Patrick ausdrücklich.
-- Karten je Abschnitt: Test, Lösung (orange), Notentabelle; beim Kurztest je Fassung Test und
-  Lösung, danach die Notentabelle. Noch nicht Freigegebenes grau „Noch nicht freigeschaltet“.
-- Themenseite und Einstiegsseite des Bildungsgangs: in der Beschreibung des Blatts
+- **Notentabellen werden immer mit veröffentlicht**, wenn der zugehörige Test online geht.
+  Karte „Notentabelle zum …“, Text „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“.
+  Zwischen Zahl und „Seite(n)“ steht immer ein geschütztes Leerzeichen (`&nbsp;`).
+- Karten je Abschnitt: Test (blau), Lösung (orange), Notentabelle (blau); beim Kurztest je
+  Fassung Test und Lösung, danach die Notentabelle.
+- Themenseite und Einstiegsseite des Bildungsgangs: in der Beschreibung der Themeneinheit
   „· mit Probetest“ bzw. „· mit Probetest und Kurztest“.
 
 Alte Adresse: `/lineare-funktionen/kurztest-1` war am 10.11.2026 kurz online und leitet auf
@@ -133,10 +139,10 @@ Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bil
 
 - **Startseite** `index.html` (`happymatty.de`): oben „Meine Klasse“ mit einer Kachel je
   Bildungsgang, darunter unter „Themenbereiche“ die **Themen** als grüne Karten (Klasse `thema-karte`) mit
-  Kennzeichen der Bildungsgänge und Zahl der Arbeitsblätter. Keine Titel einzelner Arbeitsblätter
+  Kennzeichen der Bildungsgänge und Zahl der Themeneinheiten („2 Themeneinheiten“). Keine Titel einzelner Arbeitsblätter
   auf der Startseite. Auch ältere Themen bleiben stehen, damit jedes Material auffindbar bleibt.
-- **Themenseite** `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`): alle
-  Arbeitsblätter des Themas in der Reihenfolge der Lernreihe, je mit Titel, Kennzeichen der
+- **Themenseite** `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`), Überschrift
+  „Alle Themeneinheiten“: alle Themeneinheiten des Themas in der Reihenfolge der Lernreihe, je mit Titel, Kennzeichen der
   Bildungsgänge und einer kurzen Beschreibung. Laufen in einem Thema mehrere Bildungsgänge mit
   eigenen Blättern (etwa BGY als Wiederholung auf höherem Niveau), stehen sie hier nebeneinander.
 - **Einstiegsseite je Bildungsgang** `<kürzel>/index.html` (z. B. `happymatty.de/bf2`): nur die
