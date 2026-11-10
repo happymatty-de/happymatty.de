@@ -65,6 +65,7 @@ h1{
   line-height:1.15;
   color:var(--blau);
 }
+h1.thema{color:var(--gruen)} /* Themenseite: das Thema als Haupttitel */
 .unterzeile{margin:.3rem 0 0;text-align:center;color:var(--grau)}
 .unterzeile a{color:var(--blau);text-decoration:none}
 

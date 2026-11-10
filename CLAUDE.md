@@ -130,15 +130,17 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
   Ebene des Themas (Entscheidung 10.11.2026, erste: Quadratische Funktionen):
   - Veröffentlicht wird nur die **Probeklassenarbeit**, immer mit Lösung und Notentabelle
     (wie der Probetest). Die Klassenarbeit selbst kommt nie auf die Website.
+  - Eigene Seite wie die Übersicht einer Themeneinheit (Entscheidung 10.11.2026, geändert am
+    selben Tag: einheitlich mit den Themeneinheiten): `<thema>/probeklassenarbeit/index.html`,
+    Link `/<thema>/probeklassenarbeit`. Kopfzeile Fach · Thema, Überschrift „Probeklassenarbeit“,
+    Kennzeichen, drei Karten: Probeklassenarbeit (violett, `test`), Lösung zur Probeklassenarbeit
+    (orange), Notentabelle zur Probeklassenarbeit (hellblau). Die PDFs liegen im selben Ordner.
   - Auf der Themenseite unter den Themeneinheiten der Abschnitt „Probeklassenarbeit“
-    (`themenkopf` mit `id="probeklassenarbeit"`), Karten wie beim Probetest:
-    Probeklassenarbeit (violett, `test`), Lösung zur Probeklassenarbeit (orange),
-    Notentabelle zur Probeklassenarbeit (hellblau).
-  - Die PDFs liegen im Ordner `<thema>/probeklassenarbeit/`. Dessen `index.html` leitet auf
-    `/<thema>/#probeklassenarbeit` weiter; `/<thema>/probeklassenarbeit` ist der Link zum Verschicken.
-  - Einstiegsseite des Bildungsgangs: unter den Themeneinheiten des Themas eine violette Karte
-    „Probeklassenarbeit“ – „Die ganze Reihe zum Üben vor der Klassenarbeit“, Link auf den Abschnitt.
-    Startseite und Beschreibungen der Themeneinheiten nennen sie nicht.
+    (`themenkopf` mit `id="probeklassenarbeit"`) mit **einer** violetten Karte (`test`) auf diese
+    Seite: „Probeklassenarbeit“ mit Kennzeichen – „Die ganze Reihe zum Üben vor der Klassenarbeit ·
+    mit Lösung und Notentabelle“.
+  - Startseite, Einstiegsseiten der Bildungsgänge und Beschreibungen der Themeneinheiten nennen
+    sie nicht.
 
 | Datei | Inhalt | PDF-Titel |
 |---|---|---|
@@ -157,7 +159,7 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
   Zwischen Zahl und „Seite(n)“ steht immer ein geschütztes Leerzeichen (`&nbsp;`).
 - Karten je Abschnitt: Test (violett, Klasse `test`), Lösung (orange), Notentabelle (hellblau, Klasse `notentabelle`); beim Kurztest je
   Fassung Test und Lösung, danach die Notentabelle.
-- Themenseite und Einstiegsseite des Bildungsgangs: in der Beschreibung der Themeneinheit
+- Themenseite: in der Beschreibung der Themeneinheit
   „· mit Probetest“ bzw. „· mit Probetest und Kurztest“.
 
 Alte Adresse: `/lineare-funktionen/kurztest-1` war am 10.11.2026 kurz online und leitet auf
@@ -193,23 +195,28 @@ Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bil
   Zwischen Titel und Kennzeichen kann eine **Unterzeile** (Klasse `unterzeile`, im Standardgrau
   wie der Text darunter) stehen: die Teile des Themas, mit Mittelpunkt getrennt, so wie Patrick sie vorgibt
   (Rechnen mit Zahlen: „Rationale Zahlen · Rechenregeln · Überschlagen und Schätzen“).
-- **Themenseite** `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`), Überschrift
-  „Alle Themeneinheiten“: alle Themeneinheiten des Themas in der Reihenfolge der Lernreihe, je mit Titel, Kennzeichen der
+- **Themenseite** `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`): Kopfzeile nur
+  „Mathematik“, Überschrift das Thema groß in Grün (`<h1 class="thema">`, Entscheidung 10.11.2026:
+  der Haupttitel soll sofort ins Auge fallen). Darunter der Abschnitt „Themeneinheiten“
+  (`themenkopf`, grau; nicht „Arbeitsblätter“, weil auch interaktive Seiten dazugehören):
+  alle Themeneinheiten des Themas in der Reihenfolge der Lernreihe, je mit Titel, Kennzeichen der
   Bildungsgänge und einer kurzen Beschreibung. Laufen in einem Thema mehrere Bildungsgänge mit
   eigenen Blättern (etwa BGY als Wiederholung auf höherem Niveau), stehen sie hier nebeneinander.
   Die Beschreibung beginnt mit dem Teilthema, danach ein Gedankenstrich: „Addition und
-  Subtraktion – Zahlenkarten, Wege und Zahlenmauern“. Die Einstiegsseiten der Bildungsgänge
-  übernehmen dieselbe Beschreibung.
+  Subtraktion – Zahlenkarten, Wege und Zahlenmauern“. Danach gegebenenfalls der Abschnitt
+  „Probeklassenarbeit“ (siehe Tests).
 - **Einstiegsseite je Bildungsgang** `<kürzel>/index.html` (z. B. `happymatty.de/bf2`): nur die
-  Arbeitsblätter, die dieser Bildungsgang bearbeitet, je Fach und Thema in der Reihenfolge der
-  Reihe. Ohne Material eine graue Karte „Noch kein Material“. Die Schüler speichern sich diesen
+  **Themen**, die dieser Bildungsgang bearbeitet, keine einzelnen Themeneinheiten (Entscheidung
+  10.11.2026: sonst wird es zu viel). Je Fach eine Überschrift (`themenkopf`, „Mathematik“), darunter
+  die Themen als grüne Karten wie auf der Startseite (mit Unterzeile und Zahl der Themeneinheiten,
+  ohne Kennzeichen), in der Reihenfolge, in der sie unterrichtet werden. Ohne Material eine graue Karte „Noch kein Material“. Die Schüler speichern sich diesen
   einen Link.
 - **Übersicht des Arbeitsblatts**: unter der Überschrift die Kennzeichen der Bildungsgänge.
 - **Kennzeichen** (Klasse `badge`) in der Form der Badges auf den Blättern, aber in Akzentlila:
   Rahmen und Schrift `#85609E`, gefüllt `#EBE5EF`, Indie Flower (Skill `mathe`, Stand 10.11.2026).
 - Wird ein Arbeitsblatt neu veröffentlicht, umbenannt oder bekommt es einen neuen Titel oder
   Bildungsgang, trägt Claude das im selben Schritt überall ein: Übersicht, Themenseite,
-  Einstiegsseiten der Bildungsgänge und Startseite (Zahl, Kennzeichen). Ein neues Thema bekommt
+  Einstiegsseiten der Bildungsgänge (Zahl) und Startseite (Zahl, Kennzeichen). Ein neues Thema bekommt
   eine Themenseite und eine Karte auf der Startseite.
 - Welcher Bildungsgang ein Blatt bearbeitet, steht im Namen des Reihenplans
   (`BF2_Reihenplan_…`); im Zweifel fragt Claude.
@@ -244,7 +251,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   einen Mittelpunkt: „Mathematik · Lineare Funktionen“. Fach grau, Thema grün `#26870C`.
   Auf der Übersicht einer Themeneinheit folgt das Teilthema in Akzentlila `#85609E`:
   „Mathematik · Rechnen mit Zahlen · Addition und Subtraktion“ (Klasse `teilthema`).
-  Themenseite und Einstiegsseiten der Bildungsgänge zeigen nur Fach und Thema.
+  Die Themenseite zeigt in der Kopfzeile nur das Fach; das Thema ist dort die grüne Überschrift.
 - **Ein Grau** `#6E6E6E` überall, wo Text grau ist (Kopf- und Fußzeile, Beschreibungen,
   Unterzeilen), wie im Skill `mathe` (Variable `--grau`). Das frühere `#767676` war heller als
   Blau, Grün und Lila und wirkte daneben am schwächsten (Skill `mathe`, 10.11.2026).
@@ -256,7 +263,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 - Auf den Einstiegsseiten der Bildungsgänge steht in der Kopfzeile der volle Name (grau),
   die Überschrift ist das Kürzel („BF2“). Kacheln der Bildungsgänge auf der Startseite in
   Akzentlila: Rand oben, Kürzel fett, Füllung beim Darüberfahren `#EBE5EF`.
-- Überschrift mittig in Indie Flower, Blau `#0072B2`.
+- Überschrift mittig in Indie Flower, Blau `#0072B2`; auf der Themenseite Grün `#26870C` (das Thema).
 - **Seitentitel** (`<title>`, erscheint im Tab und als Name von Lesezeichen), immer mit
   „happymatty“ klein und zusammen vorn, getrennt durch Schrägstriche ohne Leerzeichen:
 
@@ -265,6 +272,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   | Startseite | `happymatty` |
   | Bildungsgang | `happymatty/bf2` |
   | Thema | `happymatty/Lineare Funktionen` |
+  | Probeklassenarbeit | `happymatty/Quadratische Funktionen/Probeklassenarbeit` |
   | Übersicht des Arbeitsblatts | `happymatty/Mehr als nur steil` |
   | interaktive Seite | `happymatty/Mehr als nur steil/interaktiv` |
   | `aufgabenblatt.pdf` | `happymatty/Mehr als nur steil/Aufgabenblatt` |
