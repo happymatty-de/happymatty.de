@@ -241,10 +241,16 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 | `/lineare-funktionen/wie-steil-ist-das/probetest.pdf` | Probetest | BF2 | `LF1_Probetest_v14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/wie-steil-ist-das/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF2 | `LF1_Probetest_Loesung_v14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/wie-steil-ist-das/probetest-notentabelle.pdf` | Notentabelle zum Probetest | BF2 | `LF1_Probetest_Notentabelle_v14.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/kurztest-fassung-1.pdf` | Kurztest Fassung 1, freigegeben | BF2 | `LF1_Kurztest_1_v17.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/kurztest-fassung-1-loesung.pdf` | Lösung Fassung 1, freigegeben | BF2 | `LF1_Kurztest_Loesung_1_v17.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/kurztest-fassung-2.pdf` | Kurztest Fassung 2, freigegeben | BF2 | `LF1_Kurztest_2_v17.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/kurztest-fassung-2-loesung.pdf` | Lösung Fassung 2, freigegeben | BF2 | `LF1_Kurztest_Loesung_2_v17.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/kurztest-notentabelle.pdf` | Notentabelle zum Kurztest | BF2 | `LF1_Kurztest_Notentabelle_v17.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
 
 Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2.
 
 Noch nicht freigegeben: Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`).
+Kurztest LF1 Fassung 3 und 4 (v17) mit Lösungen: nicht veröffentlichen, im Einsatz ab 11.11.2026.
 Interaktive Seiten zu LF1 (Artifacts „Steil-Check“, „Steigung ablesen“): vorerst nicht veröffentlichen.
