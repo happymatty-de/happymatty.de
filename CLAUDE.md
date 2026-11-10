@@ -81,35 +81,38 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
 - Kommt etwas hinzu, wird die graue Karte zur aktiven Karte; die freigeschaltete Musterlösung
   bekommt die Klasse `loesung` (orange).
 
-## Kurztests
+## Tests: Probetest, Kurztest, Klassenarbeit
 
-Ein Kurztest deckt oft mehrere Aufgabenblätter ab. Er bekommt deshalb einen eigenen Ordner
-im Thema, nummeriert in der Reihenfolge, in der die Kurztests eines Themas online gehen:
-`<thema>/kurztest-<n>/`, z. B. `happymatty.de/lineare-funktionen/kurztest-1`. Die Nummer
-wird nie neu vergeben. Kennungen wie `LF1` stehen nicht im Link, nur in den Regeln.
+Tests stehen auf der Übersicht des Aufgabenblatts, das sie abdecken, unter den drei Karten,
+je Testart in einem eigenen Abschnitt (Überschrift `themenkopf` mit `id`, z. B. „Probetest“,
+„Kurztest“). Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
+(Entscheidung 10.11.2026). Deckt ein Test mehrere Blätter ab, steht er beim letzten; die
+früheren Blätter bekommen im Abschnitt eine Karte, die dorthin verweist.
 
-| Datei | Inhalt | Seitentitel bzw. PDF-Titel |
+| Datei | Inhalt | PDF-Titel |
 |---|---|---|
-| `index.html` | Übersicht: „zu …“ mit Link auf die Aufgabenblätter, vier Karten | `happymatty/Kurztest 1` |
-| `probetest.pdf` | Probetest | `happymatty/Kurztest 1/Probetest` |
-| `probetest-loesung.pdf` | Lösung zum Probetest, nur nach Freigabe | `happymatty/Kurztest 1/Lösung Probetest` |
-| `kurztest.pdf` | freigegebene Fassung(en) des Kurztests, nur nach Freigabe | `happymatty/Kurztest 1/Kurztest` |
-| `kurztest-loesung.pdf` | Lösung dazu, nur nach Freigabe | `happymatty/Kurztest 1/Lösung Kurztest` |
+| `probetest.pdf` | Probetest (es gibt nur eine Fassung) | `happymatty/<Titel>/Probetest` |
+| `probetest-loesung.pdf` | Lösung zum Probetest, nach Freigabe | `happymatty/<Titel>/Lösung Probetest` |
+| `probetest-notentabelle.pdf` | Notentabelle zum Probetest | `happymatty/<Titel>/Notentabelle Probetest` |
+| `kurztest-fassung-<n>.pdf` | freigegebene Fassung des Kurztests | `happymatty/<Titel>/Kurztest Fassung <n>` |
+| `kurztest-fassung-<n>-loesung.pdf` | Lösung dazu, nach Freigabe | `happymatty/<Titel>/Lösung Kurztest Fassung <n>` |
+| `kurztest-notentabelle.pdf` | Notentabelle zum Kurztest | `happymatty/<Titel>/Notentabelle Kurztest` |
 
-- Vier Karten in dieser Reihenfolge: Probetest, Lösung zum Probetest, Kurztest, Lösung zum
-  Kurztest. Nicht Freigegebenes grau „Noch nicht freigeschaltet“, Lösungen orange.
+Klassenarbeiten und Probeklassenarbeiten entsprechend (`klassenarbeit-…`, `probeklassenarbeit-…`).
+
+- **Notentabellen werden immer mit veröffentlicht**, bei Probetests, Kurztests, Tests und
+  Klassenarbeiten (Entscheidung 10.11.2026). Karte „Notentabelle zum …“, Text
+  „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“. Zwischen Zahl und „Seite(n)“ steht immer
+  ein geschütztes Leerzeichen (`&nbsp;`).
 - **Fassungen, die noch eine Klasse schreibt, kommen nie auf die Website**, nur ins Backup.
-  Welche Fassungen online dürfen, sagt Patrick ausdrücklich. Gehen mehrere Fassungen online,
-  heißen sie `kurztest-fassung-1.pdf` usw., mit eigener Karte.
-- Die Übersicht jedes abgedeckten Aufgabenblatts bekommt unter den drei Karten eine vierte
-  Karte „Kurztest <n>“. Die Themenseite listet die Kurztests im Abschnitt „Kurztests“, die
-  Einstiegsseite des Bildungsgangs direkt nach dem letzten abgedeckten Aufgabenblatt.
-  Die Startseite zählt sie mit („2 Aufgabenblätter · 1 Kurztest“).
-- Die Notentabelle ist Material der Lehrkraft und kommt nur ins Backup.
+  Welche Fassungen online dürfen, sagt Patrick ausdrücklich.
+- Karten je Abschnitt: Test, Lösung (orange), Notentabelle; beim Kurztest je Fassung Test und
+  Lösung, danach die Notentabelle. Noch nicht Freigegebenes grau „Noch nicht freigeschaltet“.
+- Themenseite und Einstiegsseite des Bildungsgangs: in der Beschreibung des Blatts
+  „· mit Probetest“ bzw. „· mit Probetest und Kurztest“.
 
-| Kurztest | Kennung | deckt ab | Probetest | Kurztest |
-|---|---|---|---|---|
-| `kurztest-1` | LF1 | Wie steil ist das? | v14 online, Lösung freigegeben | v17 folgt |
+Alte Adresse: `/lineare-funktionen/kurztest-1` war am 10.11.2026 kurz online und leitet auf
+`/lineare-funktionen/wie-steil-ist-das/#probetest` weiter.
 
 ## Lösungen
 
@@ -194,6 +197,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   | interaktive Seite | `happymatty/Mehr als nur steil/interaktiv` |
   | `aufgabenblatt.pdf` | `happymatty/Mehr als nur steil/Aufgabenblatt` |
   | `loesung.pdf` | `happymatty/Mehr als nur steil/Lösung` |
+  | Tests | siehe Abschnitt „Tests“ |
 
   Bei der interaktiven Seite ersetzt Claude bei jeder Übernahme eines Artifacts den `<title>`.
   In die PDFs auf der Website (nicht ins Backup) trägt Claude den Titel mit
@@ -228,8 +232,9 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 |---|---|---|---|---|
 | `/lineare-funktionen/wie-steil-ist-das/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF1_Wie_steil_ist_das_Aufgabenblatt_v24.pdf` | 10.11.2026 |
 | `/lineare-funktionen/wie-steil-ist-das/loesung.pdf` | Musterlösung, freigegeben | BF2 | `LF1_Wie_steil_ist_das_Loesung_v24.pdf` | 10.11.2026 |
-| `/lineare-funktionen/kurztest-1/probetest.pdf` | Probetest | BF2 | `LF1_Probetest_v14.pdf` | 10.11.2026 |
-| `/lineare-funktionen/kurztest-1/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF2 | `LF1_Probetest_Loesung_v14.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/probetest.pdf` | Probetest | BF2 | `LF1_Probetest_v14.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF2 | `LF1_Probetest_Loesung_v14.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/probetest-notentabelle.pdf` | Notentabelle zum Probetest | BF2 | `LF1_Probetest_Notentabelle_v14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
 
