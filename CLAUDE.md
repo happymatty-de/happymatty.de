@@ -40,6 +40,10 @@ auch über mehrere Schuljahre und für mehrere Klassen.
 - Vor dem Hochladen prüft Claude lokal: die geänderten Seiten im Browser (Handy-Ansicht),
   alle Links darauf, die Schriften, und dass kein `.tex` und keine Lösung im Repository liegt,
   die nicht in „Veröffentlichtes Material“ als freigegeben steht.
+- Nach dem Hochladen wartet Claude mit `python3 _werkzeuge/warten_bis_online.py`, bis GitHub
+  Pages fertig ist, und meldet erst dann „online“. Die Veröffentlichung dauert mal unter einer
+  Minute, mal mehrere Minuten (Anlass 10.11.2026: Patrick beurteilte Farben, bevor sie online
+  waren). Danach genügt in Safari Wahltaste + Cmd + R.
 - Danach nennt Claude im Chat kurz, welche Links neu sind oder sich geändert haben.
 - Claude fragt vorher nach, bevor ein veröffentlichter Link umbenannt oder verschoben wird,
   bevor eine Lösung veröffentlicht wird und bevor etwas gelöscht wird.
