@@ -4,6 +4,14 @@ Dieses Repository ist die Website `happymatty.de`. Sie wird über GitHub Pages a
 Hier liegen Arbeitsblätter (PDF) und interaktive Seiten für den Unterricht.
 Sie sind ohne Login per Link erreichbar und hängen nicht an Claude.
 
+## Begriffe
+
+- Auf der Website heißt es immer **Aufgabenblatt** (Mehrzahl Aufgabenblätter): das PDF für die
+  Schüler, das Blatt mit allem Material auf Startseite und Themenseite, in Seitentiteln und
+  Dateinamen. Sagt Patrick „Arbeitsblatt“ oder „Übungsblatt“, meint er dasselbe; Claude schreibt
+  trotzdem „Aufgabenblatt“ (Entscheidung 10.11.2026). „Arbeitsblatt“ in diesen Regeln meint
+  dasselbe und kommt auf öffentlichen Seiten nicht vor.
+
 ## Grundsatz: Links bleiben dauerhaft gültig
 
 Ein Link, der einmal an Schüler verschickt wurde, muss auf Dauer funktionieren,
@@ -152,7 +160,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   | Thema | `happymatty/Lineare Funktionen` |
   | Übersicht des Arbeitsblatts | `happymatty/Mehr als nur steil` |
   | interaktive Seite | `happymatty/Mehr als nur steil/interaktiv` |
-  | `aufgabenblatt.pdf` | `happymatty/Mehr als nur steil/Arbeitsblatt` |
+  | `aufgabenblatt.pdf` | `happymatty/Mehr als nur steil/Aufgabenblatt` |
   | `loesung.pdf` | `happymatty/Mehr als nur steil/Lösung` |
 
   Bei der interaktiven Seite ersetzt Claude bei jeder Übernahme eines Artifacts den `<title>`.
