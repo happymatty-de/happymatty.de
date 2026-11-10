@@ -44,6 +44,26 @@ Nicht in den Link gehören, weil sie sich ändern:
 Die Dateinamen der Arbeitsblätter (z. B. `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf`)
 folgen eigenen Regeln und sind davon unabhängig.
 
+## Startseite und Themenseiten
+
+- `index.html` im Hauptordner ist die Startseite (`happymatty.de`). Sie listet alle Seiten auf,
+  gruppiert nach Fach und Thema, auch ältere, damit Schüler jedes Material wiederfinden.
+- Jedes Thema hat eine Themenseite `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`)
+  mit allen Seiten des Themas.
+- Wird eine Seite neu veröffentlicht, umbenannt oder bekommt sie einen neuen Titel, trägt Claude das
+  im selben Pull Request auf der Startseite und auf der Themenseite ein. Ein neues Thema bekommt
+  eine neue Themenseite.
+- Innerhalb eines Themas stehen die Seiten in der Reihenfolge der Lernreihe. Jeder Eintrag hat
+  Titel und eine kurze Beschreibung in einer Zeile.
+- Gemeinsame Gestaltung liegt in `stil/` (`basis.css`, Schrift Libertinus Sans, Farben wie in den
+  Unterrichtsseiten). `stil` ist kein Thema und wird nie als Link-Ordner vergeben.
+
+## Inhalte auf den öffentlichen Seiten
+
+- Patrick Saul darf als Autor genannt werden.
+- Kein Impressum, keine Anschrift, keine Kontaktdaten.
+- Nichts über Claude oder darüber, wie die Seiten entstehen.
+
 ## Herkunft der Seiten
 
 Die Seiten entstehen meist als Artifact in einem Claude-Projekt auf claude.ai und werden von hier
