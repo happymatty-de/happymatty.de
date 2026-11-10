@@ -102,7 +102,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 - Kopfzeile mittig in Indie Flower: immer erst das Fach, dann das Thema, getrennt durch
   einen Mittelpunkt: „Mathematik · Lineare Funktionen“. Fach grau `#767676`, Thema grün `#26870C`.
   Darunter eine dünne Linie in Blau `#0072B2`.
-- Auf der Startseite steht in der Kopfzeile nur „happymatty.de“, in Libertinus Sans fett, Blau `#0072B2`.
+- Auf der Startseite steht in der Kopfzeile nur „happymatty.de“, in Libertinus Sans fett, schwarz (Textfarbe `#1F2933`).
 - Überschrift mittig in Indie Flower, Blau `#0072B2`.
 - Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul“, Name grün, Rest grau,
   darüber eine dünne blaue Linie.
