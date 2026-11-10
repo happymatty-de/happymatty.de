@@ -230,7 +230,9 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   Orange und Grün aus dem Skill (Aufgabenblatt `#E0EDF8`); die Notentabelle heller (`#F3F8FB`).
   Beim Aufhellen in OKLCH rechnen, nicht mit Weiß mischen: Gemischtes Blau kippt ins Türkis.
 - **Symbol der Website** (Tab, Lesezeichen, Home-Bildschirm): weißes „hm“ in Indie Flower auf
-  Akzentblau, Schrift waagerecht und senkrecht mittig (Entscheidung 10.11.2026). Dateien:
+  Akzentblau, darunter ein weißes Lächeln wie ein Pinselstrich (Mitte dicker, leicht
+  unregelmäßig, rechts höher gezogen); beides zusammen waagerecht und senkrecht mittig
+  (Entscheidung 10.11.2026). Dateien:
   `favicon.ico` und `apple-touch-icon.png` (180 px) im Hauptordner, `stil/icon-32.png`,
   `stil/icon-192.png`.
 - Ändern sich die Farben oder die Kopfzeile im Skill `mathe`, zieht die Website nach.
