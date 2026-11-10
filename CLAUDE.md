@@ -15,10 +15,14 @@ auch über mehrere Schuljahre und für mehrere Klassen.
 
 ## Ablauf bei Änderungen
 
-- Online ist nur, was auf `main` liegt. Claude schreibt nie direkt auf `main`.
-- Claude arbeitet auf einem eigenen Zweig, lädt ihn hoch und legt selbst einen Pull Request an.
-- Patrick gibt frei, indem er den Pull Request auf GitHub mergt. Erst dann geht die Änderung online.
-- Im Pull Request steht kurz, welche Links neu sind oder sich ändern.
+- Online ist, was auf `main` liegt; GitHub Pages veröffentlicht es etwa eine Minute nach dem Hochladen.
+- Claude speichert Änderungen direkt auf `main` und lädt sie hoch. Kein Pull Request, kein Merge
+  durch Patrick (Entscheidung 10.11.2026: Jeder Klick kostet Aufmerksamkeit).
+- Vor dem Hochladen prüft Claude lokal: die geänderten Seiten im Browser (Handy-Ansicht),
+  alle Links darauf, die Schriften, und dass keine Lösung und kein `.tex` im Repository liegt.
+- Danach nennt Claude im Chat kurz, welche Links neu sind oder sich geändert haben.
+- Claude fragt vorher nach, bevor ein veröffentlichter Link umbenannt oder verschoben wird,
+  bevor eine Lösung veröffentlicht wird und bevor etwas gelöscht wird.
 
 ## Aufbau der Links
 
