@@ -1,0 +1,108 @@
+/* Gemeinsame Gestaltung für Startseite, Themenseiten und Übersichten der Arbeitsblätter.
+   Schriften und Farben wie auf den Arbeitsblättern (Skill mathe, Gestaltung):
+   Kopfzeile „Mathematik ·“ grau, Thema grün; Überschrift Indie Flower blau;
+   Fußzeile „CC BY-NC-SA 4.0 · Patrick Saul“ mit grünem Namen. */
+
+@font-face{font-family:'Libertinus Sans';font-style:normal;font-weight:400;font-display:swap;src:url(/stil/libertinus-sans-400.woff2) format('woff2')}
+@font-face{font-family:'Libertinus Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/stil/libertinus-sans-700.woff2) format('woff2')}
+@font-face{font-family:'Indie Flower';font-style:normal;font-weight:400;font-display:swap;src:url(/stil/indie-flower.woff2) format('woff2')}
+
+:root{
+  --text:#1F2933;
+  --grau:#767676;      /* Kopf- und Fußzeilentext */
+  --blau:#0072B2;      /* Akzentfarbe A: Überschriften, Linien, Titel */
+  --blauhell:#EDF4FA;
+  --gruen:#26870C;     /* Akzentfarbe B: Thema, Autor */
+  --gruenhell:#E3EFDF;
+  --orange:#D55E00;    /* Lösungen */
+  --orangehell:#F9E7D9;
+  --linie:#D9DFE6;
+  --hand:'Indie Flower',cursive;
+}
+
+*{box-sizing:border-box}
+
+html{-webkit-text-size-adjust:100%}
+
+body{
+  margin:0;
+  font-family:'Libertinus Sans',system-ui,sans-serif;
+  font-size:1.2rem;
+  line-height:1.45;
+  color:var(--text);
+  background:#fff;
+}
+
+.seite{max-width:40rem;margin:0 auto;padding:1.2rem 1.25rem 2rem}
+
+/* Kopfzeile wie auf dem Blatt */
+.kopf{
+  margin:0;
+  padding:0 0 .35rem;
+  border-bottom:1px solid var(--blau);
+  text-align:center;
+  font-family:var(--hand);
+  font-size:1.1rem;
+  color:var(--grau);
+}
+.kopf a{color:inherit;text-decoration:none}
+.kopf .thema{color:var(--gruen)}
+/* Name der Website: normale Schrift, fett, Akzentblau */
+.kopf .marke{font-family:'Libertinus Sans',system-ui,sans-serif;font-weight:700;font-size:1.05rem;color:var(--blau)}
+
+.zurueck{display:inline-block;margin:0 0 .8rem;font-size:1rem;color:var(--blau);text-decoration:none}
+
+h1{
+  margin:1.6rem 0 0;
+  text-align:center;
+  font-family:var(--hand);
+  font-weight:400;
+  font-size:2.4rem;
+  line-height:1.15;
+  color:var(--blau);
+}
+.unterzeile{margin:.3rem 0 0;text-align:center;color:var(--grau)}
+
+/* Thema auf der Startseite: Zeile wie die Kopfzeile, ohne Linie */
+.themenkopf{
+  margin:2.4rem 0 .7rem;
+  font-family:var(--hand);
+  font-weight:400;
+  font-size:1.35rem;
+  color:var(--grau);
+}
+.themenkopf a{color:inherit;text-decoration:none}
+.themenkopf .thema{color:var(--gruen)}
+
+.liste{list-style:none;margin:1.8rem 0 0;padding:0}
+.themenkopf + .liste{margin-top:0}
+.liste li{margin:0 0 .7rem}
+.liste a{
+  display:block;
+  padding:.75rem 1rem .8rem;
+  border:1px solid var(--linie);
+  border-left:4px solid var(--blau);
+  border-radius:6px;
+  color:inherit;
+  text-decoration:none;
+}
+.liste a:hover,.liste a:focus-visible{background:var(--blauhell)}
+.liste .titel{display:block;font-family:var(--hand);font-size:1.45rem;line-height:1.2;color:var(--blau)}
+.liste .text{display:block;margin-top:.2rem;font-size:1rem;color:var(--grau)}
+
+/* Musterlösung in Lösungsfarbe, wie auf dem Blatt */
+.liste a.loesung{border-left-color:var(--orange)}
+.liste a.loesung:hover,.liste a.loesung:focus-visible{background:var(--orangehell)}
+.liste a.loesung .titel{color:var(--orange)}
+
+/* Fußzeile wie auf dem Blatt */
+footer{
+  margin-top:3rem;
+  padding-top:.4rem;
+  border-top:1px solid var(--blau);
+  text-align:center;
+  font-family:var(--hand);
+  font-size:1.05rem;
+  color:var(--grau);
+}
+footer .name{color:var(--gruen)}
