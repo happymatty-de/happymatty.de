@@ -109,7 +109,7 @@ h1{
 
 /* Notentabellen: Zusatz, helleres Akzentblau (35 % zu Weiß aufgehellt), etwas kleiner */
 .liste a.notentabelle{border-left-color:#59A3CD}
-.liste a.notentabelle:hover,.liste a.notentabelle:focus-visible{background:#EEF5FA} /* heller als die Aufgabenblatt-Füllung */
+.liste a.notentabelle:hover,.liste a.notentabelle:focus-visible{background:#F3F8FB} /* heller als die Aufgabenblatt-Füllung */
 .liste a.notentabelle .titel{color:#59A3CD;font-size:1.3rem}
 
 /* Noch nicht verfügbar (Lösung nicht freigeschaltet, interaktive Seite fehlt):
