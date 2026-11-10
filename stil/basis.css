@@ -87,7 +87,7 @@ h1{
   color:inherit;
   text-decoration:none;
 }
-.liste a:hover,.liste a:focus-visible{background:var(--blauhell)}
+.liste a:hover,.liste a:focus-visible{background:#DCEAF5} /* kräftigere Füllung aus dem Skill mathe */
 .liste .titel{display:block;font-family:var(--hand);font-size:1.45rem;line-height:1.2;color:var(--blau)}
 .liste .text{display:block;margin-top:.2rem;font-size:1rem;color:var(--grau)}
 
