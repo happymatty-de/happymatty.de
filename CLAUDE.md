@@ -113,6 +113,9 @@ Patrick lädt sie hier im Chat oder auf GitHub hoch, Claude legt sie unter dem f
 
 ## Veröffentlichtes Material
 
-| Link | Inhalt | Quelle | seit |
+| Link | Inhalt | Quelle | Stand |
 |---|---|---|---|
+| `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
+
+Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`): noch nicht freigegeben.
