@@ -143,8 +143,22 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   die Überschrift ist das Kürzel („BF2“). Kacheln der Bildungsgänge auf der Startseite: Kürzel grün fett.
 - Überschrift mittig in Indie Flower, Blau `#0072B2`.
 - **Seitentitel** (`<title>`, erscheint im Tab und als Name von Lesezeichen), immer mit
-  „happymatty“ klein und zusammen vorn: Startseite `happymatty`, Bildungsgang `happymatty/bf2`,
-  Thema `happymatty/Lineare Funktionen`, Arbeitsblatt `happymatty/Mehr als nur steil`.
+  „happymatty“ klein und zusammen vorn, getrennt durch Schrägstriche ohne Leerzeichen:
+
+  | Seite | Seitentitel |
+  |---|---|
+  | Startseite | `happymatty` |
+  | Bildungsgang | `happymatty/bf2` |
+  | Thema | `happymatty/Lineare Funktionen` |
+  | Übersicht des Arbeitsblatts | `happymatty/Mehr als nur steil` |
+  | interaktive Seite | `happymatty/Mehr als nur steil/interaktiv` |
+  | `aufgabenblatt.pdf` | `happymatty/Mehr als nur steil/Arbeitsblatt` |
+  | `loesung.pdf` | `happymatty/Mehr als nur steil/Lösung` |
+
+  Bei der interaktiven Seite ersetzt Claude bei jeder Übernahme eines Artifacts den `<title>`.
+  In die PDFs auf der Website (nicht ins Backup) trägt Claude den Titel mit
+  `python3 _werkzeuge/pdf_titel.py <datei.pdf> "<Titel>"` ein, bei jedem neuen oder ersetzten
+  PDF; Inhalt und Aussehen bleiben dabei gleich. Ohne Titel zeigen Browser nur den Dateinamen.
 - Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul“, Name grün, Rest grau,
   darüber eine dünne blaue Linie.
 - Fließtext Libertinus Sans. Einträge als Karten mit blauem Rand links, Titel in Indie Flower blau.
