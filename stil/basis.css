@@ -96,29 +96,29 @@ h1.thema{color:var(--gruen)} /* Themenseite: das Thema als Haupttitel */
   color:inherit;
   text-decoration:none;
 }
-.liste a:hover,.liste a:focus-visible{background:#E0EDF8} /* Farbton des Akzentblaus (OKLCH 244°), Helligkeit wie die Füllungen zu Orange und Grün */
+.liste a{background:#E0EDF8} /* Farbton des Akzentblaus (OKLCH 244°), Helligkeit wie die Füllungen zu Orange und Grün */
 .liste .titel{display:block;font-family:var(--hand);font-size:1.45rem;line-height:1.2;color:var(--blau)}
 .liste .text{display:block;margin-top:.2rem;font-size:1rem;color:var(--grau)}
 
 /* Musterlösung in Lösungsfarbe, wie auf dem Blatt */
 .liste a.loesung{border-left-color:var(--orange)}
-.liste a.loesung:hover,.liste a.loesung:focus-visible{background:var(--orangehell)}
+.liste a.loesung{background:var(--orangehell)}
 .liste a.loesung .titel{color:var(--orange)}
 
 /* Tests (Probetest, Kurztest): Akzentlila (Violett #7A5195 aus dem Skill mathe, auf die Helligkeit
    des Akzentblaus angehoben), Füllung #EBE5EF */
 .liste a.test{border-left-color:var(--lila)}
-.liste a.test:hover,.liste a.test:focus-visible{background:var(--lilahell)}
+.liste a.test{background:var(--lilahell)}
 .liste a.test .titel{color:var(--lila)}
 
 /* Interaktive Seiten: Akzentgrün */
 .liste a.interaktiv{border-left-color:var(--gruen)}
-.liste a.interaktiv:hover,.liste a.interaktiv:focus-visible{background:var(--gruenhell)}
+.liste a.interaktiv{background:var(--gruenhell)}
 .liste a.interaktiv .titel{color:var(--gruen)}
 
 /* Notentabellen: Zusatz, helleres Akzentblau (35 % zu Weiß aufgehellt), etwas kleiner */
 .liste a.notentabelle{border-left-color:#59A3CD}
-.liste a.notentabelle:hover,.liste a.notentabelle:focus-visible{background:#F3F8FB} /* heller als die Aufgabenblatt-Füllung */
+.liste a.notentabelle{background:#F3F8FB} /* heller als die Aufgabenblatt-Füllung */
 .liste a.notentabelle .titel{color:#59A3CD;font-size:1.3rem}
 
 /* Noch nicht verfügbar (Lösung nicht freigeschaltet, interaktive Seite fehlt):
@@ -147,16 +147,22 @@ h1.thema{color:var(--gruen)} /* Themenseite: das Thema als Haupttitel */
   color:inherit;
   text-decoration:none;
 }
-.klassen a:hover,.klassen a:focus-visible{background:var(--lilahell)}
+.klassen a{background:var(--lilahell)}
 .klassen .kuerzel{display:block;font-weight:700;font-size:1.35rem;color:var(--lila)}
 .klassen .name{display:block;font-size:.85rem;line-height:1.2;color:var(--grau)}
 
 /* Themen auf der Startseite: Karten in Grün wie das Thema in der Kopfzeile */
 .liste a.thema-karte{border-left-color:var(--gruen)}
-.liste a.thema-karte:hover,.liste a.thema-karte:focus-visible{background:var(--gruenhell)}
+.liste a.thema-karte{background:var(--gruenhell)}
 .liste a.thema-karte .titel{color:var(--gruen)}
 /* Unterzeile der Themenkarte: die Teile des Themas, grau wie der Text darunter */
 .liste a.thema-karte .unterzeile{display:block;margin:.15rem 0 0;text-align:left;font-size:1rem;color:var(--grau)}
+
+/* Kacheln tragen ihre Füllung immer (auch auf iPad und Handy, wo es kein Hover gibt).
+   Beim Darüberfahren mit der Maus und beim Antippen werden sie weiß (Entscheidung 11.11.2026). */
+.liste a,.klassen a{transition:background-color .15s}
+@media (hover:hover){.liste a:hover,.klassen a:hover{background:#fff}}
+.liste a:active,.klassen a:active{background:#fff}
 
 /* Bildungsgang-Kennzeichen wie die Badges auf dem Blatt, in Akzentlila (Skill mathe, Gestaltung) */
 .badge{

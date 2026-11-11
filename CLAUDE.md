@@ -262,7 +262,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 - Auf der Startseite steht in der Kopfzeile nur „happymatty.de“, in Libertinus Sans fett, schwarz (Textfarbe `#1F2933`).
 - Auf den Einstiegsseiten der Bildungsgänge steht in der Kopfzeile der volle Name (grau),
   die Überschrift ist das Kürzel („BF2“). Kacheln der Bildungsgänge auf der Startseite in
-  Akzentlila: Rand oben, Kürzel fett, Füllung beim Darüberfahren `#EBE5EF`.
+  Akzentlila: Rand oben, Kürzel fett, Füllung `#EBE5EF`.
 - Überschrift mittig in Indie Flower, Blau `#0072B2`; auf der Themenseite Grün `#26870C` (das Thema).
 - **Seitentitel** (`<title>`, erscheint im Tab und als Name von Lesezeichen), immer mit
   „happymatty“ klein und zusammen vorn, getrennt durch Schrägstriche ohne Leerzeichen:
@@ -304,8 +304,11 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   `notentabelle`); nicht Veröffentlichtes grau gestrichelt (Klasse `gesperrt`): Titel in hellerem
   Grau `#9A9A9A`, deutlich heller als das Standardgrau, damit die Karte als „noch nicht da“ zurücktritt;
   der Hinweis darunter („Noch nicht freigeschaltet“) im Standardgrau (Entscheidung 10.11.2026: so lassen).
-  Füllungen beim Darüberfahren im Farbton ihrer Schrift und gleich hell wie die Füllungen zu
+  Füllungen im Farbton ihrer Schrift und gleich hell wie die Füllungen zu
   Orange und Grün aus dem Skill (Aufgabenblatt `#E0EDF8`); die Notentabelle heller (`#F3F8FB`).
+  Die Kacheln (Karten und Bildungsgang-Kacheln) tragen ihre Füllung immer; beim Darüberfahren
+  mit der Maus und beim Antippen werden sie weiß (Entscheidung 11.11.2026: Auf iPad und Handy
+  gibt es kein Darüberfahren, die Farben waren dort nur beim Tippen kurz zu sehen).
   Beim Aufhellen in OKLCH rechnen, nicht mit Weiß mischen: Gemischtes Blau kippt ins Türkis.
 - **Symbol der Website** (Tab, Lesezeichen, Home-Bildschirm): weißes „hm“ in Indie Flower auf
   Akzentblau, darunter ein weißes Lächeln wie ein Pinselstrich (Mitte dicker, leicht
