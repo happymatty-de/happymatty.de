@@ -330,12 +330,15 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   mit der Maus und beim Antippen werden sie weiß (Entscheidung 11.11.2026: Auf iPad und Handy
   gibt es kein Darüberfahren, die Farben waren dort nur beim Tippen kurz zu sehen).
   Beim Aufhellen in OKLCH rechnen, nicht mit Weiß mischen: Gemischtes Blau kippt ins Türkis.
-- **Symbol der Website** (Tab, Lesezeichen, Home-Bildschirm): weißes „hm“ in Indie Flower auf
-  Akzentblau, darunter ein weißes Lächeln wie ein Pinselstrich (Mitte dicker, leicht
-  unregelmäßig, rechts höher gezogen); beides zusammen waagerecht und senkrecht mittig
-  (Entscheidung 10.11.2026). Dateien:
-  `favicon.ico` und `apple-touch-icon.png` (180 px) im Hauptordner, `stil/icon-32.png`,
-  `stil/icon-192.png`.
+- **Symbol der Website** (Tab, Lesezeichen, Home-Bildschirm, Logo oben links): weißer Smiley auf
+  Akzentblau, wie von Hand gezeichnet: zwei ovale Augen, darunter ein Lächeln mit dickem, leicht
+  unregelmäßigem Strich; der Kopf ist um 17° gegen den Uhrzeigersinn gekippt (rechts höher), das
+  Ganze steht waagerecht und senkrecht mittig (Entscheidung 11.11.2026, löst das „hm“ mit Lächeln
+  vom 10.11.2026 ab; Patrick wollte einen echten Smiley, nicht glatt und nicht Standard).
+  Vorlage als Vektorgrafik: `_werkzeuge/symbol.svg`. Dateien:
+  `favicon.ico` (16, 32, 48 px) und `apple-touch-icon.png` (180 px) im Hauptordner,
+  `stil/icon-32.png`, `stil/icon-192.png`; alle quadratisch ohne runde Ecken, die Seiten und
+  Geräte runden selbst.
 - Ändern sich die Farben oder die Kopfzeile im Skill `mathe`, zieht die Website nach.
 
 ## Inhalte auf den öffentlichen Seiten
