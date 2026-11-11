@@ -263,8 +263,13 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 - **Logo oben links** (Entscheidung 11.11.2026): Auf jeder Seite außer der Startseite steht ganz
   oben links das Symbol der Website mit „happymatty.de“ daneben (fett, schwarz), als Link auf die
   Startseite (Klasse `logo`, Bild `/stil/icon-192.png`). Darunter folgt der Link eine Ebene höher
-  („← Lineare Funktionen“, „← Alle Themen“). Auf der Datenschutzerklärung bleibt die Kopfzeile leer
-  (nur die blaue Linie), weil der Name schon im Logo steht.
+  (Klasse `zurueck`), aber nie ein zweiter Link auf die Startseite:
+  - Einstiegsseite eines Bildungsgangs (`/bf1` …): nur das Logo, kein Zurück-Link.
+  - Themenseite: zurück zu ihrem Bildungsgang („← BF1“ auf `/bf1/`), nicht zur Startseite
+    (Entscheidung 11.11.2026). Gehört ein Thema zu mehreren Bildungsgängen, fragt Claude nach.
+  - Übersicht einer Themeneinheit, Probeklassenarbeit: zurück zum Thema („← Lineare Funktionen“).
+  - Datenschutzerklärung: nur das Logo; die Kopfzeile bleibt leer (nur die blaue Linie), weil der
+    Name schon im Logo steht.
 - Auf den Einstiegsseiten der Bildungsgänge steht in der Kopfzeile der volle Name (grau),
   die Überschrift ist das Kürzel („BF2“). Kacheln der Bildungsgänge auf der Startseite in
   Akzentlila: Rand oben, Kürzel fett, Füllung `#EBE5EF`.
