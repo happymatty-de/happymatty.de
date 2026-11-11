@@ -259,11 +259,15 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   genauere Einordnung: Grün nennt das Thema, Lila den Teil davon. Auf der Website trägt es das
   Teilthema, Kennzeichen und Kacheln der Bildungsgänge und die Karten der Tests.
   Darunter eine dünne Linie in Blau `#0072B2`.
-- Auf der Startseite steht in der Kopfzeile nur „happymatty.de“, in Libertinus Sans fett, schwarz (Textfarbe `#1F2933`).
-- **Logo oben links** (Entscheidung 11.11.2026): Auf jeder Seite außer der Startseite steht ganz
-  oben links das Symbol der Website mit „happymatty.de“ daneben (fett, schwarz), als Link auf die
-  Startseite (Klasse `logo`, Bild `/stil/icon-192.png`). Darunter folgt der Link eine Ebene höher
-  (Klasse `zurueck`), aber nie ein zweiter Link auf die Startseite:
+- **Logo oben links** (Entscheidung 11.11.2026): Auf jeder Seite steht ganz
+  oben links das Symbol der Website mit „happymatty.de“ daneben (Libertinus Sans fett, schwarz,
+  Textfarbe `#1F2933`), als Link auf die Startseite (Klasse `logo`, Bild `/stil/icon-192.png`).
+  Darunter folgt der Link eine Ebene höher (Klasse `zurueck`), aber nie ein zweiter Link auf die
+  Startseite:
+  - Startseite: dasselbe Logo an derselben Stelle, aber ohne Link (`<div class="logo">`); die
+    Kopfzeile bleibt leer (nur die blaue Linie), weil der Name schon im Logo steht (Entscheidung
+    11.11.2026: Das Logo gehört auch auf die Startseite; vorher stand dort nur „happymatty.de“
+    mittig in der Kopfzeile).
   - Einstiegsseite eines Bildungsgangs (`/bf1` …): nur das Logo, kein Zurück-Link.
   - Themenseite: zurück zu ihrem Bildungsgang („← BF1“ auf `/bf1/`), nicht zur Startseite
     (Entscheidung 11.11.2026). Gehört ein Thema zu mehreren Bildungsgängen, fragt Claude nach.
