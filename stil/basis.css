@@ -1,7 +1,7 @@
 /* Gemeinsame Gestaltung für Startseite, Themenseiten und Übersichten der Arbeitsblätter.
    Schriften und Farben wie auf den Arbeitsblättern (Skill mathe, Gestaltung):
    Kopfzeile „Mathematik ·“ grau, Thema grün, Teilthema Akzentlila; Überschrift Indie Flower blau;
-   Fußzeile „CC BY-NC-SA 4.0 · Patrick Saul“ mit grünem Namen. */
+   Fußzeile „CC BY-NC-SA 4.0 · Patrick Saul · Datenschutzerklärung“ mit grünem Namen. */
 
 @font-face{font-family:'Libertinus Sans';font-style:normal;font-weight:400;font-display:swap;src:url(/stil/libertinus-sans-400.woff2) format('woff2')}
 @font-face{font-family:'Libertinus Sans';font-style:normal;font-weight:700;font-display:swap;src:url(/stil/libertinus-sans-700.woff2) format('woff2')}
@@ -186,3 +186,13 @@ footer{
   color:var(--grau);
 }
 footer .name{color:var(--gruen)}
+footer a{color:var(--grau);text-decoration:none;white-space:nowrap}
+footer a:hover,footer a:focus-visible{text-decoration:underline}
+
+/* Textseiten (Datenschutzerklärung): Fließtext, schlichte Zwischenüberschriften, Links blau */
+.fliesstext{margin-top:1.6rem}
+.fliesstext h2{margin:1.8rem 0 .4rem;font-size:1.25rem;font-weight:700;line-height:1.25;color:var(--text)}
+.fliesstext p{margin:0 0 .8rem}
+.fliesstext ul{margin:0 0 .8rem;padding-left:1.3rem}
+.fliesstext li{margin:0 0 .35rem}
+.fliesstext a{color:var(--blau);overflow-wrap:break-word}

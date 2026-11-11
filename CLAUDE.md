@@ -231,7 +231,7 @@ Bildungsgänge:
 | FSTM | `/fstm` | Techniker-Abendschule (BWL) | ab Januar 2027, Seite dann anlegen |
 | DBOS | `/dbos` | Duale Berufsoberschule | ab Schuljahr 2027/28, Seite dann anlegen |
 
-Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`.
+Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`, `datenschutz`.
 Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
 
 **Nach jeder Änderung an `basis.css`** und bei jeder neuen Seite (auch bei jeder Übernahme
@@ -270,6 +270,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   | Seite | Seitentitel |
   |---|---|
   | Startseite | `happymatty` |
+  | Datenschutzerklärung | `happymatty/Datenschutzerklärung` |
   | Bildungsgang | `happymatty/bf2` |
   | Thema | `happymatty/Lineare Funktionen` |
   | Probeklassenarbeit | `happymatty/Quadratische Funktionen/Probeklassenarbeit` |
@@ -283,8 +284,10 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   In die PDFs auf der Website (nicht ins Backup) trägt Claude den Titel mit
   `python3 _werkzeuge/pdf_titel.py <datei.pdf> "<Titel>"` ein, bei jedem neuen oder ersetzten
   PDF; Inhalt und Aussehen bleiben dabei gleich. Ohne Titel zeigen Browser nur den Dateinamen.
-- Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul“, Name grün, Rest grau,
-  darüber eine dünne blaue Linie.
+- Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul · Datenschutzerklärung“, Name grün,
+  Rest grau, darüber eine dünne blaue Linie. „Datenschutzerklärung“ im Standardgrau als Link auf
+  `/datenschutz`, ohne Unterstreichung, beim Darüberfahren unterstrichen. Die interaktiven Seiten
+  haben keine solche Fußzeile und bleiben ohne den Link.
 - Fließtext Libertinus Sans. Einträge als Karten mit blauem Rand links, Titel in Indie Flower blau.
 - Farben der Karten (Entscheidung 10.11.2026): Aufgabenblatt blau `#0072B2`; Probetest und
   Kurztest-Fassungen Akzentlila `#85609E` (Violett `#7A5195` aus dem Skill `mathe`, auf die Helligkeit
@@ -308,7 +311,8 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 ## Inhalte auf den öffentlichen Seiten
 
 - Patrick Saul darf als Autor genannt werden.
-- Kein Impressum, keine Anschrift, keine Kontaktdaten.
+- Kein Impressum und keine Anschrift, bis Patrick das Impressum klärt. Einzige Kontaktangabe ist
+  die E-Mail-Adresse happymatty.de@gmail.com in der Datenschutzerklärung.
 - Nichts über Claude oder darüber, wie die Seiten entstehen.
 
 ## Herkunft der Seiten
@@ -316,6 +320,9 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 Die interaktiven Seiten entstehen meist als Artifact in einem Claude-Projekt auf claude.ai und werden von hier
 übernommen. Jede Seite muss ohne Claude laufen: kein `window.claude`, keine Artifact-Datenbank.
 Möglichst keine Inhalte von fremden Servern laden (Datenschutz der Schüler).
+Lädt eine Seite etwas von fremden Servern, setzt sie Cookies, speichert sie weitere Daten im
+Browser oder kommt eine Statistik hinzu, passt Claude die Datenschutzerklärung im selben Schritt
+an oder fragt vorher.
 
 Die PDFs entstehen in Patricks Claude-Projekten; Claude Code sieht diese Dateien nicht.
 Patrick lädt sie hier im Chat oder auf GitHub hoch, Claude legt sie unter dem festen Namen ab.
