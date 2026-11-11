@@ -196,3 +196,7 @@ footer a:hover,footer a:focus-visible{text-decoration:underline}
 .fliesstext ul{margin:0 0 .8rem;padding-left:1.3rem}
 .fliesstext li{margin:0 0 .35rem}
 .fliesstext a{color:var(--blau);overflow-wrap:break-word}
+.fliesstext h3{margin:1.4rem 0 .35rem;font-size:1.08rem;font-weight:700;line-height:1.25;color:var(--text)}
+/* Abgesetzter Hinweis (Widerspruchsrecht, Art. 21 Abs. 4 DSGVO): blauer Rand links wie die Karten */
+.fliesstext .kasten{margin:1.4rem 0;padding:.2rem 1rem .1rem;border-left:4px solid var(--blau);background:var(--blauhell);border-radius:0 6px 6px 0}
+.fliesstext .kasten h3{margin-top:.6rem}

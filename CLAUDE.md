@@ -287,7 +287,14 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 - Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul · Datenschutzerklärung“, Name grün,
   Rest grau, darüber eine dünne blaue Linie. „Datenschutzerklärung“ im Standardgrau als Link auf
   `/datenschutz`, ohne Unterstreichung, beim Darüberfahren unterstrichen. Die interaktiven Seiten
-  haben keine solche Fußzeile und bleiben ohne den Link.
+  haben keine solche Fußzeile. Dort steht hinter der Versionsnummer ein kleines „Datenschutz“,
+  durch „ · “ getrennt und so zurückhaltend wie die Versionsnummer (gleiche Größe und Farbe, ohne
+  Unterstreichung, beim Darüberfahren unterstrichen); es öffnet `/datenschutz/` in einem neuen Tab
+  (`target="_blank" rel="noopener"`). Claude setzt es bei jeder Übernahme eines Artifacts ein
+  (Entscheidung 11.11.2026).
+- **Datenschutzerklärung** (`/datenschutz`): Die Stand-Zeile trägt das Datum der Veröffentlichung.
+  Der Abschnitt „Dein Recht auf Widerspruch“ steht abgesetzt im Kasten mit blauem Rand links
+  (Klasse `kasten`), weil Art. 21 Abs. 4 DSGVO für diesen Hinweis eine getrennte Form verlangt.
 - Fließtext Libertinus Sans. Einträge als Karten mit blauem Rand links, Titel in Indie Flower blau.
 - Farben der Karten (Entscheidung 10.11.2026): Aufgabenblatt blau `#0072B2`; Probetest und
   Kurztest-Fassungen Akzentlila `#85609E` (Violett `#7A5195` aus dem Skill `mathe`, auf die Helligkeit

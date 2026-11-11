@@ -116,6 +116,7 @@ header{display:flex;align-items:center;gap:calc(1.5*var(--u))}
 .titel{font-family:var(--hand);color:var(--blau);font-size:calc(2.9*var(--u));line-height:1;white-space:nowrap}
 .titel small{display:block;font-family:inherit;font-size:calc(1.35*var(--u));color:var(--gruen);margin-top:calc(.25*var(--u))}
 .titel .version{font-size:calc(1.35*var(--u));opacity:.62;margin-left:calc(.7*var(--u));vertical-align:baseline}
+.titel .version a{color:inherit;text-decoration:none}.titel .version a:hover,.titel .version a:focus-visible{text-decoration:underline}
 nav.tabs{display:flex;flex:1;justify-content:flex-end;gap:calc(.55*var(--u))}
 nav.tabs button{font:inherit;font-size:calc(1.65*var(--u));font-weight:700;color:var(--blau);background:#fff;
   border:2px solid var(--blau);border-radius:calc(2.4*var(--u));padding:calc(.55*var(--u)) calc(1.5*var(--u));
@@ -260,7 +261,7 @@ svg .ring1{fill:none;stroke-width:3px;transform-box:fill-box;transform-origin:ce
 <body>
 <div class="app">
   <header>
-    <div class="titel">Mehr als nur steil<span class="version">v1.22</span><small>Lineare Funktionen · f(x) = m·x + b</small></div>
+    <div class="titel">Mehr als nur steil<span class="version">v1.22 · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></span><small>Lineare Funktionen · f(x) = m·x + b</small></div>
     <nav class="tabs" id="tabs"></nav>
     <button id="voll" class="voll" title="Vollbild"><svg id="vollicon" viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg></button>
   </header>
