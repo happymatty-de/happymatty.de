@@ -54,12 +54,16 @@ body{
 /* Name der Website: normale Schrift, fett, schwarz (Textfarbe) */
 .kopf .marke{font-family:'Libertinus Sans',system-ui,sans-serif;font-weight:700;font-size:1.05rem;color:var(--text)}
 
-.zurueck{display:inline-block;margin:0 0 .8rem;font-size:1rem;color:var(--blau);text-decoration:none}
 
 /* Logo mit Namen oben links: führt von jeder Seite zur Startseite (Entscheidung 11.11.2026) */
 .logo{display:flex;width:fit-content;align-items:center;gap:.5rem;margin:0 0 .6rem;color:var(--text);text-decoration:none}
 .logo img{display:block;width:2.1rem;height:2.1rem;border-radius:22%}
 .logo span{font-weight:700;font-size:1.05rem}
+/* Link eine Ebene höher: rechts in der Zeile des Logos, spart auf dem Handy eine Zeile
+   (Entscheidung 11.11.2026). Ist er zu lang, bricht er rechtsbündig neben dem Logo um. */
+.kopfleiste{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin:0 0 .6rem}
+.kopfleiste .logo{flex:none;margin:0}
+.zurueck{padding:.3rem 0;font-size:.95rem;line-height:1.15;text-align:right;color:var(--blau);text-decoration:none}
 
 h1{
   margin:1.6rem 0 0;

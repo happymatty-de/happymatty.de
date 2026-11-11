@@ -268,8 +268,11 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   Textfarbe `#1F2933`), als Link auf die Startseite (Klasse `logo`, Bild `/stil/icon-192.png`).
   Das ist der Standard für jede Seite, auch für jede neue: erst der Smiley, rechts daneben der
   Name; „happymatty.de“ steht nirgends mehr mittig oder an anderer Stelle (Patrick, 11.11.2026).
-  Darunter folgt der Link eine Ebene höher (Klasse `zurueck`), aber nie ein zweiter Link auf die
-  Startseite:
+  Rechts in derselben Zeile steht der Link eine Ebene höher (Klasse `zurueck`, Logo und Link
+  zusammen in `<div class="kopfleiste">`), aber nie ein zweiter Link auf die Startseite
+  (Entscheidung 11.11.2026: spart auf dem Handy eine Zeile; vorher stand er unter dem Logo).
+  Ist er zu lang („← Quadratische Funktionen“ auf iPhone SE/mini), bricht er rechtsbündig neben
+  dem Logo um:
   - Startseite: dasselbe Logo an derselben Stelle, aber ohne Link (`<div class="logo">`); die
     Kopfzeile bleibt leer (nur die blaue Linie), weil der Name schon im Logo steht (Entscheidung
     11.11.2026: Das Logo gehört auch auf die Startseite; vorher stand dort nur „happymatty.de“
