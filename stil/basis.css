@@ -77,6 +77,7 @@ h1{
 h1.thema{color:var(--gruen)} /* Themenseite: das Thema als Haupttitel */
 .unterzeile{margin:.3rem 0 0;text-align:center;color:var(--grau)}
 .unterzeile a{color:var(--blau);text-decoration:none}
+.unterzeile.autor{font-family:var(--hand);font-size:1.35rem;color:var(--gruen)} /* Startseite: „von Patrick Saul“, grün wie der Name in der Fußzeile (Entscheidung 11.11.2026) */
 
 /* Thema auf der Startseite: Zeile wie die Kopfzeile, ohne Linie */
 .themenkopf{
