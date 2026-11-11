@@ -18,6 +18,13 @@ while time.time() - start < 600:
             dauer = int(time.time() - start)
             if r['conclusion'] == 'success':
                 print(f'online ({sha[:7]}, nach {dauer} s Wartezeit)'); sys.exit(0)
+            # Manchmal bricht GitHub nur den Nebenauftrag „report-build-status“ ab und meldet dann
+            # „failure“, obwohl die Seite veröffentlicht ist (Anlass 11.11.2026). Maßgeblich ist „deploy“.
+            jobs = subprocess.run(['gh', 'api', f"repos/{repo}/actions/runs/{r['id']}/jobs"],
+                                  capture_output=True, text=True).stdout
+            if any(j.get('name') == 'deploy' and j.get('conclusion') == 'success'
+                   for j in json.loads(jobs or '{}').get('jobs', [])):
+                print(f'online ({sha[:7]}, nach {dauer} s Wartezeit; nur der Statusbericht von GitHub schlug fehl)'); sys.exit(0)
             print(f"Veröffentlichung {r['conclusion']} ({sha[:7]})"); sys.exit(1)
     time.sleep(10)
 print(f'nach 10 Minuten noch nicht online ({sha[:7]})'); sys.exit(2)
