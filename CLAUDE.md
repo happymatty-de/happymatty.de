@@ -260,6 +260,11 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   Teilthema, Kennzeichen und Kacheln der Bildungsgänge und die Karten der Tests.
   Darunter eine dünne Linie in Blau `#0072B2`.
 - Auf der Startseite steht in der Kopfzeile nur „happymatty.de“, in Libertinus Sans fett, schwarz (Textfarbe `#1F2933`).
+- **Logo oben links** (Entscheidung 11.11.2026): Auf jeder Seite außer der Startseite steht ganz
+  oben links das Symbol der Website mit „happymatty.de“ daneben (fett, schwarz), als Link auf die
+  Startseite (Klasse `logo`, Bild `/stil/icon-192.png`). Darunter folgt der Link eine Ebene höher
+  („← Lineare Funktionen“, „← Alle Themen“). Auf der Datenschutzerklärung bleibt die Kopfzeile leer
+  (nur die blaue Linie), weil der Name schon im Logo steht.
 - Auf den Einstiegsseiten der Bildungsgänge steht in der Kopfzeile der volle Name (grau),
   die Überschrift ist das Kürzel („BF2“). Kacheln der Bildungsgänge auf der Startseite in
   Akzentlila: Rand oben, Kürzel fett, Füllung `#EBE5EF`.
@@ -292,6 +297,16 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   Unterstreichung, beim Darüberfahren unterstrichen); es öffnet `/datenschutz/` in einem neuen Tab
   (`target="_blank" rel="noopener"`). Claude setzt es bei jeder Übernahme eines Artifacts ein
   (Entscheidung 11.11.2026).
+- **Zurück-Knopf der interaktiven Seiten** (Entscheidung 11.11.2026): Links vor dem Titel steht ein
+  Pfeil „‹“ mit dem Symbol der Website, beides ein Link (`<a class="heim" id="heim" href="/">`).
+  Ein Tipp darauf führt dorthin zurück, wo man herkam (`history.back()`, wenn die vorige Seite auf
+  happymatty.de lag); bei einem Direktlink führt er zur Startseite. Nicht „Zurück“ beschriften:
+  Unten gibt es meist schon einen Zurück-Knopf für die Schritte. Damit die Kopfleiste auch auf
+  einem iPad im 4:3-Format passt, stehen Versionsnummer und „Datenschutz“ in der kleinen Zeile
+  unter dem Titel, hinter dem Thema („Lineare Funktionen v1.22 · Datenschutz“); eine Formel o. Ä.
+  fällt aus dieser Zeile weg. Claude setzt Knopf, Stil und Skript bei jeder Übernahme eines
+  Artifacts ein, wie in `/lineare-funktionen/mehr-als-nur-steil/interaktiv` (Kommentar
+  „happymatty: Zurück-Knopf“), und prüft die Kopfleiste bei 1024 × 768.
 - **Datenschutzerklärung** (`/datenschutz`): Die Stand-Zeile trägt das Datum der Veröffentlichung.
   Der Abschnitt „Dein Recht auf Widerspruch“ steht abgesetzt im Kasten mit blauem Rand links
   (Klasse `kasten`), weil Art. 21 Abs. 4 DSGVO für diesen Hinweis eine getrennte Form verlangt.

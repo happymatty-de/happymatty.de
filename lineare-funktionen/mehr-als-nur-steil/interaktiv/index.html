@@ -256,12 +256,19 @@ svg .lab.fn{font-style:italic;font-size:28px;font-weight:400}
 svg .ring{fill:none;stroke-width:3px;transform-box:fill-box;transform-origin:center;animation:ring 1.5s ease-out infinite}
 svg .ring1{fill:none;stroke-width:3px;transform-box:fill-box;transform-origin:center;animation:ring 1s ease-out 1}
 @keyframes ring{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+/* happymatty: Zurück-Knopf (Logo) oben links, bei jeder Übernahme einsetzen (CLAUDE.md) */
+header .heim{flex:none;display:flex;align-items:center;gap:calc(.3*var(--u));text-decoration:none}
+header .heim img{width:calc(4.2*var(--u));height:calc(4.2*var(--u));border-radius:22%;display:block}
+header .heim .pfeil{font-family:var(--sans);font-size:calc(4*var(--u));font-weight:700;margin-top:calc(-.5*var(--u));line-height:1;color:var(--blau)}
+.titel small .version{font-size:inherit;color:var(--grau);opacity:.75;margin-left:calc(.7*var(--u))}
+@media (orientation: portrait){.titel small{display:block}} /* Version und Datenschutz auch hochkant zeigen */
 </style>
 </head>
 <body>
 <div class="app">
   <header>
-    <div class="titel">Mehr als nur steil<span class="version">v1.22 · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></span><small>Lineare Funktionen · f(x) = m·x + b</small></div>
+    <a class="heim" id="heim" href="/" aria-label="Zurück zu happymatty.de"><span class="pfeil">‹</span><img src="/stil/icon-192.png" alt=""></a>
+    <div class="titel">Mehr als nur steil<small>Lineare Funktionen<span class="version">v1.22 · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a></span></small></div>
     <nav class="tabs" id="tabs"></nav>
     <button id="voll" class="voll" title="Vollbild"><svg id="vollicon" viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg></button>
   </header>
@@ -872,6 +879,12 @@ window.addEventListener('hashchange',()=>{if(location.hash==='#auto'){if(!auto)s
 (function(){let t=0;const i=TABS.findIndex(tb=>'#'+tb.id===location.hash);if(i>=0)t=i;
   go(t,0,{tick:false});if(location.hash==='#auto')setAuto(true);
   setTimeout(()=>hinweis('Tipp: Aufs Bild tippen = nächster Schritt'),1200);})();
+</script>
+<script>
+/* Logo: zurück dorthin, wo man herkam (innerhalb von happymatty.de); bei Direktlink zur Startseite */
+document.getElementById('heim').addEventListener('click',function(e){
+  try{ if(document.referrer && new URL(document.referrer).origin===location.origin && history.length>1){ e.preventDefault(); history.back(); } }catch(_){}
+});
 </script>
 </body>
 </html>
