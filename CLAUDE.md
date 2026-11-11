@@ -234,12 +234,16 @@ Bildungsgänge:
 Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`, `datenschutz`.
 Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
 
-**Nach jeder Änderung an `basis.css`** und bei jeder neuen Seite (auch bei jeder Übernahme
-eines Artifacts) führt Claude `python3 _werkzeuge/stil_version.py` aus. Das Skript hängt an
+**Nach jeder Änderung an `basis.css` oder am Symbol der Website** und bei jeder neuen Seite
+(auch bei jeder Übernahme eines Artifacts) führt Claude `python3 _werkzeuge/stil_version.py` aus. Das Skript hängt an
 jeden Verweis auf `/stil/basis.css` eine Kennung aus dem Inhalt der Datei an (`?v=…`) und
 ergänzt fehlende Verweise auf das Symbol der Website. Sonst zeigen Browser
 bis zu einigen Stunden die alte Gestaltung aus dem Zwischenspeicher (Anlass 10.11.2026:
 Safari zeigte den alten Abstand am Kennzeichen noch nach mehreren Minuten).
+Die Verweise auf das Symbol im Kopf der Seite (`favicon.ico`, `stil/icon-32.png`,
+`apple-touch-icon.png`) bekommen ebenso eine Kennung aus dem Inhalt der Bilddatei
+(Anlass 11.11.2026: Safari auf dem iPad zeigte nach dem Wechsel zum Smiley weiter das alte „hm“,
+auch nach dem Löschen des Verlaufs).
 Ordner, die mit `_` beginnen, veröffentlicht GitHub Pages nicht.
 
 ## Gestaltung
@@ -262,6 +266,8 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 - **Logo oben links** (Entscheidung 11.11.2026): Auf jeder Seite steht ganz
   oben links das Symbol der Website mit „happymatty.de“ daneben (Libertinus Sans fett, schwarz,
   Textfarbe `#1F2933`), als Link auf die Startseite (Klasse `logo`, Bild `/stil/icon-192.png`).
+  Das ist der Standard für jede Seite, auch für jede neue: erst der Smiley, rechts daneben der
+  Name; „happymatty.de“ steht nirgends mehr mittig oder an anderer Stelle (Patrick, 11.11.2026).
   Darunter folgt der Link eine Ebene höher (Klasse `zurueck`), aber nie ein zweiter Link auf die
   Startseite:
   - Startseite: dasselbe Logo an derselben Stelle, aber ohne Link (`<div class="logo">`); die
