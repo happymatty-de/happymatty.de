@@ -139,8 +139,18 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
   Notentabelle. **Fassungen, die noch eine Klasse schreibt, kommen nie auf die Website.**
 - **Klassenarbeiten** (z. B. BGY) decken meist mehrere Themeneinheiten ab und stehen auf der
   Ebene des Themas (Entscheidung 10.11.2026, erste: Quadratische Funktionen):
-  - Veröffentlicht wird nur die **Probeklassenarbeit**, immer mit Lösung und Notentabelle
-    (wie der Probetest). Die Klassenarbeit selbst kommt nie auf die Website.
+  - Veröffentlicht wird die **Probeklassenarbeit**, immer mit Lösung und Notentabelle
+    (wie der Probetest). Die Klassenarbeit selbst kommt erst auf die Website, wenn Patrick sie
+    nach dem Schreiben freigibt (Entscheidung 12.11.2026, erste: Quadratische Funktionen, geschrieben
+    Freitag 13.11.2026; vorher hieß es „nie“).
+  - Bis dahin steht auf der Themenseite unter der Probeklassenarbeit der Abschnitt „Klassenarbeit“
+    (`themenkopf` mit `id="klassenarbeit"`) mit zwei grauen Karten (`gesperrt`): „Klassenarbeit“
+    und „Lösung zur Klassenarbeit“, Hinweis „Wird am Freitag nach der Klassenarbeit veröffentlicht“.
+    Bei Freigabe werden sie aktiv: Klassenarbeit violett (`test`), Lösung orange (`loesung`), Texte
+    „Zum Üben (PDF, n Seiten)“ bzw. „Zum Vergleichen (PDF, n Seiten)“; die PDFs liegen in
+    `<thema>/klassenarbeit/` (`QF_Klassenarbeit.pdf`, `QF_Klassenarbeit_Loesung.pdf`, PDF-Titel
+    `happymatty/<Thema>/Klassenarbeit` bzw. `…/Lösung Klassenarbeit`). Vor der Freigabe liegt nichts
+    davon im Repository.
   - Eigene Seite wie die Übersicht einer Themeneinheit (Entscheidung 10.11.2026, geändert am
     selben Tag: einheitlich mit den Themeneinheiten): `<thema>/probeklassenarbeit/index.html`,
     Link `/<thema>/probeklassenarbeit`. Kopfzeile Fach · Thema, Überschrift „Probeklassenarbeit“,
