@@ -144,13 +144,20 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
     nach dem Schreiben freigibt (Entscheidung 12.11.2026, erste: Quadratische Funktionen, geschrieben
     Freitag 13.11.2026; vorher hieß es „nie“).
   - Bis dahin steht auf der Themenseite unter der Probeklassenarbeit der Abschnitt „Klassenarbeit“
-    (`themenkopf` mit `id="klassenarbeit"`) mit zwei grauen Karten (`gesperrt`): „Klassenarbeit“
-    und „Lösung zur Klassenarbeit“, Hinweis „Wird am Freitag nach der Klassenarbeit veröffentlicht“.
-    Bei Freigabe werden sie aktiv: Klassenarbeit violett (`test`), Lösung orange (`loesung`), Texte
-    „Zum Üben (PDF, n Seiten)“ bzw. „Zum Vergleichen (PDF, n Seiten)“; die PDFs liegen in
-    `<thema>/klassenarbeit/` (`QF_Klassenarbeit.pdf`, `QF_Klassenarbeit_Loesung.pdf`, PDF-Titel
-    `happymatty/<Thema>/Klassenarbeit` bzw. `…/Lösung Klassenarbeit`). Vor der Freigabe liegt nichts
-    davon im Repository.
+    (`themenkopf` mit `id="klassenarbeit"`) mit drei grauen Karten (`gesperrt`): „Klassenarbeit“,
+    „Lösung zur Klassenarbeit“ und „Notentabelle zur Klassenarbeit“, Hinweis „Wird am Freitag nach
+    der Klassenarbeit veröffentlicht“. Auch die Gesamtpunktzahl bleibt bis dahin verborgen, deshalb
+    geht alles zusammen online (Entscheidung 12.11.2026).
+  - Freigabe: Patrick schreibt nur „Klassenarbeit freigeben“. Die Dateien liegen schon im Backup
+    (`unterrichtsmaterial/mathematik/<thema>/QF_Klassenarbeit_…_v….pdf`, neueste Version); Claude
+    kopiert die drei PDFs ohne `_v…` nach `<thema>/klassenarbeit/` (`QF_Klassenarbeit.pdf`,
+    `QF_Klassenarbeit_Loesung.pdf`, `QF_Klassenarbeit_Notentabelle.pdf`; PDF-Titel
+    `happymatty/<Thema>/Klassenarbeit`, `…/Lösung Klassenarbeit`, `…/Notentabelle Klassenarbeit`),
+    macht die Karten auf der Themenseite aktiv und verlinkt sie direkt auf die PDFs: Klassenarbeit
+    violett (`test`, „Zum Üben (PDF, n Seiten)“), Lösung orange (`loesung`, „Zum Vergleichen (PDF,
+    n Seiten)“), Notentabelle hellblau (`notentabelle`, „Welche Note zu deinen Punkten gehört (PDF,
+    1 Seite)“), und trägt sie in „Veröffentlichtes Material“ ein. Die `.tex` bleibt im Backup.
+    Vor der Freigabe liegt nichts davon in diesem Repository.
   - Eigene Seite wie die Übersicht einer Themeneinheit (Entscheidung 10.11.2026, geändert am
     selben Tag: einheitlich mit den Themeneinheiten): `<thema>/probeklassenarbeit/index.html`,
     Link `/<thema>/probeklassenarbeit`. Kopfzeile Fach · Thema, Überschrift „Probeklassenarbeit“,
@@ -443,6 +450,10 @@ Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2, die Reihe Rech
 Quadratische Funktionen nur im BGY (alle Musterlösungen freigegeben 10.11.2026).
 Rechnen mit Zahlen hieß bis 10.11.2026 „Rationale Zahlen“ (`/rationale-zahlen`); der alte Link war
 nirgends weitergegeben und hat deshalb keine Weiterleitung (Entscheidung 10.11.2026).
+
+Klassenarbeit QF (v1.4: Klassenarbeit 6 Seiten, Lösung 6 Seiten, Notentabelle 1 Seite; nur im
+Backup): geschrieben am 13.11.2026, danach auf „Klassenarbeit freigeben“ veröffentlichen (siehe Tests).
+Eine Nachschreib-Fassung käme nur ins Backup, nie auf die Website.
 
 Noch nicht freigegeben: Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`).
 Kurztest LF1 Fassung 3 und 4 (v17) mit Lösungen: nicht veröffentlichen, im Einsatz ab 11.11.2026.
