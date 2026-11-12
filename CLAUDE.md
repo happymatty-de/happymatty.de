@@ -412,8 +412,8 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 | `/quadratische-funktionen/die-pq-formel/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF3_Die_pq-Formel_Loesung_v12.pdf` | 10.11.2026 |
 | `/quadratische-funktionen/nullstellen-bestimmen-die-funktion/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF4_Nullstellen_bestimmen_die_Funktion_Aufgabenblatt_v26.1.pdf` | 10.11.2026 |
 | `/quadratische-funktionen/nullstellen-bestimmen-die-funktion/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF4_Nullstellen_bestimmen_die_Funktion_Loesung_v26.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/der-korbwurf/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF5_Der_Korbwurf_Aufgabenblatt_v48.2.pdf` | 12.11.2026 |
-| `/quadratische-funktionen/der-korbwurf/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF5_Der_Korbwurf_Loesung_v48.2.pdf` | 12.11.2026 |
+| `/quadratische-funktionen/der-korbwurf/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF5_Der_Korbwurf_Aufgabenblatt_v48.5.pdf` | 12.11.2026 |
+| `/quadratische-funktionen/der-korbwurf/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF5_Der_Korbwurf_Loesung_v48.5.pdf` | 12.11.2026 |
 | `/quadratische-funktionen/probeklassenarbeit/probeklassenarbeit.pdf` | Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_v6.pdf` | 10.11.2026 |
 | `/quadratische-funktionen/probeklassenarbeit/probeklassenarbeit-loesung.pdf` | Lösung zur Probeklassenarbeit, freigegeben | BGY | `QF_Probeklassenarbeit_Loesung_v6.pdf` | 10.11.2026 |
 | `/quadratische-funktionen/probeklassenarbeit/probeklassenarbeit-notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_Notentabelle_v6.pdf` | 10.11.2026 |
