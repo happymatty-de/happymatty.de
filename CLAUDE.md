@@ -33,7 +33,8 @@ Ein Link, der einmal an Schüler verschickt wurde, muss auf Dauer funktionieren,
 auch über mehrere Schuljahre und für mehrere Klassen.
 
 - Eine veröffentlichte Seite wird nie gelöscht oder umbenannt, ohne dass an der alten Adresse
-  eine Weiterleitung auf die neue Adresse bleibt.
+  eine Weiterleitung auf die neue Adresse bleibt. Ausnahme: PDF-Adressen (siehe „Aufbau pro
+  Arbeitsblatt“).
 - Vor jeder Umbenennung oder Verschiebung fragt Claude nach.
 
 ## Ablauf bei Änderungen
@@ -77,8 +78,9 @@ Ausnahme: die Einstiegsseiten der Bildungsgänge (`happymatty.de/bf2` usw., sieh
 Sie sind Übersichten, deren Inhalt sich jedes Jahr ändern darf; die Blätter selbst bleiben
 unter ihrem Thema.
 
-Die Dateinamen der Arbeitsblätter (z. B. `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf`)
-folgen eigenen Regeln und sind davon unabhängig.
+Die Dateinamen der Arbeitsblätter im Material (z. B. `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf`)
+folgen eigenen Regeln. Auf der Website heißen die PDFs wie im Material, nur ohne Versionsnummer
+(Abschnitt „Aufbau pro Arbeitsblatt“).
 
 ## Aufbau pro Arbeitsblatt
 
@@ -88,11 +90,20 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
 |---|---|---|
 | `index.html` | `…/<titel>` | Übersicht des Arbeitsblatts: listet alles auf, was es dazu gibt |
 | `interaktiv/index.html` | `…/<titel>/interaktiv` | interaktive Seite |
-| `aufgabenblatt.pdf` | `…/<titel>/aufgabenblatt.pdf` | Arbeitsblatt |
-| `loesung.pdf` | `…/<titel>/loesung.pdf` | Musterlösung, nur nach Freigabe (siehe unten) |
+| `<Kürzel>_<Titel>_Aufgabenblatt.pdf` | `…/<titel>/<Kürzel>_<Titel>_Aufgabenblatt.pdf` | Arbeitsblatt |
+| `<Kürzel>_<Titel>_Loesung.pdf` | `…/<titel>/<Kürzel>_<Titel>_Loesung.pdf` | Musterlösung, nur nach Freigabe (siehe unten) |
 
+- **PDF-Namen** (Entscheidung 12.11.2026): Der Name ist der aus der Spalte „Quelle“ in
+  „Veröffentlichtes Material“ ohne `_v…`, z. B. `QF5_Der_Korbwurf_Aufgabenblatt.pdf`. Grund: Beim
+  Herunterladen soll die Datei so heißen wie bei Patrick, und das Kürzel (QF5, LF1 …) ordnet die
+  Dateien bei den Schülern.
 - Die Dateinamen tragen keine Version. Eine neue Version ersetzt die alte unter demselben Namen;
-  ältere Stände bleiben im Git-Verlauf.
+  ältere Stände bleiben im Git-Verlauf. Die Versionsnummer steht nur in der Spalte „Quelle“.
+- Die Kennung (Kürzel) im Dateinamen steht damit auch in der Adresse; das ist die Ausnahme von der
+  Regel, dass Adressen keine Kennung tragen. Die Adressen der Seiten bleiben ohne Kennung.
+- Die früheren PDF-Adressen (`aufgabenblatt.pdf`, `loesung.pdf`, `probetest.pdf` usw.) entfielen
+  am 12.11.2026 ersatzlos, ohne Weiterleitung: Patrick hatte sie nirgends weitergegeben. Das gilt
+  nur für PDFs; Seitenadressen bekommen weiter eine Weiterleitung (Grundsatz oben).
 - Die Übersicht zeigt immer drei Karten in dieser Reihenfolge: Aufgabenblatt, Musterlösung,
   Interaktiv. Was es noch nicht gibt, steht als graue Karte ohne Link (Klasse `gesperrt`):
   Musterlösung „Noch nicht freigeschaltet“, Interaktiv „Noch nicht vorhanden“.
@@ -142,17 +153,17 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
   - Startseite, Einstiegsseiten der Bildungsgänge und Beschreibungen der Themeneinheiten nennen
     sie nicht.
 
-| Datei | Inhalt | PDF-Titel |
+| Datei (Name wie in „Quelle“, ohne `_v…`) | Inhalt | PDF-Titel |
 |---|---|---|
-| `probetest.pdf` | Probetest (es gibt nur eine Fassung) | `happymatty/<Titel>/Probetest` |
-| `probetest-loesung.pdf` | Lösung zum Probetest | `happymatty/<Titel>/Lösung Probetest` |
-| `probetest-notentabelle.pdf` | Notentabelle zum Probetest | `happymatty/<Titel>/Notentabelle Probetest` |
-| `kurztest-fassung-<n>.pdf` | freigegebene Fassung des Kurztests | `happymatty/<Titel>/Kurztest Fassung <n>` |
-| `kurztest-fassung-<n>-loesung.pdf` | Lösung dazu | `happymatty/<Titel>/Lösung Kurztest Fassung <n>` |
-| `kurztest-notentabelle.pdf` | Notentabelle zum Kurztest | `happymatty/<Titel>/Notentabelle Kurztest` |
-| `probeklassenarbeit/probeklassenarbeit.pdf` | Probeklassenarbeit (im Ordner des Themas) | `happymatty/<Thema>/Probeklassenarbeit` |
-| `probeklassenarbeit/probeklassenarbeit-loesung.pdf` | Lösung zur Probeklassenarbeit | `happymatty/<Thema>/Lösung Probeklassenarbeit` |
-| `probeklassenarbeit/probeklassenarbeit-notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | `happymatty/<Thema>/Notentabelle Probeklassenarbeit` |
+| `<Kürzel>_Probetest.pdf` | Probetest (es gibt nur eine Fassung) | `happymatty/<Titel>/Probetest` |
+| `<Kürzel>_Probetest_Loesung.pdf` | Lösung zum Probetest | `happymatty/<Titel>/Lösung Probetest` |
+| `<Kürzel>_Probetest_Notentabelle.pdf` | Notentabelle zum Probetest | `happymatty/<Titel>/Notentabelle Probetest` |
+| `<Kürzel>_Kurztest_<n>.pdf` | freigegebene Fassung des Kurztests | `happymatty/<Titel>/Kurztest Fassung <n>` |
+| `<Kürzel>_Kurztest_Loesung_<n>.pdf` | Lösung dazu | `happymatty/<Titel>/Lösung Kurztest Fassung <n>` |
+| `<Kürzel>_Kurztest_Notentabelle.pdf` | Notentabelle zum Kurztest | `happymatty/<Titel>/Notentabelle Kurztest` |
+| `probeklassenarbeit/QF_Probeklassenarbeit.pdf` | Probeklassenarbeit (im Ordner des Themas) | `happymatty/<Thema>/Probeklassenarbeit` |
+| `probeklassenarbeit/QF_Probeklassenarbeit_Loesung.pdf` | Lösung zur Probeklassenarbeit | `happymatty/<Thema>/Lösung Probeklassenarbeit` |
+| `probeklassenarbeit/QF_Probeklassenarbeit_Notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | `happymatty/<Thema>/Notentabelle Probeklassenarbeit` |
 
 - **Notentabellen werden immer mit veröffentlicht**, wenn der zugehörige Test online geht.
   Karte „Notentabelle zum …“, Text „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“.
@@ -163,17 +174,17 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
   „· mit Probetest“ bzw. „· mit Probetest und Kurztest“.
 
 Alte Adresse: `/lineare-funktionen/kurztest-1` war am 10.11.2026 kurz online und leitet auf
-`/lineare-funktionen/wie-steil-ist-das/#probetest` weiter.
+`/lineare-funktionen/wie-steil-ist-das/#probetest` weiter. Die zwei PDFs, die dort lagen (ältere Stände des Probetests), sind am 12.11.2026 entfallen.
 
 ## Lösungen
 
 - Das Repository ist öffentlich: Alles, was darin liegt, kann jeder finden, auch ohne Link.
   Lösungen kommen deshalb erst ins Repository, wenn Patrick sie ausdrücklich freigibt.
   Bis dahin liegen sie nur im privaten Backup `happymatty-de/unterrichtsmaterial`.
-  Ein ausgegrauter Link schützt nicht: Die Adresse `…/loesung.pdf` ist erratbar, und das
+  Ein ausgegrauter Link schützt nicht: Die Adresse `…/<Kürzel>_<Titel>_Loesung.pdf` ist erratbar, und das
   Repository ist öffentlich einsehbar.
 - Freischalten: Patrick schreibt z. B. „Lösung LF2 freigeben“. Claude kopiert die Lösung
-  aus dem Backup als `loesung.pdf`, trägt den PDF-Titel ein, macht die Karte aktiv und orange
+  aus dem Backup (ohne `_v…` im Namen), trägt den PDF-Titel ein, macht die Karte aktiv und orange
   („Zum Vergleichen (PDF, n Seiten)“) und trägt sie in „Veröffentlichtes Material“ ein.
   Kommt später eine neue Version des Blatts, ersetzt Claude eine freigegebene Lösung mit.
 - Ein passwortgeschützter Bereich für Lehrkräfte ist geplant, aber noch nicht gebaut.
@@ -300,8 +311,8 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   | Probeklassenarbeit | `happymatty/Quadratische Funktionen/Probeklassenarbeit` |
   | Übersicht des Arbeitsblatts | `happymatty/Mehr als nur steil` |
   | interaktive Seite | `happymatty/Mehr als nur steil/interaktiv` |
-  | `aufgabenblatt.pdf` | `happymatty/Mehr als nur steil/Aufgabenblatt` |
-  | `loesung.pdf` | `happymatty/Mehr als nur steil/Lösung` |
+  | `…_Aufgabenblatt.pdf` | `happymatty/Mehr als nur steil/Aufgabenblatt` |
+  | `…_Loesung.pdf` | `happymatty/Mehr als nur steil/Lösung` |
   | Tests | siehe Abschnitt „Tests“ |
 
   Bei der interaktiven Seite ersetzt Claude bei jeder Übernahme eines Artifacts den `<title>`.
@@ -372,7 +383,7 @@ Browser oder kommt eine Statistik hinzu, passt Claude die Datenschutzerklärung 
 an oder fragt vorher.
 
 Die PDFs entstehen in Patricks Claude-Projekten; Claude Code sieht diese Dateien nicht.
-Patrick lädt sie hier im Chat oder auf GitHub hoch, Claude legt sie unter dem festen Namen ab.
+Patrick lädt sie hier im Chat oder auf GitHub hoch, Claude legt sie unter ihrem Namen ohne Versionsnummer ab.
 Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im privaten Repository
 `happymatty-de/unterrichtsmaterial`; Ablauf dort in `CLAUDE.md`.
 
@@ -380,43 +391,43 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 
 | Link | Inhalt | Bildungsgang | Quelle | Stand |
 |---|---|---|---|---|
-| `/lineare-funktionen/wie-steil-ist-das/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF1_Wie_steil_ist_das_Aufgabenblatt_v24.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/loesung.pdf` | Musterlösung, freigegeben | BF2 | `LF1_Wie_steil_ist_das_Loesung_v24.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/probetest.pdf` | Probetest | BF2 | `LF1_Probetest_v14.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF2 | `LF1_Probetest_Loesung_v14.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/probetest-notentabelle.pdf` | Notentabelle zum Probetest | BF2 | `LF1_Probetest_Notentabelle_v14.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/kurztest-fassung-1.pdf` | Kurztest Fassung 1, freigegeben | BF2 | `LF1_Kurztest_1_v17.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/kurztest-fassung-1-loesung.pdf` | Lösung Fassung 1, freigegeben | BF2 | `LF1_Kurztest_Loesung_1_v17.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/kurztest-fassung-2.pdf` | Kurztest Fassung 2, freigegeben | BF2 | `LF1_Kurztest_2_v17.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/kurztest-fassung-2-loesung.pdf` | Lösung Fassung 2, freigegeben | BF2 | `LF1_Kurztest_Loesung_2_v17.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/kurztest-notentabelle.pdf` | Notentabelle zum Kurztest | BF2 | `LF1_Kurztest_Notentabelle_v17.pdf` | 10.11.2026 |
-| `/lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/LF1_Wie_steil_ist_das_Aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF1_Wie_steil_ist_das_Aufgabenblatt_v24.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/LF1_Wie_steil_ist_das_Loesung.pdf` | Musterlösung, freigegeben | BF2 | `LF1_Wie_steil_ist_das_Loesung_v24.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/LF1_Probetest.pdf` | Probetest | BF2 | `LF1_Probetest_v14.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/LF1_Probetest_Loesung.pdf` | Lösung zum Probetest, freigegeben | BF2 | `LF1_Probetest_Loesung_v14.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/LF1_Probetest_Notentabelle.pdf` | Notentabelle zum Probetest | BF2 | `LF1_Probetest_Notentabelle_v14.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_1.pdf` | Kurztest Fassung 1, freigegeben | BF2 | `LF1_Kurztest_1_v17.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_Loesung_1.pdf` | Lösung Fassung 1, freigegeben | BF2 | `LF1_Kurztest_Loesung_1_v17.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_2.pdf` | Kurztest Fassung 2, freigegeben | BF2 | `LF1_Kurztest_2_v17.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_Loesung_2.pdf` | Lösung Fassung 2, freigegeben | BF2 | `LF1_Kurztest_Loesung_2_v17.pdf` | 10.11.2026 |
+| `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_Notentabelle.pdf` | Notentabelle zum Kurztest | BF2 | `LF1_Kurztest_Notentabelle_v17.pdf` | 10.11.2026 |
+| `/lineare-funktionen/mehr-als-nur-steil/LF2_Mehr_als_nur_steil_Aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
 | `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
-| `/rechnen-mit-zahlen/ausschuss/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Ausschuss_Aufgabenblatt_v11.1.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/ausschuss/loesung.pdf` | Musterlösung, freigegeben | BF1 | `Ausschuss_Loesung_v11.1.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/zahlenjagd/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Zahlenjagd_Aufgabenblatt_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/zahlenjagd/loesung.pdf` | Musterlösung, freigegeben | BF1 | `Zahlenjagd_Loesung_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/zahlenjagd/probetest.pdf` | Probetest | BF1 | `Zahlenjagd_Probetest_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/zahlenjagd/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Zahlenjagd_Probetest_Loesung_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/zahlenjagd/probetest-notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Zahlenjagd_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Mal_geteilt_und_das_Minus_Aufgabenblatt_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/loesung.pdf` | Musterlösung, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Loesung_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest.pdf` | Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest-loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Loesung_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/probetest-notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/vom-term-zur-parabel/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF1_Vom_Term_zur_Parabel_Aufgabenblatt_v13.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/vom-term-zur-parabel/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF1_Vom_Term_zur_Parabel_Loesung_v13.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/nullstellen-ohne-formel/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF2_Nullstellen_ohne_Formel_Aufgabenblatt_v16.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/nullstellen-ohne-formel/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF2_Nullstellen_ohne_Formel_Loesung_v16.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/die-pq-formel/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF3_Die_pq-Formel_Aufgabenblatt_v12.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/die-pq-formel/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF3_Die_pq-Formel_Loesung_v12.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/nullstellen-bestimmen-die-funktion/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF4_Nullstellen_bestimmen_die_Funktion_Aufgabenblatt_v26.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/nullstellen-bestimmen-die-funktion/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF4_Nullstellen_bestimmen_die_Funktion_Loesung_v26.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/der-korbwurf/aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF5_Der_Korbwurf_Aufgabenblatt_v48.5.pdf` | 12.11.2026 |
-| `/quadratische-funktionen/der-korbwurf/loesung.pdf` | Musterlösung, freigegeben | BGY | `QF5_Der_Korbwurf_Loesung_v48.5.pdf` | 12.11.2026 |
-| `/quadratische-funktionen/probeklassenarbeit/probeklassenarbeit.pdf` | Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_v6.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/probeklassenarbeit/probeklassenarbeit-loesung.pdf` | Lösung zur Probeklassenarbeit, freigegeben | BGY | `QF_Probeklassenarbeit_Loesung_v6.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/probeklassenarbeit/probeklassenarbeit-notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_Notentabelle_v6.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/ausschuss/Ausschuss_Aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Ausschuss_Aufgabenblatt_v11.1.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/ausschuss/Ausschuss_Loesung.pdf` | Musterlösung, freigegeben | BF1 | `Ausschuss_Loesung_v11.1.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/zahlenjagd/Zahlenjagd_Aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Zahlenjagd_Aufgabenblatt_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/zahlenjagd/Zahlenjagd_Loesung.pdf` | Musterlösung, freigegeben | BF1 | `Zahlenjagd_Loesung_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/zahlenjagd/Zahlenjagd_Probetest.pdf` | Probetest | BF1 | `Zahlenjagd_Probetest_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/zahlenjagd/Zahlenjagd_Probetest_Loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Zahlenjagd_Probetest_Loesung_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/zahlenjagd/Zahlenjagd_Probetest_Notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Zahlenjagd_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/Mal_geteilt_und_das_Minus_Aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Mal_geteilt_und_das_Minus_Aufgabenblatt_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/Mal_geteilt_und_das_Minus_Loesung.pdf` | Musterlösung, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Loesung_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/Mal_geteilt_und_das_Minus_Probetest.pdf` | Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/Mal_geteilt_und_das_Minus_Probetest_Loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Loesung_v2.pdf` | 10.11.2026 |
+| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/Mal_geteilt_und_das_Minus_Probetest_Notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/vom-term-zur-parabel/QF1_Vom_Term_zur_Parabel_Aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF1_Vom_Term_zur_Parabel_Aufgabenblatt_v13.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/vom-term-zur-parabel/QF1_Vom_Term_zur_Parabel_Loesung.pdf` | Musterlösung, freigegeben | BGY | `QF1_Vom_Term_zur_Parabel_Loesung_v13.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/nullstellen-ohne-formel/QF2_Nullstellen_ohne_Formel_Aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF2_Nullstellen_ohne_Formel_Aufgabenblatt_v16.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/nullstellen-ohne-formel/QF2_Nullstellen_ohne_Formel_Loesung.pdf` | Musterlösung, freigegeben | BGY | `QF2_Nullstellen_ohne_Formel_Loesung_v16.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/die-pq-formel/QF3_Die_pq-Formel_Aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF3_Die_pq-Formel_Aufgabenblatt_v12.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/die-pq-formel/QF3_Die_pq-Formel_Loesung.pdf` | Musterlösung, freigegeben | BGY | `QF3_Die_pq-Formel_Loesung_v12.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/nullstellen-bestimmen-die-funktion/QF4_Nullstellen_bestimmen_die_Funktion_Aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF4_Nullstellen_bestimmen_die_Funktion_Aufgabenblatt_v26.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/nullstellen-bestimmen-die-funktion/QF4_Nullstellen_bestimmen_die_Funktion_Loesung.pdf` | Musterlösung, freigegeben | BGY | `QF4_Nullstellen_bestimmen_die_Funktion_Loesung_v26.1.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/der-korbwurf/QF5_Der_Korbwurf_Aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF5_Der_Korbwurf_Aufgabenblatt_v48.5.pdf` | 12.11.2026 |
+| `/quadratische-funktionen/der-korbwurf/QF5_Der_Korbwurf_Loesung.pdf` | Musterlösung, freigegeben | BGY | `QF5_Der_Korbwurf_Loesung_v48.5.pdf` | 12.11.2026 |
+| `/quadratische-funktionen/probeklassenarbeit/QF_Probeklassenarbeit.pdf` | Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_v6.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/probeklassenarbeit/QF_Probeklassenarbeit_Loesung.pdf` | Lösung zur Probeklassenarbeit, freigegeben | BGY | `QF_Probeklassenarbeit_Loesung_v6.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/probeklassenarbeit/QF_Probeklassenarbeit_Notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_Notentabelle_v6.pdf` | 10.11.2026 |
 
 Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2, die Reihe Rechnen mit Zahlen nur in der BF1, die Reihe
 Quadratische Funktionen nur im BGY (alle Musterlösungen freigegeben 10.11.2026).

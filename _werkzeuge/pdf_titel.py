@@ -4,7 +4,7 @@ Dateinamens zeigen. Inhalt und Aussehen bleiben unverändert.
 
 Braucht pikepdf (einmal je Sitzung: pip install pikepdf).
 Aufruf:  python3 _werkzeuge/pdf_titel.py <datei.pdf> "<Titel>"
-Beispiel: python3 _werkzeuge/pdf_titel.py lineare-funktionen/mehr-als-nur-steil/aufgabenblatt.pdf "happymatty/Mehr als nur steil/Arbeitsblatt"
+Beispiel: python3 _werkzeuge/pdf_titel.py lineare-funktionen/mehr-als-nur-steil/LF2_Mehr_als_nur_steil_Aufgabenblatt.pdf "happymatty/Mehr als nur steil/Arbeitsblatt"
 """
 import sys, pikepdf
 
