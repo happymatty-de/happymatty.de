@@ -143,17 +143,24 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
     (wie der Probetest). Die Klassenarbeit selbst kommt erst auf die Website, wenn Patrick sie
     nach dem Schreiben freigibt (Entscheidung 12.11.2026, erste: Quadratische Funktionen, geschrieben
     Freitag 13.11.2026; vorher hieß es „nie“).
-  - Bis dahin steht auf der Themenseite unter der Probeklassenarbeit der Abschnitt „Klassenarbeit“
-    (`themenkopf` mit `id="klassenarbeit"`) mit drei grauen Karten (`gesperrt`): „Klassenarbeit“,
-    „Lösung zur Klassenarbeit“ und „Notentabelle zur Klassenarbeit“, Hinweis „Wird am Freitag nach
-    der Klassenarbeit veröffentlicht“. Auch die Gesamtpunktzahl bleibt bis dahin verborgen, deshalb
-    geht alles zusammen online (Entscheidung 12.11.2026).
+  - **Grundsatz** (Patrick, 12.11.2026): Themenseiten verlinken nie direkt auf PDFs. Jede Karte dort
+    führt eine Ebene tiefer auf eine Übersicht; erst dort liegen die einzelnen Dokumente.
+  - Die Klassenarbeit ist aufgebaut wie die Probeklassenarbeit: Auf der Themenseite unter der
+    Probeklassenarbeit der Abschnitt „Klassenarbeit“ (`themenkopf` mit `id="klassenarbeit"`) mit
+    **einer** violetten Karte (`test`), von Anfang an aktiv: „Klassenarbeit“ mit Kennzeichen – „Die
+    Klassenarbeit zur ganzen Reihe · mit Lösung und Notentabelle“, Link `/<thema>/klassenarbeit`.
+    Diese Seite (`<thema>/klassenarbeit/index.html`, Titel `happymatty/<Thema>/Klassenarbeit`,
+    Überschrift „Klassenarbeit“, Kennzeichen, zurück zum Thema) zeigt drei Karten: „Klassenarbeit“,
+    „Lösung zur Klassenarbeit“, „Notentabelle zur Klassenarbeit“. Bis zur Freigabe sind sie grau
+    (`gesperrt`) mit dem Hinweis „Wird am Freitag nach der Klassenarbeit veröffentlicht“. Auch die
+    Gesamtpunktzahl bleibt bis dahin verborgen, deshalb geht alles zusammen online
+    (Entscheidung 12.11.2026).
   - Freigabe: Patrick schreibt nur „Klassenarbeit freigeben“. Die Dateien liegen schon im Backup
     (`unterrichtsmaterial/mathematik/<thema>/QF_Klassenarbeit_…_v….pdf`, neueste Version); Claude
     kopiert die drei PDFs ohne `_v…` nach `<thema>/klassenarbeit/` (`QF_Klassenarbeit.pdf`,
     `QF_Klassenarbeit_Loesung.pdf`, `QF_Klassenarbeit_Notentabelle.pdf`; PDF-Titel
     `happymatty/<Thema>/Klassenarbeit`, `…/Lösung Klassenarbeit`, `…/Notentabelle Klassenarbeit`),
-    macht die Karten auf der Themenseite aktiv und verlinkt sie direkt auf die PDFs: Klassenarbeit
+    macht die drei Karten auf der Seite `/<thema>/klassenarbeit` aktiv: Klassenarbeit
     violett (`test`, „Zum Üben (PDF, n Seiten)“), Lösung orange (`loesung`, „Zum Vergleichen (PDF,
     n Seiten)“), Notentabelle hellblau (`notentabelle`, „Welche Note zu deinen Punkten gehört (PDF,
     1 Seite)“), und trägt sie in „Veröffentlichtes Material“ ein. Die `.tex` bleibt im Backup.
@@ -309,7 +316,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   - Einstiegsseite eines Bildungsgangs (`/bf1` …): nur das Logo, kein Zurück-Link.
   - Themenseite: zurück zu ihrem Bildungsgang („← BF1“ auf `/bf1/`), nicht zur Startseite
     (Entscheidung 11.11.2026). Gehört ein Thema zu mehreren Bildungsgängen, fragt Claude nach.
-  - Übersicht einer Themeneinheit, Probeklassenarbeit: zurück zum Thema („← Lineare Funktionen“).
+  - Übersicht einer Themeneinheit, Probeklassenarbeit, Klassenarbeit: zurück zum Thema („← Lineare Funktionen“).
   - Datenschutzerklärung: nur das Logo; die Kopfzeile bleibt leer (nur die blaue Linie), weil der
     Name schon im Logo steht.
 - Auf den Einstiegsseiten der Bildungsgänge steht in der Kopfzeile der volle Name (grau),
@@ -326,6 +333,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   | Bildungsgang | `happymatty/bf2` |
   | Thema | `happymatty/Lineare Funktionen` |
   | Probeklassenarbeit | `happymatty/Quadratische Funktionen/Probeklassenarbeit` |
+  | Klassenarbeit | `happymatty/Quadratische Funktionen/Klassenarbeit` |
   | Übersicht des Arbeitsblatts | `happymatty/Mehr als nur steil` |
   | interaktive Seite | `happymatty/Mehr als nur steil/interaktiv` |
   | `…_Aufgabenblatt.pdf` | `happymatty/Mehr als nur steil/Aufgabenblatt` |
