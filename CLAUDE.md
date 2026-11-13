@@ -453,14 +453,16 @@ Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im pri
 | `/quadratische-funktionen/probeklassenarbeit/QF_Probeklassenarbeit.pdf` | Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_v6.pdf` | 10.11.2026 |
 | `/quadratische-funktionen/probeklassenarbeit/QF_Probeklassenarbeit_Loesung.pdf` | Lösung zur Probeklassenarbeit, freigegeben | BGY | `QF_Probeklassenarbeit_Loesung_v6.pdf` | 10.11.2026 |
 | `/quadratische-funktionen/probeklassenarbeit/QF_Probeklassenarbeit_Notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_Notentabelle_v6.pdf` | 10.11.2026 |
+| `/quadratische-funktionen/klassenarbeit/QF_Klassenarbeit.pdf` | Klassenarbeit, freigegeben nach dem Schreiben | BGY | `QF_Klassenarbeit_v1.4.pdf` | 13.11.2026 |
+| `/quadratische-funktionen/klassenarbeit/QF_Klassenarbeit_Loesung.pdf` | Lösung zur Klassenarbeit, freigegeben | BGY | `QF_Klassenarbeit_Loesung_v1.4.pdf` | 13.11.2026 |
+| `/quadratische-funktionen/klassenarbeit/QF_Klassenarbeit_Notentabelle.pdf` | Notentabelle zur Klassenarbeit | BGY | `QF_Klassenarbeit_Notentabelle_v1.4.pdf` | 13.11.2026 |
 
 Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2, die Reihe Rechnen mit Zahlen nur in der BF1, die Reihe
 Quadratische Funktionen nur im BGY (alle Musterlösungen freigegeben 10.11.2026).
 Rechnen mit Zahlen hieß bis 10.11.2026 „Rationale Zahlen“ (`/rationale-zahlen`); der alte Link war
 nirgends weitergegeben und hat deshalb keine Weiterleitung (Entscheidung 10.11.2026).
 
-Klassenarbeit QF (v1.4: Klassenarbeit 6 Seiten, Lösung 6 Seiten, Notentabelle 1 Seite; nur im
-Backup): geschrieben am 13.11.2026, danach auf „Klassenarbeit freigeben“ veröffentlichen (siehe Tests).
+Klassenarbeit QF (v1.4): geschrieben und freigegeben am 13.11.2026, mit Lösung und Notentabelle online.
 Eine Nachschreib-Fassung käme nur ins Backup, nie auf die Website.
 
 Noch nicht freigegeben: Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`).
