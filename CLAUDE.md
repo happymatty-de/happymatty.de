@@ -20,14 +20,15 @@ gemeldet (Entscheidung 10.11.2026: Viel Text lässt Wichtiges untergehen).
 
 In dieses Repository schreiben zwei Arten von Chats (Entscheidung 14.11.2026):
 
-- **Projektchats aus claude.ai** (Patricks Claude-Projekte, in denen das Material entsteht;
-  Erprobung ab der nächsten Themeneinheit). Sie halten sich an diese CLAUDE.md und schreiben
-  **nur in den Ordner ihrer Themeneinheit**: die PDFs, `interaktiv/` und die Beschreibungsdatei
-  `_einheit.json`. Dann lassen sie `python3 _werkzeuge/bauen.py` laufen und laden hoch; die
-  Seiten, die das Skript dabei außerhalb ihres Ordners neu baut (Themenseite, Startseite …),
-  gehören mit dazu. Von Hand ändern sie außerhalb ihres Ordners nichts. Quelldateien und alle
-  PDFs sichern sie selbst im privaten Backup `happymatty-de/unterrichtsmaterial` (Regeln dort in
-  der `CLAUDE.md`).
+- **Projektchats aus claude.ai** (Patricks Claude-Projekte, in denen das Material entsteht; in
+  Erprobung: erster Lauf am 14.11.2026 mit neuen Versionen von LF1 und LF2, ohne Fehler; eine ganz
+  neue Themeneinheit hat noch kein Projektchat angelegt). Sie halten sich an diese CLAUDE.md und
+  schreiben **nur in den Ordner ihrer Themeneinheit**: die PDFs, `interaktiv/` und die
+  Beschreibungsdatei `_einheit.json`. Dann lassen sie `python3 _werkzeuge/bauen.py` laufen und
+  laden hoch; die Seiten, die das Skript dabei außerhalb ihres Ordners neu baut (Themenseite,
+  Startseite …), gehören mit dazu. Von Hand ändern sie außerhalb ihres Ordners nichts.
+  Quelldateien und alle PDFs sichern sie selbst im privaten Backup
+  `happymatty-de/unterrichtsmaterial` (Regeln dort in der `CLAUDE.md`).
 - **Claude Code** (lokal bei Patrick) darf alles. Nur Claude Code ändert: das Skript und alles in
   `_werkzeuge/`, `stil/`, die Seitentypen (Aufbau der gebauten Seiten), neue Bereiche, neue
   Themen und Bildungsgänge, die Beschreibungsdateien der Themen (`_thema.json`, also auch
@@ -77,9 +78,15 @@ auch über mehrere Schuljahre und für mehrere Klassen.
 - Online ist, was auf `main` liegt; GitHub Pages veröffentlicht es etwa eine Minute nach dem Hochladen.
 - Claude speichert Änderungen direkt auf `main` und lädt sie hoch. Kein Pull Request, kein Merge
   durch Patrick (Entscheidung 10.11.2026: Jeder Klick kostet Aufmerksamkeit).
+- Commits tragen die Identität `happymatty-de <353878744+happymatty-de@users.noreply.github.com>`
+  (im Repository mit `git config user.name` und `git config user.email` setzen), nie eine private
+  Adresse: Das Repository ist öffentlich, jede Adresse im Verlauf bleibt dort sichtbar.
 - Vor der Arbeit `git pull`, vor dem Hochladen `git pull --rebase`. Gibt es dabei Konflikte in
   gebauten Seiten (`index.html`), nimmt Claude den Stand von `main` und lässt das Skript neu
   laufen; die Beschreibungsdateien sind maßgeblich, nicht die Seiten.
+- `git commit`, `git pull --rebase` und `git push` als einzelne Befehle ausführen, nicht mit `&&`
+  verkettet (Anlass 14.11.2026: In einer Cloud-Sitzung lehnte die Rechteprüfung die Kette ab,
+  einzeln gingen sie durch).
 - Vor dem Hochladen läuft `python3 _werkzeuge/bauen.py` ohne Fehler. Das Skript prüft, dass kein
   `.tex` und kein PDF im Repository liegt, das nicht als freigegeben eingetragen ist (Abschnitt
   „Beschreibungsdateien und Bauskript“). Claude Code sieht sich zusätzlich geänderte Seitentypen
@@ -121,8 +128,8 @@ Es bricht ab, ohne etwas zu schreiben, wenn
 - ein als freigegeben eingetragenes PDF oder eine freigegebene interaktive Seite fehlt, oder ein
   Ordner `interaktiv/` liegt, der nicht freigegeben ist,
 - eine Beschreibungsdatei kein gültiges JSON ist, ein Pflichteintrag fehlt oder ein Eintrag
-  unbekannt ist (Tippfehler), ein Datum nicht wie `14.11.2026` aussieht oder eine Quelle keine
-  Versionsnummer trägt,
+  unbekannt ist (Tippfehler), ein Datum nicht wie `14.11.2026` aussieht, die Quelle eines PDFs
+  keine Versionsnummer trägt oder die Quelle einer freigegebenen interaktiven Seite keine Version,
 - ein Bildungsgang oder Bereich genannt ist, den es nicht gibt oder der noch keine Seite hat,
 - ein Probetest, eine Probeklassenarbeit oder Klassenarbeit nicht zusammen mit Lösung und
   Notentabelle freigegeben ist, eine Kurztest-Fassung nicht zusammen mit ihrer Lösung, oder
@@ -196,6 +203,12 @@ Kennzeichen BF1 und „Addition und Subtraktion – Zahlenkarten, Wege und Zahle
 Test“, und die Zählung auf Startseite und `/bf1`. Der Kurztest erscheint nirgends, weil
 keine Fassung freigegeben ist.
 
+**Dateinamen der Kurztests:** Die Reihe Rechnen mit Zahlen (BF1) heißt noch nach altem Muster,
+wie im Beispiel (`Zahlenjagd_Kurztest_F1_v2.pdf`, `Zahlenjagd_Kurztest_F1_Loesung_v2.pdf`).
+Alles Neue heißt nach Skill `mathe` (Dateinamen), wie LF1: `LF1_Kurztest_1_v19.1.pdf`,
+`LF1_Kurztest_Loesung_1_v19.1.pdf`, `LF1_Kurztest_Notentabelle_v19.1.pdf`; auf der Website ohne
+`_v…` (Tabelle unter „Tests“).
+
 | Eintrag | Inhalt |
 |---|---|
 | `titel` | Titel wie auf dem Blatt: Überschrift der Übersicht, Eintrag auf der Themenseite, Seitentitel, PDF-Titel |
@@ -215,9 +228,9 @@ Jedes **Dokument** hat diese Einträge:
 |---|---|
 | `vorhanden` | `true`, wenn es die Datei gibt (bei Patrick, im Backup oder als Artifact) |
 | `freigegeben` | `true`, wenn sie auf die Website darf. Nur dann liegt sie in diesem Repository |
-| `quelle` | Pflicht, wenn vorhanden: der Dateiname mit Versionsnummer wie im Backup, z. B. `Zahlenjagd_Probetest_v2.pdf`. Auf der Website heißt die Datei genauso ohne `_v…` (`Zahlenjagd_Probetest.pdf`) und liegt im Ordner der Einheit. Bei `interaktiv` der Name des Artifacts mit Version, z. B. `Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ v1.22` |
+| `quelle` | Pflicht, wenn vorhanden: der Dateiname mit Versionsnummer wie im Backup, z. B. `Zahlenjagd_Probetest_v2.pdf`. Auf der Website heißt die Datei genauso ohne `_v…` (`Zahlenjagd_Probetest.pdf`) und liegt im Ordner der Einheit. Bei `interaktiv` der Name des Artifacts mit Version, z. B. `Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ v1.22`; die Version ist Pflicht, sobald die Seite freigegeben ist, vorher genügt der Name |
 | `stand` | Datum `TT.MM.JJJJ`; Pflicht, wenn freigegeben: der Tag, an dem diese Version online ging. Sonst, wenn bekannt, der Tag der Sicherung |
-| `hinweis` | freiwillig: kurze Notiz, die nirgends auf der Website erscheint, z. B. „im Einsatz ab 11.11.2026, nicht veröffentlichen“ |
+| `hinweis` | freiwillig: kurze Notiz, die nirgends auf der Website erscheint, z. B. „im Einsatz ab 11.11.2026, nicht veröffentlichen“. Stimmt ein Hinweis nicht mehr („folgt“, obwohl die Datei da ist; „im Einsatz“, obwohl geschrieben), passt ihn der Chat beim Nachführen an; was er verbietet („nicht veröffentlichen“), bleibt |
 | `text` | nur bei `interaktiv`, Pflicht, wenn freigegeben: die Zeile unter dem Kartentitel, z. B. „Lineare Funktionen erkunden, zeichnen und ablesen – mit Spezialfällen“ |
 
 Was es nicht gibt, steht als `{ "vorhanden": false, "freigegeben": false }`.
@@ -291,6 +304,10 @@ sie vorhanden ist, bis zur Freigabe mit grauen Karten (siehe „Tests“).
 **Neue Version eines Dokuments:** PDF unter demselben Namen ersetzen, in `_einheit.json` `quelle`
 und `stand` anpassen, Skript laufen lassen. Ist die Lösung freigegeben, kommt sie mit.
 **Freigabe:** PDF hineinlegen, `"freigegeben": true` und `stand` setzen, Skript laufen lassen.
+**Freigabe zurücknehmen** (nur auf Patricks Wort): PDFs löschen, `"freigegeben": false`, im
+`hinweis` Datum und Grund („bis 14.11.2026 online; nicht mehr veröffentlichen, der Probetest
+reicht“), Skript laufen lassen. Die PDF-Adressen entfallen ohne Weiterleitung; sie kommen unter
+„Frühere Adressen und Namen“ (Abschnitt „Was veröffentlicht ist“).
 **Weiterer Bildungsgang:** in `bildungsgaenge` ergänzen, Skript laufen lassen. Den ersten
 zweiten Bildungsgang überhaupt trägt Claude Code ein (siehe „Startseite, Themenseiten und
 Bildungsgänge“).
@@ -673,7 +690,7 @@ Schritt an oder fragt vorher; ein Projektchat legt eine solche Seite nicht selbs
 
 Die PDFs entstehen in Patricks Claude-Projekten. Von dort kommen sie auf zwei Wegen:
 
-- **Direkt aus dem Projektchat** (Erprobung ab der nächsten Themeneinheit): Der Projektchat legt
+- **Direkt aus dem Projektchat** (in Erprobung, erster Lauf 14.11.2026): Der Projektchat legt
   die freigegebenen PDFs, `interaktiv/` und `_einheit.json` in den Ordner seiner Themeneinheit,
   lässt das Skript laufen und lädt hoch (siehe „Wer schreibt was“ und „Neue Themeneinheit
   anlegen“). Alle Dateien mit Versionsnummer, auch `.tex` und Lösungen, sichert er selbst im
@@ -695,3 +712,8 @@ Frühere Adressen und Namen:
 - Rechnen mit Zahlen hieß bis 10.11.2026 „Rationale Zahlen“ (`/rationale-zahlen`); der alte Link
   war nirgends weitergegeben und hat deshalb keine Weiterleitung (Entscheidung 10.11.2026).
 - `/lineare-funktionen/kurztest-1`: siehe Ende des Abschnitts „Tests“.
+- `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_1.pdf`, `LF1_Kurztest_2.pdf`,
+  `LF1_Kurztest_Loesung_1.pdf`, `LF1_Kurztest_Loesung_2.pdf`, `LF1_Kurztest_Notentabelle.pdf`:
+  online vom 12. bis 14.11.2026 (Fassungen 1 und 2 als Ausnahme), entfielen ohne Weiterleitung
+  (Entscheidung 14.11.2026: Der Probetest reicht). Mit ihnen entfiel der Abschnitt „Kurztest“ auf
+  der Übersicht von LF1.

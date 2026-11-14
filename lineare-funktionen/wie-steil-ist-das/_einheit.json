@@ -28,13 +28,13 @@
       },
       {
         "fassung": 3,
-        "test": { "vorhanden": true, "freigegeben": false, "quelle": "LF1_Kurztest_3_v19.1.pdf", "stand": "14.11.2026", "hinweis": "im Einsatz ab 11.11.2026, nicht veröffentlichen" },
-        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "LF1_Kurztest_Loesung_3_v19.1.pdf", "stand": "14.11.2026", "hinweis": "im Einsatz ab 11.11.2026, nicht veröffentlichen" }
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "LF1_Kurztest_3_v19.1.pdf", "stand": "14.11.2026", "hinweis": "geschrieben ab 11.11.2026; nicht veröffentlichen" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "LF1_Kurztest_Loesung_3_v19.1.pdf", "stand": "14.11.2026", "hinweis": "geschrieben ab 11.11.2026; nicht veröffentlichen" }
       },
       {
         "fassung": 4,
-        "test": { "vorhanden": true, "freigegeben": false, "quelle": "LF1_Kurztest_4_v19.1.pdf", "stand": "14.11.2026", "hinweis": "im Einsatz ab 11.11.2026, nicht veröffentlichen" },
-        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "LF1_Kurztest_Loesung_4_v19.1.pdf", "stand": "14.11.2026", "hinweis": "im Einsatz ab 11.11.2026, nicht veröffentlichen" }
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "LF1_Kurztest_4_v19.1.pdf", "stand": "14.11.2026", "hinweis": "geschrieben ab 11.11.2026; nicht veröffentlichen" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "LF1_Kurztest_Loesung_4_v19.1.pdf", "stand": "14.11.2026", "hinweis": "geschrieben ab 11.11.2026; nicht veröffentlichen" }
       },
       {
         "fassung": 5,

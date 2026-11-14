@@ -111,6 +111,7 @@ def esc(text):
 
 DATUM = re.compile(r'^\d{2}\.\d{2}\.\d{4}$')
 QUELLE_PDF = re.compile(r'^[^/\\\s]+_v\d+(?:\.\d+)*\.pdf$')
+VERSION = re.compile(r'(?<!\w)v\d+(?:\.\d+)*\b')  # interaktiv: „… v1.22“
 KENNUNG = re.compile(r'^[A-Z]+\d*$')
 ORDNERNAME = re.compile(r'^[a-z0-9]+(?:-[a-z0-9]+)*$')
 
@@ -194,6 +195,9 @@ class Dok:
         if self.quelle and not interaktiv and not QUELLE_PDF.match(self.quelle):
             melde(ort, f'„quelle“ muss der Dateiname mit Versionsnummer sein, z. B. '
                        f'„LF1_Probetest_v14.pdf“, nicht „{self.quelle}“')
+        if self.quelle and interaktiv and self.freigegeben and not VERSION.search(self.quelle):
+            melde(ort, f'„quelle“ einer freigegebenen interaktiven Seite braucht die Version des '
+                       f'Artifacts, z. B. „Artifact „Titel“ v1.22“, nicht „{self.quelle}“')
         if self.freigegeben and not self.stand:
             melde(ort, 'freigegeben, aber „stand“ (Datum der Veröffentlichung) fehlt')
         if self.stand:
