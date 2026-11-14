@@ -1,0 +1,12 @@
+{
+  "titel": "Nullstellen ohne Formel",
+  "kennung": "QF2",
+  "teilthema": "Nullstellen, Hoch- & Tiefpunkt",
+  "beschreibung": "Wurzel ziehen, Nullprodukt, Ausklammern; Hühnergehege und Anhalteweg",
+  "bildungsgaenge": ["BGY"],
+  "bereiche": [],
+  "platz": 2,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "QF2_Nullstellen_ohne_Formel_Aufgabenblatt_v16.1.pdf", "stand": "10.11.2026" },
+  "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF2_Nullstellen_ohne_Formel_Loesung_v16.1.pdf", "stand": "10.11.2026" },
+  "interaktiv": { "vorhanden": false, "freigegeben": false }
+}

@@ -1,0 +1,12 @@
+{
+  "titel": "Nullstellen bestimmen die Funktion",
+  "kennung": "QF4",
+  "teilthema": "Linearfaktoren & Vielfachheit",
+  "beschreibung": "Linearfaktorform, schneiden oder berühren; Foodtruck; Parabel und Gerade",
+  "bildungsgaenge": ["BGY"],
+  "bereiche": [],
+  "platz": 4,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "QF4_Nullstellen_bestimmen_die_Funktion_Aufgabenblatt_v26.1.pdf", "stand": "10.11.2026" },
+  "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF4_Nullstellen_bestimmen_die_Funktion_Loesung_v26.1.pdf", "stand": "10.11.2026" },
+  "interaktiv": { "vorhanden": false, "freigegeben": false }
+}

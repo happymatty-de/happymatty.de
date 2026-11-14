@@ -1,0 +1,37 @@
+{
+  "titel": "Ausschuss?",
+  "kennung": null,
+  "teilthema": "Vergleichen und Ordnen",
+  "beschreibung": "positive und negative Zahlen an Abweichungen vom Sollmaß, Abstand von 0 und Zahlengerade",
+  "bildungsgaenge": ["BF1"],
+  "bereiche": [],
+  "platz": 1,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "Ausschuss_Aufgabenblatt_v11.1.pdf", "stand": "10.11.2026" },
+  "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "Ausschuss_Loesung_v11.1.pdf", "stand": "10.11.2026" },
+  "interaktiv": { "vorhanden": false, "freigegeben": false },
+  "kurztest": {
+    "fassungen": [
+      {
+        "fassung": 1,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Ausschuss_Kurztest_F1_v6.1.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Ausschuss_Kurztest_F1_Loesung_v6.1.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 2,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Ausschuss_Kurztest_F2_v6.1.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Ausschuss_Kurztest_F2_Loesung_v6.1.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 3,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Ausschuss_Kurztest_F3_v6.1.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Ausschuss_Kurztest_F3_Loesung_v6.1.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 4,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Ausschuss_Kurztest_F4_v6.1.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Ausschuss_Kurztest_F4_Loesung_v6.1.pdf", "stand": "10.11.2026" }
+      }
+    ],
+    "notentabelle": { "vorhanden": true, "freigegeben": false, "quelle": "Ausschuss_Kurztest_Notentabelle_v6.1.pdf", "stand": "10.11.2026" }
+  }
+}

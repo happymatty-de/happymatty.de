@@ -1,0 +1,12 @@
+{
+  "titel": "Der Korbwurf",
+  "kennung": "QF5",
+  "teilthema": "Modellierung",
+  "beschreibung": "Term aus drei Punkten, Modell prüfen und deuten",
+  "bildungsgaenge": ["BGY"],
+  "bereiche": [],
+  "platz": 5,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "QF5_Der_Korbwurf_Aufgabenblatt_v48.5.pdf", "stand": "12.11.2026" },
+  "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF5_Der_Korbwurf_Loesung_v48.5.pdf", "stand": "12.11.2026" },
+  "interaktiv": { "vorhanden": false, "freigegeben": false }
+}

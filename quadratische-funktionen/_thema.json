@@ -1,0 +1,26 @@
+{
+  "titel": "Quadratische Funktionen",
+  "kennung": "QF",
+  "fach": "Mathematik",
+  "unterzeile": null,
+  "bildungsgang": "BGY",
+  "reihenfolge": 1,
+  "probeklassenarbeit": {
+    "bildungsgaenge": ["BGY"],
+    "test": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Probeklassenarbeit_v6.pdf", "stand": "10.11.2026" },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Probeklassenarbeit_Loesung_v6.pdf", "stand": "10.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Probeklassenarbeit_Notentabelle_v6.pdf", "stand": "10.11.2026" }
+  },
+  "klassenarbeit": {
+    "bildungsgaenge": ["BGY"],
+    "test": {
+      "vorhanden": true,
+      "freigegeben": true,
+      "quelle": "QF_Klassenarbeit_v1.4.pdf",
+      "stand": "13.11.2026",
+      "hinweis": "geschrieben am 13.11.2026; eine Nachschreib-Fassung käme nur ins Backup"
+    },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Klassenarbeit_Loesung_v1.4.pdf", "stand": "13.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Klassenarbeit_Notentabelle_v1.4.pdf", "stand": "13.11.2026" }
+  }
+}

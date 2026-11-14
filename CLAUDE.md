@@ -4,12 +4,40 @@ Dieses Repository ist die Website `happymatty.de`. Sie wird über GitHub Pages a
 Hier liegen Arbeitsblätter (PDF) und interaktive Seiten für den Unterricht.
 Sie sind ohne Login per Link erreichbar und hängen nicht an Claude.
 
+Die Übersichten (Startseite, Einstiegsseiten der Bildungsgänge, Themenseiten, Übersicht jeder
+Themeneinheit, Probeklassenarbeit, Klassenarbeit) schreibt niemand von Hand: Das Skript
+`_werkzeuge/bauen.py` baut sie aus den Beschreibungsdateien (Entscheidung 14.11.2026).
+Wie das geht: Abschnitt „Beschreibungsdateien und Bauskript“.
+
 ## Rückmeldung im Chat
 
 Nach erledigter Arbeit nur eine kurze Statusmeldung („Alles umgesetzt.“). Details nur, wenn etwas
 nicht funktioniert hat, wenn Claude deutlich vom Auftrag abgewichen ist oder wenn Patrick etwas
 entscheiden oder tun muss. Kleine Verbesserungen, die Claude selbst vornimmt, werden nicht
 gemeldet (Entscheidung 10.11.2026: Viel Text lässt Wichtiges untergehen).
+
+## Wer schreibt was
+
+In dieses Repository schreiben zwei Arten von Chats (Entscheidung 14.11.2026):
+
+- **Projektchats aus claude.ai** (Patricks Claude-Projekte, in denen das Material entsteht;
+  Erprobung ab der nächsten Themeneinheit). Sie halten sich an diese CLAUDE.md und schreiben
+  **nur in den Ordner ihrer Themeneinheit**: die PDFs, `interaktiv/` und die Beschreibungsdatei
+  `_einheit.json`. Dann lassen sie `python3 _werkzeuge/bauen.py` laufen und laden hoch; die
+  Seiten, die das Skript dabei außerhalb ihres Ordners neu baut (Themenseite, Startseite …),
+  gehören mit dazu. Von Hand ändern sie außerhalb ihres Ordners nichts. Quelldateien und alle
+  PDFs sichern sie selbst im privaten Backup `happymatty-de/unterrichtsmaterial` (Regeln dort in
+  der `CLAUDE.md`).
+- **Claude Code** (lokal bei Patrick) darf alles. Nur Claude Code ändert: das Skript und alles in
+  `_werkzeuge/`, `stil/`, die Seitentypen (Aufbau der gebauten Seiten), neue Bereiche, neue
+  Themen und Bildungsgänge, die Beschreibungsdateien der Themen (`_thema.json`, also auch
+  Probeklassenarbeit und Klassenarbeit), Datenschutzerklärung, Impressum und diese CLAUDE.md.
+- Braucht ein Projektchat etwas davon (ein neues Thema, einen neuen Bildungsgang oder Bereich,
+  eine andere Gestaltung), hält er an und sagt Patrick, dass Claude Code das übernimmt.
+- Der Weg über den Eingang bleibt daneben gültig: Patrick legt eine ZIP-Datei oder Dateien in den
+  Ordner `Eingang` neben diesem Repository (`Schreibtisch/Claude/Eingang`) oder hängt sie in einer
+  Sitzung an, und Claude Code übernimmt alles (Ablauf in der `CLAUDE.md` von
+  `unterrichtsmaterial`).
 
 ## Begriffe
 
@@ -26,6 +54,11 @@ gemeldet (Entscheidung 10.11.2026: Viel Text lässt Wichtiges untergehen).
   und Dateinamen. Sagt Patrick „Arbeitsblatt“ oder „Übungsblatt“, meint er dasselbe; Claude
   schreibt trotzdem „Aufgabenblatt“ (Entscheidung 10.11.2026). „Arbeitsblatt“ in diesen Regeln
   meint die Themeneinheit und kommt auf öffentlichen Seiten nicht vor.
+- **Beschreibungsdatei**: `_einheit.json` im Ordner jeder Themeneinheit, `_thema.json` im Ordner
+  jedes Themas. Sie sind die einzige Stelle, an der steht, was es gibt und was veröffentlicht ist.
+- **Bereich**: eine weitere Zusammenstellung neben Themen und Bildungsgängen, vorgesehen ist
+  „Grundlagen“. Noch ohne eigene Seite; eine Einheit kann ihn schon in ihrer Beschreibungsdatei
+  nennen.
 
 ## Grundsatz: Links bleiben dauerhaft gültig
 
@@ -36,22 +69,231 @@ auch über mehrere Schuljahre und für mehrere Klassen.
   eine Weiterleitung auf die neue Adresse bleibt. Ausnahme: PDF-Adressen (siehe „Aufbau pro
   Arbeitsblatt“).
 - Vor jeder Umbenennung oder Verschiebung fragt Claude nach.
+- Die Adresse einer Themeneinheit ist ihr Ordnername, nicht ihr Titel: Ein neuer Titel in
+  `_einheit.json` ändert die Adresse nicht.
 
 ## Ablauf bei Änderungen
 
 - Online ist, was auf `main` liegt; GitHub Pages veröffentlicht es etwa eine Minute nach dem Hochladen.
 - Claude speichert Änderungen direkt auf `main` und lädt sie hoch. Kein Pull Request, kein Merge
   durch Patrick (Entscheidung 10.11.2026: Jeder Klick kostet Aufmerksamkeit).
-- Vor dem Hochladen prüft Claude lokal: die geänderten Seiten im Browser (Handy-Ansicht),
-  alle Links darauf, die Schriften, und dass kein `.tex` und keine Lösung im Repository liegt,
-  die nicht in „Veröffentlichtes Material“ als freigegeben steht.
+- Vor der Arbeit `git pull`, vor dem Hochladen `git pull --rebase`. Gibt es dabei Konflikte in
+  gebauten Seiten (`index.html`), nimmt Claude den Stand von `main` und lässt das Skript neu
+  laufen; die Beschreibungsdateien sind maßgeblich, nicht die Seiten.
+- Vor dem Hochladen läuft `python3 _werkzeuge/bauen.py` ohne Fehler. Das Skript prüft, dass kein
+  `.tex` und kein PDF im Repository liegt, das nicht als freigegeben eingetragen ist (Abschnitt
+  „Beschreibungsdateien und Bauskript“). Claude Code sieht sich zusätzlich geänderte Seitentypen
+  und Gestaltung im Browser an (Handy-Ansicht, Links, Schriften).
 - Nach dem Hochladen wartet Claude mit `python3 _werkzeuge/warten_bis_online.py`, bis GitHub
-  Pages fertig ist, und meldet erst dann „online“. Die Veröffentlichung dauert mal unter einer
+  Pages fertig ist, und meldet erst dann „online“ (braucht `gh`; ohne `gh` meldet Claude
+  „hochgeladen, in wenigen Minuten online“). Die Veröffentlichung dauert mal unter einer
   Minute, mal mehrere Minuten (Anlass 10.11.2026: Patrick beurteilte Farben, bevor sie online
   waren). Danach genügt in Safari Wahltaste + Cmd + R.
 - Danach nennt Claude im Chat kurz, welche Links neu sind oder sich geändert haben.
 - Claude fragt vorher nach, bevor ein veröffentlichter Link umbenannt oder verschoben wird,
   bevor eine Lösung veröffentlicht wird und bevor etwas gelöscht wird.
+
+## Beschreibungsdateien und Bauskript
+
+### Aufruf
+
+Im Hauptordner des Repositorys (einmal je Sitzung vorher `pip install pikepdf`):
+
+```bash
+python3 _werkzeuge/bauen.py
+```
+
+prüft alles und baut dann die Übersichten. Es nennt jede Datei, die es geändert hat; diese
+Dateien gehören in denselben Commit. Bei einem Fehler bricht es ab, schreibt nichts und nennt
+Datei und Stelle.
+
+- `python3 _werkzeuge/bauen.py --pruefen` prüft nur und nennt, was sich beim Bauen ändern würde
+  (Rückgabe 1, wenn etwas nicht aktuell ist); es schreibt nichts.
+- `python3 _werkzeuge/bauen.py --bestand` listet, was veröffentlicht ist (mit Quelle und Stand),
+  und darunter, was vorhanden oder vorgemerkt, aber nicht veröffentlicht ist.
+
+### Was das Skript prüft
+
+Es bricht ab, ohne etwas zu schreiben, wenn
+
+- irgendwo im Repository eine `.tex` liegt (sie enthält immer die Lösung),
+- ein PDF im Repository liegt, das in keiner Beschreibungsdatei als freigegeben steht,
+- ein als freigegeben eingetragenes PDF oder eine freigegebene interaktive Seite fehlt, oder ein
+  Ordner `interaktiv/` liegt, der nicht freigegeben ist,
+- eine Beschreibungsdatei kein gültiges JSON ist, ein Pflichteintrag fehlt oder ein Eintrag
+  unbekannt ist (Tippfehler), ein Datum nicht wie `14.11.2026` aussieht oder eine Quelle keine
+  Versionsnummer trägt,
+- ein Bildungsgang oder Bereich genannt ist, den es nicht gibt oder der noch keine Seite hat,
+- ein Probetest, eine Probeklassenarbeit oder Klassenarbeit nicht zusammen mit Lösung und
+  Notentabelle freigegeben ist, eine Kurztest-Fassung nicht zusammen mit ihrer Lösung, oder
+  freigegebene Fassungen ohne die Notentabelle,
+- das Aufgabenblatt einer Themeneinheit nicht freigegeben ist (eine Einheit erscheint erst mit
+  ihrem Aufgabenblatt),
+- zwei Einheiten eines Themas denselben `platz` haben oder zwei Themen eines Bildungsgangs dieselbe
+  `reihenfolge`,
+- ein Ordner ohne Beschreibungsdatei auftaucht (außer den reservierten und Weiterleitungen, also
+  Seiten mit `rel="canonical"`) oder im Ordner einer Einheit eine unbekannte Datei liegt.
+
+### Was das Skript baut und was nicht
+
+- Es baut: Startseite, Einstiegsseiten der Bildungsgänge, Themenseiten, die Übersicht jeder
+  Themeneinheit und die Seiten `/<thema>/probeklassenarbeit` und `/<thema>/klassenarbeit`,
+  genau so, wie die Abschnitte unten sie beschreiben. Kennzeichen, Zahl der Themeneinheiten,
+  Reihenfolge, Seitenzahlen der PDFs („PDF, 5 Seiten“, aus der Datei gelesen) und der Zusatz
+  „· mit Test“ ergeben sich aus den Beschreibungsdateien.
+- Es baut nicht und ändert nicht: interaktive Seiten, Datenschutzerklärung, Impressum,
+  Weiterleitungen. Bei ihnen erneuert es nur die Kennungen `?v=…` im Kopf (siehe „Startseite,
+  Themenseiten und Bildungsgänge“, letzter Absatz) und ergänzt dort fehlende Verweise auf das
+  Symbol der Website.
+- PDFs erzeugt es nie. Fehlt einem freigegebenen PDF der Titel (siehe „Gestaltung“,
+  Seitentitel), trägt es ihn ein; Inhalt und Aussehen bleiben gleich.
+- Es ersetzt die früheren Werkzeuge `stil_version.py` und `pdf_titel.py`.
+
+### `_einheit.json`
+
+Liegt im Ordner der Themeneinheit, z. B. `rechnen-mit-zahlen/zahlenjagd/_einheit.json`.
+Vollständiges Beispiel:
+
+```json
+{
+  "titel": "Zahlenjagd",
+  "kennung": null,
+  "teilthema": "Addition und Subtraktion",
+  "beschreibung": "Zahlenkarten, Wege und Zahlenmauern",
+  "bildungsgaenge": ["BF1"],
+  "bereiche": [],
+  "platz": 2,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "Zahlenjagd_Aufgabenblatt_v2.pdf", "stand": "10.11.2026" },
+  "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "Zahlenjagd_Loesung_v2.pdf", "stand": "10.11.2026" },
+  "interaktiv": { "vorhanden": false, "freigegeben": false },
+  "probetest": {
+    "test": { "vorhanden": true, "freigegeben": true, "quelle": "Zahlenjagd_Probetest_v2.pdf", "stand": "10.11.2026" },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "Zahlenjagd_Probetest_Loesung_v2.pdf", "stand": "10.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "Zahlenjagd_Probetest_Notentabelle_v2.pdf", "stand": "10.11.2026" }
+  },
+  "kurztest": {
+    "fassungen": [
+      {
+        "fassung": 1,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F1_v2.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F1_Loesung_v2.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 2,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F2_v2.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F2_Loesung_v2.pdf", "stand": "10.11.2026" }
+      }
+    ],
+    "notentabelle": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_Notentabelle_v2.pdf", "stand": "10.11.2026" }
+  }
+}
+```
+
+(Die echte Datei nennt alle vier Kurztest-Fassungen; hier gekürzt.) Daraus entstehen die
+Übersicht `/rechnen-mit-zahlen/zahlenjagd` mit Aufgabenblatt, Musterlösung, grauer Karte
+„Interaktiv“ und dem Abschnitt „Probetest“, auf der Themenseite der Eintrag „Zahlenjagd“ mit
+Kennzeichen BF1 und „Addition und Subtraktion – Zahlenkarten, Wege und Zahlenmauern · mit
+Test“, und die Zählung auf Startseite und `/bf1`. Der Kurztest erscheint nirgends, weil
+keine Fassung freigegeben ist.
+
+| Eintrag | Inhalt |
+|---|---|
+| `titel` | Titel wie auf dem Blatt: Überschrift der Übersicht, Eintrag auf der Themenseite, Seitentitel, PDF-Titel |
+| `kennung` | Kürzel aus der Reihenplanung (`LF1`, `QF5`); `null`, wenn das Blatt keins trägt (die BF1-Blätter von Rechnen mit Zahlen) |
+| `teilthema` | siehe „Begriffe“; Kopfzeile der Übersicht und Anfang der Beschreibung. `null` gibt es nur bei LF1 und LF2 (ihre Seiten zeigen heute keins); eine neue Einheit hat immer eins, sonst fragt der Chat Patrick |
+| `beschreibung` | kurzer Text auf der Themenseite hinter „Teilthema – “; „· mit Test“ hängt das Skript an, wenn ein Probetest oder Kurztest-Fassungen veröffentlicht sind |
+| `bildungsgaenge` | Liste der Bildungsgänge, die die Einheit bearbeiten (Kennzeichen, Einstiegsseiten, Zählung). Ein weiterer Eintrag zeigt die Einheit auch unter diesem Bildungsgang |
+| `bereiche` | Liste weiterer Bereiche, vorgesehen: `"Grundlagen"`. Noch ohne Seite; das Skript prüft nur den Namen. Sonst `[]` |
+| `platz` | Platz in der Reihe (1, 2, 3 …): Reihenfolge auf der Themenseite |
+| `aufgabenblatt`, `musterloesung`, `interaktiv` | je ein Dokument (Pflicht) |
+| `probetest` | `test`, `loesung`, `notentabelle`, je ein Dokument. Weglassen, wenn es keinen Probetest gibt |
+| `kurztest` | `fassungen` (Liste, je `fassung` als Zahl, `test`, `loesung`) und `notentabelle`. Weglassen, wenn es keinen Kurztest gibt |
+
+Jedes **Dokument** hat diese Einträge:
+
+| Eintrag | Inhalt |
+|---|---|
+| `vorhanden` | `true`, wenn es die Datei gibt (bei Patrick, im Backup oder als Artifact) |
+| `freigegeben` | `true`, wenn sie auf die Website darf. Nur dann liegt sie in diesem Repository |
+| `quelle` | Pflicht, wenn vorhanden: der Dateiname mit Versionsnummer wie im Backup, z. B. `Zahlenjagd_Probetest_v2.pdf`. Auf der Website heißt die Datei genauso ohne `_v…` (`Zahlenjagd_Probetest.pdf`) und liegt im Ordner der Einheit. Bei `interaktiv` der Name des Artifacts mit Version, z. B. `Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ v1.22` |
+| `stand` | Datum `TT.MM.JJJJ`; Pflicht, wenn freigegeben: der Tag, an dem diese Version online ging. Sonst, wenn bekannt, der Tag der Sicherung |
+| `hinweis` | freiwillig: kurze Notiz, die nirgends auf der Website erscheint, z. B. „im Einsatz ab 11.11.2026, nicht veröffentlichen“ |
+| `text` | nur bei `interaktiv`, Pflicht, wenn freigegeben: die Zeile unter dem Kartentitel, z. B. „Lineare Funktionen erkunden, zeichnen und ablesen – mit Spezialfällen“ |
+
+Was es nicht gibt, steht als `{ "vorhanden": false, "freigegeben": false }`.
+
+**Öffentlich lesbar:** Die Beschreibungsdateien liegen im öffentlichen Repository. GitHub Pages
+liefert sie nicht aus (Name beginnt mit `_`), auf GitHub kann sie aber jeder lesen. Sie enthalten
+deshalb nur Titel, Dateinamen, Versionen, Daten und kurze Hinweise, nie Aufgaben, Lösungen,
+Punktzahlen oder etwas über einzelne Schüler.
+
+### `_thema.json`
+
+Liegt im Ordner des Themas, z. B. `quadratische-funktionen/_thema.json`; nur Claude Code legt
+sie an und ändert sie.
+
+```json
+{
+  "titel": "Quadratische Funktionen",
+  "kennung": "QF",
+  "fach": "Mathematik",
+  "unterzeile": null,
+  "bildungsgang": "BGY",
+  "reihenfolge": 1,
+  "probeklassenarbeit": {
+    "bildungsgaenge": ["BGY"],
+    "test": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Probeklassenarbeit_v6.pdf", "stand": "10.11.2026" },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Probeklassenarbeit_Loesung_v6.pdf", "stand": "10.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Probeklassenarbeit_Notentabelle_v6.pdf", "stand": "10.11.2026" }
+  },
+  "klassenarbeit": {
+    "bildungsgaenge": ["BGY"],
+    "test": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Klassenarbeit_v1.4.pdf", "stand": "13.11.2026", "hinweis": "geschrieben am 13.11.2026; eine Nachschreib-Fassung käme nur ins Backup" },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Klassenarbeit_Loesung_v1.4.pdf", "stand": "13.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Klassenarbeit_Notentabelle_v1.4.pdf", "stand": "13.11.2026" }
+  }
+}
+```
+
+| Eintrag | Inhalt |
+|---|---|
+| `titel` | Name des Themas: Überschrift der Themenseite, Kopfzeilen, Karten |
+| `kennung` | Kürzel der Reihe (`LF`, `QF`) oder `null` |
+| `fach` | `Mathematik` (später `BWL`): Kopfzeile, Überschrift auf den Einstiegsseiten |
+| `unterzeile` | die Teile des Themas, so wie Patrick sie vorgibt, oder `null` |
+| `bildungsgang` | der Bildungsgang, zu dem das Thema gehört: Zurück-Link der Themenseite, Gruppe auf der Startseite |
+| `reihenfolge` | Platz unter den Themen dieses Bildungsgangs, in der Reihenfolge des Unterrichts |
+| `probeklassenarbeit`, `klassenarbeit` | freiwillig: `bildungsgaenge` (Kennzeichen) und `test`, `loesung`, `notentabelle`; die PDFs liegen in `<thema>/probeklassenarbeit/` bzw. `<thema>/klassenarbeit/` |
+
+Die Probeklassenarbeit erscheint, sobald sie freigegeben ist. Die Klassenarbeit erscheint, sobald
+sie vorhanden ist, bis zur Freigabe mit grauen Karten (siehe „Tests“).
+
+### Neue Themeneinheit anlegen
+
+1. `git pull`. Das Thema muss es schon geben (`<thema>/_thema.json`); ein neues Thema legt
+   Claude Code an.
+2. Ordner `<thema>/<titel-der-einheit>/` anlegen; Schreibweise wie unter „Aufbau der Links“
+   (z. B. „Mal, geteilt – und das Minus?“ → `mal-geteilt-und-das-minus`).
+3. Die freigegebenen PDFs hineinlegen, jeweils unter dem Namen aus `quelle` ohne `_v…`:
+   das Aufgabenblatt immer; den Probetest mit Lösung und Notentabelle, sobald es ihn gibt; die
+   Musterlösung und Kurztest-Fassungen nur, wenn Patrick sie ausdrücklich freigibt (Abschnitte
+   „Lösungen“ und „Tests“). Nie eine `.tex`.
+4. Ist eine interaktive Seite freigegeben: als `interaktiv/index.html` ablegen und dabei die
+   Regeln unter „Gestaltung“ einsetzen (Seitentitel, Zurück-Knopf, „Datenschutz · Impressum“).
+5. `_einheit.json` schreiben wie im Beispiel oben: alles, was es gibt, auch Nicht-Freigegebenes
+   (dann `"freigegeben": false`). `platz` ist die Nummer in der Reihe.
+6. `python3 _werkzeuge/bauen.py`; bei Fehlern die Meldung lesen, beheben, erneut laufen lassen.
+7. Den Ordner der Einheit und alle Dateien, die das Skript nennt, in einem Commit hochladen
+   (Commit-Nachricht wie „LF3 Titel v2 veröffentlicht“), dann `warten_bis_online.py`.
+8. Im Backup `unterrichtsmaterial` sichern: alle Dateien mit Versionsnummer, auch `.tex` und
+   Lösungen (Regeln dort).
+
+**Neue Version eines Dokuments:** PDF unter demselben Namen ersetzen, in `_einheit.json` `quelle`
+und `stand` anpassen, Skript laufen lassen. Ist die Lösung freigegeben, kommt sie mit.
+**Freigabe:** PDF hineinlegen, `"freigegeben": true` und `stand` setzen, Skript laufen lassen.
+**Weiterer Bildungsgang:** in `bildungsgaenge` ergänzen, Skript laufen lassen. Den ersten
+zweiten Bildungsgang überhaupt trägt Claude Code ein (siehe „Startseite, Themenseiten und
+Bildungsgänge“).
 
 ## Aufbau der Links
 
@@ -84,35 +326,36 @@ folgen eigenen Regeln. Auf der Website heißen die PDFs wie im Material, nur ohn
 
 ## Aufbau pro Arbeitsblatt
 
-Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter festen Namen:
+Jedes Arbeitsblatt (jede Themeneinheit) hat einen Ordner. Darin liegt alles, was dazugehört:
 
 | Datei | Link | Inhalt |
 |---|---|---|
-| `index.html` | `…/<titel>` | Übersicht des Arbeitsblatts: listet alles auf, was es dazu gibt |
+| `_einheit.json` | – (wird nicht ausgeliefert) | Beschreibungsdatei |
+| `index.html` | `…/<titel>` | Übersicht des Arbeitsblatts, vom Skript gebaut: listet alles auf, was es dazu gibt |
 | `interaktiv/index.html` | `…/<titel>/interaktiv` | interaktive Seite |
 | `<Kürzel>_<Titel>_Aufgabenblatt.pdf` | `…/<titel>/<Kürzel>_<Titel>_Aufgabenblatt.pdf` | Arbeitsblatt |
 | `<Kürzel>_<Titel>_Loesung.pdf` | `…/<titel>/<Kürzel>_<Titel>_Loesung.pdf` | Musterlösung, nur nach Freigabe (siehe unten) |
 
-- **PDF-Namen** (Entscheidung 12.11.2026): Der Name ist der aus der Spalte „Quelle“ in
-  „Veröffentlichtes Material“ ohne `_v…`, z. B. `QF5_Der_Korbwurf_Aufgabenblatt.pdf`. Grund: Beim
+- **PDF-Namen** (Entscheidung 12.11.2026): Der Name ist der aus `quelle` in der
+  Beschreibungsdatei ohne `_v…`, z. B. `QF5_Der_Korbwurf_Aufgabenblatt.pdf`. Grund: Beim
   Herunterladen soll die Datei so heißen wie bei Patrick, und das Kürzel (QF5, LF1 …) ordnet die
   Dateien bei den Schülern.
 - Die Dateinamen tragen keine Version. Eine neue Version ersetzt die alte unter demselben Namen;
-  ältere Stände bleiben im Git-Verlauf. Die Versionsnummer steht nur in der Spalte „Quelle“.
+  ältere Stände bleiben im Git-Verlauf. Die Versionsnummer steht nur in `quelle`.
 - Die Kennung (Kürzel) im Dateinamen steht damit auch in der Adresse; das ist die Ausnahme von der
   Regel, dass Adressen keine Kennung tragen. Die Adressen der Seiten bleiben ohne Kennung.
 - Die früheren PDF-Adressen (`aufgabenblatt.pdf`, `loesung.pdf`, `probetest.pdf` usw.) entfielen
   am 12.11.2026 ersatzlos, ohne Weiterleitung: Patrick hatte sie nirgends weitergegeben. Das gilt
   nur für PDFs; Seitenadressen bekommen weiter eine Weiterleitung (Grundsatz oben).
 - Die Übersicht zeigt immer drei Karten in dieser Reihenfolge: Aufgabenblatt, Musterlösung,
-  Interaktiv. Was es noch nicht gibt, steht als graue Karte ohne Link (Klasse `gesperrt`):
+  Interaktiv. Was nicht freigegeben ist, steht als graue Karte ohne Link (Klasse `gesperrt`):
   Musterlösung „Noch nicht freigeschaltet“, Interaktiv „Noch nicht vorhanden“.
   So sehen die Schüler, dass eine Lösung kommt (Entscheidung 10.11.2026).
-- Kommt etwas hinzu, wird die graue Karte zur aktiven Karte; die freigeschaltete Musterlösung
+- Wird etwas freigegeben, wird die graue Karte zur aktiven Karte; die freigeschaltete Musterlösung
   bekommt die Klasse `loesung` (orange).
 - **Text unter dem Kartentitel** sagt, wozu die Schüler die Datei nutzen, nicht was man technisch
   damit tun kann; dahinter in Klammern Dateiart und Seitenzahl (Entscheidung 10.11.2026: Kaum ein
-  Schüler druckt selbst aus, sie laden die PDFs aufs iPad):
+  Schüler druckt selbst aus, sie laden die PDFs aufs iPad). Das Skript setzt ihn so:
 
   | Karte | Text |
   |---|---|
@@ -120,10 +363,11 @@ Jedes Arbeitsblatt hat einen Ordner. Darin liegt alles, was dazugehört, unter f
   | Musterlösung, Lösungen zu Tests | „Zum Vergleichen (PDF, n Seiten)“ |
   | Probetest | „Zum Üben vor dem Kurztest (PDF, n Seiten)“ |
   | Probeklassenarbeit | „Zum Üben vor der Klassenarbeit (PDF, n Seiten)“ |
-  | Kurztest-Fassung | „Zum Üben (PDF, n Seiten)“ |
+  | Kurztest-Fassung, Klassenarbeit | „Zum Üben (PDF, n Seiten)“ |
   | Notentabelle | „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“ |
+  | Interaktiv | `text` aus der Beschreibungsdatei |
 
-  Die Seitenzahl prüft Claude bei jedem neuen oder ersetzten PDF gegen die Datei.
+  Die Seitenzahl liest das Skript aus der Datei.
 
 ## Tests: Probetest, Kurztest, Klassenarbeit
 
@@ -134,11 +378,13 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
 - **Probetest: wird immer veröffentlicht**, zusammen mit Lösung und Notentabelle, sobald
   Patrick ihn schickt (Entscheidung 10.11.2026: Der Probetest dient der Selbstkontrolle).
 - **Kurztest: wird normalerweise nicht veröffentlicht**, weil Patrick ihn wieder einsetzt.
-  Es gibt dann keinen Abschnitt und keine graue Karte. Nur wenn Patrick Fassungen ausdrücklich
-  freigibt, entsteht der Abschnitt „Kurztest“ mit diesen Fassungen, ihren Lösungen und der
-  Notentabelle. **Fassungen, die noch eine Klasse schreibt, kommen nie auf die Website.**
+  Es gibt dann keinen Abschnitt und keine graue Karte; in der Beschreibungsdatei stehen die
+  Fassungen mit `"freigegeben": false`. Nur wenn Patrick Fassungen ausdrücklich freigibt, entsteht
+  der Abschnitt „Kurztest“ mit diesen Fassungen, ihren Lösungen und der Notentabelle.
+  **Fassungen, die noch eine Klasse schreibt, kommen nie auf die Website**, ebenso wenig
+  Nachschreib-Fassungen.
 - **Klassenarbeiten** (z. B. BGY) decken meist mehrere Themeneinheiten ab und stehen auf der
-  Ebene des Themas (Entscheidung 10.11.2026, erste: Quadratische Funktionen):
+  Ebene des Themas, in `_thema.json` (Entscheidung 10.11.2026, erste: Quadratische Funktionen):
   - Veröffentlicht wird die **Probeklassenarbeit**, immer mit Lösung und Notentabelle
     (wie der Probetest). Die Klassenarbeit selbst kommt erst auf die Website, wenn Patrick sie
     nach dem Schreiben freigibt (Entscheidung 12.11.2026, erste: Quadratische Funktionen, geschrieben
@@ -151,20 +397,16 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
     Klassenarbeit zur ganzen Reihe · mit Lösung und Notentabelle“, Link `/<thema>/klassenarbeit`.
     Diese Seite (`<thema>/klassenarbeit/index.html`, Titel `happymatty/<Thema>/Klassenarbeit`,
     Überschrift „Klassenarbeit“, Kennzeichen, zurück zum Thema) zeigt drei Karten: „Klassenarbeit“,
-    „Lösung zur Klassenarbeit“, „Notentabelle zur Klassenarbeit“. Bis zur Freigabe sind sie grau
-    (`gesperrt`) mit dem Hinweis „Wird am Freitag nach der Klassenarbeit veröffentlicht“. Auch die
-    Gesamtpunktzahl bleibt bis dahin verborgen, deshalb geht alles zusammen online
+    „Lösung zur Klassenarbeit“, „Notentabelle zur Klassenarbeit“. Sobald die Klassenarbeit in
+    `_thema.json` vorhanden ist, gibt es Abschnitt und Seite; bis zur Freigabe sind die Karten
+    grau (`gesperrt`) mit dem Hinweis „Wird am Freitag nach der Klassenarbeit veröffentlicht“.
+    Auch die Gesamtpunktzahl bleibt bis dahin verborgen, deshalb geht alles zusammen online
     (Entscheidung 12.11.2026).
   - Freigabe: Patrick schreibt nur „Klassenarbeit freigeben“. Die Dateien liegen schon im Backup
     (`unterrichtsmaterial/mathematik/<thema>/QF_Klassenarbeit_…_v….pdf`, neueste Version); Claude
-    kopiert die drei PDFs ohne `_v…` nach `<thema>/klassenarbeit/` (`QF_Klassenarbeit.pdf`,
-    `QF_Klassenarbeit_Loesung.pdf`, `QF_Klassenarbeit_Notentabelle.pdf`; PDF-Titel
-    `happymatty/<Thema>/Klassenarbeit`, `…/Lösung Klassenarbeit`, `…/Notentabelle Klassenarbeit`),
-    macht die drei Karten auf der Seite `/<thema>/klassenarbeit` aktiv: Klassenarbeit
-    violett (`test`, „Zum Üben (PDF, n Seiten)“), Lösung orange (`loesung`, „Zum Vergleichen (PDF,
-    n Seiten)“), Notentabelle hellblau (`notentabelle`, „Welche Note zu deinen Punkten gehört (PDF,
-    1 Seite)“), und trägt sie in „Veröffentlichtes Material“ ein. Die `.tex` bleibt im Backup.
-    Vor der Freigabe liegt nichts davon in diesem Repository.
+    Code kopiert die drei PDFs ohne `_v…` nach `<thema>/klassenarbeit/`, setzt in `_thema.json`
+    bei allen dreien `"freigegeben": true` und `stand` und lässt das Skript laufen. Die `.tex`
+    bleibt im Backup. Vor der Freigabe liegt keines dieser PDFs in diesem Repository.
   - Eigene Seite wie die Übersicht einer Themeneinheit (Entscheidung 10.11.2026, geändert am
     selben Tag: einheitlich mit den Themeneinheiten): `<thema>/probeklassenarbeit/index.html`,
     Link `/<thema>/probeklassenarbeit`. Kopfzeile Fach · Thema, Überschrift „Probeklassenarbeit“,
@@ -177,7 +419,7 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
   - Startseite, Einstiegsseiten der Bildungsgänge und Beschreibungen der Themeneinheiten nennen
     sie nicht.
 
-| Datei (Name wie in „Quelle“, ohne `_v…`) | Inhalt | PDF-Titel |
+| Datei (Name wie in `quelle`, ohne `_v…`) | Inhalt | PDF-Titel |
 |---|---|---|
 | `<Kürzel>_Probetest.pdf` | Probetest (es gibt nur eine Fassung) | `happymatty/<Titel>/Probetest` |
 | `<Kürzel>_Probetest_Loesung.pdf` | Lösung zum Probetest | `happymatty/<Titel>/Lösung Probetest` |
@@ -188,17 +430,21 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
 | `probeklassenarbeit/QF_Probeklassenarbeit.pdf` | Probeklassenarbeit (im Ordner des Themas) | `happymatty/<Thema>/Probeklassenarbeit` |
 | `probeklassenarbeit/QF_Probeklassenarbeit_Loesung.pdf` | Lösung zur Probeklassenarbeit | `happymatty/<Thema>/Lösung Probeklassenarbeit` |
 | `probeklassenarbeit/QF_Probeklassenarbeit_Notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | `happymatty/<Thema>/Notentabelle Probeklassenarbeit` |
+| `klassenarbeit/QF_Klassenarbeit.pdf` usw. | Klassenarbeit, Lösung, Notentabelle | `happymatty/<Thema>/Klassenarbeit`, `…/Lösung Klassenarbeit`, `…/Notentabelle Klassenarbeit` |
 
 - **Notentabellen werden immer mit veröffentlicht**, wenn der zugehörige Test online geht.
   Karte „Notentabelle zum …“, Text „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“.
   Zwischen Zahl und „Seite(n)“ steht immer ein geschütztes Leerzeichen (`&nbsp;`).
 - Karten je Abschnitt: Test (violett, Klasse `test`), Lösung (orange), Notentabelle (hellblau, Klasse `notentabelle`); beim Kurztest je
   Fassung Test und Lösung, danach die Notentabelle.
-- Themenseite: in der Beschreibung der Themeneinheit
-  „· mit Probetest“ bzw. „· mit Probetest und Kurztest“.
+- Themenseite: in der Beschreibung der Themeneinheit „· mit Test“, sobald ein Probetest oder
+  Kurztest-Fassungen veröffentlicht sind, gleich welche (Entscheidung 14.11.2026; vorher
+  „· mit Probetest“ bzw. „· mit Probetest und Kurztest“).
 
 Alte Adresse: `/lineare-funktionen/kurztest-1` war am 10.11.2026 kurz online und leitet auf
-`/lineare-funktionen/wie-steil-ist-das/#probetest` weiter. Die zwei PDFs, die dort lagen (ältere Stände des Probetests), sind am 12.11.2026 entfallen.
+`/lineare-funktionen/wie-steil-ist-das/#probetest` weiter (handgeschriebene Weiterleitung, das
+Skript lässt sie stehen). Die zwei PDFs, die dort lagen (ältere Stände des Probetests), sind am
+12.11.2026 entfallen.
 
 ## Lösungen
 
@@ -208,14 +454,16 @@ Alte Adresse: `/lineare-funktionen/kurztest-1` war am 10.11.2026 kurz online und
   Ein ausgegrauter Link schützt nicht: Die Adresse `…/<Kürzel>_<Titel>_Loesung.pdf` ist erratbar, und das
   Repository ist öffentlich einsehbar.
 - Freischalten: Patrick schreibt z. B. „Lösung LF2 freigeben“. Claude kopiert die Lösung
-  aus dem Backup (ohne `_v…` im Namen), trägt den PDF-Titel ein, macht die Karte aktiv und orange
-  („Zum Vergleichen (PDF, n Seiten)“) und trägt sie in „Veröffentlichtes Material“ ein.
+  aus dem Backup (ohne `_v…` im Namen) in den Ordner der Einheit, setzt in `_einheit.json` bei
+  `musterloesung` `"freigegeben": true` und `stand` und lässt das Skript laufen; es macht die
+  Karte aktiv und orange und trägt den PDF-Titel ein.
   Kommt später eine neue Version des Blatts, ersetzt Claude eine freigegebene Lösung mit.
 - Ein passwortgeschützter Bereich für Lehrkräfte ist geplant, aber noch nicht gebaut.
 
 ## Startseite, Themenseiten und Bildungsgänge
 
-Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bildungsgang für die Schüler.
+Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bildungsgang für die
+Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den es erzeugt.
 
 - **Startseite** `index.html` (`happymatty.de`): unter der Überschrift „Unterrichtsmaterial“ die Zeile
   „von Patrick Saul“ in Indie Flower grün (Klasse `unterzeile autor`, Entscheidung 11.11.2026). Darunter „Klassen“ mit einer Kachel je
@@ -225,9 +473,9 @@ Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bil
   Material auffindbar bleibt.
   **Reihenfolge** (Entscheidung 10.11.2026): erst alle Themen der BF1, dann der BF2, dann des BGY
   (danach FSTM, DBOS); innerhalb eines Bildungsgangs in der Reihenfolge, in der die Reihen
-  unterrichtet werden, nicht alphabetisch. Zwischen den Bildungsgängen eine gestrichelte Linie
-  in Akzentlila (`<hr class="trenner">`, je Bildungsgang eine eigene `<ul class="liste">`),
-  zwischen Themen desselben Bildungsgangs keine. Ein Thema für mehrere Bildungsgänge: Claude fragt.
+  unterrichtet werden (`reihenfolge` in `_thema.json`), nicht alphabetisch. Zwischen den
+  Bildungsgängen eine gestrichelte Linie in Akzentlila (`<hr class="trenner">`, je Bildungsgang
+  eine eigene `<ul class="liste">`), zwischen Themen desselben Bildungsgangs keine.
   Zwischen Titel und Kennzeichen kann eine **Unterzeile** (Klasse `unterzeile`, im Standardgrau
   wie der Text darunter) stehen: die Teile des Themas, mit Mittelpunkt getrennt, so wie Patrick sie vorgibt
   (Rechnen mit Zahlen: „Rationale Zahlen · Rechenregeln · Überschlagen und Schätzen“).
@@ -235,57 +483,68 @@ Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bil
   „Mathematik“, Überschrift das Thema groß in Grün (`<h1 class="thema">`, Entscheidung 10.11.2026:
   der Haupttitel soll sofort ins Auge fallen). Darunter der Abschnitt „Themeneinheiten“
   (`themenkopf`, grau; nicht „Arbeitsblätter“, weil auch interaktive Seiten dazugehören):
-  alle Themeneinheiten des Themas in der Reihenfolge der Lernreihe, je mit Titel, Kennzeichen der
-  Bildungsgänge und einer kurzen Beschreibung. Laufen in einem Thema mehrere Bildungsgänge mit
-  eigenen Blättern (etwa BGY als Wiederholung auf höherem Niveau), stehen sie hier nebeneinander.
-  Die Beschreibung beginnt mit dem Teilthema, danach ein Gedankenstrich: „Addition und
-  Subtraktion – Zahlenkarten, Wege und Zahlenmauern“. Danach gegebenenfalls der Abschnitt
-  „Probeklassenarbeit“ (siehe Tests).
+  alle Themeneinheiten des Themas in der Reihenfolge der Lernreihe (`platz`), je mit Titel,
+  Kennzeichen der Bildungsgänge und einer kurzen Beschreibung. Laufen in einem Thema mehrere
+  Bildungsgänge mit eigenen Blättern (etwa BGY als Wiederholung auf höherem Niveau), stehen sie
+  hier nebeneinander. Die Beschreibung beginnt mit dem Teilthema, danach ein Gedankenstrich:
+  „Addition und Subtraktion – Zahlenkarten, Wege und Zahlenmauern“. Danach gegebenenfalls die
+  Abschnitte „Probeklassenarbeit“ und „Klassenarbeit“ (siehe Tests).
 - **Einstiegsseite je Bildungsgang** `<kürzel>/index.html` (z. B. `happymatty.de/bf2`): nur die
   **Themen**, die dieser Bildungsgang bearbeitet, keine einzelnen Themeneinheiten (Entscheidung
   10.11.2026: sonst wird es zu viel). Je Fach eine Überschrift (`themenkopf`, „Mathematik“), darunter
   die Themen als grüne Karten wie auf der Startseite (mit Unterzeile und Zahl der Themeneinheiten,
-  ohne Kennzeichen), in der Reihenfolge, in der sie unterrichtet werden. Ohne Material eine graue Karte „Noch kein Material“. Die Schüler speichern sich diesen
-  einen Link.
+  ohne Kennzeichen), in der Reihenfolge, in der sie unterrichtet werden. Ohne Material eine graue
+  Karte „Noch kein Material“ mit „Hier erscheinen die Themen, sobald Material online ist.“
+  (Entscheidung 14.11.2026). Die Schüler speichern sich diesen einen Link.
 - **Übersicht des Arbeitsblatts**: unter der Überschrift die Kennzeichen der Bildungsgänge.
 - **Kennzeichen** (Klasse `badge`) in der Form der Badges auf den Blättern, aber in Akzentlila:
   Rahmen und Schrift `#85609E`, gefüllt `#EBE5EF`, Indie Flower (Skill `mathe`, Stand 10.11.2026).
-- Wird ein Arbeitsblatt neu veröffentlicht, umbenannt oder bekommt es einen neuen Titel oder
-  Bildungsgang, trägt Claude das im selben Schritt überall ein: Übersicht, Themenseite,
-  Einstiegsseiten der Bildungsgänge (Zahl) und Startseite (Zahl, Kennzeichen). Ein neues Thema bekommt
-  eine Themenseite und eine Karte auf der Startseite.
+- **Eine Themeneinheit in mehreren Bildungsgängen** (Eintrag in `bildungsgaenge`): Sie trägt alle
+  Kennzeichen (Übersicht, Themenseite), und ihr Thema trägt auf der Startseite alle Kennzeichen
+  seiner Einheiten. Auf der Startseite steht das Thema nur einmal, in der Gruppe seines
+  `bildungsgang`; die Zahl dort zählt alle Einheiten. Auf der Einstiegsseite jedes beteiligten
+  Bildungsgangs steht das Thema mit der Zahl der Einheiten dieses Bildungsgangs. Die Themenseite
+  führt zurück zum `bildungsgang` des Themas (Entscheidung 14.11.2026). Zwei Kennzeichen
+  hintereinander stehen auf der Themenseite noch mit dem großen Abstand hinter dem Titel; beim
+  ersten Fall ergänzt Claude Code in `basis.css` den Abstand zwischen zwei Kennzeichen und prüft
+  im Browser (Entscheidung 14.11.2026). Bis dahin trägt nur Claude Code einen zweiten
+  Bildungsgang ein.
 - Welcher Bildungsgang ein Blatt bearbeitet, steht im Namen des Reihenplans
   (`BF2_Reihenplan_…`); im Zweifel fragt Claude.
 
-Bildungsgänge:
+Bildungsgänge (maßgeblich ist `BILDUNGSGAENGE` in `_werkzeuge/bauen.py`):
 
 | Kürzel | Link | Name | Stand |
 |---|---|---|---|
 | BF1 | `/bf1` | Berufsfachschule I | aktiv |
 | BF2 | `/bf2` | Berufsfachschule II | aktiv |
 | BGY | `/bgy` | Berufliches Gymnasium | aktiv, ein Jahrgang |
-| FSTM | `/fstm` | Techniker-Abendschule (BWL) | ab Januar 2027, Seite dann anlegen |
-| DBOS | `/dbos` | Duale Berufsoberschule | ab Schuljahr 2027/28, Seite dann anlegen |
+| FSTM | `/fstm` | Techniker-Abendschule (BWL) | ab Januar 2027; dann trägt Claude Code ihn im Skript ein |
+| DBOS | `/dbos` | Duale Berufsoberschule | ab Schuljahr 2027/28; dann trägt Claude Code ihn im Skript ein |
 
-Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`, `datenschutz`.
-Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
+Bereiche: vorgesehen „Grundlagen“ (`BEREICHE` im Skript), noch ohne Seite. Bekommt ein Bereich
+eine Seite, baut Claude Code den Seitentyp ins Skript ein und fragt vorher nach Adresse und
+Aufbau.
 
-**Nach jeder Änderung an `basis.css` oder am Symbol der Website** und bei jeder neuen Seite
-(auch bei jeder Übernahme eines Artifacts) führt Claude `python3 _werkzeuge/stil_version.py` aus. Das Skript hängt an
-jeden Verweis auf `/stil/basis.css` eine Kennung aus dem Inhalt der Datei an (`?v=…`) und
-ergänzt fehlende Verweise auf das Symbol der Website. Sonst zeigen Browser
-bis zu einigen Stunden die alte Gestaltung aus dem Zwischenspeicher (Anlass 10.11.2026:
-Safari zeigte den alten Abstand am Kennzeichen noch nach mehreren Minuten).
+Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`, `datenschutz`,
+`impressum`. Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
+
+**Kennungen im Kopf:** Das Skript hängt an jeden Verweis auf `/stil/basis.css` eine Kennung aus dem
+Inhalt der Datei an (`?v=…`) und ergänzt fehlende Verweise auf das Symbol der Website. Sonst
+zeigen Browser bis zu einigen Stunden die alte Gestaltung aus dem Zwischenspeicher (Anlass
+10.11.2026: Safari zeigte den alten Abstand am Kennzeichen noch nach mehreren Minuten).
 Die Verweise auf das Symbol im Kopf der Seite (`favicon.ico`, `stil/icon-32.png`,
 `apple-touch-icon.png`) bekommen ebenso eine Kennung aus dem Inhalt der Bilddatei
 (Anlass 11.11.2026: Safari auf dem iPad zeigte nach dem Wechsel zum Smiley weiter das alte „hm“,
-auch nach dem Löschen des Verlaufs).
-Ordner, die mit `_` beginnen, veröffentlicht GitHub Pages nicht.
+auch nach dem Löschen des Verlaufs). Nach jeder Änderung an `basis.css` oder am Symbol und bei
+jeder neuen Seite (auch jeder Übernahme eines Artifacts) läuft deshalb das Skript.
+Ordner und Dateien, die mit `_` beginnen, veröffentlicht GitHub Pages nicht.
 
 ## Gestaltung
 
 Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
-(Skill `mathe`, Gestaltung: Schriften, Farben, Kopf- und Fußzeile, Überschrift):
+(Skill `mathe`, Gestaltung: Schriften, Farben, Kopf- und Fußzeile, Überschrift). Ihr HTML steht im
+Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
 
 - Kopfzeile mittig in Indie Flower: immer erst das Fach, dann das Thema, getrennt durch
   einen Mittelpunkt: „Mathematik · Lineare Funktionen“. Fach grau, Thema grün `#26870C`.
@@ -314,8 +573,8 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
     11.11.2026: Das Logo gehört auch auf die Startseite; vorher stand dort nur „happymatty.de“
     mittig in der Kopfzeile).
   - Einstiegsseite eines Bildungsgangs (`/bf1` …): nur das Logo, kein Zurück-Link.
-  - Themenseite: zurück zu ihrem Bildungsgang („← BF1“ auf `/bf1/`), nicht zur Startseite
-    (Entscheidung 11.11.2026). Gehört ein Thema zu mehreren Bildungsgängen, fragt Claude nach.
+  - Themenseite: zurück zu ihrem Bildungsgang („← BF1“ auf `/bf1/`, `bildungsgang` in
+    `_thema.json`), nicht zur Startseite (Entscheidung 11.11.2026).
   - Übersicht einer Themeneinheit, Probeklassenarbeit, Klassenarbeit: zurück zum Thema („← Lineare Funktionen“).
   - Datenschutzerklärung: nur das Logo; die Kopfzeile bleibt leer (nur die blaue Linie), weil der
     Name schon im Logo steht.
@@ -341,9 +600,9 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   | Tests | siehe Abschnitt „Tests“ |
 
   Bei der interaktiven Seite ersetzt Claude bei jeder Übernahme eines Artifacts den `<title>`.
-  In die PDFs auf der Website (nicht ins Backup) trägt Claude den Titel mit
-  `python3 _werkzeuge/pdf_titel.py <datei.pdf> "<Titel>"` ein, bei jedem neuen oder ersetzten
-  PDF; Inhalt und Aussehen bleiben dabei gleich. Ohne Titel zeigen Browser nur den Dateinamen.
+  In die freigegebenen PDFs auf der Website (nicht ins Backup) trägt das Skript den Titel ein,
+  wenn er fehlt oder nicht stimmt; Inhalt und Aussehen bleiben dabei gleich. Ohne Titel zeigen
+  Browser nur den Dateinamen.
 - Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul · Datenschutzerklärung · Impressum“, Name grün,
   Rest grau, darüber eine dünne blaue Linie. „Datenschutzerklärung“ im Standardgrau als Link auf
   `/datenschutz`, ohne Unterstreichung, beim Darüberfahren unterstrichen. Die interaktiven Seiten
@@ -388,7 +647,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   Vorlage als Vektorgrafik: `_werkzeuge/symbol.svg`. Dateien:
   `favicon.ico` (16, 32, 48 px) und `apple-touch-icon.png` (180 px) im Hauptordner,
   `stil/icon-32.png`, `stil/icon-192.png`; alle quadratisch ohne runde Ecken, die Seiten und
-  Geräte runden selbst.
+  Geräte runden selbst. Nach dem Ersetzen läuft das Skript (Kennungen im Kopf).
 - Ändern sich die Farben oder die Kopfzeile im Skill `mathe`, zieht die Website nach.
 
 ## Inhalte auf den öffentlichen Seiten
@@ -404,75 +663,35 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 
 ## Herkunft der Seiten
 
-Die interaktiven Seiten entstehen meist als Artifact in einem Claude-Projekt auf claude.ai und werden von hier
-übernommen. Jede Seite muss ohne Claude laufen: kein `window.claude`, keine Artifact-Datenbank.
+Die interaktiven Seiten entstehen meist als Artifact in einem Claude-Projekt auf claude.ai.
+Jede Seite muss ohne Claude laufen: kein `window.claude`, keine Artifact-Datenbank.
 Möglichst keine Inhalte von fremden Servern laden (Datenschutz der Schüler).
 Lädt eine Seite etwas von fremden Servern, setzt sie Cookies, speichert sie weitere Daten im
-Browser oder kommt eine Statistik hinzu, passt Claude die Datenschutzerklärung im selben Schritt
-an oder fragt vorher.
+Browser oder kommt eine Statistik hinzu, passt Claude Code die Datenschutzerklärung im selben
+Schritt an oder fragt vorher; ein Projektchat legt eine solche Seite nicht selbst ab, sondern
+übergibt an Claude Code.
 
-Die PDFs entstehen in Patricks Claude-Projekten; Claude Code sieht diese Dateien nicht.
-Patrick lädt sie hier im Chat oder auf GitHub hoch, Claude legt sie unter ihrem Namen ohne Versionsnummer ab.
-Alle Dateien (auch `.tex` und Lösungen) sichert Claude im selben Schritt im privaten Repository
-`happymatty-de/unterrichtsmaterial`; Ablauf dort in `CLAUDE.md`.
+Die PDFs entstehen in Patricks Claude-Projekten. Von dort kommen sie auf zwei Wegen:
 
-## Veröffentlichtes Material
+- **Direkt aus dem Projektchat** (Erprobung ab der nächsten Themeneinheit): Der Projektchat legt
+  die freigegebenen PDFs, `interaktiv/` und `_einheit.json` in den Ordner seiner Themeneinheit,
+  lässt das Skript laufen und lädt hoch (siehe „Wer schreibt was“ und „Neue Themeneinheit
+  anlegen“). Alle Dateien mit Versionsnummer, auch `.tex` und Lösungen, sichert er selbst im
+  privaten Repository `happymatty-de/unterrichtsmaterial`; Regeln dort in der `CLAUDE.md`.
+- **Über Claude Code:** Patrick lädt die Dateien in einer Sitzung hoch oder legt sie (auch als
+  ZIP) in den Eingang. Claude Code legt sie unter ihrem Namen ohne Versionsnummer ab, schreibt die
+  Beschreibungsdatei, lässt das Skript laufen und sichert alle Dateien im selben Schritt im Backup.
 
-| Link | Inhalt | Bildungsgang | Quelle | Stand |
-|---|---|---|---|---|
-| `/lineare-funktionen/wie-steil-ist-das/LF1_Wie_steil_ist_das_Aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF1_Wie_steil_ist_das_Aufgabenblatt_v24.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/LF1_Wie_steil_ist_das_Loesung.pdf` | Musterlösung, freigegeben | BF2 | `LF1_Wie_steil_ist_das_Loesung_v24.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/LF1_Probetest.pdf` | Probetest | BF2 | `LF1_Probetest_v14.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/LF1_Probetest_Loesung.pdf` | Lösung zum Probetest, freigegeben | BF2 | `LF1_Probetest_Loesung_v14.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/LF1_Probetest_Notentabelle.pdf` | Notentabelle zum Probetest | BF2 | `LF1_Probetest_Notentabelle_v14.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_1.pdf` | Kurztest Fassung 1, freigegeben | BF2 | `LF1_Kurztest_1_v17.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_Loesung_1.pdf` | Lösung Fassung 1, freigegeben | BF2 | `LF1_Kurztest_Loesung_1_v17.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_2.pdf` | Kurztest Fassung 2, freigegeben | BF2 | `LF1_Kurztest_2_v17.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_Loesung_2.pdf` | Lösung Fassung 2, freigegeben | BF2 | `LF1_Kurztest_Loesung_2_v17.pdf` | 10.11.2026 |
-| `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_Notentabelle.pdf` | Notentabelle zum Kurztest | BF2 | `LF1_Kurztest_Notentabelle_v17.pdf` | 10.11.2026 |
-| `/lineare-funktionen/mehr-als-nur-steil/LF2_Mehr_als_nur_steil_Aufgabenblatt.pdf` | Aufgabenblatt | BF2 | `LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf` | 10.11.2026 |
-| `/lineare-funktionen/mehr-als-nur-steil/interaktiv` | interaktiv | BF2 | Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ | 10.11.2026 |
-| `/rechnen-mit-zahlen/ausschuss/Ausschuss_Aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Ausschuss_Aufgabenblatt_v11.1.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/ausschuss/Ausschuss_Loesung.pdf` | Musterlösung, freigegeben | BF1 | `Ausschuss_Loesung_v11.1.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/zahlenjagd/Zahlenjagd_Aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Zahlenjagd_Aufgabenblatt_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/zahlenjagd/Zahlenjagd_Loesung.pdf` | Musterlösung, freigegeben | BF1 | `Zahlenjagd_Loesung_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/zahlenjagd/Zahlenjagd_Probetest.pdf` | Probetest | BF1 | `Zahlenjagd_Probetest_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/zahlenjagd/Zahlenjagd_Probetest_Loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Zahlenjagd_Probetest_Loesung_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/zahlenjagd/Zahlenjagd_Probetest_Notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Zahlenjagd_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/Mal_geteilt_und_das_Minus_Aufgabenblatt.pdf` | Aufgabenblatt | BF1 | `Mal_geteilt_und_das_Minus_Aufgabenblatt_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/Mal_geteilt_und_das_Minus_Loesung.pdf` | Musterlösung, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Loesung_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/Mal_geteilt_und_das_Minus_Probetest.pdf` | Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/Mal_geteilt_und_das_Minus_Probetest_Loesung.pdf` | Lösung zum Probetest, freigegeben | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Loesung_v2.pdf` | 10.11.2026 |
-| `/rechnen-mit-zahlen/mal-geteilt-und-das-minus/Mal_geteilt_und_das_Minus_Probetest_Notentabelle.pdf` | Notentabelle zum Probetest | BF1 | `Mal_geteilt_und_das_Minus_Probetest_Notentabelle_v2.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/vom-term-zur-parabel/QF1_Vom_Term_zur_Parabel_Aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF1_Vom_Term_zur_Parabel_Aufgabenblatt_v13.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/vom-term-zur-parabel/QF1_Vom_Term_zur_Parabel_Loesung.pdf` | Musterlösung, freigegeben | BGY | `QF1_Vom_Term_zur_Parabel_Loesung_v13.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/nullstellen-ohne-formel/QF2_Nullstellen_ohne_Formel_Aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF2_Nullstellen_ohne_Formel_Aufgabenblatt_v16.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/nullstellen-ohne-formel/QF2_Nullstellen_ohne_Formel_Loesung.pdf` | Musterlösung, freigegeben | BGY | `QF2_Nullstellen_ohne_Formel_Loesung_v16.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/die-pq-formel/QF3_Die_pq-Formel_Aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF3_Die_pq-Formel_Aufgabenblatt_v12.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/die-pq-formel/QF3_Die_pq-Formel_Loesung.pdf` | Musterlösung, freigegeben | BGY | `QF3_Die_pq-Formel_Loesung_v12.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/nullstellen-bestimmen-die-funktion/QF4_Nullstellen_bestimmen_die_Funktion_Aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF4_Nullstellen_bestimmen_die_Funktion_Aufgabenblatt_v26.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/nullstellen-bestimmen-die-funktion/QF4_Nullstellen_bestimmen_die_Funktion_Loesung.pdf` | Musterlösung, freigegeben | BGY | `QF4_Nullstellen_bestimmen_die_Funktion_Loesung_v26.1.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/der-korbwurf/QF5_Der_Korbwurf_Aufgabenblatt.pdf` | Aufgabenblatt | BGY | `QF5_Der_Korbwurf_Aufgabenblatt_v48.5.pdf` | 12.11.2026 |
-| `/quadratische-funktionen/der-korbwurf/QF5_Der_Korbwurf_Loesung.pdf` | Musterlösung, freigegeben | BGY | `QF5_Der_Korbwurf_Loesung_v48.5.pdf` | 12.11.2026 |
-| `/quadratische-funktionen/probeklassenarbeit/QF_Probeklassenarbeit.pdf` | Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_v6.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/probeklassenarbeit/QF_Probeklassenarbeit_Loesung.pdf` | Lösung zur Probeklassenarbeit, freigegeben | BGY | `QF_Probeklassenarbeit_Loesung_v6.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/probeklassenarbeit/QF_Probeklassenarbeit_Notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | BGY | `QF_Probeklassenarbeit_Notentabelle_v6.pdf` | 10.11.2026 |
-| `/quadratische-funktionen/klassenarbeit/QF_Klassenarbeit.pdf` | Klassenarbeit, freigegeben nach dem Schreiben | BGY | `QF_Klassenarbeit_v1.4.pdf` | 13.11.2026 |
-| `/quadratische-funktionen/klassenarbeit/QF_Klassenarbeit_Loesung.pdf` | Lösung zur Klassenarbeit, freigegeben | BGY | `QF_Klassenarbeit_Loesung_v1.4.pdf` | 13.11.2026 |
-| `/quadratische-funktionen/klassenarbeit/QF_Klassenarbeit_Notentabelle.pdf` | Notentabelle zur Klassenarbeit | BGY | `QF_Klassenarbeit_Notentabelle_v1.4.pdf` | 13.11.2026 |
+## Was veröffentlicht ist
 
-Die ganze Reihe Lineare Funktionen läuft derzeit nur in der BF2, die Reihe Rechnen mit Zahlen nur in der BF1, die Reihe
-Quadratische Funktionen nur im BGY (alle Musterlösungen freigegeben 10.11.2026).
-Rechnen mit Zahlen hieß bis 10.11.2026 „Rationale Zahlen“ (`/rationale-zahlen`); der alte Link war
-nirgends weitergegeben und hat deshalb keine Weiterleitung (Entscheidung 10.11.2026).
+Das steht nur in den Beschreibungsdateien (Entscheidung 14.11.2026: eine einzige Stelle; die frühere
+Tabelle „Veröffentlichtes Material“ in dieser Datei entfiel). Übersicht mit Quelle und Stand:
 
-Klassenarbeit QF (v1.4): geschrieben und freigegeben am 13.11.2026, mit Lösung und Notentabelle online.
-Eine Nachschreib-Fassung käme nur ins Backup, nie auf die Website.
+```bash
+python3 _werkzeuge/bauen.py --bestand
+```
 
-Noch nicht freigegeben: Lösung zu „Mehr als nur steil“ (`LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf`).
-Kurztest LF1 Fassung 3 und 4 (v17) mit Lösungen: nicht veröffentlichen, im Einsatz ab 11.11.2026.
-Kurztest LF1 Fassung 5 für Nachschreiber: folgt, nur ins Backup, nie veröffentlichen
-(Fassung 1 und 2 sind öffentlich und taugen nicht mehr zum Nachschreiben).
-Interaktive Seiten zu LF1 (Artifacts „Steil-Check“, „Steigung ablesen“): vorerst nicht veröffentlichen.
-Rechnen mit Zahlen (BF1): Lösungen aller drei Aufgabenblätter freigegeben (10.11.2026). Kurztests aller drei Einheiten nur im
-Backup.
+Frühere Adressen und Namen:
+- Rechnen mit Zahlen hieß bis 10.11.2026 „Rationale Zahlen“ (`/rationale-zahlen`); der alte Link
+  war nirgends weitergegeben und hat deshalb keine Weiterleitung (Entscheidung 10.11.2026).
+- `/lineare-funktionen/kurztest-1`: siehe Ende des Abschnitts „Tests“.

@@ -1,0 +1,42 @@
+{
+  "titel": "Mal, geteilt – und das Minus?",
+  "kennung": null,
+  "teilthema": "Multiplikation und Division",
+  "beschreibung": "Vorzeichen, Brüche und Dezimalzahlen",
+  "bildungsgaenge": ["BF1"],
+  "bereiche": [],
+  "platz": 3,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "Mal_geteilt_und_das_Minus_Aufgabenblatt_v2.pdf", "stand": "10.11.2026" },
+  "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "Mal_geteilt_und_das_Minus_Loesung_v2.pdf", "stand": "10.11.2026" },
+  "interaktiv": { "vorhanden": false, "freigegeben": false },
+  "probetest": {
+    "test": { "vorhanden": true, "freigegeben": true, "quelle": "Mal_geteilt_und_das_Minus_Probetest_v2.pdf", "stand": "10.11.2026" },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "Mal_geteilt_und_das_Minus_Probetest_Loesung_v2.pdf", "stand": "10.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "Mal_geteilt_und_das_Minus_Probetest_Notentabelle_v2.pdf", "stand": "10.11.2026" }
+  },
+  "kurztest": {
+    "fassungen": [
+      {
+        "fassung": 1,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Mal_geteilt_und_das_Minus_Kurztest_F1_v2.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Mal_geteilt_und_das_Minus_Kurztest_F1_Loesung_v2.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 2,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Mal_geteilt_und_das_Minus_Kurztest_F2_v2.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Mal_geteilt_und_das_Minus_Kurztest_F2_Loesung_v2.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 3,
+        "test": { "vorhanden": false, "freigegeben": false, "hinweis": "folgt" },
+        "loesung": { "vorhanden": false, "freigegeben": false, "hinweis": "folgt" }
+      },
+      {
+        "fassung": 4,
+        "test": { "vorhanden": false, "freigegeben": false, "hinweis": "folgt" },
+        "loesung": { "vorhanden": false, "freigegeben": false, "hinweis": "folgt" }
+      }
+    ],
+    "notentabelle": { "vorhanden": true, "freigegeben": false, "quelle": "Mal_geteilt_und_das_Minus_Kurztest_Notentabelle_v2.pdf", "stand": "10.11.2026" }
+  }
+}

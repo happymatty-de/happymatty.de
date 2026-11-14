@@ -1,0 +1,12 @@
+{
+  "titel": "Vom Term zur Parabel",
+  "kennung": "QF1",
+  "teilthema": "Strecken & Verschieben",
+  "beschreibung": "Term und Graph zuordnen, Parabeln mit Schiebereglern, das Werkstor",
+  "bildungsgaenge": ["BGY"],
+  "bereiche": [],
+  "platz": 1,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "QF1_Vom_Term_zur_Parabel_Aufgabenblatt_v13.1.pdf", "stand": "10.11.2026" },
+  "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF1_Vom_Term_zur_Parabel_Loesung_v13.1.pdf", "stand": "10.11.2026" },
+  "interaktiv": { "vorhanden": false, "freigegeben": false }
+}

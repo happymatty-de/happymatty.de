@@ -1,0 +1,42 @@
+{
+  "titel": "Zahlenjagd",
+  "kennung": null,
+  "teilthema": "Addition und Subtraktion",
+  "beschreibung": "Zahlenkarten, Wege und Zahlenmauern",
+  "bildungsgaenge": ["BF1"],
+  "bereiche": [],
+  "platz": 2,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "Zahlenjagd_Aufgabenblatt_v2.pdf", "stand": "10.11.2026" },
+  "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "Zahlenjagd_Loesung_v2.pdf", "stand": "10.11.2026" },
+  "interaktiv": { "vorhanden": false, "freigegeben": false },
+  "probetest": {
+    "test": { "vorhanden": true, "freigegeben": true, "quelle": "Zahlenjagd_Probetest_v2.pdf", "stand": "10.11.2026" },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "Zahlenjagd_Probetest_Loesung_v2.pdf", "stand": "10.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "Zahlenjagd_Probetest_Notentabelle_v2.pdf", "stand": "10.11.2026" }
+  },
+  "kurztest": {
+    "fassungen": [
+      {
+        "fassung": 1,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F1_v2.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F1_Loesung_v2.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 2,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F2_v2.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F2_Loesung_v2.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 3,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F3_v2.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F3_Loesung_v2.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 4,
+        "test": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F4_v2.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_F4_Loesung_v2.pdf", "stand": "10.11.2026" }
+      }
+    ],
+    "notentabelle": { "vorhanden": true, "freigegeben": false, "quelle": "Zahlenjagd_Kurztest_Notentabelle_v2.pdf", "stand": "10.11.2026" }
+  }
+}

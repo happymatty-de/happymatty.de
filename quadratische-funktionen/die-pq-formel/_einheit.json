@@ -1,0 +1,12 @@
+{
+  "titel": "Die p,q-Formel",
+  "kennung": "QF3",
+  "teilthema": "Nullstellen, Gleichungen lösen",
+  "beschreibung": "p,q-Formel, Anzahl der Lösungen, schnellster Rechenweg; Diagonalstrebe",
+  "bildungsgaenge": ["BGY"],
+  "bereiche": [],
+  "platz": 3,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "QF3_Die_pq-Formel_Aufgabenblatt_v12.pdf", "stand": "10.11.2026" },
+  "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF3_Die_pq-Formel_Loesung_v12.pdf", "stand": "10.11.2026" },
+  "interaktiv": { "vorhanden": false, "freigegeben": false }
+}

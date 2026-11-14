@@ -1,0 +1,24 @@
+{
+  "titel": "Mehr als nur steil",
+  "kennung": "LF2",
+  "teilthema": null,
+  "beschreibung": "Lineare Funktionen zeichnen und ablesen – mit Spezialfällen",
+  "bildungsgaenge": ["BF2"],
+  "bereiche": [],
+  "platz": 2,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf", "stand": "10.11.2026" },
+  "musterloesung": {
+    "vorhanden": true,
+    "freigegeben": false,
+    "quelle": "LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf",
+    "stand": "10.11.2026",
+    "hinweis": "noch nicht freigegeben"
+  },
+  "interaktiv": {
+    "vorhanden": true,
+    "freigegeben": true,
+    "quelle": "Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ v1.22",
+    "stand": "10.11.2026",
+    "text": "Lineare Funktionen erkunden, zeichnen und ablesen – mit Spezialfällen"
+  }
+}

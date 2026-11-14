@@ -1,0 +1,75 @@
+{
+  "titel": "Wie steil ist das?",
+  "kennung": "LF1",
+  "teilthema": null,
+  "beschreibung": "Steigung in Prozent und am Steigungsdreieck – Ursprungsgeraden ablesen und zeichnen",
+  "bildungsgaenge": ["BF2"],
+  "bereiche": [],
+  "platz": 1,
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "LF1_Wie_steil_ist_das_Aufgabenblatt_v24.pdf", "stand": "10.11.2026" },
+  "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "LF1_Wie_steil_ist_das_Loesung_v24.pdf", "stand": "10.11.2026" },
+  "interaktiv": { "vorhanden": true, "freigegeben": false, "quelle": "Artifacts „Steil-Check“ und „Steigung ablesen“", "hinweis": "vorerst nicht veröffentlichen" },
+  "probetest": {
+    "test": { "vorhanden": true, "freigegeben": true, "quelle": "LF1_Probetest_v14.pdf", "stand": "10.11.2026" },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "LF1_Probetest_Loesung_v14.pdf", "stand": "10.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "LF1_Probetest_Notentabelle_v14.pdf", "stand": "10.11.2026" }
+  },
+  "kurztest": {
+    "fassungen": [
+      {
+        "fassung": 1,
+        "test": { "vorhanden": true, "freigegeben": true, "quelle": "LF1_Kurztest_1_v17.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "LF1_Kurztest_Loesung_1_v17.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 2,
+        "test": { "vorhanden": true, "freigegeben": true, "quelle": "LF1_Kurztest_2_v17.pdf", "stand": "10.11.2026" },
+        "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "LF1_Kurztest_Loesung_2_v17.pdf", "stand": "10.11.2026" }
+      },
+      {
+        "fassung": 3,
+        "test": {
+          "vorhanden": true,
+          "freigegeben": false,
+          "quelle": "LF1_Kurztest_3_v17.pdf",
+          "stand": "10.11.2026",
+          "hinweis": "im Einsatz ab 11.11.2026, nicht veröffentlichen"
+        },
+        "loesung": {
+          "vorhanden": true,
+          "freigegeben": false,
+          "quelle": "LF1_Kurztest_Loesung_3_v17.pdf",
+          "stand": "10.11.2026",
+          "hinweis": "im Einsatz ab 11.11.2026, nicht veröffentlichen"
+        }
+      },
+      {
+        "fassung": 4,
+        "test": {
+          "vorhanden": true,
+          "freigegeben": false,
+          "quelle": "LF1_Kurztest_4_v17.pdf",
+          "stand": "10.11.2026",
+          "hinweis": "im Einsatz ab 11.11.2026, nicht veröffentlichen"
+        },
+        "loesung": {
+          "vorhanden": true,
+          "freigegeben": false,
+          "quelle": "LF1_Kurztest_Loesung_4_v17.pdf",
+          "stand": "10.11.2026",
+          "hinweis": "im Einsatz ab 11.11.2026, nicht veröffentlichen"
+        }
+      },
+      {
+        "fassung": 5,
+        "test": {
+          "vorhanden": false,
+          "freigegeben": false,
+          "hinweis": "für Nachschreiber, folgt; nur ins Backup, nie veröffentlichen (Fassung 1 und 2 sind öffentlich und taugen nicht mehr zum Nachschreiben)"
+        },
+        "loesung": { "vorhanden": false, "freigegeben": false, "hinweis": "folgt mit Fassung 5; nie veröffentlichen" }
+      }
+    ],
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "LF1_Kurztest_Notentabelle_v17.pdf", "stand": "10.11.2026" }
+  }
+}
