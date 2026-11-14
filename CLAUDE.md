@@ -219,7 +219,7 @@ Zwei Wege zum Material (Entscheidung 10.11.2026): nach Thema für alle, nach Bil
 
 - **Startseite** `index.html` (`happymatty.de`): unter der Überschrift „Unterrichtsmaterial“ die Zeile
   „von Patrick Saul“ in Indie Flower grün (Klasse `unterzeile autor`, Entscheidung 11.11.2026). Darunter „Klassen“ mit einer Kachel je
-  Bildungsgang (Entscheidung 11.11.2026: knapp wie „Themenbereiche“, vorher „Meine Klasse“), darunter unter „Themenbereiche“ die **Themen** als grüne Karten (Klasse `thema-karte`) mit
+  Bildungsgang (Entscheidung 11.11.2026: knapp wie „Themen“, vorher „Meine Klasse“; „Themenbereiche“ hieß der Abschnitt bis 14.11.2026), darunter unter „Themen“ die **Themen** als grüne Karten (Klasse `thema-karte`) mit
   Kennzeichen der Bildungsgänge und Zahl der Themeneinheiten („2 Themeneinheiten“). Keine Titel
   einzelner Arbeitsblätter auf der Startseite. Auch ältere Themen bleiben stehen, damit jedes
   Material auffindbar bleibt.
