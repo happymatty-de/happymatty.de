@@ -11,10 +11,16 @@ Wie das geht: Abschnitt „Beschreibungsdateien und Bauskript“.
 
 ## Rückmeldung im Chat
 
-Nach erledigter Arbeit nur eine kurze Statusmeldung („Alles umgesetzt.“). Details nur, wenn etwas
-nicht funktioniert hat, wenn Claude deutlich vom Auftrag abgewichen ist oder wenn Patrick etwas
-entscheiden oder tun muss. Kleine Verbesserungen, die Claude selbst vornimmt, werden nicht
-gemeldet (Entscheidung 10.11.2026: Viel Text lässt Wichtiges untergehen).
+Ist eine Arbeit so erledigt wie besprochen, auch mit kleinen Abweichungen, schreibt Claude nur
+„Alles umgesetzt.“, ohne Liste von Dateien, Commits, Versionen oder Schritten. Das gilt auch, wenn
+ein Auftrag am Ende eine Zusammenfassung verlangt, etwa ein Prompt, den Claude Code vorbereitet hat.
+Mehr schreibt Claude nur, wenn etwas nicht funktioniert hat, wenn Claude deutlich vom Auftrag
+abgewichen ist oder wenn Patrick etwas entscheiden oder tun muss, und dann nur diesen Punkt. Ein
+Protokoll oder einen Bericht liefert Claude nur, wenn Patrick ihn ausdrücklich als eigenes Ergebnis
+verlangt, etwa ein Testprotokoll zum Weitergeben. Schreibt Claude einen Auftrag für einen
+Projektchat oder eine andere Sitzung, verlangt Claude darin keine Schlussmeldung. Kleine
+Verbesserungen, die Claude selbst vornimmt, werden nicht gemeldet (Entscheidung 14.11.2026,
+verschärft die Regel vom 10.11.2026: Viel Text lässt Wichtiges untergehen).
 
 ## Wer schreibt was
 
@@ -97,7 +103,6 @@ auch über mehrere Schuljahre und für mehrere Klassen.
   „hochgeladen, in wenigen Minuten online“). Die Veröffentlichung dauert mal unter einer
   Minute, mal mehrere Minuten (Anlass 10.11.2026: Patrick beurteilte Farben, bevor sie online
   waren). Danach genügt in Safari Wahltaste + Cmd + R.
-- Danach nennt Claude im Chat kurz, welche Links neu sind oder sich geändert haben.
 - Claude fragt vorher nach, bevor ein veröffentlichter Link umbenannt oder verschoben wird,
   bevor eine Lösung veröffentlicht wird und bevor etwas gelöscht wird.
 
