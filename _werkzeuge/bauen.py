@@ -255,6 +255,8 @@ class Einheit:
         if self.kennung and not KENNUNG.match(self.kennung):
             melde(ort, f'„kennung“ sieht aus wie LF1 oder QF5, nicht „{self.kennung}“')
         self.teilthema = wert(ort, d, 'teilthema', 'text', leer=True)
+        if 'teilthema' in d and not self.teilthema:
+            melde(ort, '„teilthema“ fehlt; Patrick fragen (siehe CLAUDE.md, Begriffe)')
         self.beschreibung = wert(ort, d, 'beschreibung', 'text') or ''
         self.bildungsgaenge = bildungsgaenge(ort, d)
         self.bereiche = wert(ort, d, 'bereiche', 'liste') or []
@@ -686,7 +688,7 @@ def baue_thema(t):
             + f'  <h1 class="thema">{esc(t.titel)}</h1>\n')
     karten = []
     for e in t.einheiten:
-        text = (f'{esc(e.teilthema)} – ' if e.teilthema else '') + esc(e.beschreibung)
+        text = f'{esc(e.teilthema)} – {esc(e.beschreibung)}'
         if e.probetest_online or e.fassungen_online:  # Entscheidung 14.11.2026: nur „mit Test“
             text += ' · mit Test'
         karten.append(karte(None, url(e.ordner), f'{esc(e.titel)}{badges(e.bildungsgaenge)}', text))

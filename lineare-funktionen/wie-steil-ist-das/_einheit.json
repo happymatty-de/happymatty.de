@@ -1,8 +1,8 @@
 {
   "titel": "Wie steil ist das?",
   "kennung": "LF1",
-  "teilthema": null,
-  "beschreibung": "Steigung in Prozent und am Steigungsdreieck – Ursprungsgeraden ablesen und zeichnen",
+  "teilthema": "Steigung",
+  "beschreibung": "in Prozent und am Steigungsdreieck, Ursprungsgeraden ablesen und zeichnen",
   "bildungsgaenge": ["BF2"],
   "bereiche": [],
   "platz": 1,

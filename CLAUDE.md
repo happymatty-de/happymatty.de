@@ -200,7 +200,7 @@ keine Fassung freigegeben ist.
 |---|---|
 | `titel` | Titel wie auf dem Blatt: Überschrift der Übersicht, Eintrag auf der Themenseite, Seitentitel, PDF-Titel |
 | `kennung` | Kürzel aus der Reihenplanung (`LF1`, `QF5`); `null`, wenn das Blatt keins trägt (die BF1-Blätter von Rechnen mit Zahlen) |
-| `teilthema` | siehe „Begriffe“; Kopfzeile der Übersicht und Anfang der Beschreibung. `null` gibt es nur bei LF1 und LF2 (ihre Seiten zeigen heute keins); eine neue Einheit hat immer eins, sonst fragt der Chat Patrick |
+| `teilthema` | siehe „Begriffe“; Kopfzeile der Übersicht und Anfang der Beschreibung. Pflicht: Steht es nicht auf dem Blatt oder im Reihenplan, fragt der Chat Patrick |
 | `beschreibung` | kurzer Text auf der Themenseite hinter „Teilthema – “; „· mit Test“ hängt das Skript an, wenn ein Probetest oder Kurztest-Fassungen veröffentlicht sind |
 | `bildungsgaenge` | Liste der Bildungsgänge, die die Einheit bearbeiten (Kennzeichen, Einstiegsseiten, Zählung). Ein weiterer Eintrag zeigt die Einheit auch unter diesem Bildungsgang |
 | `bereiche` | Liste weiterer Bereiche, vorgesehen: `"Grundlagen"`. Noch ohne Seite; das Skript prüft nur den Namen. Sonst `[]` |

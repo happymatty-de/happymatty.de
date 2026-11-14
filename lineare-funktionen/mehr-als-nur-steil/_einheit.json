@@ -1,8 +1,8 @@
 {
   "titel": "Mehr als nur steil",
   "kennung": "LF2",
-  "teilthema": null,
-  "beschreibung": "Lineare Funktionen zeichnen und ablesen – mit Spezialfällen",
+  "teilthema": "Steigung und y-Achsenabschnitt",
+  "beschreibung": "Geraden zeichnen und ablesen, waagerecht und senkrecht",
   "bildungsgaenge": ["BF2"],
   "bereiche": [],
   "platz": 2,
