@@ -344,7 +344,7 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
   In die PDFs auf der Website (nicht ins Backup) trägt Claude den Titel mit
   `python3 _werkzeuge/pdf_titel.py <datei.pdf> "<Titel>"` ein, bei jedem neuen oder ersetzten
   PDF; Inhalt und Aussehen bleiben dabei gleich. Ohne Titel zeigen Browser nur den Dateinamen.
-- Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul · Datenschutzerklärung“, Name grün,
+- Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul · Datenschutzerklärung · Impressum“, Name grün,
   Rest grau, darüber eine dünne blaue Linie. „Datenschutzerklärung“ im Standardgrau als Link auf
   `/datenschutz`, ohne Unterstreichung, beim Darüberfahren unterstrichen. Die interaktiven Seiten
   haben keine solche Fußzeile. Dort steht hinter der Versionsnummer ein kleines „Datenschutz“,
@@ -394,8 +394,12 @@ Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 ## Inhalte auf den öffentlichen Seiten
 
 - Patrick Saul darf als Autor genannt werden.
-- Kein Impressum und keine Anschrift, bis Patrick das Impressum klärt. Einzige Kontaktangabe ist
-  die E-Mail-Adresse happymatty.de@gmail.com in der Datenschutzerklärung.
+- Das Impressum ist geklärt und online (`/impressum`, Entscheidung 14.11.2026). Als Anschrift gilt
+  ausschließlich die berufliche Anschrift „Patrick Saul, c/o BBS Betzdorf-Kirchen, Auf dem
+  Molzberg 14, 57548 Kirchen“. Die private Anschrift kommt nie auf die Seite. Kontakt bleibt
+  happymatty.de@gmail.com. Neue Seiten bekommen die Fußzeile mit Datenschutzerklärung und
+  Impressum (Link `/impressum/`, im selben Grau und mit derselben Gestaltung); die interaktiven
+  Seiten tragen hinter „Datenschutz“ ein „Impressum“.
 - Nichts über Claude oder darüber, wie die Seiten entstehen.
 
 ## Herkunft der Seiten
