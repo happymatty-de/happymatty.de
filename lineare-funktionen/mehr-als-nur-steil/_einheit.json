@@ -6,12 +6,12 @@
   "bildungsgaenge": ["BF2"],
   "bereiche": [],
   "platz": 2,
-  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Mehr_als_nur_steil_Aufgabenblatt_v12.14.pdf", "stand": "10.11.2026" },
+  "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Mehr_als_nur_steil_Aufgabenblatt_v13.1.pdf", "stand": "14.11.2026" },
   "musterloesung": {
     "vorhanden": true,
     "freigegeben": false,
-    "quelle": "LF2_Mehr_als_nur_steil_Loesung_v12.14.pdf",
-    "stand": "10.11.2026",
+    "quelle": "LF2_Mehr_als_nur_steil_Loesung_v13.1.pdf",
+    "stand": "14.11.2026",
     "hinweis": "noch nicht freigegeben"
   },
   "interaktiv": {
