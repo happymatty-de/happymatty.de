@@ -67,8 +67,9 @@ Ein Link, der einmal an Schüler verschickt wurde, muss auf Dauer funktionieren,
 auch über mehrere Schuljahre und für mehrere Klassen.
 
 - Eine veröffentlichte Seite wird nie gelöscht oder umbenannt, ohne dass an der alten Adresse
-  eine Weiterleitung auf die neue Adresse bleibt. Ausnahme: PDF-Adressen (siehe „Aufbau pro
-  Arbeitsblatt“).
+  eine Weiterleitung auf die neue Adresse bleibt. Ausnahmen: PDF-Adressen (siehe „Aufbau pro
+  Arbeitsblatt“) und Seiten, für die Patrick ausdrücklich keine Weiterleitung will, etwa weil ihr
+  Link nirgends weitergegeben wurde (Liste unter „Was veröffentlicht ist“).
 - Vor jeder Umbenennung oder Verschiebung fragt Claude nach.
 - Die Adresse einer Themeneinheit ist ihr Ordnername, nicht ihr Titel: Ein neuer Titel in
   `_einheit.json` ändert die Adresse nicht.
@@ -458,11 +459,6 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
   Kurztest-Fassungen veröffentlicht sind, gleich welche (Entscheidung 14.11.2026; vorher
   „· mit Probetest“ bzw. „· mit Probetest und Kurztest“).
 
-Alte Adresse: `/lineare-funktionen/kurztest-1` war am 10.11.2026 kurz online und leitet auf
-`/lineare-funktionen/wie-steil-ist-das/#probetest` weiter (handgeschriebene Weiterleitung, das
-Skript lässt sie stehen). Die zwei PDFs, die dort lagen (ältere Stände des Probetests), sind am
-12.11.2026 entfallen.
-
 ## Lösungen
 
 - Das Repository ist öffentlich: Alles, was darin liegt, kann jeder finden, auch ohne Link.
@@ -711,7 +707,9 @@ python3 _werkzeuge/bauen.py --bestand
 Frühere Adressen und Namen:
 - Rechnen mit Zahlen hieß bis 10.11.2026 „Rationale Zahlen“ (`/rationale-zahlen`); der alte Link
   war nirgends weitergegeben und hat deshalb keine Weiterleitung (Entscheidung 10.11.2026).
-- `/lineare-funktionen/kurztest-1`: siehe Ende des Abschnitts „Tests“.
+- `/lineare-funktionen/kurztest-1` war am 10.11.2026 kurz online (mit zwei älteren Ständen des
+  Probetests als PDF, entfallen am 12.11.2026) und leitete danach auf den Probetest von LF1 weiter.
+  Die Weiterleitung entfiel am 14.11.2026 (Entscheidung Patrick: nicht nötig).
 - `/lineare-funktionen/wie-steil-ist-das/LF1_Kurztest_1.pdf`, `LF1_Kurztest_2.pdf`,
   `LF1_Kurztest_Loesung_1.pdf`, `LF1_Kurztest_Loesung_2.pdf`, `LF1_Kurztest_Notentabelle.pdf`:
   online vom 12. bis 14.11.2026 (Fassungen 1 und 2 als Ausnahme), entfielen ohne Weiterleitung
