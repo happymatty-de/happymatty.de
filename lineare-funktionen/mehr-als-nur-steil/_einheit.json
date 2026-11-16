@@ -9,10 +9,9 @@
   "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Mehr_als_nur_steil_Aufgabenblatt_v13.1.pdf", "stand": "14.11.2026" },
   "musterloesung": {
     "vorhanden": true,
-    "freigegeben": false,
+    "freigegeben": true,
     "quelle": "LF2_Mehr_als_nur_steil_Loesung_v13.1.pdf",
-    "stand": "14.11.2026",
-    "hinweis": "noch nicht freigegeben"
+    "stand": "16.11.2026"
   },
   "interaktiv": {
     "vorhanden": true,
