@@ -19,5 +19,10 @@
     "quelle": "Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ v1.22",
     "stand": "10.11.2026",
     "text": "Lineare Funktionen erkunden, zeichnen und ablesen – mit Spezialfällen"
+  },
+  "probetest": {
+    "test": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_v1.3.pdf", "stand": "17.11.2026" },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_Loesung_v1.3.pdf", "stand": "17.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_Notentabelle_v1.3.pdf", "stand": "17.11.2026" }
   }
 }
