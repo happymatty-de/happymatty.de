@@ -21,8 +21,8 @@
     "text": "Lineare Funktionen erkunden, zeichnen und ablesen – mit Spezialfällen"
   },
   "probetest": {
-    "test": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_v1.3.pdf", "stand": "17.11.2026" },
-    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_Loesung_v1.3.pdf", "stand": "17.11.2026" },
-    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_Notentabelle_v1.3.pdf", "stand": "17.11.2026" }
+    "test": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_v2.pdf", "stand": "18.11.2026" },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_Loesung_v2.pdf", "stand": "18.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_Notentabelle_v2.pdf", "stand": "18.11.2026" }
   }
 }
