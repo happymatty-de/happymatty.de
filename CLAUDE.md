@@ -35,6 +35,11 @@ In dieses Repository schreiben zwei Arten von Chats (Entscheidung 14.11.2026):
   Startseite …), gehören mit dazu. Von Hand ändern sie außerhalb ihres Ordners nichts.
   Quelldateien und alle PDFs sichern sie selbst im privaten Backup
   `happymatty-de/unterrichtsmaterial` (Regeln dort in der `CLAUDE.md`).
+- **Codelisten nie veröffentlichen, nie sichern** (Skill `schule`, Notenschlüssel, Codeliste):
+  Sie sind nur für einen Einsatz da, werden ausgedruckt, die Schüler tragen ihre Namen ein,
+  danach werden sie vernichtet. Sie gehen nur in den Chat und in die iCloud-Ablage, von der aus
+  Patrick in der Schule druckt, weder in dieses Repository noch ins Backup `unterrichtsmaterial`,
+  auch wenn sonst alles gesichert wird (Entscheidung 18.11.2026).
 - **Claude Code** (lokal bei Patrick) darf alles. Nur Claude Code ändert: das Skript und alles in
   `_werkzeuge/`, `stil/`, die Seitentypen (Aufbau der gebauten Seiten), neue Bereiche, neue
   Themen und Bildungsgänge, die Beschreibungsdateien der Themen (`_thema.json`, also auch
@@ -455,6 +460,7 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
 | `probeklassenarbeit/QF_Probeklassenarbeit_Notentabelle.pdf` | Notentabelle zur Probeklassenarbeit | `happymatty/<Thema>/Notentabelle Probeklassenarbeit` |
 | `klassenarbeit/QF_Klassenarbeit.pdf` usw. | Klassenarbeit, Lösung, Notentabelle | `happymatty/<Thema>/Klassenarbeit`, `…/Lösung Klassenarbeit`, `…/Notentabelle Klassenarbeit` |
 
+- **Codelisten kommen nie auf die Website**, auch nicht mit dem Test (Abschnitt „Wer schreibt was“).
 - **Notentabellen werden immer mit veröffentlicht**, wenn der zugehörige Test online geht.
   Karte „Notentabelle zum …“, Text „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“.
   Zwischen Zahl und „Seite(n)“ steht immer ein geschütztes Leerzeichen (`&nbsp;`).
