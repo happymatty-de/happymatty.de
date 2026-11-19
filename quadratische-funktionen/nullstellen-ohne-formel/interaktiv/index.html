@@ -771,7 +771,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v1.1';
+const VERSION='v1.2';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const el=h=>{const t=document.createElement('template');t.innerHTML=h.trim();return t.content.firstElementChild;};
@@ -1339,7 +1339,7 @@ const GEN={
       if(art==='plus'){c=pick([1,2,3,4,5,9]);t=poly(1,0,c);n=0;fn=z=>z*z+c;grund='Die Normalparabel ist um '+c+' nach oben verschoben. Sie trifft die '+x+'-Achse nicht: keine Nullstelle.';}
       else if(art==='minus'){c=pick([1,2,3,4,5,7,9,16]);t=poly(1,0,-c);n=2;fn=z=>z*z-c;grund='Die Normalparabel ist um '+c+' nach unten verschoben. Sie schneidet die '+x+'-Achse zweimal: zwei Nullstellen.';}
       else if(art==='null'){a=pick([1,2,-1,3,0.5]);const u=pick([0,0,-3,-2,2,3]);t=u===0?glied(a,2):vorfaktor(a)+'('+x+(u>0?' − ':' + ')+Math.abs(u)+')'+Q;n=1;fn=z=>a*(z-u)*(z-u);
-        const hp=a>0?'Tiefpunkt':'Hochpunkt';grund=u===0?'Der '+hp+' liegt im Ursprung, auf der '+x+'-Achse: genau eine Nullstelle.':'Nur nach '+(u>0?'rechts':'links')+' verschoben: Der '+hp+' liegt auf der '+x+'-Achse. Genau eine Nullstelle.';}
+        const hp=a>0?'Tiefpunkt':'Hochpunkt';grund=u===0?'Der '+hp+' liegt im Ursprung, auf der '+x+'-Achse: genau eine Nullstelle.':'Nach '+(u>0?'rechts':'links')+' verschoben'+(a<0?' und gespiegelt':'')+', aber nicht nach oben oder unten: Der '+hp+' liegt auf der '+x+'-Achse. Genau eine Nullstelle.';}
       else if(art==='negplus'){a=pick([-1,-1,-2,-0.5]);c=pick([1,2,4,8,9]);t=poly(a,0,c);n=2;fn=z=>a*z*z+c;grund='Nach unten geöffnet und um '+c+' nach oben verschoben: Der Hochpunkt liegt über der '+x+'-Achse. Zwei Nullstellen.';}
       else if(art==='negminus'){a=pick([-1,-2]);c=pick([1,2,3,4]);t=poly(a,0,-c);n=0;fn=z=>a*z*z-c;grund='Nach unten geöffnet und nach unten verschoben: Der Hochpunkt liegt unter der '+x+'-Achse. Keine Nullstelle.';}
       else if(art==='nf'){let p,q;do{p=pick([-5,-4,-3,-2,-1,1,2,3,4,5]);q=pick([-5,-4,-3,-2,-1,0,1,2,3,4,5]);}while(p===q);a=pick([1,2,-1,-3]);t=(a===1?'':a===-1?'−':a+' · ')+lf(p)+' · '+lf(q);n=2;fn=z=>a*(z-p)*(z-q);
