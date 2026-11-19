@@ -10,7 +10,8 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=66113f26">
 <style>
 /* =====================================================================
-   LF2 · Mehr als nur steil · Erklärer v1.22 (04.11.2026) · CC BY-NC-SA 4.0 · Patrick Saul
+   LF2 · Mehr als nur steil · Erklärer v1.23 (19.11.2026) · CC BY-NC-SA 4.0 · Patrick Saul
+   v1.23: Logo oben links mit „happymatty.de“ statt „‹“ (Kopfzeile der interaktiven Seiten, 19.11.2026).
    Vier Reiter: Lineare Funktion · Zeichnen · Ablesen · Spezialfälle
    v1.22: Erkunder (Lineare Funktion): „b = …“ steht am Punkt auf der y-Achse wie in den
      Schritten.
@@ -256,10 +257,17 @@ svg .lab.fn{font-style:italic;font-size:28px;font-weight:400}
 svg .ring{fill:none;stroke-width:3px;transform-box:fill-box;transform-origin:center;animation:ring 1.5s ease-out infinite}
 svg .ring1{fill:none;stroke-width:3px;transform-box:fill-box;transform-origin:center;animation:ring 1s ease-out 1}
 @keyframes ring{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.6);opacity:0}}
-/* happymatty: Zurück-Knopf (Logo) oben links, bei jeder Übernahme einsetzen (CLAUDE.md) */
-header .heim{flex:none;display:flex;align-items:center;gap:calc(.3*var(--u));text-decoration:none}
+/* happymatty: Logo oben links als Zurück-Link, Smiley mit „happymatty.de“ wie auf der Website (CLAUDE.md, Kopfzeile der interaktiven Seiten) */
+header .heim{flex:none;display:flex;align-items:center;gap:calc(.8*var(--u));color:#1F2933;text-decoration:none}
 header .heim img{width:calc(4.2*var(--u));height:calc(4.2*var(--u));border-radius:22%;display:block}
-header .heim .pfeil{font-family:var(--sans);font-size:calc(4*var(--u));font-weight:700;margin-top:calc(-.5*var(--u));line-height:1;color:var(--blau)}
+header .heim span{font-family:var(--sans);font-weight:700;font-size:calc(2*var(--u));white-space:nowrap}
+/* Quer bis 16:10 (iPad 4:3, Tafel) passen Logo, Titel, Reiter und Vollbild nicht in eine Zeile:
+   oben Logo, Titel und Vollbild, darunter die Reiter */
+@media (orientation: landscape) and (max-aspect-ratio: 33/20){
+  header{flex-wrap:wrap;row-gap:calc(.6*var(--u))}
+  header button.voll{margin-left:auto}
+  nav.tabs{order:3;flex-basis:100%;justify-content:flex-start}
+}
 .titel small .version{font-size:inherit;color:var(--grau);opacity:.75;margin-left:calc(.7*var(--u))}
 @media (orientation: portrait){.titel small{display:block}} /* Version und Datenschutz auch hochkant zeigen */
 </style>
@@ -267,8 +275,8 @@ header .heim .pfeil{font-family:var(--sans);font-size:calc(4*var(--u));font-weig
 <body>
 <div class="app">
   <header>
-    <a class="heim" id="heim" href="/" aria-label="Zurück zu happymatty.de"><span class="pfeil">‹</span><img src="/stil/icon-192.png" alt=""></a>
-    <div class="titel">Mehr als nur steil<small>Lineare Funktionen<span class="version">v1.22 · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a> · <a href="/impressum/" target="_blank" rel="noopener">Impressum</a></span></small></div>
+    <a class="heim" id="heim" href="/" aria-label="Zurück zu happymatty.de"><img src="/stil/icon-192.png" alt=""><span>happymatty.de</span></a>
+    <div class="titel">Mehr als nur steil<small>Lineare Funktionen<span class="version">v1.23 · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a> · <a href="/impressum/" target="_blank" rel="noopener">Impressum</a></span></small></div>
     <nav class="tabs" id="tabs"></nav>
     <button id="voll" class="voll" title="Vollbild"><svg id="vollicon" viewBox="0 0 24 24"><path d="M4 4h6v2H6v4H4zm10 0h6v6h-2V6h-4zM4 14h2v4h4v2H4zm14 0h2v6h-6v-2h4z"/></svg></button>
   </header>

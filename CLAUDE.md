@@ -303,7 +303,8 @@ sie vorhanden ist, bis zur Freigabe mit grauen Karten (siehe „Tests“).
    Musterlösung und Kurztest-Fassungen nur, wenn Patrick sie ausdrücklich freigibt (Abschnitte
    „Lösungen“ und „Tests“). Nie eine `.tex`.
 4. Ist eine interaktive Seite freigegeben: als `interaktiv/index.html` ablegen und dabei die
-   Regeln unter „Gestaltung“ einsetzen (Seitentitel, Zurück-Knopf, „Datenschutz · Impressum“).
+   Regeln unter „Gestaltung“ einsetzen (Seitentitel, Kopfzeile der interaktiven Seiten, „Datenschutz ·
+   Impressum“).
 5. `_einheit.json` schreiben wie im Beispiel oben: alles, was es gibt, auch Nicht-Freigegebenes
    (dann `"freigegeben": false`). `platz` ist die Nummer in der Reihe.
 6. `python3 _werkzeuge/bauen.py`; bei Fehlern die Meldung lesen, beheben, erneut laufen lassen.
@@ -587,7 +588,7 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
   Startseite (es gibt noch keine Seite je Fach; kommt eine, zeigt es dorthin), das Thema ein Link
   auf seine Themenseite. Farbe wie bisher, ohne Unterstreichung, beim Darüberfahren
   unterstrichen. Das Teilthema bleibt ohne Link. Das gilt auf jeder Seite mit dieser Kopfzeile,
-  auch auf den interaktiven Seiten, sobald sie sie tragen.
+  auch auf der Startseite der Trainings (Kopfzeile der interaktiven Seiten).
 - **Ein Grau** `#6E6E6E` überall, wo Text grau ist (Kopf- und Fußzeile, Beschreibungen,
   Unterzeilen), wie im Skill `mathe` (Variable `--grau`). Das frühere `#767676` war heller als
   Blau, Grün und Lila und wirkte daneben am schwächsten (Skill `mathe`, 10.11.2026).
@@ -643,21 +644,36 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
 - Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul · Datenschutzerklärung · Impressum“, Name grün,
   Rest grau, darüber eine dünne blaue Linie. „Datenschutzerklärung“ im Standardgrau als Link auf
   `/datenschutz`, ohne Unterstreichung, beim Darüberfahren unterstrichen. Die interaktiven Seiten
-  haben keine solche Fußzeile. Dort steht hinter der Versionsnummer ein kleines „Datenschutz“,
-  durch „ · “ getrennt und so zurückhaltend wie die Versionsnummer (gleiche Größe und Farbe, ohne
-  Unterstreichung, beim Darüberfahren unterstrichen); es öffnet `/datenschutz/` in einem neuen Tab
-  (`target="_blank" rel="noopener"`). Claude setzt es bei jeder Übernahme eines Artifacts ein
-  (Entscheidung 11.11.2026).
-- **Zurück-Knopf der interaktiven Seiten** (Entscheidung 11.11.2026): Links vor dem Titel steht ein
-  Pfeil „‹“ mit dem Symbol der Website, beides ein Link (`<a class="heim" id="heim" href="/">`).
-  Ein Tipp darauf führt dorthin zurück, wo man herkam (`history.back()`, wenn die vorige Seite auf
-  happymatty.de lag); bei einem Direktlink führt er zur Startseite. Nicht „Zurück“ beschriften:
-  Unten gibt es meist schon einen Zurück-Knopf für die Schritte. Damit die Kopfleiste auch auf
-  einem iPad im 4:3-Format passt, stehen Versionsnummer und „Datenschutz“ in der kleinen Zeile
-  unter dem Titel, hinter dem Thema („Lineare Funktionen v1.22 · Datenschutz“); eine Formel o. Ä.
-  fällt aus dieser Zeile weg. Claude setzt Knopf, Stil und Skript bei jeder Übernahme eines
-  Artifacts ein, wie in `/lineare-funktionen/mehr-als-nur-steil/interaktiv` (Kommentar
-  „happymatty: Zurück-Knopf“), und prüft die Kopfleiste bei 1024 × 768.
+  haben keine solche Fußzeile. Dort stehen Versionsnummer, „Datenschutz“ und „Impressum“ klein
+  und grau, durch „ · “ getrennt („v2 · Datenschutz · Impressum“), ohne Unterstreichung, beim
+  Darüberfahren unterstrichen; die beiden Links öffnen `/datenschutz/` und `/impressum/` in einem
+  neuen Tab (`target="_blank" rel="noopener"`). Wo die Zeile steht, regelt der nächste Punkt.
+  Claude setzt sie bei jeder Übernahme eines Artifacts ein (Entscheidung 11.11.2026, Ort geändert
+  am 19.11.2026).
+- **Kopfzeile der interaktiven Seiten** (Entscheidung Patrick 19.11.2026, Variante A; löst den
+  Zurück-Knopf „‹“ mit Smiley vom 11.11.2026 ab: Der Pfeil wirkte hässlich, und „happymatty“ stand
+  nirgends). Die Startseite eines Trainings beginnt wie die übrige Website:
+  1. Oben eine Zeile wie die Kopfleiste: links das Logo (`/stil/icon-192.png` mit „happymatty.de“,
+     Libertinus Sans fett, `#1F2933`), ohne „‹“. Das Logo ist der Zurück-Link
+     (`<a class="logo" id="heim" href="/">`): Ein Tipp führt dorthin zurück, wo man herkam
+     (`history.back()`, wenn die vorige Seite auf happymatty.de lag), bei einem Direktlink zur
+     Startseite. Nicht „Zurück“ beschriften: Unten gibt es meist schon einen Zurück-Knopf für die
+     Schritte. Rechts in derselben Zeile die Knöpfe der Seite (Kronen, Ton, Vollbild).
+  2. Darunter mittig die Kopfzeile in Indie Flower wie auf der Übersicht der Themeneinheit:
+     „Mathematik · Thema · Teilthema“ (grau, grün, lila; Teilthema aus `_einheit.json`), Fach und
+     Thema als Links wie dort, darunter eine dünne blaue Linie.
+  3. Darunter mittig die Überschrift in Indie Flower blau („QF2-Training“), darunter klein grau der
+     Titel des Blatts („Nullstellen ohne Formel“).
+  4. Versionsnummer · Datenschutz · Impressum klein und grau mittig am Fuß der Startseite.
+
+  Die Kopfzeilen der übrigen Ansichten eines Trainings (Einzeltraining, Erklärungen, Aufgaben mit
+  „‹ Start“) bleiben, wie sie sind. Eine Erklär-App, die starr auf einen Bildschirm passt
+  (`/lineare-funktionen/mehr-als-nur-steil/interaktiv`), bekommt die volle Kopfzeile nur, wenn sie
+  bei 1024 × 768 ohne Scrollen passt; sonst nur das Logo mit „happymatty.de“ als Zurück-Link,
+  Versionsnummer · Datenschutz · Impressum in der kleinen Zeile unter dem Titel. Dort brechen bei
+  4:3 quer die Reiter unter Logo und Titel um. Claude setzt die Kopfzeile bei jeder Übernahme
+  eines Artifacts ein, wie im QF2-Training (Quellen im Backup, `startKopf()`), und prüft sie bei
+  1024 × 768, 1366 × 768 und 390 × 780.
 - **Datenschutzerklärung** (`/datenschutz`): Die Stand-Zeile trägt das Datum der Veröffentlichung.
   Der Abschnitt „Dein Recht auf Widerspruch“ steht abgesetzt im Kasten mit blauem Rand links
   (Klasse `kasten`), weil Art. 21 Abs. 4 DSGVO für diesen Hinweis eine getrennte Form verlangt.

@@ -30,13 +30,22 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 /* ---------- Kopf ---------- */
 .kopf{display:flex;align-items:center;gap:.6rem;padding:.55rem .9rem;min-height:3.3rem;flex-wrap:wrap}
 .kopf h1{font-family:var(--hand);font-weight:400;color:var(--blau);font-size:2rem;margin:0;line-height:1;white-space:nowrap}
-.kopf .unter{color:var(--grau);font-size:.95rem;white-space:nowrap}
-.ver{color:#9AA4AF;font-size:.8rem;margin-left:.5rem}
+/* happymatty: Kopfzeile der Startseite, Variante A (Lehrkraft 19.11.2026), wie die Kopfleiste von happymatty.de */
+.kopf .logo{flex:none;display:flex;align-items:center;gap:.5rem;color:var(--text);text-decoration:none}
+.kopf .logo img{width:2.1rem;height:2.1rem;border-radius:22%;display:block}
+.kopf .logo span{font-family:var(--satz);font-weight:700;font-size:1.05rem;white-space:nowrap}
+.skopf{padding:0 .9rem;text-align:center}
+.szeile{margin:0;padding:0 0 .35rem;border-bottom:1px solid var(--blau);font-family:var(--hand);font-size:1.1rem;color:var(--grau)}
+.szeile a{color:inherit;text-decoration:none}
+.szeile a:hover,.szeile a:focus-visible{text-decoration:underline}
+.szeile .thema{color:var(--gruen)}
+.szeile .teilthema{color:var(--lila)}
+.szeile .thema,.szeile .teilthema{white-space:nowrap} /* Umbruch am Mittelpunkt, nicht im Namen */
+.skopf h1{font-family:var(--hand);font-weight:400;color:var(--blau);font-size:2.4rem;line-height:1.1;margin:.6rem 0 0}
+.sunter{margin:.1rem 0 .5rem;color:var(--grau);font-size:.95rem}
+.sfuss{padding:.1rem .9rem .6rem;text-align:center;color:#9AA4AF;font-size:.8rem}
+.sfuss a{color:inherit;text-decoration:none}.sfuss a:hover{text-decoration:underline}
 /* happymatty: Zurück-Knopf (Logo) oben links und Datenschutz in der kleinen Zeile (CLAUDE.md der Webseite) */
-.kopf .heim{flex:none;display:flex;align-items:center;gap:.2rem;text-decoration:none}
-.kopf .heim img{width:2.4rem;height:2.4rem;border-radius:22%;display:block}
-.kopf .heim .pfeil{font-size:2.2rem;font-weight:700;line-height:1;margin-top:-.25rem;color:var(--blau)}
-.ver a{color:inherit;text-decoration:none}.ver a:hover{text-decoration:underline}
 .kn{background:#fff;border:1.5px solid #B9C4D0;border-radius:.55rem;padding:.25rem .75rem;font-weight:700;font-size:.95rem;min-height:2.4rem;white-space:nowrap;display:inline-flex;align-items:center;gap:.45rem;color:#39424C}
 .kn:active,.hk:active{transform:translateY(1px)}
 .kn.ton,.kn.voll{padding:.25rem .55rem}
@@ -570,8 +579,9 @@ button.eka.tipp{background:#E3EFDF}
   html{font-size:clamp(15px,4.3vw,19px)}
   .kopf{padding:.45rem .6rem;gap:.45rem}
   .kopf h1{font-size:1.5rem}
-  .kopf .ver{display:block;margin-left:0}
-  .kopf .heim img{width:2rem;height:2rem}
+  .kopf .logo img{width:2rem;height:2rem}
+  .skopf{padding:0 .6rem}
+  .skopf h1{font-size:2rem}
   .kopf.trk .etappe{order:5;flex-basis:100%}
   .kopf.trk .kn.stand .wort{display:none}
   .startm,.seite{padding:.3rem .6rem .8rem}
@@ -647,7 +657,9 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v4';
+const VERSION='v5';
+const TITEL='Vom Term zur Parabel',KURZ='QF1';
+const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const el=h=>{const t=document.createElement('template');t.innerHTML=h.trim();return t.content.firstElementChild;};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -1205,11 +1217,18 @@ const WERKG={
    ===================================================================== */
 function vStart(){
   S.ansicht='start';adresse('');
-  setApp('<header class="kopf"><a class="heim" id="heim" href="/" aria-label="Zurück zu happymatty.de"><span class="pfeil">‹</span><img src="/stil/icon-192.png" alt=""></a><div><h1>QF1-Training</h1><span class="unter">Vom Term zur Parabel<span class="ver">'+VERSION+' · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a> · <a href="/impressum/" target="_blank" rel="noopener">Impressum</a></span></span></div><span class="luft"></span>'+kronenHTML()+tonKnopf()+'</header>'+
+  setApp(startKopf()+
     '<main class="startm"><button class="gross" data-akt="gesamt"><b>'+(S.geuebt?'Weiter':'Start')+'</b><small>'+(S.geuebt?etappeText():'Gesamttraining. Alles gemischt. Los geht’s.')+'</small></button>'+
     '<div class="zwei"><button class="mittel" data-akt="einzel"><b>Einzeltraining</b><small>Aufgaben gezielt üben.</small></button>'+
-    '<button class="mittel gr" data-akt="erkl"><b>Erklärungen</b><small>Infoboxen. Watch &amp; Try.</small></button></div></main>');
+    '<button class="mittel gr" data-akt="erkl"><b>Erklärungen</b><small>Infoboxen. Watch &amp; Try.</small></button></div></main>'+startFuss());
 }
+/* happymatty: Kopfzeile der Startseite (Variante A, Lehrkraft 19.11.2026): oben links das Logo als Zurück-Link,
+   rechts die Knöpfe; darunter Fach · Thema · Teilthema (Fach und Thema als Links), Überschrift und Titel.
+   Version, Datenschutz und Impressum stehen am Fuß der Startseite. */
+function startKopf(){
+  return '<header class="kopf"><a class="logo" id="heim" href="/" aria-label="Zurück zu happymatty.de"><img src="/stil/icon-192.png" alt=""><span>happymatty.de</span></a><span class="luft"></span>'+kronenHTML()+tonKnopf()+'</header>'+
+    '<div class="skopf"><p class="szeile"><a href="/">'+FACH+'</a> · <a class="thema" href="'+THEMA_URL+'">'+THEMA+'</a> · <span class="teilthema">'+TEILTHEMA+'</span></p><h1>'+KURZ+'-Training</h1><p class="sunter">'+TITEL+'</p></div>';}
+function startFuss(){return '<footer class="sfuss">'+VERSION+' · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a> · <a href="/impressum/" target="_blank" rel="noopener">Impressum</a></footer>';}
 function kachel(t,emp){
   if(!t.aktiv)return '<div class="ka aus"><b>'+t.titel+'</b><div class="kz">'+bandHTML(t,0)+'<span class="ms">'+markeHTML(t)+'</span></div></div>';
   return '<button class="ka" data-akt="einzelstart" data-typ="'+t.id+'"><b>'+t.titel+'</b><div class="kz">'+bandHTML(t)+'<span class="ms">'+markeHTML(t,emp)+'</span></div></button>';}
