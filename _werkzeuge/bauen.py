@@ -595,6 +595,12 @@ def badges(liste):
     return ''.join(f'<span class="badge">{b}</span>' for b in liste)
 
 
+def badges_links(liste):
+    """Kennzeichen unter der Überschrift: Link auf die Einstiegsseite des Bildungsgangs
+    (Entscheidung 19.11.2026). In Karten bleiben sie <span>, die Karte ist schon ein Link."""
+    return ''.join(f'<a class="badge" href="/{b.lower()}/">{b}</a>' for b in liste)
+
+
 def karte(klasse, href, titel, text):
     k = f' class="{klasse}"' if klasse else ''
     return (f'    <li><a{k} href="{href}">\n'
@@ -639,8 +645,14 @@ def seite(titel, bloecke):
     return KOPF.format(titel=esc(titel)) + '\n'.join(bloecke + [FUSS])
 
 
+def kopf_fach(t):
+    """Fach in der Kopfzeile: Link auf die Startseite, solange es keine Seite je Fach gibt
+    (Entscheidung 19.11.2026)."""
+    return f'<a href="/">{esc(t.fach)}</a>'
+
+
 def kopf_thema(t, teilthema=None):
-    s = f'{esc(t.fach)} · <span class="thema">{esc(t.titel)}</span>'
+    s = f'{kopf_fach(t)} · <a class="thema" href="/{t.slug}/">{esc(t.titel)}</a>'
     if teilthema:
         s += f' · <span class="teilthema">{esc(teilthema)}</span>'
     return f'  <p class="kopf">{s}</p>\n'
@@ -651,7 +663,7 @@ def baue_einheit(e):
     by = {x.dok: x for x in e.eintraege}
     kopf = (kopfleiste(f'/{t.slug}/', t.titel) + kopf_thema(t, e.teilthema)
             + f'  <h1>{esc(e.titel)}</h1>\n'
-            + f'  <p class="badges">{badges(e.bildungsgaenge)}</p>\n')
+            + f'  <p class="badges">{badges_links(e.bildungsgaenge)}</p>\n')
     karten = [pdf_karte(by[e.aufgabenblatt])]
     karten.append(pdf_karte(by[e.musterloesung]) if e.musterloesung.freigegeben
                   else graue_karte('Musterlösung', GESPERRT_LOESUNG))
@@ -678,7 +690,7 @@ def baue_arbeit(t, art):
     by = {x.dok: x for x in t.eintraege}
     kopf = (kopfleiste(f'/{t.slug}/', t.titel) + kopf_thema(t)
             + f'  <h1>{name}</h1>\n'
-            + f'  <p class="badges">{badges(g["bildungsgaenge"])}</p>\n')
+            + f'  <p class="badges">{badges_links(g["bildungsgaenge"])}</p>\n')
     karten = []
     for k in ('test', 'loesung', 'notentabelle'):
         x = by[g[k]]
@@ -688,7 +700,7 @@ def baue_arbeit(t, art):
 
 def baue_thema(t):
     heim = t.bildungsgang
-    kopf = (kopfleiste(f'/{heim.lower()}/', heim) + f'  <p class="kopf">{esc(t.fach)}</p>\n'
+    kopf = (kopfleiste(f'/{heim.lower()}/', heim) + f'  <p class="kopf">{kopf_fach(t)}</p>\n'
             + f'  <h1 class="thema">{esc(t.titel)}</h1>\n')
     karten = []
     for e in t.einheiten:

@@ -527,6 +527,10 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
 - **Übersicht des Arbeitsblatts**: unter der Überschrift die Kennzeichen der Bildungsgänge.
 - **Kennzeichen** (Klasse `badge`) in der Form der Badges auf den Blättern, aber in Akzentlila:
   Rahmen und Schrift `#85609E`, gefüllt `#EBE5EF`, Indie Flower (Skill `mathe`, Stand 10.11.2026).
+  Unter einer Überschrift (Übersicht, Probeklassenarbeit, Klassenarbeit) ist jedes Kennzeichen
+  ein Link auf die Einstiegsseite seines Bildungsgangs (`<a class="badge" href="/bf2/">`), weiß
+  beim Darüberfahren und Antippen wie die Kacheln (Entscheidung 19.11.2026). In Karten bleibt es
+  ohne eigenen Link, weil die Karte schon einer ist.
 - **Eine Themeneinheit in mehreren Bildungsgängen** (Eintrag in `bildungsgaenge`): Sie trägt alle
   Kennzeichen (Übersicht, Themenseite), und ihr Thema trägt auf der Startseite alle Kennzeichen
   seiner Einheiten. Auf der Startseite steht das Thema nur einmal, in der Gruppe seines
@@ -579,6 +583,11 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
   Auf der Übersicht einer Themeneinheit folgt das Teilthema in Akzentlila `#85609E`:
   „Mathematik · Rechnen mit Zahlen · Addition und Subtraktion“ (Klasse `teilthema`).
   Die Themenseite zeigt in der Kopfzeile nur das Fach; das Thema ist dort die grüne Überschrift.
+  **Kopfzeile als Wegweiser** (Entscheidung 19.11.2026): Das Fach ist ein Link auf die
+  Startseite (es gibt noch keine Seite je Fach; kommt eine, zeigt es dorthin), das Thema ein Link
+  auf seine Themenseite. Farbe wie bisher, ohne Unterstreichung, beim Darüberfahren
+  unterstrichen. Das Teilthema bleibt ohne Link. Das gilt auf jeder Seite mit dieser Kopfzeile,
+  auch auf den interaktiven Seiten, sobald sie sie tragen.
 - **Ein Grau** `#6E6E6E` überall, wo Text grau ist (Kopf- und Fußzeile, Beschreibungen,
   Unterzeilen), wie im Skill `mathe` (Variable `--grau`). Das frühere `#767676` war heller als
   Blau, Grün und Lila und wirkte daneben am schwächsten (Skill `mathe`, 10.11.2026).
