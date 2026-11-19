@@ -75,7 +75,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .mittel b{font-size:1.8rem;line-height:1.1}
 .mittel small{color:#444;font-size:1rem;margin-top:.45rem}
 .mittel.gr{border-top-color:var(--gruen);color:var(--gruen);background:#E3EFDF}
-.fuss{padding:.2rem .9rem .6rem;display:flex;justify-content:flex-end}
+
 .link{background:none;border:0;color:#9AA4AF;font-size:.85rem;text-decoration:underline;padding:.3rem}
 
 /* ---------- Zwischenstand, Einzeltraining, Erklärungen ---------- */
@@ -122,8 +122,8 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .mitbild .inhalt{display:grid;grid-template-columns:minmax(0,21rem) minmax(0,1fr);gap:1.3rem;align-items:center}
 .rechts{display:flex;flex-direction:column;gap:.55rem;min-width:0}
 .opts{display:grid;gap:.6rem;margin-top:.25rem}
-.opts.n2,.opts.n4{grid-template-columns:1fr 1fr}
-.opt{background:#fff;border:.14rem solid var(--blau);border-radius:.8rem;min-height:3.7rem;font-size:1.4rem;padding:.4rem 2.2rem;box-shadow:0 .2rem 0 #C9D6E2;position:relative;color:var(--text)}
+.opts.n2,.opts.n4{grid-template-columns:repeat(2,minmax(0,1fr))}
+.opt{background:#fff;border:.14rem solid var(--blau);border-radius:.8rem;min-height:3.7rem;font-size:1.4rem;padding:.4rem 2.2rem;box-shadow:0 .2rem 0 #C9D6E2;position:relative;color:var(--text);min-width:0;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
 .opt:disabled{box-shadow:none;cursor:default;border-color:#C9D0D8;color:#6B7580}
 .opt.gew{background:#EAF3F9;box-shadow:0 0 0 .2rem #CFE3F1}
 .opt.fehlt{border-color:var(--gruen);border-style:dashed;color:var(--text);background:#fff}
@@ -408,11 +408,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:2.1rem;hei
 input[type=range]::-moz-range-track{height:.5rem;border-radius:.25rem;background:#C9D6E2}
 input[type=range]::-moz-range-thumb{width:1.8rem;height:1.8rem;border-radius:50%;background:var(--blau);border:.18rem solid #fff;box-shadow:0 .1rem .3rem rgba(0,0,0,.3)}
 
-/* Probeansicht */
-.probe table{border-collapse:collapse;width:100%;font-size:.95rem}
-.probe th,.probe td{border-bottom:1px solid var(--rand);padding:.25rem .4rem;text-align:left}
-.probe td.r,.probe th.r{text-align:right}
-.probe textarea{width:100%;height:5.5rem;font:inherit;font-size:.85rem;border:1.5px solid var(--rand);border-radius:.5rem;padding:.4rem}
 .pk{display:flex;gap:.45rem;flex-wrap:wrap}
 
 /* ---------- Das Werkstor (Anwendung zum Anfassen) ---------- */
@@ -565,7 +560,7 @@ button.reihe:active{background:#EDF4FA}
 .gross.los,.mittel.los{animation:los .3s cubic-bezier(.5,0,.8,.3) forwards;pointer-events:none}
 .gross.los{background:var(--blau-d)}
 .mittel.los,.mittel.gr.los{background:#fff}
-.geht .gross:not(.los),.geht .mittel:not(.los),.seite.geht>*:not(.los),.geht~.fuss{transition:opacity .22s;opacity:0}
+.geht .gross:not(.los),.geht .mittel:not(.los),.seite.geht>*:not(.los){transition:opacity .22s;opacity:0}
 .tipp{background:#fff!important;pointer-events:none}      /* angetippte Kachel bleibt weiß, bis die Ansicht wechselt */
 button.ka.tipp{background:#EDF4FA}
 button.eka.tipp{background:#E3EFDF}
@@ -587,8 +582,8 @@ button.eka.tipp{background:#E3EFDF}
   .buehne{grid-template-columns:minmax(0,1fr);padding:.15rem .6rem .5rem;gap:.55rem}
   .mitbild .inhalt{grid-template-columns:minmax(0,1fr);gap:.6rem}
   .mitbild .bild{max-width:17rem;margin:0 auto;width:100%}
-  .opts.n4{grid-template-columns:1fr 1fr}
-  .opt{font-size:1.25rem;padding:.4rem 1.6rem;min-height:3.3rem}
+  .opts.n4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .opt{font-size:1.25rem;padding:.4rem 1.4rem;min-height:3.3rem}
   .leiste:not(.ex){padding:.45rem .6rem .6rem;flex-direction:column;align-items:stretch;gap:.45rem}
   .leiste:not(.ex) .hilfen{flex:none;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
   .hilfen::-webkit-scrollbar{display:none}
@@ -652,7 +647,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v3.5';
+const VERSION='v4';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const el=h=>{const t=document.createElement('template');t.innerHTML=h.trim();return t.content.firstElementChild;};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -1213,8 +1208,7 @@ function vStart(){
   setApp('<header class="kopf"><a class="heim" id="heim" href="/" aria-label="Zurück zu happymatty.de"><span class="pfeil">‹</span><img src="/stil/icon-192.png" alt=""></a><div><h1>QF1-Training</h1><span class="unter">Vom Term zur Parabel<span class="ver">'+VERSION+' · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a> · <a href="/impressum/" target="_blank" rel="noopener">Impressum</a></span></span></div><span class="luft"></span>'+kronenHTML()+tonKnopf()+'</header>'+
     '<main class="startm"><button class="gross" data-akt="gesamt"><b>'+(S.geuebt?'Weiter':'Start')+'</b><small>'+(S.geuebt?etappeText():'Gesamttraining. Alles gemischt. Los geht’s.')+'</small></button>'+
     '<div class="zwei"><button class="mittel" data-akt="einzel"><b>Einzeltraining</b><small>Aufgaben gezielt üben.</small></button>'+
-    '<button class="mittel gr" data-akt="erkl"><b>Erklärungen</b><small>Infoboxen. Watch &amp; Try.</small></button></div></main>'+
-    '<footer class="fuss"><button class="link" data-akt="probe">Probeansicht</button></footer>');
+    '<button class="mittel gr" data-akt="erkl"><b>Erklärungen</b><small>Infoboxen. Watch &amp; Try.</small></button></div></main>');
 }
 function kachel(t,emp){
   if(!t.aktiv)return '<div class="ka aus"><b>'+t.titel+'</b><div class="kz">'+bandHTML(t,0)+'<span class="ms">'+markeHTML(t)+'</span></div></div>';
@@ -1286,6 +1280,8 @@ function zeigeLeer(){
   m.innerHTML='<section class="karte"><p class="frage">Für die eingeschalteten Level gibt es hier gerade keine Aufgaben mehr.</p><p><button class="haupt" data-akt="allelevel">Alle Level einschalten</button></p></section>';
   $('.hilfen').innerHTML='';const h=$('.leiste .haupt');h.hidden=true;
 }
+// Trennstellen in langen Wörtern der Antwortkacheln: Auf dem Handy passt sonst ein Wort nicht in die halbe Breite
+const weich=h=>h.replace(/Normalparabel/g,'Normal\u00ADparabel').replace(/Scheitelpunktform/g,'Scheitel\u00ADpunkt\u00ADform').replace(/Nullstellenform/g,'Null\u00ADstellen\u00ADform').replace(/Allgemeine/g,'All\u00ADgemeine');
 const wasZeile=()=>'<p class="was"><b>'+A.t.titel+'</b> · Level '+LEVELNR[A.key]+' '+LEVELWORT[A.key]+'</p>';
 const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
 const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3>'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
@@ -1302,7 +1298,7 @@ const FORM={
     m.className='buehne eins';
     m.innerHTML='<section class="karte'+(auf.bild?' mitbild':'')+'">'+wasZeile()+'<div class="inhalt">'+(auf.bild?'<div class="bild">'+auf.bild+'</div>':'')+
       '<div class="rechts"><p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>'+
-      '<div class="opts n'+auf.opts.length+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+o.html+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
+      '<div class="opts n'+auf.opts.length+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+weich(o.html)+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
     $$('.opt',m).forEach(b=>b.addEventListener('click',()=>{if(A.gewertet)return;const o=auf.opts[+b.dataset.i];
       $$('.opt',m).forEach((x,i)=>{x.disabled=true;if(auf.opts[i].ok)x.classList.add('ok');});if(!o.ok)b.classList.add('falsch');
       abgeben(!!o.ok,o.hinweis||null);}));
@@ -1374,7 +1370,7 @@ const FORM={
   mehr(auf,m){
     m.className='buehne eins';
     m.innerHTML='<section class="karte">'+wasZeile()+'<div class="inhalt"><div class="rechts"><p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>'+
-      '<div class="opts n'+auf.opts.length+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'" aria-pressed="false">'+o.html+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
+      '<div class="opts n'+auf.opts.length+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'" aria-pressed="false">'+weich(o.html)+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
     const bs=$$('.opt',m);
     bs.forEach(b=>b.addEventListener('click',()=>{if(A.gewertet)return;const an=b.classList.toggle('gew');b.setAttribute('aria-pressed',an);setHaupt('pruefen',bs.some(x=>x.classList.contains('gew')));}));
     A.pruefe=()=>{let zuviel=null,fehlt=null;
@@ -1714,7 +1710,7 @@ W.aufl=function(sofort){const L=W.L,g=L.g,svg=$('.wsvg'),r=$('.wrechts'),d=W.dat
 };
 
 /* =====================================================================
-   Überlagerungen: Menü, Stand, Krone, Finale, Probe
+   Überlagerungen: Menü, Stand, Krone, Finale
    ===================================================================== */
 function schliesse(){$$('.ov,.menue').forEach(e=>{if(e._zu)e._zu();else e.remove();});}
 function zeigeMenue(){
@@ -1807,23 +1803,6 @@ function zeigeFinale(danach){
   const zu=()=>{if(!offen||!bereit)return;offen=false;T.forEach(t=>t.cancel());timers.forEach(clearTimeout);fw.stop();ov.remove();danach();};
   $('.haupt',ov).addEventListener('click',zu);ov._zu=zu;
 }
-function zeigeProbe(){
-  const gr={};S.zeiten.forEach(z=>{const k=z.name||z.typ+' · '+LEVELWORT[z.key];(gr[k]=gr[k]||[]).push(z);});
-  const med=a=>{const s=a.map(z=>z.s).sort((x,y)=>x-y),m=Math.floor(s.length/2);return s.length%2?s[m]:(s[m-1]+s[m])/2;};
-  const zeilen=Object.keys(gr).map(k=>[k,gr[k].length,gr[k].filter(z=>z.ok).length,med(gr[k])]);
-  const text=zeilen.length?zeilen.map(z=>z[0]+': '+z[1]+' Aufgaben, '+z[2]+' richtig, Median '+zahl(z[3])+' s').join('\n'):'Noch keine Aufgaben.';
-  const ov=el('<div class="ov dunkel"><div class="panel probe" role="dialog" aria-label="Probeansicht"><div class="pkopf"><h2>Probeansicht</h2><span class="luft"></span><button class="kn" data-zu>Schließen</button></div>'+
-    '<p class="klein">Nur für die Probe von Bau 2. Sekunden bis zur ersten Antwort, nur auf diesem Gerät, nichts wird gespeichert.</p>'+
-    (zeilen.length?'<table><tr><th>Aufgaben</th><th class="r">Zahl</th><th class="r">richtig</th><th class="r">Median</th></tr>'+zeilen.map(z=>'<tr><td>'+z[0]+'</td><td class="r">'+z[1]+'</td><td class="r">'+z[2]+'</td><td class="r">'+zahl(z[3])+' s</td></tr>').join('')+'</table>':'')+
-    '<textarea readonly aria-label="Zeiten zum Kopieren">'+text+'</textarea>'+
-    '<div class="pk"><button class="kn" data-p="krone">Krone zeigen</button><button class="kn" data-p="finale">Finale zeigen</button><button class="kn" data-p="neu">Alles zurücksetzen</button></div></div></div>');
-  ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();const b=e.target.closest('[data-p]');if(!b)return;ov.remove();
-    if(b.dataset.p==='krone')zeigeKrone('Etappe 1 geschafft!',()=>{});
-    else if(b.dataset.p==='finale')zeigeFinale(()=>{});
-    else{Object.assign(S,{etappe:1,pkt:0,pos:0,letzter:null,kronen:0,geuebt:false,finale:false,einzel:null,zeiten:[],offen:{},filter:{q:true,b:true,w:true}});neuerStand();vStart();}});
-  document.body.appendChild(ov);
-}
-
 /* =====================================================================
    Erklärungen: Info 1 und Info 2 (Watch), Erkunder (Try)
    ===================================================================== */
@@ -2180,7 +2159,7 @@ function zeigeTafel(){
    Bedienung
    ===================================================================== */
 const AKT={
-  start:vStart,gesamt:startGesamt,einzel:()=>vEinzel(),erkl:vErkl,probe:zeigeProbe,
+  start:vStart,gesamt:startGesamt,einzel:()=>vEinzel(),erkl:vErkl,
   einzelstart:b=>startEinzel(b.dataset.typ),
   zurueck:()=>{clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;if(S.modus==='gesamt')vStart();else vEinzel();},
   werk:()=>startWerk('einzel'),wdenk:()=>W.denk(),wschritt:()=>W.schritt(false),wloesung:()=>W.schritt(true),
@@ -2241,7 +2220,7 @@ function nachAdresse(){const h=(location.hash||'').replace('#','');
 window.addEventListener('hashchange',()=>{const h=(location.hash||'').replace('#','');
   if(['einzeltraining','erklaerungen','info-1','info-2','erkunder','tafel-runde','werkstor'].includes(h)&&S.ansicht!=='aufgabe'&&S.ansicht!=='werk')nachAdresse();});
 (function(){const h=(location.hash||'').replace('#','');if(h==='gesamttraining'){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}nachAdresse();})();
-window.QF1={S,A,W,TYPEN,GEN,WERKG,TAFEL,zeigeTafel,Sound,zeigeProbe,weiter,zeigeFinale,zeigeKrone,startEinzel,startGesamt,startWerk,werkWeiter,werkDran,vStart,vEinzel};     // für die Probe am Gerät
+window.QF1={S,A,W,TYPEN,GEN,WERKG,TAFEL,zeigeTafel,Sound,FORM,weiter,zeigeFinale,zeigeKrone,startEinzel,startGesamt,startWerk,werkWeiter,werkDran,vStart,vEinzel};     // für die Prüfläufe
 
 /* happymatty: Zurück-Knopf (Logo): zurück dorthin, wo man herkam (innerhalb von happymatty.de); bei Direktlink zur Startseite */
 document.addEventListener('click',function(e){const a=e.target.closest&&e.target.closest('#heim');if(!a)return;
