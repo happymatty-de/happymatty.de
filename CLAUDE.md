@@ -242,7 +242,7 @@ Jedes **Dokument** hat diese Einträge:
 | `quelle` | Pflicht, wenn vorhanden: der Dateiname mit Versionsnummer wie im Backup, z. B. `Zahlenjagd_Probetest_v2.pdf`. Auf der Website heißt die Datei genauso ohne `_v…` (`Zahlenjagd_Probetest.pdf`) und liegt im Ordner der Einheit. Bei `interaktiv` der Name des Artifacts mit Version, z. B. `Artifact „Mehr als nur steil – Lineare Funktionen (LF2)“ v1.22`; die Version ist Pflicht, sobald die Seite freigegeben ist, vorher genügt der Name |
 | `stand` | Datum `TT.MM.JJJJ`; Pflicht, wenn freigegeben: der Tag, an dem diese Version online ging. Sonst, wenn bekannt, der Tag der Sicherung |
 | `hinweis` | freiwillig: kurze Notiz, die nirgends auf der Website erscheint, z. B. „im Einsatz ab 11.11.2026, nicht veröffentlichen“. Stimmt ein Hinweis nicht mehr („folgt“, obwohl die Datei da ist; „im Einsatz“, obwohl geschrieben), passt ihn der Chat beim Nachführen an; was er verbietet („nicht veröffentlichen“), bleibt |
-| `text` | nur bei `interaktiv`, Pflicht, wenn freigegeben: die Zeile unter dem Kartentitel, z. B. „Lineare Funktionen erkunden, zeichnen und ablesen – mit Spezialfällen“ |
+| `text` | nur bei `interaktiv`, Pflicht, wenn freigegeben: die Zeile unter dem Kartentitel. Bei einem Training immer „Training“; bei einer Erklär-App individuell, z. B. „Lineare Funktionen erkunden, zeichnen und ablesen – mit Spezialfällen“ |
 
 Was es nicht gibt, steht als `{ "vorhanden": false, "freigegeben": false }`.
 
@@ -387,14 +387,15 @@ Jedes Arbeitsblatt (jede Themeneinheit) hat einen Ordner. Darin liegt alles, was
 
   | Karte | Text |
   |---|---|
-  | Aufgabenblatt | „Zum Arbeiten und Lernen (PDF, n Seiten)“ |
-  | Musterlösung, Lösungen zu Tests | „Zum Vergleichen (PDF, n Seiten)“ |
-  | Probetest | „Zum Üben vor dem Kurztest (PDF, n Seiten)“ |
-  | Probeklassenarbeit | „Zum Üben vor der Klassenarbeit (PDF, n Seiten)“ |
-  | Kurztest-Fassung, Klassenarbeit | „Zum Üben (PDF, n Seiten)“ |
+  | Aufgabenblatt | „Erarbeiten (PDF, n Seiten)“ |
+  | Musterlösung, Lösung zu Probetest, Kurztest, Probeklassenarbeit, Klassenarbeit | „Vergleichen (PDF, n Seiten)“ |
+  | Probetest, Kurztest-Fassung, Probeklassenarbeit, Klassenarbeit | „Üben (PDF, n Seiten)“ |
   | Notentabelle | „Welche Note zu deinen Punkten gehört (PDF, 1 Seite)“ |
-  | Interaktiv | `text` aus der Beschreibungsdatei |
+  | Interaktiv, Training | immer „Training“, nichts Individuelles; steht als `text` in der Beschreibungsdatei, das Skript setzt ihn nicht selbst |
+  | Interaktiv, Erklär-App | `text` aus der Beschreibungsdatei, individuell (derzeit nur LF2, bis Patrick etwas anderes sagt) |
 
+  Fassung vom 19.11.2026 (Patrick): ein Wort, kein „Zum“; vorher „Zum Arbeiten und Lernen“,
+  „Zum Vergleichen“, „Zum Üben vor dem Kurztest“ usw.
   Die Seitenzahl liest das Skript aus der Datei.
 
 ## Tests: Probetest, Kurztest, Klassenarbeit

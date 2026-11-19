@@ -78,11 +78,11 @@ FUSS = ('  <footer>CC BY-NC-SA 4.0 · <span class="name">Patrick Saul</span> · 
 LOGO = '<img src="/stil/icon-192.png" alt=""><span>happymatty.de</span>'
 
 ZWECK = {  # Text unter dem Kartentitel, vor „(PDF, n Seiten)“
-    'aufgabenblatt': 'Zum Arbeiten und Lernen',
-    'loesung': 'Zum Vergleichen',
-    'probetest': 'Zum Üben vor dem Kurztest',
-    'probeklassenarbeit': 'Zum Üben vor der Klassenarbeit',
-    'ueben': 'Zum Üben',
+    'aufgabenblatt': 'Erarbeiten',
+    'loesung': 'Vergleichen',
+    'probetest': 'Üben',
+    'probeklassenarbeit': 'Üben',
+    'ueben': 'Üben',
     'notentabelle': 'Welche Note zu deinen Punkten gehört',
 }
 GESPERRT_LOESUNG = 'Noch nicht freigeschaltet'
