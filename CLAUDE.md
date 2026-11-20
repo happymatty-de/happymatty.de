@@ -662,8 +662,9 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
   2. Darunter mittig die Kopfzeile in Indie Flower wie auf der Übersicht der Themeneinheit:
      „Mathematik · Thema · Teilthema“ (grau, grün, lila; Teilthema aus `_einheit.json`), Fach und
      Thema als Links wie dort, darunter eine dünne blaue Linie.
-  3. Darunter mittig die Überschrift in Indie Flower blau („QF2-Training“), darunter klein grau der
-     Titel des Blatts („Nullstellen ohne Formel“).
+  3. Darunter mittig als Überschrift der Titel des Blatts in Indie Flower blau („Nullstellen ohne
+     Formel“), darunter klein grau das Kennzeichen („QF2-Training“) (Entscheidung Patrick
+     20.11.2026: vorher umgekehrt).
   4. Versionsnummer · Datenschutz · Impressum klein und grau mittig am Fuß der Startseite.
 
   Die Kopfzeilen der übrigen Ansichten eines Trainings (Einzeltraining, Erklärungen, Aufgaben mit
