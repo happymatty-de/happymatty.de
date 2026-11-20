@@ -657,7 +657,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v5';
+const VERSION='v5.1';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1677,10 +1677,10 @@ W.zeig=function(){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;clearTimeout(W.
     const n=L.ph===2?1:2,d=W.dat(WDAT[L.ph-1]);sub.w=sub.w||{};
     r.innerHTML=kopf(n)+(d.text?'<p class="wtext">'+d.text+'</p>':'')+'<p class="term">'+d.term+'</p><p class="frage">'+d.frage+'</p><div class="denk" hidden></div><div class="ein">'+d.ein+'</div><div class="rueck" hidden></div>'+wTASTEN;
     let F=null;
-    const fertig=(kl,txt)=>{sub.fertig=true;sub.w.x=zahl(d.loes.x);F.zeig();r.classList.add('gesperrt','steht');zeigeRueck(kl,txt);W.setH('Weiter',true,W.vor);W.bild();W.rech();W.hilfen();W.balken();};
+    const fertig=(kl,txt,klein)=>{sub.fertig=true;sub.w.x=zahl(d.loes.x);F.zeig();r.classList.add('gesperrt','steht');zeigeRueck(kl,txt,klein);W.setH('Weiter',true,W.vor);W.bild();W.rech();W.hilfen();W.balken();};
     const pruefen=()=>{const res=d.pruefe(sub.w),erst=!sub.gewertet;if(erst){sub.gewertet=true;W.wert(res.ok,sub.hilfe);}
       if(res.ok)fertig(erst&&sub.hilfe?'neutral':'gut',erst?(sub.hilfe?'Mit Hilfe gelöst. Schritt '+n+' zählt in diesem Durchgang nicht.':'Richtig.'):'Jetzt stimmt es.');
-      else{F.f.classList.add('falsch');zeigeRueck('schlecht',res.hinweis);}};
+      else{const ein=sub.w.x||'';fertig('schlecht',/Denkanstoß zeigt den Anfang/.test(res.hinweis||'')?'Noch nicht richtig.':(res.hinweis||'Noch nicht richtig.'),(ein?'Deine Eingabe: '+ein+'. ':'')+'Im Feld und in der Rechnung steht jetzt die Lösung. Schritt '+n+' zählt in diesem Durchgang nicht.');}};   // falsch: die Lösung erscheint (Lehrkraft 20.11.2026)
     F=W.feld(r,sub,'x',ok=>{if(!sub.fertig)W.setH('Prüfen',ok,pruefen);});
     W.ab=()=>{if(!sub.gewertet){sub.gewertet=true;W.wert(false,true);}fertig('neutral','Lösung angesehen. Schritt '+n+' zählt in diesem Durchgang nicht.');};
     if(sub.fertig){r.classList.add('gesperrt','steht');W.setH('Weiter',true,W.vor);}

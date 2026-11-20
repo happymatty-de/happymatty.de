@@ -781,7 +781,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v2';
+const VERSION='v2.1';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1873,7 +1873,7 @@ const ANW=true;
    Erst schätzen, dann rechnen; erst am Ende läuft der Zaun, und der Graph der Fläche wächst mit (QF2, neu). */
 const WSCHRITT=['Größen festlegen','Rechnung aufstellen','Ergebnis deuten'],WPHASE=['Tipp','andere Seite','Flächenfunktion','Nullstellen','Mitte','Deuten'];
 const W={L:null,timer:0,lauf:0,fn:null,taste:null,ab:null,t0:0};
-const wTASTEN='<div class="tasten">'+['7','8','9','del','4','5','6','−',',','1','2','3','0'].map(k=>'<button type="button" data-k="'+k+'" class="'+(k==='0'||k==='del'?'breit':'')+(k==='del'?' fn':'')+'"'+(k==='del'?' aria-label="Löschen"':'')+'>'+(k==='del'?'⌫':k)+'</button>').join('')+'</div>';
+const wTASTEN='<div class="tasten">'+['7','8','9','del','4','5','6','−',',','1','2','3','0','weiter'].map(k=>'<button type="button" data-k="'+k+'" class="'+(k==='del'?'breit fn':k==='weiter'?'fn':'')+'"'+(k==='del'?' aria-label="Löschen"':k==='weiter'?' aria-label="Nächstes Feld"':'')+'>'+(k==='del'?'⌫':k==='weiter'?'→':k)+'</button>').join('')+'</div>';
 const schmal=()=>window.innerWidth<=760;
 const andersMit=(g,t)=>(g.art==='wand'?g.L+' − 2 · ':zahl(g.c)+' − ')+zahl(t);       // die andere Seite für eine Zahl x
 const GEHA={
@@ -2004,13 +2004,13 @@ W.zeig=function(){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;clearTimeout(W.
     if(L.ph===2){const dyn=$('.ghbild .gh-dyn');if(dyn)dyn.innerHTML=gehegeInnen(g,L.tipp,{mass:true,ylab:g.anders});}
   }else{                                                  // Zahlen: rechnen, eintippen, prüfen
     const n=L.ph<=4?2:3,d=W.dat(WDAT[L.ph-1]);sub.w=sub.w||{};
-    r.innerHTML=kopf(n)+'<p class="term">'+d.term+'</p><p class="frage">'+d.frage+'</p><div class="denk" hidden></div><div class="ein'+(L.ph===5?' satz':'')+'">'+d.ein+'</div><div class="rueck" hidden></div>'+wTASTEN.replace('</div>','<button type="button" data-k="weiter" class="fn" aria-label="Nächstes Feld">→</button></div>');
+    r.innerHTML=kopf(n)+'<p class="term">'+d.term+'</p><p class="frage">'+d.frage+'</p><div class="denk" hidden></div><div class="ein'+(L.ph===5?' satz':'')+'">'+d.ein+'</div><div class="rueck" hidden></div>'+wTASTEN;
     let F=null;
-    const fertig=(kl,txt)=>{sub.fertig=true;const lo=L.ph===3?{a:zahl(0),b:zahl(g.z2)}:L.ph===4?{m:zahl(g.m)}:{x:zahl(g.m),y:zahl(g.y),f:zahl(g.F)};Object.assign(sub.w,lo);F.zeig();
-      r.classList.add('gesperrt','steht');zeigeRueck(kl,txt);W.setH(L.ph===5?'Abspielen':'Weiter',true,L.ph===5?W.spiel:W.vor);W.bild();W.rech();W.hilfen();W.balken();};
+    const fertig=(kl,txt,klein)=>{sub.fertig=true;const lo=L.ph===3?{a:zahl(0),b:zahl(g.z2)}:L.ph===4?{m:zahl(g.m)}:{x:zahl(g.m),y:zahl(g.y),f:zahl(g.F)};Object.assign(sub.w,lo);F.zeig();
+      r.classList.add('gesperrt','steht');zeigeRueck(kl,txt,klein);W.setH(L.ph===5?'Abspielen':'Weiter',true,L.ph===5?W.spiel:W.vor);W.bild();W.rech();W.hilfen();W.balken();};
     const pruefen=()=>{const res=d.pruefe(sub.w),erst=!sub.gewertet;if(erst){sub.gewertet=true;W.wert(res.ok,sub.hilfe);L.s3=L.ph===5?{ok:res.ok&&!sub.hilfe,hinweis:res.hinweis||''}:L.s3;}
       if(res.ok)fertig(erst&&sub.hilfe?'neutral':'gut',erst?(sub.hilfe?'Mit Hilfe gelöst. Schritt '+n+' zählt in diesem Durchgang nicht.':'Richtig.'):'Jetzt stimmt es.');
-      else{(res.falsch||d.ids).forEach(id=>{const f=$('.feld[data-f="'+id+'"]',r);if(f)f.classList.add('falsch');});zeigeRueck('schlecht',res.hinweis,'Du kannst verbessern und noch einmal prüfen.');}};
+      else fertig('schlecht',/Denkanstoß zeigt den Anfang/.test(res.hinweis||'')?'Noch nicht richtig.':(res.hinweis||'Noch nicht richtig.'),'In den Feldern und in der Rechnung steht jetzt die Lösung. Schritt '+n+' zählt in diesem Durchgang nicht.');};   // falsch: die Lösung erscheint (Lehrkraft 20.11.2026)
     F=W.felder(r,sub,d.ids,(eins,alle)=>{if(!sub.fertig)W.setH('Prüfen',L.ph===3?eins:alle,pruefen);});
     W.ab=()=>{if(!sub.gewertet){sub.gewertet=true;W.wert(false,true);if(L.ph===5)L.s3={ok:false,hinweis:''};}fertig('neutral','Lösung angesehen. Schritt '+n+' zählt in diesem Durchgang nicht.');};
     if(sub.fertig){r.classList.add('gesperrt','steht');W.setH(L.ph===5?'Abspielen':'Weiter',true,L.ph===5?W.spiel:W.vor);}
