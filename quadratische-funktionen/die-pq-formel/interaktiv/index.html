@@ -945,7 +945,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v1.2';
+const VERSION='v1.3';
 const TITEL='Die <i>p</i>,<i>q</i>-Formel',KURZ='QF3';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Gleichungen lösen'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -2164,7 +2164,7 @@ const ANW=true;
    Phasen eines Durchgangs: 0 Tipp · 1 Was ist gesucht? · 2 Gleichung · 3 umstellen und normieren · 4 lösen · 5 deuten · 6 Abspielen und Auflösung */
 const WSCHRITT=['Größen festlegen','Rechnung aufstellen','Ergebnis deuten'],WPHASE=['Tipp','gesucht','Gleichung','Normieren','Lösen','Deuten'];
 const W={L:null,timer:0,lauf:0,fn:null,taste:null,ab:null,t0:0,raf:0};
-const wTASTEN='<div class="tasten">'+['7','8','9','del','4','5','6','−',',','1','2','3','0'].map(k=>'<button type="button" data-k="'+k+'" class="'+(k==='0'||k==='del'?'breit':'')+(k==='del'?' fn':'')+'"'+(k==='del'?' aria-label="Löschen"':'')+'>'+(k==='del'?'⌫':k)+'</button>').join('')+'</div>';
+const wTASTEN='<div class="tasten">'+['7','8','9','del','4','5','6','−',',','1','2','3','0','weiter'].map(k=>'<button type="button" data-k="'+k+'" class="'+(k==='del'?'breit fn':k==='weiter'?'fn':'')+'"'+(k==='del'?' aria-label="Löschen"':k==='weiter'?' aria-label="Nächstes Feld"':'')+'>'+(k==='del'?'⌫':k==='weiter'?'→':k)+'</button>').join('')+'</div>';
 const schmal=()=>window.innerWidth<=760;
 const sek=z=>zahl(z)+' s';
 const RAKA={
@@ -2331,14 +2331,15 @@ W.zeig=function(){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;clearTimeout(W.
     }else{                                                 // Zahlen: rechnen, eintippen, prüfen
       sub.w=sub.w||{};
       r.innerHTML=kopf(n)+'<p class="term">'+d.term+'</p><p class="frage">'+d.frage+'</p><div class="denk" hidden></div><div class="ein">'+d.ein+'</div>'+
-        (d.keine?'<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">keine Lösung</button></p>':'')+'<div class="rueck" hidden></div>'+wTASTEN.replace('</div>','<button type="button" data-k="weiter" class="fn" aria-label="Nächstes Feld">→</button></div>');
+        (d.keine?'<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">keine Lösung</button></p>':'')+'<div class="rueck" hidden></div>'+wTASTEN;
       let F=null;
-      const fertig=(kl,txt)=>{sub.fertig=true;sub.keine=!g.n;if(g.n){sub.w.a=zahl(g.L[g.n-1]);sub.w.b=g.n===2?zahl(g.L[0]):'';}F.zeig();
-        r.classList.add('gesperrt','steht');zeigeRueck(kl,txt);W.setH('Weiter',true,W.vor);W.bild();W.rech();W.hilfen();W.balken();};
+      const fertig=(kl,txt,klein)=>{sub.fertig=true;sub.keine=!g.n;if(g.n){sub.w.a=zahl(g.L[g.n-1]);sub.w.b=g.n===2?zahl(g.L[0]):'';}F.zeig();
+        r.classList.add('gesperrt','steht');zeigeRueck(kl,txt,klein);W.setH('Weiter',true,W.vor);W.bild();W.rech();W.hilfen();W.balken();};
       const pruefen=()=>{const res=d.pruefe(sub.w,!!sub.keine),erst=!sub.gewertet;if(erst){sub.gewertet=true;W.wert(res.ok,sub.hilfe);}
         if(res.ok)fertig(erst&&sub.hilfe?'neutral':'gut',erst?(sub.hilfe?'Mit Hilfe gelöst. Schritt '+n+' zählt in diesem Durchgang nicht.':'Richtig.'):'Jetzt stimmt es.');
-        else{(res.falsch||d.ids).forEach(id=>{if(id==='keine'){const kb=$('.keine',r);if(kb)kb.classList.add('falsch');return;}const f=$('.feld[data-f="'+id+'"]',r);if(f&&/\d$/.test(sub.w[id]||''))f.classList.add('falsch');});
-          zeigeRueck('schlecht',res.hinweis,'Du kannst verbessern und noch einmal prüfen.');}};
+        else{const ein=d.ids.map(id=>sub.w[id]).filter(v=>/\d$/.test(v||'')),dein=sub.keine?'keine Lösung':ein.join(' und '),   // falsch: die Lösung erscheint, weiter geht es mit „Weiter“
+            hin=/Denkanstoß zeigt den Anfang/.test(res.hinweis)?'Noch nicht richtig.':res.hinweis;
+          fertig('schlecht',hin,'Deine Eingabe: '+dein+'. In den Feldern und in der Rechnung steht jetzt die Lösung. Schritt '+n+' zählt in diesem Durchgang nicht.');}};
       F=W.felder(r,sub,d.ids,eins=>{if(!sub.fertig)W.setH('Prüfen',eins,pruefen);});
       W.ab=()=>{if(!sub.gewertet){sub.gewertet=true;W.wert(false,true);}fertig('neutral','Lösung angesehen. Schritt '+n+' zählt in diesem Durchgang nicht.');};
       if(sub.fertig){r.classList.add('gesperrt','steht');W.setH('Weiter',true,W.vor);}
