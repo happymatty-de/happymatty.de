@@ -353,6 +353,11 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .erk .pc,.info1 .pc{color:var(--cc);font-weight:700}
 .erk .px1,.info1 .px1{color:var(--cx1);font-weight:700}
 .erk .px2,.info1 .px2{color:var(--cx2);font-weight:700}
+/* Info 1: Nullstellen in Akzentlila und Akzentpink, sie heben sich besser vom blauen Graphen ab als Petrol und Türkis (Lehrkraft 20.11.2026). Gilt für Punkte, Zahlen und Zeilen in Info 1 */
+.info1{--cx1:#85609E;--cx2:#CE65A2}
+.nsw{display:inline-flex;gap:2.4em}
+.nsnw{white-space:nowrap}
+.fnam{font-family:var(--satz);font-style:italic;font-size:24px;fill:var(--blau);paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
 .erk input[data-p=a]::-webkit-slider-thumb{background:var(--ca)}
 .erk input[data-p=u]::-webkit-slider-thumb{background:var(--cu)}
 .erk input[data-p=b]::-webkit-slider-thumb{background:var(--cb)}
@@ -781,7 +786,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v2.1';
+const VERSION='v3';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -2091,8 +2096,11 @@ const nullPkte=(k,L,ab)=>L.map((z,i)=>k.pkt(z,0,i?'px2':'px1',ab?zahl(z):'',i?8:
 /* Info 1: Nullstellen, die drei Wege vom Blatt */
 function zeigeInfo1(){const x=X;
   const SCH=[
-    {neu:1,titel:'Nullstellen',text:'Nullstellen von '+V('f')+' sind die Zahlen '+x+', für die '+V('f')+'('+x+') = 0 ist. Dort trifft der Graph die '+x+'-Achse.',
-      kurven:[{f:z=>z*z-9}],win:[[-3,0],[3,0],[0,-9]],zeilen:[zl(fx(x+Q+' − 9'))],marken:(k,j)=>j>=1?nullPkte(k,[-3,3],true):''},
+    {neu:1,titel:'Nullstellen',text:'Das sind die '+x+'-Werte, an denen der Graph die <span class="nsnw">'+x+'-Achse</span> trifft.<br>Für diese '+x+'-Werte gilt: '+V('f')+'('+x+') = 0',
+      kurven:[{f:z=>z*z-9}],win:[[-3,0],[3,0],[0,-9]],
+      /* f in Kurvenfarbe direkt am Graphen; x₁ und x₂ erscheinen mit den Punkten, in deren Farben */
+      extra:k=>'<text class="fnam" x="'+(k.x(Math.sqrt(3))+12)+'" y="'+(k.y(-6)+6)+'">f</text>',
+      zeilen:[zl('<span class="nsw">'+P('x1',x+'<sub>1</sub> = −3')+P('x2',x+'<sub>2</sub> = 3')+'</span>')],marken:(k,j)=>j>=1?nullPkte(k,[-3,3],true):''},
     {titel:'Keine, eine oder zwei',text:'Eine quadratische Funktion hat keine, eine oder zwei Nullstellen.',
       kurven:[{f:z=>z*z+2,kl:'k0'},{f:z=>z*z,kl:'k1'},{f:z=>z*z-4,kl:'k2'}],X:[-4,4],Y:[-5,7],o:{ex:36,ey:26,sy:1,lx:2,ly:2},
       zeilen:[zl('nach oben verschoben: keine',null,true),zl('auf der '+x+'-Achse: eine',null,true),zl('nach unten verschoben: zwei',null,true)],
