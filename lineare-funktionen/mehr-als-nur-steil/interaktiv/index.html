@@ -65,6 +65,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .krone{display:block;width:100%;height:auto}
 .etappe{flex:1;display:flex;align-items:center;gap:.6rem;min-width:0}
 .el{font-weight:700;white-space:nowrap;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;color:#39424C}
+.el:empty{display:none}
 .eb{flex:1;height:.9rem;border-radius:.45rem;background:#E1E6EC;overflow:hidden;min-width:3rem;display:block}
 .eb i{display:block;height:100%;background:var(--blau);border-radius:.45rem;transition:width .5s cubic-bezier(.2,.8,.2,1)}
 
@@ -1117,7 +1118,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v2.8';
+const VERSION='v2.9';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1726,10 +1727,9 @@ function trainingRahmen(){
     '<main class="buehne"></main><footer class="leiste"><div class="hilfen"></div><button class="haupt" data-akt="haupt" disabled>Prüfen</button></footer><div class="toasts"></div>','tr');
   zeigeEtappe();
 }
-/* Im Einzeltraining steht neben dem Balken nur „Einzeltraining“, wo im Gesamttraining die Etappe steht: Der Knopf links nennt nur den Rückweg, nicht den Ort.
-   Der Aufgabentyp steht schon über der Aufgabe; mit ihm war die Kopfzeile zu voll (Lehrkraft 21.11.2026) */
+/* Im Einzeltraining steht neben dem Balken nichts: Der Ort steht über der Aufgabe („Einzeltraining · ‹Aufgabentyp› · Level 1“, ortHTML()), die Kopfzeile war sonst zu voll (Lehrkraft 21.11.2026) */
 function zeigeEtappe(){const l=$('.el'),b=$('.eb i');if(!l)return;
-  const p=S.modus==='gesamt'?S.pkt:S.einzel.pkt;l.textContent=S.modus==='gesamt'?'Etappe '+S.etappe:'Einzeltraining';b.style.width=Math.min(100,Math.round(p/ETAPPE*100))+'%';}
+  const p=S.modus==='gesamt'?S.pkt:S.einzel.pkt;l.textContent=S.modus==='gesamt'?'Etappe '+S.etappe:'';b.style.width=Math.min(100,Math.round(p/ETAPPE*100))+'%';}
 function setHaupt(art,an){const h=$('.leiste .haupt');if(!h)return;A.haupt=art;h.hidden=false;h.textContent=art==='pruefen'?'Prüfen':'Weiter';h.disabled=!an;}
 function toast(t,alt,neu,text){const host=$('.toasts');if(!host)return;
   const e=el('<div class="toast"><b>'+t.titel+'</b>'+bandHTML(t,alt)+'<span class="tx">'+text+'</span></div>');host.appendChild(e);
@@ -1776,8 +1776,10 @@ function zeigeLeer(){
 }
 // Trennstellen in langen Wörtern der Antwortkacheln: Auf dem Handy passt sonst ein Wort nicht in die halbe Breite
 const weich=h=>h.replace(/Normalparabel/g,'Normal\u00ADparabel').replace(/Scheitelpunktform/g,'Scheitel\u00ADpunkt\u00ADform').replace(/Nullstellenform/g,'Null\u00ADstellen\u00ADform').replace(/Allgemeine/g,'All\u00ADgemeine');
-// Aufgabenkopf: der Aufgabentyp (fett, blau) führt über ein kleines Fenster in sein Einzeltraining; im Einzeltraining dieses Typs sagt das Fenster nur, dass man schon dort ist. Das Level steht nur als Zahl da
-const wasZeile=()=>'<p class="was"><span><button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button> · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
+// Aufgabenkopf: der Aufgabentyp (fett, blau) führt über ein kleines Fenster in sein Einzeltraining; im Einzeltraining dieses Typs sagt das Fenster nur, dass man schon dort ist. Das Level steht nur als Zahl da.
+// Im Einzeltraining steht davor grau „Einzeltraining ·“: Der Knopf oben links nennt nur den Rückweg, nicht den Ort (Lehrkraft 21.11.2026)
+const ortHTML=()=>S.modus==='einzel'?'<span class="waso">Einzeltraining · </span>':'';
+const wasZeile=()=>'<p class="was"><span>'+ortHTML()+'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button> · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
 const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
 const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3>'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
 function zeigeSchritte(){const z=$('.zeilen');if(!z)return;const s=A.auf.schritte||[];
@@ -2159,7 +2161,7 @@ var RB=null;
 function merkeLetzte(){const m=$('.buehne');
   if(!m||S.rueckblick||!A.gewertet||!m.firstChild||m.dataset.nr!==String(A.nr)||(S.letzte&&S.letzte.nr===A.nr))return;
   $$('input',m).forEach(i=>i.setAttribute('value',i.value));              // Regler: die Kopie übernimmt nur das Attribut
-  const k=m.cloneNode(true);$$('.wasr',k).forEach(x=>x.remove());
+  const k=m.cloneNode(true);$$('.wasr,.waso',k).forEach(x=>x.remove());
   $$('.wasl',k).forEach(x=>{const b=document.createElement('b');b.innerHTML=x.innerHTML;x.replaceWith(b);});
   $$('.was',k).forEach(w=>w.appendChild(el('<span class="wasm">Letzte Aufgabe</span>')));
   S.letzte={nr:A.nr,klasse:m.className,bild:k,t:A.t,auf:A.auf};}
@@ -2169,7 +2171,7 @@ function zeigeLetzte(){if(!S.letzte||S.rueckblick||S.ansicht!=='aufgabe')return;
   while(m.firstChild)RB.frag.appendChild(m.firstChild);
   m.className=S.letzte.klasse+' rueckblick';Array.from(S.letzte.bild.childNodes).forEach(c=>m.appendChild(c.cloneNode(true)));m.scrollTop=0;
   const L=S.letzte,b=$('.was>span>b',m),d=$('.denk',m),hi=$('.hilfen');
-  if(b){const x=el('<button class="wasl" data-akt="einzeltyp" data-typ="'+L.t.id+'"></button>');x.innerHTML=b.innerHTML;b.replaceWith(x);}
+  if(b){const x=el('<button class="wasl" data-akt="einzeltyp" data-typ="'+L.t.id+'"></button>');x.innerHTML=b.innerHTML;b.replaceWith(x);x.insertAdjacentHTML('beforebegin',ortHTML());}
   L.denkAn=!!(d&&!d.hidden);
   if(hi)hi.innerHTML=(L.auf.denk&&d?'<button class="hk'+(L.denkAn?' an':'')+'" data-akt="ldenk">Denkanstoß</button>':'')+(L.auf.erkl?'<button class="hk erkl" data-akt="lerkl">Erklärung</button>':'');
   h.hidden=false;h.disabled=false;h.textContent='Weiter';S.rueckblick=true;}
