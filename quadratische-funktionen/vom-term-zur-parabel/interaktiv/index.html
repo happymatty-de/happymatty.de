@@ -660,7 +660,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v6';
+const VERSION='v6.1';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1230,7 +1230,7 @@ function vStart(){
    Version, Datenschutz und Impressum stehen am Fuß der Startseite. */
 function startKopf(){
   return '<header class="kopf"><a class="logo" id="heim" href="/" aria-label="Zurück zu happymatty.de"><img src="/stil/icon-192.png" alt=""><span>happymatty.de</span></a><span class="luft"></span>'+kronenHTML()+tonKnopf()+'</header>'+
-    '<div class="skopf"><p class="szeile"><a href="/">'+FACH+'</a> · <a class="thema" href="'+THEMA_URL+'">'+THEMA+'</a> · <span class="teilthema">'+TEILTHEMA+'</span></p><h1>'+TITEL+'</h1><p class="sunter">'+KURZ+'-Training</p></div>';}
+    '<div class="skopf"><p class="szeile"><a href="/">'+FACH+'</a> · <a class="thema" href="'+THEMA_URL+'">'+THEMA+'</a> · <span class="teilthema">'+TEILTHEMA+'</span></p><h1>'+TITEL+'</h1><p class="sunter">Interaktives Training</p></div>';}
 function startFuss(){return '<footer class="sfuss">'+VERSION+' · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a> · <a href="/impressum/" target="_blank" rel="noopener">Impressum</a></footer>';}
 function kachel(t,emp){
   if(!t.aktiv)return '<div class="ka aus"><b>'+t.titel+'</b><div class="kz">'+bandHTML(t,0)+'<span class="ms">'+markeHTML(t)+'</span></div></div>';
