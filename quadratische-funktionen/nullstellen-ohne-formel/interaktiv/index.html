@@ -128,6 +128,10 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .was .wasl{background:none;border:0;border-radius:.3rem;padding:.4rem .3rem;margin:-.4rem -.3rem;font-weight:700;color:var(--blau)}
 .was .wasl:hover{text-decoration:underline}
 .was .wasl:active{color:var(--blau-d);text-decoration:underline}
+/* der Ort vor dem Aufgabentyp („Gesamttraining“, „Einzeltraining“): antippbar wie der Aufgabentyp, aber nicht fett */
+.was .wasol{background:none;border:0;border-radius:.3rem;padding:.4rem .3rem;margin:-.4rem -.3rem;color:var(--blau)}
+.was .wasol:hover{text-decoration:underline}
+.was .wasol:active{color:var(--blau-d);text-decoration:underline}
 /* Aufgabenkopf: links Aufgabentyp und Level, rechts der Weg zur letzten Aufgabe */
 .was{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem}
 .was .wasr{background:none;border:0;border-radius:.3rem;padding:.4rem .3rem;margin:-.4rem -.3rem;color:var(--blau);white-space:nowrap;flex:none}
@@ -136,7 +140,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .was .wasm{flex:none;font-size:.8rem;font-weight:700;color:#fff;background:var(--dgrau);border-radius:.25rem;padding:.06rem .45rem .12rem;white-space:nowrap;line-height:1.25}
 /* Rückblick: das Bild der letzten Aufgabe ist eingefroren; nur der Aufgabentyp bleibt antippbar */
 .buehne.rueckblick>*{pointer-events:none}
-.buehne.rueckblick .wasl{pointer-events:auto}
+.buehne.rueckblick .wasl,.buehne.rueckblick .wasol{pointer-events:auto}
 /* Fenster vor dem Wechsel ins Einzeltraining eines Aufgabentyps */
 .efrage{width:min(94vw,27rem)}
 .efrage .reihe{grid-template-columns:minmax(0,1fr) minmax(4rem,9rem) auto}
@@ -813,7 +817,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v4.9';
+const VERSION='v4.10';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1453,7 +1457,8 @@ function trainingRahmen(){
     '<main class="buehne"></main><footer class="leiste"><div class="hilfen"></div><button class="haupt" data-akt="haupt" disabled>Prüfen</button></footer><div class="toasts"></div>','tr');
   zeigeEtappe();
 }
-/* Im Einzeltraining steht neben dem Balken nichts: Der Ort steht über der Aufgabe („Einzeltraining · ‹Aufgabentyp› · Level 1“, ortHTML()), die Kopfzeile war sonst zu voll (Lehrkraft 21.11.2026) */
+/* Im Einzeltraining steht neben dem Balken nichts: Der Ort steht über der Aufgabe („Einzeltraining · ‹Aufgabentyp› · Level 1“, ortHTML()), die Kopfzeile war sonst zu voll (Lehrkraft 21.11.2026).
+   Im Gesamttraining bleibt neben dem Balken die Etappe */
 function zeigeEtappe(){const l=$('.el'),b=$('.eb i');if(!l)return;
   const p=S.modus==='gesamt'?S.pkt:S.einzel.pkt;l.textContent=S.modus==='gesamt'?'Etappe '+S.etappe:'';b.style.width=Math.min(100,Math.round(p/ETAPPE*100))+'%';}
 function setHaupt(art,an){const h=$('.leiste .haupt');if(!h)return;A.haupt=art;h.hidden=false;h.textContent=art==='pruefen'?'Prüfen':'Weiter';h.disabled=!an;}
@@ -1473,6 +1478,11 @@ function zeigeEinzelFrage(id){const t=TYP[id];if(!t||$('.efrage'))return;clearTi
          :'<p class="klein">Nur Aufgaben dieses Typs.</p><div class="eknoepfe"><button class="kn" data-zu>Abbrechen</button><button class="haupt" data-los>Start</button></div>')+'</div></div>');
   ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();if(e.target.closest('[data-los]')){ov.remove();startEinzel(id,S.modus==='gesamt'||!!(S.einzel&&S.einzel.vonGesamt));}});
   document.body.appendChild(ov);const b=$('.haupt',ov);if(b)b.focus();}
+function zeigeGesamtHinweis(){if($('.efrage'))return;clearTimeout(A.auto);
+  const ov=el('<div class="ov dunkel"><div class="panel efrage" role="dialog" aria-label="Gesamttraining"><div class="pkopf"><h2>Gesamttraining</h2></div>'+
+    '<p class="ehier">Du bist schon im Gesamttraining.</p><p class="klein">Alles gemischt.</p><div class="eknoepfe"><button class="haupt" data-zu>OK</button></div></div></div>');
+  ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))ov.remove();});
+  document.body.appendChild(ov);$('.haupt',ov).focus();}
 function startEinzel(id,vonGesamt){S.modus='einzel';S.einzel={id,pkt:0,vollNeu:false,vonGesamt:!!vonGesamt};trainingRahmen();neueAufgabe(true);}
 const offenKey=()=>S.modus==='gesamt'?'gesamt':'einzel-'+S.einzel.id;
 
@@ -1503,8 +1513,9 @@ function zeigeLeer(){
 // Trennstellen in langen Wörtern der Antwortkacheln: Auf dem Handy passt sonst ein Wort nicht in die halbe Breite
 const weich=h=>h.replace(/Normalparabel/g,'Normal\u00ADparabel').replace(/Scheitelpunktform/g,'Scheitel\u00ADpunkt\u00ADform').replace(/Nullstellenform/g,'Null\u00ADstellen\u00ADform').replace(/Allgemeine/g,'All\u00ADgemeine');
 // Aufgabenkopf: der Aufgabentyp (fett, blau) führt über ein kleines Fenster in sein Einzeltraining; im Einzeltraining dieses Typs sagt das Fenster nur, dass man schon dort ist. Das Level steht nur als Zahl da.
-// Im Einzeltraining steht davor grau „Einzeltraining ·“: Der Knopf oben links nennt nur den Rückweg, nicht den Ort (Lehrkraft 21.11.2026)
-const ortHTML=()=>S.modus==='einzel'?'<span class="waso">Einzeltraining · </span>':'';
+// Davor steht der Ort, „Gesamttraining ·“ oder „Einzeltraining ·“: Der Knopf oben links nennt nur den Rückweg, nicht den Ort. Auch der Ort ist blau und antippbar (AKT.ort):
+// „Einzeltraining“ führt zur Übersicht des Einzeltrainings, „Gesamttraining“ öffnet nur den Hinweis, dass man schon dort ist (Lehrkraft 21.11.2026)
+const ortHTML=()=>'<span class="waso"><button class="wasol" data-akt="ort">'+(S.modus==='einzel'?'Einzeltraining':'Gesamttraining')+'</button> · </span>';
 const wasZeile=()=>'<p class="was"><span>'+ortHTML()+'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button> · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
 const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
 const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3>'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
@@ -2424,6 +2435,7 @@ const AKT={
   start:vStart,gesamt:startGesamt,einzel:()=>vEinzel(),erkl:vErkl,
   einzelstart:b=>startEinzel(b.dataset.typ),
   einzeltyp:b=>zeigeEinzelFrage(b.dataset.typ),
+  ort:()=>{if(S.modus==='gesamt')return zeigeGesamtHinweis();clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;vEinzel();},
   zurueck:()=>{clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;if(S.modus==='gesamt')vStart();else if(S.ansicht==='aufgabe'&&S.einzel&&S.einzel.vonGesamt)startGesamt();else vEinzel();},
   werk:()=>startWerk('einzel'),wdenk:()=>W.denk(),wschritt:()=>W.schritt(false),wloesung:()=>W.schritt(true),werkl:()=>{clearTimeout(W.timer);zeigeInfo2();},
   menue:zeigeMenue,stand:zeigeStand,letzte:zeigeLetzte,
