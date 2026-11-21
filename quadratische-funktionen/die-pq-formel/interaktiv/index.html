@@ -122,6 +122,9 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .eins .karte{max-width:54rem;width:100%;margin:0 auto}
 .was{margin:0;color:var(--grau);font-size:.85rem}
 .was b{color:var(--dgrau)}
+.was .wasl{background:none;border:0;border-radius:.3rem;padding:.4rem .3rem;margin:-.4rem -.3rem;font-weight:700;color:var(--blau)}
+.was .wasl:hover{text-decoration:underline}
+.was .wasl:active{color:var(--blau-d);text-decoration:underline}
 .frage{margin:0;font-size:1.2rem}
 .term{margin:.1rem 0;font-size:1.7rem;line-height:1.25}
 .term .pp{margin-left:1.4rem;white-space:nowrap;display:inline-block}
@@ -945,7 +948,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v1.3';
+const VERSION='v2';
 const TITEL='Die <i>p</i>,<i>q</i>-Formel',KURZ='QF3';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Gleichungen lösen'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1048,7 +1051,7 @@ const Sound={ctx:null,out:null,dl:null,
 
 /* ---------- Aufgabentypen und Zustand ---------- */
 const PUNKTE={q:1,b:2,w:5}, NOETIG={q:3,b:2,w:2}, ETAPPE=15;
-const LEVELNR={q:1,b:2,w:3}, LEVELWORT={q:'Quick',b:'Build',w:'Write'};
+const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der Planung; auf der Seite steht nur die Zahl
 const PQ=V('p')+','+V('q');
 const TYPEN=[
   {id:'norm',   titel:'Normieren',             level:['q','b','w'], aktiv:true, punkte:{w:3}},
@@ -1703,7 +1706,8 @@ function zeigeLeer(){
 }
 // Trennstellen in langen Wörtern der Antwortkacheln: Auf dem Handy passt sonst ein Wort nicht in die halbe Breite
 const weich=h=>h.replace(/Normalparabel/g,'Normal\u00ADparabel').replace(/Scheitelpunktform/g,'Scheitel\u00ADpunkt\u00ADform').replace(/Nullstellenform/g,'Null\u00ADstellen\u00ADform').replace(/Allgemeine/g,'All\u00ADgemeine');
-const wasZeile=()=>'<p class="was"><b>'+A.t.titel+'</b> · Level '+LEVELNR[A.key]+' '+LEVELWORT[A.key]+'</p>';
+// Aufgabenkopf: im Gesamttraining führt der Aufgabentyp (fett, blau) in sein Einzeltraining; das Level steht nur als Zahl da
+const wasZeile=()=>'<p class="was">'+(S.modus==='gesamt'?'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button>':'<b>'+A.t.titel+'</b>')+' · Level '+LEVELNR[A.key]+'</p>';
 const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
 const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3>'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
 function zeigeSchritte(){const z=$('.zeilen');if(!z)return;const s=A.auf.schritte||[];
@@ -2054,7 +2058,7 @@ function weiter(){
 function schliesse(){$$('.ov,.menue').forEach(e=>{if(e._zu)e._zu();else e.remove();});}
 function zeigeMenue(){
   if($('.menue'))return schliesse();
-  const ov=el('<div class="ov"></div>'),mn=el('<div class="menue" role="dialog" aria-label="Level wählen">'+['q','b','w'].map(k=>'<div class="mz"><b>Level '+LEVELNR[k]+'</b><span>'+LEVELWORT[k]+'</span><button class="sw'+(S.filter[k]?' an':'')+'" data-k="'+k+'" role="switch" aria-checked="'+S.filter[k]+'" aria-label="Level '+LEVELNR[k]+'"></button></div>').join('')+'<p class="klein">Alle an: Automatik. Erst Quick, dann Build, dann Write.</p></div>');
+  const ov=el('<div class="ov"></div>'),mn=el('<div class="menue" role="dialog" aria-label="Level wählen">'+['q','b','w'].map(k=>'<div class="mz"><b>Level '+LEVELNR[k]+'</b><span></span><button class="sw'+(S.filter[k]?' an':'')+'" data-k="'+k+'" role="switch" aria-checked="'+S.filter[k]+'" aria-label="Level '+LEVELNR[k]+'"></button></div>').join('')+'<p class="klein">Alle an: Automatik. Erst Level 1, dann 2, dann 3.</p></div>');
   ov.addEventListener('click',schliesse);ov._zu=()=>{ov.remove();mn.remove();};
   $$('.sw',mn).forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.k;
     if(S.filter[k]&&['q','b','w'].filter(x=>S.filter[x]).length===1){b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert');return;}
@@ -2722,6 +2726,7 @@ function zeigeTafel(){
 const AKT={
   start:vStart,gesamt:startGesamt,einzel:()=>vEinzel(),erkl:vErkl,
   einzelstart:b=>startEinzel(b.dataset.typ),
+  einzeltyp:b=>{clearTimeout(A.auto);startEinzel(b.dataset.typ);},
   zurueck:()=>{clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;if(S.modus==='gesamt')vStart();else vEinzel();},
   werk:()=>startWerk('einzel'),wdenk:()=>W.denk(),wschritt:()=>W.schritt(false),wloesung:()=>W.schritt(true),werkl:()=>{clearTimeout(W.timer);(W.L&&W.L.ph===5?zeigeInfo2:zeigeInfo1)();},
   menue:zeigeMenue,stand:zeigeStand,
