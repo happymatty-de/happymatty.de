@@ -648,8 +648,8 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
   durch „ · “ getrennt („Datenschutz · Impressum“), ohne Unterstreichung, beim
   Darüberfahren unterstrichen; die beiden Links öffnen `/datenschutz/` und `/impressum/` in einem
   neuen Tab (`target="_blank" rel="noopener"`). Wo die Zeile steht, regelt der nächste Punkt.
-  Eine Versionsnummer zeigen die interaktiven Seiten nicht (Entscheidung Patrick 21.11.2026: Sie
-  ist für die Schüler gemacht, ihnen sagt die Nummer nichts). Sie steht unsichtbar als
+  Eine Versionsnummer zeigen die interaktiven Seiten nicht (Entscheidung Patrick 21.11.2026: Die
+  Seiten sind für die Schüler gemacht, ihnen sagt die Nummer nichts). Sie steht unsichtbar als
   `data-version` am `<footer class="sfuss">` und weiter in `quelle` der `_einheit.json`.
   Claude setzt die Zeile bei jeder Übernahme eines Artifacts ein (Entscheidung 11.11.2026, Ort
   geändert am 19.11.2026).
@@ -666,9 +666,10 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
      „Mathematik · Thema · Teilthema“ (grau, grün, lila; Teilthema aus `_einheit.json`), Fach und
      Thema als Links wie dort, darunter eine dünne blaue Linie.
   3. Darunter mittig als Überschrift der Titel des Blatts in Indie Flower blau („Nullstellen ohne
-     Formel“), darunter klein grau „Interaktives Training“ (Entscheidung Patrick 21.11.2026: Kennungen wie
-     LF2 kommen auf der Webseite sonst nicht vor, die Schüler kennen sie nicht, und sie können
-     sich ändern; am 20.11.2026 stand dort noch das Kennzeichen „QF2-Training“).
+     Formel“), darunter klein grau „Interaktives Training“, nicht das Kennzeichen
+     (Entscheidung Patrick 21.11.2026: Kennungen wie LF2 kommen auf der Webseite sonst nicht vor,
+     die Schüler kennen sie nicht, und sie können sich ändern; am 20.11.2026 stand dort noch
+     „QF2-Training“).
   4. Datenschutz · Impressum klein und grau mittig am Fuß der Startseite, ohne Versionsnummer
      (diese steht nur als `data-version` am `<footer class="sfuss">`).
 
