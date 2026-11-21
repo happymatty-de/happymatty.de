@@ -147,8 +147,8 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .efrage .eknoepfe{display:flex;justify-content:flex-end;align-items:center;gap:.6rem;margin-top:.2rem}
 .efrage .eknoepfe .kn{min-height:3rem;padding:.3rem 1rem}
 .efrage .ehier{margin:0}
-/* „wechseln?“ unter dem Aufgabentyp setzt die Überschrift „Zum Einzeltraining“ fort, in derselben Schrift */
-.efrage .ewechsel{font-family:var(--hand);color:var(--blau);font-size:1.8rem;line-height:1;margin:0}
+/* der Aufgabentyp ist in diesem Fenster nicht antippbar, also nicht blau */
+.efrage .reihe b{color:var(--text)}
 
 /* Nach einer falschen Antwort steht der Denkanstoß als Regel unter dem Fehler */
 .rueck small.regel{color:#3D4853;font-size:.92rem;margin-top:.25rem}
@@ -978,7 +978,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v2.14';
+const VERSION='v2.15';
 const TITEL='Die <i>p</i>,<i>q</i>-Formel',KURZ='QF3';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Gleichungen lösen'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1715,10 +1715,10 @@ function startGesamt(){S.modus='gesamt';if(werkDran())return startWerk('gesamt')
    Im Einzeltraining dieses Typs zeigt dasselbe Fenster nur den Hinweis „Du bist schon in diesem Einzeltraining.“ mit „OK“ (Lehrkraft 21.11.2026). */
 function zeigeEinzelFrage(id){const t=TYP[id];if(!t||$('.efrage'))return;clearTimeout(A.auto);
   const hier=S.modus==='einzel'&&!!S.einzel&&S.einzel.id===id;
-  const ov=el('<div class="ov dunkel"><div class="panel efrage" role="dialog" aria-label="Einzeltraining"><div class="pkopf"><h2>'+(hier?'Einzeltraining':'Zum Einzeltraining')+'</h2></div>'+
+  const ov=el('<div class="ov dunkel"><div class="panel efrage" role="dialog" aria-label="Einzeltraining"><div class="pkopf"><h2>'+(hier?'Einzeltraining':'Zum Einzeltraining wechseln')+'</h2></div>'+
     '<div class="reihe"><b>'+t.titel+'</b>'+bandHTML(t)+'<span>'+markeHTML(t,empfohlen())+'</span></div>'+
     (hier?'<p class="ehier">Du bist schon in diesem Einzeltraining.</p><div class="eknoepfe"><button class="haupt" data-zu>OK</button></div>'
-         :'<p class="ewechsel">wechseln?</p><p class="klein">Nur Aufgaben dieses Typs.</p><div class="eknoepfe"><button class="kn" data-zu>Abbrechen</button><button class="haupt" data-los>Start</button></div>')+'</div></div>');
+         :'<p class="klein">Nur Aufgaben dieses Typs.</p><div class="eknoepfe"><button class="kn" data-zu>Abbrechen</button><button class="haupt" data-los>Start</button></div>')+'</div></div>');
   ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();if(e.target.closest('[data-los]')){ov.remove();startEinzel(id,S.modus==='gesamt'||!!(S.einzel&&S.einzel.vonGesamt));}});
   document.body.appendChild(ov);const b=$('.haupt',ov);if(b)b.focus();}
 /* Das Fenster hinter dem Ort „Gesamttraining“ erklärt kurz, was das heißt: alle Aufgabentypen gemischt, und bei „Automatik“ steigen die Level von selbst (Lehrkraft 21.11.2026) */

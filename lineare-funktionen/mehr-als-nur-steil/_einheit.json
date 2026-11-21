@@ -13,7 +13,7 @@
     "quelle": "LF2_Mehr_als_nur_steil_Loesung_v13.1.pdf",
     "stand": "16.11.2026"
   },
-  "interaktiv": { "vorhanden": true, "freigegeben": true, "quelle": "LF2-Training v2.14 (Backup: LF2_Mehr_als_nur_steil_Training_v2.14.html)", "stand": "21.11.2026", "text": "Trainieren", "hinweis": "ersetzt seit 20.11.2026 die Erklär-App v1.23 (Backup: LF2_Mehr_als_nur_steil_Erklaerer_v1.23.html); ihre Adressen #funktion, #zeichnen, #ablesen, #spezial, #auto öffnen die passende Erklärung" },
+  "interaktiv": { "vorhanden": true, "freigegeben": true, "quelle": "LF2-Training v2.15 (Backup: LF2_Mehr_als_nur_steil_Training_v2.15.html)", "stand": "21.11.2026", "text": "Trainieren", "hinweis": "ersetzt seit 20.11.2026 die Erklär-App v1.23 (Backup: LF2_Mehr_als_nur_steil_Erklaerer_v1.23.html); ihre Adressen #funktion, #zeichnen, #ablesen, #spezial, #auto öffnen die passende Erklärung" },
   "probetest": {
     "test": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_v2.pdf", "stand": "18.11.2026" },
     "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "LF2_Probetest_Loesung_v2.pdf", "stand": "18.11.2026" },
