@@ -125,6 +125,18 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .was .wasl{background:none;border:0;border-radius:.3rem;padding:.4rem .3rem;margin:-.4rem -.3rem;font-weight:700;color:var(--blau)}
 .was .wasl:hover{text-decoration:underline}
 .was .wasl:active{color:var(--blau-d);text-decoration:underline}
+/* Aufgabenkopf: links Aufgabentyp und Level, rechts der Weg zur letzten Aufgabe */
+.was{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem}
+.was .wasr{background:none;border:0;border-radius:.3rem;padding:.4rem .3rem;margin:-.4rem -.3rem;color:var(--blau);white-space:nowrap;flex:none}
+.was .wasr:hover{text-decoration:underline}
+.was .wasr:active{color:var(--blau-d);text-decoration:underline}
+.was .wasm{flex:none;font-size:.8rem;font-weight:700;color:#fff;background:var(--dgrau);border-radius:.25rem;padding:.06rem .45rem .12rem;white-space:nowrap;line-height:1.25}
+/* Rückblick: das Bild der letzten Aufgabe ist eingefroren; die Hilfen ruhen */
+.buehne.rueckblick>*{pointer-events:none}
+.leiste.rb .hilfen{visibility:hidden}
+/* Nach einer falschen Antwort steht der Denkanstoß als Regel unter dem Fehler */
+.rueck small.regel{color:#3D4853;font-size:.92rem;margin-top:.25rem}
+
 .frage{margin:0;font-size:1.2rem}
 .term{margin:.1rem 0;font-size:1.7rem;line-height:1.25}
 .term .pp{margin-left:1.4rem;white-space:nowrap;display:inline-block}
@@ -791,7 +803,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v4.2';
+const VERSION='v4.3';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -974,7 +986,7 @@ const bandHTML=(t,w)=>'<span class="bd"><i style="width:'+Math.round((w===undefi
 function markeHTML(t,emp){if(!t.aktiv)return '<span class="mk bald">folgt</span>';
   if(voll(t))return '<span class="mk ok">✓ sitzt</span>';
   if((emp||empfohlen()).includes(t.id))return '<span class="mk voll">'+PFEIL+'empfohlen</span>';return '';}
-function setApp(html,kl){$$('.blase').forEach(x=>x.remove());const a=$('#app');a.className=kl||'';a.innerHTML=html;window.scrollTo(0,0);}
+function setApp(html,kl){if(S.rueckblick)endeLetzte();merkeLetzte();$$('.blase').forEach(x=>x.remove());const a=$('#app');a.className=kl||'';a.innerHTML=html;window.scrollTo(0,0);}
 function adresse(h){try{history.replaceState(null,'',h?'#'+h:location.pathname+location.search);}catch(e){}}
 
 /* ---------- Koordinatensystem ---------- */
@@ -1443,7 +1455,7 @@ const offenKey=()=>S.modus==='gesamt'?'gesamt':'einzel-'+S.einzel.id;
 
 /* ---------- Training: eine Aufgabe ---------- */
 function neueAufgabe(wieder){
-  clearTimeout(A.auto);
+  clearTimeout(A.auto);if(S.rueckblick)endeLetzte();merkeLetzte();
   let t,li,auf;const o=wieder&&S.offen[offenKey()];
   if(o&&S.filter[o.t.level[o.li]]&&(aktLevel(o.t)===o.li||aktLevel(o.t)===null)){t=o.t;li=o.li;auf=o.auf;}   // die angefangene Aufgabe steht noch da
   else{
@@ -1454,7 +1466,7 @@ function neueAufgabe(wieder){
   Object.keys(A).forEach(k=>delete A[k]);
   Object.assign(A,{nr:++aufgabeNr,t,li,key,auf,form:auf.form,start:performance.now(),gewertet:false,fertig:false,hilfe:false,gezeigt:0,denk:false,versuche:0});
   S.letzter=t.id;
-  const m=$('.buehne');m.scrollTop=0;
+  const m=$('.buehne');m.scrollTop=0;m.dataset.nr=A.nr;
   FORM[auf.form](auf,m);
   zeigeHilfen();zeigeEtappe();
 }
@@ -1468,14 +1480,14 @@ function zeigeLeer(){
 // Trennstellen in langen Wörtern der Antwortkacheln: Auf dem Handy passt sonst ein Wort nicht in die halbe Breite
 const weich=h=>h.replace(/Normalparabel/g,'Normal\u00ADparabel').replace(/Scheitelpunktform/g,'Scheitel\u00ADpunkt\u00ADform').replace(/Nullstellenform/g,'Null\u00ADstellen\u00ADform').replace(/Allgemeine/g,'All\u00ADgemeine');
 // Aufgabenkopf: im Gesamttraining führt der Aufgabentyp (fett, blau) in sein Einzeltraining; das Level steht nur als Zahl da
-const wasZeile=()=>'<p class="was">'+(S.modus==='gesamt'?'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button>':'<b>'+A.t.titel+'</b>')+' · Level '+LEVELNR[A.key]+'</p>';
+const wasZeile=()=>'<p class="was"><span>'+(S.modus==='gesamt'?'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button>':'<b>'+A.t.titel+'</b>')+' · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
 const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
 const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3>'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
 function zeigeSchritte(){const z=$('.zeilen');if(!z)return;const s=A.auf.schritte||[];
   for(let i=z.children.length;i<A.gezeigt&&i<s.length;i++)z.appendChild(el('<div class="zl'+(s[i].text?' text':'')+'"><span>'+s[i].h+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</div>'));
   const l=$('.rechnung .leer');if(l&&A.gezeigt>0)l.hidden=true;}
-function zeigeRueck(kl,txt,klein){const r=$('.rueck');if(!r)return;r.hidden=false;r.className='rueck '+kl;
-  r.innerHTML='<span class="z">'+(kl==='gut'?'✓':kl==='schlecht'?'✗':'i')+'</span><span>'+txt+(klein?'<small>'+klein+'</small>':'')+'</span>';
+function zeigeRueck(kl,txt,klein,regel){const r=$('.rueck');if(!r)return;r.hidden=false;r.className='rueck '+kl;
+  r.innerHTML='<span class="z">'+(kl==='gut'?'✓':kl==='schlecht'?'✗':'i')+'</span><span>'+txt+(regel?'<small class="regel">'+regel+'</small>':'')+(klein?'<small>'+klein+'</small>':'')+'</span>';
   r.scrollIntoView({block:'nearest',behavior:'smooth'});}
 
 const FORM={
@@ -1701,12 +1713,35 @@ function abgeben(ok,hinweis,art){
   if(art==='loesung')zeigeRueck('neutral','Lösung angesehen. Diese Aufgabe zählt nicht und kommt mit neuen Zahlen wieder.');
   else if(ok&&erst&&A.hilfe)zeigeRueck('neutral','Mit Hilfe gelöst. Diese Aufgabe zählt nicht und kommt mit neuen Zahlen wieder.');
   else if(ok)zeigeRueck('gut',erst?'Richtig.':'Jetzt stimmt es.',A.auf.nachher||'');
-  else zeigeRueck('schlecht',hinweis||'Noch nicht richtig.',still?emp:(emp||'Du kannst verbessern und noch einmal prüfen.'));
+  else zeigeRueck('schlecht',hinweis||'Noch nicht richtig.',still?emp:(emp||'Du kannst verbessern und noch einmal prüfen.'),A.auf.denk&&!A.denk?A.auf.denk:'');     // die Regel der Aufgabe gleich dazu, wenn der Denkanstoß nicht schon offen ist
   if(ok||art==='loesung'||einmal){A.fertig=true;if(A.sperre)A.sperre();
     if(A.auf.schritte&&!einmal){A.gezeigt=A.auf.schritte.length;zeigeSchritte();}}
   setHaupt('weiter',true);zeigeHilfen();
   if(ok&&erst&&A.key==='q'&&!A.auf.nachher){const nr=A.nr;A.auto=setTimeout(()=>{if(A.nr===nr&&S.ansicht==='aufgabe'&&!$('.ov')&&!$('.ebene'))weiter();},1100);}
 }
+/* ---------- Rückblick: die letzte gewertete Aufgabe noch einmal ansehen (Lehrkraft 21.11.2026) ----------
+   Verlässt man eine gewertete Aufgabe, bleibt ein Bild ihrer Bühne stehen: eine Kopie, eingefroren, nichts antippbar, nichts zählt.
+   „‹ Letzte Aufgabe“ (rechts in der Zeile mit dem Aufgabentyp) zeigt es. Die laufende Aufgabe wird solange aus der Seite genommen
+   und danach unverändert wieder eingehängt: Eingaben und Bedienung bleiben. Es gibt genau eine Aufgabe zurück, keinen Verlauf. */
+var RB=null;
+function merkeLetzte(){const m=$('.buehne');
+  if(!m||S.rueckblick||!A.gewertet||!m.firstChild||m.dataset.nr!==String(A.nr)||(S.letzte&&S.letzte.nr===A.nr))return;
+  $$('input',m).forEach(i=>i.setAttribute('value',i.value));              // Regler: die Kopie übernimmt nur das Attribut
+  const k=m.cloneNode(true);$$('.wasr',k).forEach(x=>x.remove());
+  $$('.wasl',k).forEach(x=>{const b=document.createElement('b');b.innerHTML=x.innerHTML;x.replaceWith(b);});
+  $$('.was',k).forEach(w=>w.appendChild(el('<span class="wasm">Letzte Aufgabe</span>')));
+  S.letzte={nr:A.nr,klasse:m.className,bild:k};}
+function zeigeLetzte(){if(!S.letzte||S.rueckblick||S.ansicht!=='aufgabe')return;const m=$('.buehne'),h=$('.leiste .haupt'),l=$('.leiste');if(!m||!h)return;
+  clearTimeout(A.auto);
+  RB={frag:document.createDocumentFragment(),klasse:m.className,scroll:m.scrollTop,htext:h.textContent,hdis:h.disabled,hhid:h.hidden};
+  while(m.firstChild)RB.frag.appendChild(m.firstChild);
+  m.className=S.letzte.klasse+' rueckblick';Array.from(S.letzte.bild.childNodes).forEach(c=>m.appendChild(c.cloneNode(true)));m.scrollTop=0;
+  h.hidden=false;h.disabled=false;h.textContent='Weiter';if(l)l.classList.add('rb');S.rueckblick=true;}
+function endeLetzte(){if(!S.rueckblick)return;S.rueckblick=false;const m=$('.buehne'),h=$('.leiste .haupt'),l=$('.leiste');
+  if(m&&RB){m.textContent='';m.className=RB.klasse;m.appendChild(RB.frag);m.scrollTop=RB.scroll;
+    if(h){h.textContent=RB.htext;h.disabled=RB.hdis;h.hidden=RB.hhid;}}
+  if(l)l.classList.remove('rb');RB=null;}
+
 function weiter(){
   clearTimeout(A.auto);if(!A.gewertet)return;
   if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(()=>vEinzel({titel:'Alles sitzt!'}));}
@@ -2360,10 +2395,10 @@ const AKT={
   einzeltyp:b=>{clearTimeout(A.auto);startEinzel(b.dataset.typ);},
   zurueck:()=>{clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;if(S.modus==='gesamt')vStart();else vEinzel();},
   werk:()=>startWerk('einzel'),wdenk:()=>W.denk(),wschritt:()=>W.schritt(false),wloesung:()=>W.schritt(true),werkl:()=>{clearTimeout(W.timer);zeigeInfo2();},
-  menue:zeigeMenue,stand:zeigeStand,
+  menue:zeigeMenue,stand:zeigeStand,letzte:zeigeLetzte,
   ton:()=>{S.ton=!S.ton;$$('.kn.ton').forEach(b=>b.innerHTML=S.ton?TON_AN:TON_AUS);if(!S.ton)return;      // der Ton ist am Anfang aus; das Antippen schaltet ihn ein und lässt ihn sofort hören
     Sound.init();const c=Sound.ctx,los=()=>Sound.richtig();if(c&&c.state!=='running'&&c.resume)c.resume().then(los).catch(()=>{});else los();},
-  haupt:()=>{if(S.ansicht==='werk'){if(W.fn)W.fn();return;}if(A.haupt==='pruefen'){const r=A.pruefe();abgeben(r.ok,r.hinweis);}else weiter();},
+  haupt:()=>{if(S.rueckblick)return endeLetzte();if(S.ansicht==='werk'){if(W.fn)W.fn();return;}if(A.haupt==='pruefen'){const r=A.pruefe();abgeben(r.ok,r.hinweis);}else weiter();},
   denk:()=>{A.denk=!A.denk;const d=$('.denk');if(d){d.hidden=!A.denk;d.innerHTML=A.auf.denk;}zeigeHilfen();},
   schritt:naechsterSchritt,loesung,
   erklaerung:()=>{clearTimeout(A.auto);({info1:zeigeInfo1,info2:zeigeInfo2,info3:zeigeInfo3}[A.auf.erkl]||zeigeInfo1)();},
@@ -2397,6 +2432,7 @@ document.addEventListener('keydown',e=>{
     else if(/^[1-4]$/.test(e.key)){const o=$$('.wrechts .opt')[+e.key-1];if(o&&!o.disabled)o.click();return;}
     if(e.key==='Enter'){const h=$('.leiste .haupt');if(h&&!h.hidden&&!h.disabled){e.preventDefault();h.click();}}
     return;}
+  if(S.rueckblick){if(e.key==='Enter'||e.key==='Escape'||e.key==='ArrowRight'||e.key===' '){e.preventDefault();endeLetzte();}return;}
   if(S.ansicht!=='aufgabe'||!A.auf)return;
   if(A.form==='wisch'&&!A.gewertet&&(e.key==='ArrowLeft'||e.key==='ArrowRight')){e.preventDefault();A.wisch(e.key==='ArrowRight');return;}
   if(A.form==='stapel'&&!A.gewertet&&/^[1-3]$/.test(e.key)){A.stapel(A.auf.stapel[+e.key-1].id);return;}
