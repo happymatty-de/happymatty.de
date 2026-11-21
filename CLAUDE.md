@@ -35,6 +35,9 @@ In dieses Repository schreiben zwei Arten von Chats (Entscheidung 14.11.2026):
   Startseite …), gehören mit dazu. Von Hand ändern sie außerhalb ihres Ordners nichts.
   Quelldateien und alle PDFs sichern sie selbst im privaten Backup
   `happymatty-de/unterrichtsmaterial` (Regeln dort in der `CLAUDE.md`).
+- Bevor ein Projektchat Material oder eine Seite ändert, die hier liegt, holt er den aktuellen
+  Stand aus diesem Repository und baut darauf auf, auch wenn er früher im Chat eine eigene Kopie
+  hatte. Claude Code meldet seine Änderungen deshalb keinem Projekt (Entscheidung 21.11.2026).
 - **Codelisten nie veröffentlichen, nie sichern** (Skill `schule`, Notenschlüssel, Codeliste):
   Sie sind nur für einen Einsatz da, werden ausgedruckt, die Schüler tragen ihre Namen ein,
   danach werden sie vernichtet. Sie gehen nur in den Chat und in die iCloud-Ablage, von der aus
@@ -675,7 +678,8 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
      Patrick Saul · Datenschutzerklärung · Impressum“, ohne sichtbare Versionsnummer.
 
   Die Kopfzeilen der übrigen Ansichten eines Trainings (Einzeltraining, Erklärungen, Aufgaben mit
-  „‹ Start“) bleiben, wie sie sind. Eine Erklär-App, die starr auf einen Bildschirm passt
+  „‹ Start“) bleiben, wie sie sind; wie sie gebaut sind, steht in `Trainingsrahmen.md` im Backup
+  `unterrichtsmaterial`. Eine Erklär-App, die starr auf einen Bildschirm passt
   (`/lineare-funktionen/mehr-als-nur-steil/interaktiv`), bekommt die volle Kopfzeile nur, wenn sie
   bei 1024 × 768 ohne Scrollen passt; sonst nur das Logo mit „happymatty.de“ als Zurück-Link.
   Die Fußzeile der interaktiven Seiten bekommt sie ebenso nur, wenn sie dann noch ohne Scrollen
