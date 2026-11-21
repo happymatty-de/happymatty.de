@@ -686,7 +686,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v6.11';
+const VERSION='v6.12';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1270,7 +1270,7 @@ function vEinzel(o){
   const titel=o.geschafft?'Etappe '+o.geschafft+' geschafft!':o.titel||'Einzeltraining';
   setApp('<header class="kopf"><button class="kn" data-akt="start">‹ Start</button><h1>'+titel+'</h1><span class="luft"></span>'+kronenHTML(o.neu)+tonKnopf()+'</header>'+
     '<main class="seite">'+(o.geschafft||o.titel?'<button class="gross flach" data-akt="gesamt"><b>Weiter</b><small>'+etappeText()+'</small></button>':'')+
-    '<div class="zs"><span>Einzelne Aufgaben gezielt üben. Tippe eine Kachel an.</span></div>'+      // ohne das Wort „Zwischenstand“: Die Erfolgsbänder erklären sich selbst (Lehrkraft 21.11.2026)
+    '<div class="zs"><span>Einzelne Aufgaben gezielt üben.</span></div>'+      // ohne das Wort „Zwischenstand“: Die Erfolgsbänder erklären sich selbst (Lehrkraft 21.11.2026)
     '<div class="kacheln">'+TYPEN.map(t=>kachel(t,emp)).join('')+werkKachel()+'</div></main>');
 }
 function vErkl(){

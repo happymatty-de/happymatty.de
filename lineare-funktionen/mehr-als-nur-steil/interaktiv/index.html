@@ -1122,7 +1122,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v2.11';
+const VERSION='v2.12';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1703,7 +1703,7 @@ function vEinzel(o){
   const titel=o.geschafft?'Etappe '+o.geschafft+' geschafft!':o.titel||'Einzeltraining';
   setApp('<header class="kopf"><button class="kn" data-akt="start">‹ Start</button><h1>'+titel+'</h1><span class="luft"></span>'+kronenHTML(o.neu)+tonKnopf()+'</header>'+
     '<main class="seite">'+(o.geschafft||o.titel?'<button class="gross flach" data-akt="gesamt"><b>Weiter</b><small>'+etappeText()+'</small></button>':'')+
-    '<div class="zs"><span>Einzelne Aufgaben gezielt üben. Tippe eine Kachel an.</span></div>'+      // ohne das Wort „Zwischenstand“: Die Erfolgsbänder erklären sich selbst (Lehrkraft 21.11.2026)
+    '<div class="zs"><span>Einzelne Aufgaben gezielt üben.</span></div>'+      // ohne das Wort „Zwischenstand“: Die Erfolgsbänder erklären sich selbst (Lehrkraft 21.11.2026)
     '<div class="kacheln">'+TYPEN.map(t=>kachel(t,emp)).join('')+(ANW?werkKachel():'')+'</div></main>');
 }
 function vErkl(){
