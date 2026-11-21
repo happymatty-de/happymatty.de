@@ -136,6 +136,8 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 /* Rückblick: das Bild der letzten Aufgabe ist eingefroren; nur der Aufgabentyp bleibt antippbar */
 .buehne.rueckblick>*{pointer-events:none}
 .buehne.rueckblick .wasl{pointer-events:auto}
+/* Einzeltraining: der Ort steht vor dem Aufgabentyp neben dem Balken */
+.el .elm{font-weight:400;color:var(--grau)}
 /* Fenster vor dem Wechsel ins Einzeltraining eines Aufgabentyps */
 .efrage{width:min(94vw,27rem)}
 .efrage .reihe{grid-template-columns:minmax(0,1fr) minmax(4rem,9rem) auto}
@@ -811,7 +813,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v4.6';
+const VERSION='v4.7';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1451,8 +1453,9 @@ function trainingRahmen(){
     '<main class="buehne"></main><footer class="leiste"><div class="hilfen"></div><button class="haupt" data-akt="haupt" disabled>Prüfen</button></footer><div class="toasts"></div>','tr');
   zeigeEtappe();
 }
+/* Im Einzeltraining steht „Einzeltraining ·“ vor dem Aufgabentyp: Der Knopf links nennt nur den Rückweg, nicht den Ort (Lehrkraft 21.11.2026) */
 function zeigeEtappe(){const l=$('.el'),b=$('.eb i');if(!l)return;
-  const p=S.modus==='gesamt'?S.pkt:S.einzel.pkt;l.textContent=S.modus==='gesamt'?'Etappe '+S.etappe:TYP[S.einzel.id].titel;b.style.width=Math.min(100,Math.round(p/ETAPPE*100))+'%';}
+  const p=S.modus==='gesamt'?S.pkt:S.einzel.pkt;l.innerHTML=S.modus==='gesamt'?'Etappe '+S.etappe:'<span class="elm">Einzeltraining · </span>'+TYP[S.einzel.id].titel;b.style.width=Math.min(100,Math.round(p/ETAPPE*100))+'%';}
 function setHaupt(art,an){const h=$('.leiste .haupt');if(!h)return;A.haupt=art;h.hidden=false;h.textContent=art==='pruefen'?'Prüfen':'Weiter';h.disabled=!an;}
 function toast(t,alt,neu,text){const host=$('.toasts');if(!host)return;
   const e=el('<div class="toast"><b>'+t.titel+'</b>'+bandHTML(t,alt)+'<span class="tx">'+text+'</span></div>');host.appendChild(e);
