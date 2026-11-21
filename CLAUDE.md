@@ -303,8 +303,7 @@ sie vorhanden ist, bis zur Freigabe mit grauen Karten (siehe „Tests“).
    Musterlösung und Kurztest-Fassungen nur, wenn Patrick sie ausdrücklich freigibt (Abschnitte
    „Lösungen“ und „Tests“). Nie eine `.tex`.
 4. Ist eine interaktive Seite freigegeben: als `interaktiv/index.html` ablegen und dabei die
-   Regeln unter „Gestaltung“ einsetzen (Seitentitel, Kopfzeile der interaktiven Seiten, „Datenschutz ·
-   Impressum“).
+   Regeln unter „Gestaltung“ einsetzen (Seitentitel, Kopf- und Fußzeile der interaktiven Seiten).
 5. `_einheit.json` schreiben wie im Beispiel oben: alles, was es gibt, auch Nicht-Freigegebenes
    (dann `"freigegeben": false`). `platz` ist die Nummer in der Reihe.
 6. `python3 _werkzeuge/bauen.py`; bei Fehlern die Meldung lesen, beheben, erneut laufen lassen.
@@ -643,16 +642,18 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
   Browser nur den Dateinamen.
 - Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul · Datenschutzerklärung · Impressum“, Name grün,
   Rest grau, darüber eine dünne blaue Linie. „Datenschutzerklärung“ im Standardgrau als Link auf
-  `/datenschutz`, ohne Unterstreichung, beim Darüberfahren unterstrichen. Die interaktiven Seiten
-  haben keine solche Fußzeile. Dort stehen „Datenschutz“ und „Impressum“ klein und grau,
-  durch „ · “ getrennt („Datenschutz · Impressum“), ohne Unterstreichung, beim
-  Darüberfahren unterstrichen; die beiden Links öffnen `/datenschutz/` und `/impressum/` in einem
-  neuen Tab (`target="_blank" rel="noopener"`). Wo die Zeile steht, regelt der nächste Punkt.
+  `/datenschutz`, ohne Unterstreichung, beim Darüberfahren unterstrichen.
+- **Fußzeile der interaktiven Seiten** (Entscheidung Patrick 21.11.2026): Die Startseite eines
+  Trainings trägt dieselbe Fußzeile wie die übrige Website, gleich gestaltet und in derselben
+  Schriftgröße (`<footer class="sfuss">`). Anders als dort öffnen „Datenschutzerklärung“ und
+  „Impressum“ einen neuen Tab (`target="_blank" rel="noopener"`), damit der Stand des Trainings
+  nicht verloren geht. Grund: Einheitlichkeit; Lizenz und Name standen auf den Trainings bisher
+  nirgends, und die Fußzeile steht nur auf der Startseite, nimmt den Aufgaben also keinen Platz.
   Eine Versionsnummer zeigen die interaktiven Seiten nicht (Entscheidung Patrick 21.11.2026: Die
   Seiten sind für die Schüler gemacht, ihnen sagt die Nummer nichts). Sie steht unsichtbar als
   `data-version` am `<footer class="sfuss">` und weiter in `quelle` der `_einheit.json`.
-  Claude setzt die Zeile bei jeder Übernahme eines Artifacts ein (Entscheidung 11.11.2026, Ort
-  geändert am 19.11.2026).
+  Claude setzt die Fußzeile bei jeder Übernahme eines Artifacts ein (löst die kleine Zeile
+  „Datenschutz · Impressum“ vom 11.11. und 19.11.2026 ab).
 - **Kopfzeile der interaktiven Seiten** (Entscheidung Patrick 19.11.2026, Variante A; löst den
   Zurück-Knopf „‹“ mit Smiley vom 11.11.2026 ab: Der Pfeil wirkte hässlich, und „happymatty“ stand
   nirgends). Die Startseite eines Trainings beginnt wie die übrige Website:
@@ -670,14 +671,15 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
      (Entscheidung Patrick 21.11.2026: Kennungen wie LF2 kommen auf der Webseite sonst nicht vor,
      die Schüler kennen sie nicht, und sie können sich ändern; am 20.11.2026 stand dort noch
      „QF2-Training“).
-  4. Datenschutz · Impressum klein und grau mittig am Fuß der Startseite, ohne Versionsnummer
-     (diese steht nur als `data-version` am `<footer class="sfuss">`).
+  4. Am Fuß der Startseite die Fußzeile der interaktiven Seiten (voriger Punkt): „CC BY-NC-SA 4.0 ·
+     Patrick Saul · Datenschutzerklärung · Impressum“, ohne sichtbare Versionsnummer.
 
   Die Kopfzeilen der übrigen Ansichten eines Trainings (Einzeltraining, Erklärungen, Aufgaben mit
   „‹ Start“) bleiben, wie sie sind. Eine Erklär-App, die starr auf einen Bildschirm passt
   (`/lineare-funktionen/mehr-als-nur-steil/interaktiv`), bekommt die volle Kopfzeile nur, wenn sie
-  bei 1024 × 768 ohne Scrollen passt; sonst nur das Logo mit „happymatty.de“ als Zurück-Link,
-  Datenschutz · Impressum in der kleinen Zeile unter dem Titel. Dort brechen bei
+  bei 1024 × 768 ohne Scrollen passt; sonst nur das Logo mit „happymatty.de“ als Zurück-Link.
+  Die Fußzeile der interaktiven Seiten bekommt sie ebenso nur, wenn sie dann noch ohne Scrollen
+  passt; sonst steht deren Text klein in der Zeile unter dem Titel. Dort brechen bei
   4:3 quer die Reiter unter Logo und Titel um. Claude setzt die Kopfzeile bei jeder Übernahme
   eines Artifacts ein, wie im QF2-Training (Quellen im Backup, `startKopf()`), und prüft sie bei
   1024 × 768, 1366 × 768 und 390 × 780.
@@ -717,8 +719,8 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
   ausschließlich die berufliche Anschrift „Patrick Saul, c/o BBS Betzdorf-Kirchen, Auf dem
   Molzberg 14, 57548 Kirchen“. Die private Anschrift kommt nie auf die Seite. Kontakt bleibt
   happymatty.de@gmail.com. Neue Seiten bekommen die Fußzeile mit Datenschutzerklärung und
-  Impressum (Link `/impressum/`, im selben Grau und mit derselben Gestaltung); die interaktiven
-  Seiten tragen hinter „Datenschutz“ ein „Impressum“.
+  Impressum (Link `/impressum/`, im selben Grau und mit derselben Gestaltung); auf den
+  interaktiven Seiten steht sie am Fuß der Startseite, die Links öffnen dort einen neuen Tab.
 - Nichts über Claude oder darüber, wie die Seiten entstehen.
 
 ## Herkunft der Seiten
