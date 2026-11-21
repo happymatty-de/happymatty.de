@@ -664,7 +664,9 @@ button.eka.tipp{background:#E3EFDF}
 .stapel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin-top:.4rem}
 .stp{position:relative;background:#E0EDF8;border:0;border-top:4px solid var(--blau);border-radius:6px;min-height:5.2rem;padding:.5rem .4rem .45rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;color:var(--text);box-shadow:0 .28rem 0 -.08rem #C9D6E2,0 .56rem 0 -.16rem #DDE6EF}
 .stp b{font-size:1.15rem;line-height:1.2}
-.stp .stn{font-size:.75rem;color:#9AA4AF}
+/* Ziffern auf den Stapeln: Tastenhinweis, nur wo mit Maus oder Trackpad gearbeitet wird (Laptop); am Tablet und Handy fehlen sie. Die Tasten 1 bis 3 gelten überall. */
+.stp .stn{display:none}
+@media (hover:hover) and (pointer:fine){.stp .stn{display:inline-block;min-width:1.3rem;padding:0 .3rem;font-size:.72rem;line-height:1.2rem;color:#7C8792;background:#fff;border:1px solid #B9C3CE;border-bottom-width:2px;border-radius:.28rem}}
 .stp.ziel{background:#fff;outline:.18rem dashed var(--blau);outline-offset:.12rem}
 .stp:disabled{cursor:default}
 .stp.ok{background:#EAF4E6;border-top-color:var(--gruen)}.stp.falsch{background:#F8E9E8;border-top-color:var(--rot)}
@@ -1094,7 +1096,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v2.1';
+const VERSION='v2.2';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1413,7 +1415,9 @@ const DENK={
   ablesen:BL+' liest du an der y-Achse ab. Für '+ML+' suchst du zwei Gitterpunkte auf der Geraden: Höhe durch Länge.',
   wsk:'Waagerecht: Alle Punkte haben denselben y-Wert. Senkrecht: Alle Punkte haben denselben x-Wert.',
   probe:'Setze die x-Koordinate des Punkts in die Gleichung ein. Kommt seine y-Koordinate heraus?',
-  familie:'Parallel heißt: gleiche Steigung '+ML+'. Gleiches '+BL+' heißt: Die Geraden schneiden die y-Achse im selben Punkt.'
+  // je nach Frage nur der Teil, den sie braucht (Lehrkraft 21.11.2026: „Eigentlich brauchen wir nur den ersten Teil“; ein anderes b versetzt die Gerade nach oben oder unten)
+  parallel:'Parallel heißt: gleiche Steigung '+ML+'. Ein anderes '+BL+' verschiebt die Gerade nach oben oder unten.',
+  gleichb:'Der Schnitt mit der y-Achse ist '+BL+'. Im selben Punkt heißt: gleiches '+BL+'.'
 };
 
 /* ---------- Punktprobe ---------- */
@@ -1604,7 +1608,7 @@ const GEN={
       const opts=shuffle(wahl).map((x,i)=>({html:fn(nn[i],term(x.ss,x.bb,x.o)),ok:x.ok,hinweis:x.h,
         grund:par?V(nn[i])+' hat auch '+CM(V('m')+' = '+mText(s))+'.':V(nn[i])+' schneidet die y-Achse auch bei '+zahl(b)+'.'}));
       return {form:'mehr',frage:par?'Tippe alle Geraden an, die parallel zur Geraden von '+V('f')+' sind.':'Tippe alle Geraden an, die die y-Achse im selben Punkt schneiden wie die Gerade von '+V('f')+'.',
-        term:T,erkl:'erkunder',denk:DENK.familie,opts};},
+        term:T,erkl:'erkunder',denk:par?DENK.parallel:DENK.gleichb,opts};},
     /* Write, offen: eine eigene Gleichung erfinden; jede passende zählt */
     w(){const art=pick(['zw','zw','durch','fall']);let frage,T,bild=null,pr,sch;
       if(art==='zw'){const s=pick(STG_GANZ.concat(L_([[1,2],[-1,2]]))),b1=zufB(-4,1,false),b2=b1+zz(2,4),bm=b1+1;
@@ -1622,7 +1626,7 @@ const GEN={
         const bsp=fallend?stg(-1,1):stg(1,1);
         sch=[zl('Gleicher Punkt auf der y-Achse: '+CB(V('b')+' = '+zahl(b))+'.',null,true),zl(fallend?'Fallend: '+ML+' negativ, zum Beispiel '+CM(V('m')+' = −1')+'.':'Steigend: '+ML+' positiv, zum Beispiel '+CM(V('m')+' = 1')+'.',null,true),zl(fn('h',term(bsp,b)))];
         pr=(mm,bb)=>(fallend?!(mm<0):!(mm>0))?['m',fallend?'Fallend heißt: '+ML+' ist negativ.':'Steigend heißt: '+ML+' ist positiv.']:!gleich(bb,b)?['b',V('f')+' schneidet die y-Achse bei '+zahl(b)+': '+CB(V('b')+' = '+zahl(b))+'.']:null;}
-      return {form:'eingabe',einKl:'pq',bruch:true,bild,frage,term:T,erkl:'erkunder',denk:DENK.familie,
+      return {form:'eingabe',einKl:'pq',bruch:true,bild,frage,term:T,erkl:'erkunder',denk:art==='fall'?DENK.gleichb:DENK.parallel,
         ein:'<span class="pqf">'+ML+' = '+FELD('m')+'</span><span class="pqf">'+BL+' = '+FELD('b')+'</span>',schritte:sch,rtitel:'Ein Beispiel',
         pruefe:v=>{const mm=num(v.m),bb=num(v.b),r=pr(mm,bb);if(!r)return {ok:true};return {ok:false,hinweis:r[1],falsch:[r[0]]};}};}
   }
@@ -1660,7 +1664,8 @@ function vStart(){
 function startKopf(){
   return '<header class="kopf"><a class="logo" id="heim" href="/" aria-label="Zurück zu happymatty.de"><img src="/stil/icon-192.png" alt=""><span>happymatty.de</span></a><span class="luft"></span>'+kronenHTML()+tonKnopf()+'</header>'+
     '<div class="skopf"><p class="szeile"><a href="/">'+FACH+'</a> · <a class="thema" href="'+THEMA_URL+'">'+THEMA+'</a> · <span class="teilthema">'+TEILTHEMA+'</span></p><h1>'+TITEL+'</h1><p class="sunter">Interaktives Training</p></div>';}
-function startFuss(){return '<footer class="sfuss">'+VERSION+' · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a> · <a href="/impressum/" target="_blank" rel="noopener">Impressum</a></footer>';}
+// Die Versionsnummer steht nicht mehr sichtbar auf der Seite (Lehrkraft 21.11.2026); sie bleibt als data-version im Quelltext
+function startFuss(){return '<footer class="sfuss" data-version="'+VERSION+'"><a href="/datenschutz/" target="_blank" rel="noopener">Datenschutz</a> · <a href="/impressum/" target="_blank" rel="noopener">Impressum</a></footer>';}
 function kachel(t,emp){
   if(!t.aktiv)return '<div class="ka aus"><b>'+t.titel+'</b><div class="kz">'+bandHTML(t,0)+'<span class="ms">'+markeHTML(t)+'</span></div></div>';
   return '<button class="ka" data-akt="einzelstart" data-typ="'+t.id+'"><b>'+t.titel+'</b><div class="kz">'+bandHTML(t)+'<span class="ms">'+markeHTML(t,emp)+'</span></div></button>';}
