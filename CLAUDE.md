@@ -644,12 +644,15 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
 - Fußzeile mittig in Indie Flower: „CC BY-NC-SA 4.0 · Patrick Saul · Datenschutzerklärung · Impressum“, Name grün,
   Rest grau, darüber eine dünne blaue Linie. „Datenschutzerklärung“ im Standardgrau als Link auf
   `/datenschutz`, ohne Unterstreichung, beim Darüberfahren unterstrichen. Die interaktiven Seiten
-  haben keine solche Fußzeile. Dort stehen Versionsnummer, „Datenschutz“ und „Impressum“ klein
-  und grau, durch „ · “ getrennt („v2 · Datenschutz · Impressum“), ohne Unterstreichung, beim
+  haben keine solche Fußzeile. Dort stehen „Datenschutz“ und „Impressum“ klein und grau,
+  durch „ · “ getrennt („Datenschutz · Impressum“), ohne Unterstreichung, beim
   Darüberfahren unterstrichen; die beiden Links öffnen `/datenschutz/` und `/impressum/` in einem
   neuen Tab (`target="_blank" rel="noopener"`). Wo die Zeile steht, regelt der nächste Punkt.
-  Claude setzt sie bei jeder Übernahme eines Artifacts ein (Entscheidung 11.11.2026, Ort geändert
-  am 19.11.2026).
+  Eine Versionsnummer zeigen die interaktiven Seiten nicht (Entscheidung Patrick 21.11.2026: Sie
+  ist für die Schüler gemacht, ihnen sagt die Nummer nichts). Sie steht unsichtbar als
+  `data-version` am `<footer class="sfuss">` und weiter in `quelle` der `_einheit.json`.
+  Claude setzt die Zeile bei jeder Übernahme eines Artifacts ein (Entscheidung 11.11.2026, Ort
+  geändert am 19.11.2026).
 - **Kopfzeile der interaktiven Seiten** (Entscheidung Patrick 19.11.2026, Variante A; löst den
   Zurück-Knopf „‹“ mit Smiley vom 11.11.2026 ab: Der Pfeil wirkte hässlich, und „happymatty“ stand
   nirgends). Die Startseite eines Trainings beginnt wie die übrige Website:
@@ -663,15 +666,17 @@ Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
      „Mathematik · Thema · Teilthema“ (grau, grün, lila; Teilthema aus `_einheit.json`), Fach und
      Thema als Links wie dort, darunter eine dünne blaue Linie.
   3. Darunter mittig als Überschrift der Titel des Blatts in Indie Flower blau („Nullstellen ohne
-     Formel“), darunter klein grau das Kennzeichen („QF2-Training“) (Entscheidung Patrick
-     20.11.2026: vorher umgekehrt).
-  4. Versionsnummer · Datenschutz · Impressum klein und grau mittig am Fuß der Startseite.
+     Formel“), darunter klein grau „Interaktives Training“ (Entscheidung Patrick 21.11.2026: Kennungen wie
+     LF2 kommen auf der Webseite sonst nicht vor, die Schüler kennen sie nicht, und sie können
+     sich ändern; am 20.11.2026 stand dort noch das Kennzeichen „QF2-Training“).
+  4. Datenschutz · Impressum klein und grau mittig am Fuß der Startseite, ohne Versionsnummer
+     (diese steht nur als `data-version` am `<footer class="sfuss">`).
 
   Die Kopfzeilen der übrigen Ansichten eines Trainings (Einzeltraining, Erklärungen, Aufgaben mit
   „‹ Start“) bleiben, wie sie sind. Eine Erklär-App, die starr auf einen Bildschirm passt
   (`/lineare-funktionen/mehr-als-nur-steil/interaktiv`), bekommt die volle Kopfzeile nur, wenn sie
   bei 1024 × 768 ohne Scrollen passt; sonst nur das Logo mit „happymatty.de“ als Zurück-Link,
-  Versionsnummer · Datenschutz · Impressum in der kleinen Zeile unter dem Titel. Dort brechen bei
+  Datenschutz · Impressum in der kleinen Zeile unter dem Titel. Dort brechen bei
   4:3 quer die Reiter unter Logo und Titel um. Claude setzt die Kopfzeile bei jeder Übernahme
   eines Artifacts ein, wie im QF2-Training (Quellen im Backup, `startKopf()`), und prüft sie bei
   1024 × 768, 1366 × 768 und 390 × 780.
