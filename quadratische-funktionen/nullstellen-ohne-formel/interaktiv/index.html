@@ -133,9 +133,9 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .was .wasr:hover{text-decoration:underline}
 .was .wasr:active{color:var(--blau-d);text-decoration:underline}
 .was .wasm{flex:none;font-size:.8rem;font-weight:700;color:#fff;background:var(--dgrau);border-radius:.25rem;padding:.06rem .45rem .12rem;white-space:nowrap;line-height:1.25}
-/* Rückblick: das Bild der letzten Aufgabe ist eingefroren; die Hilfen ruhen */
+/* Rückblick: das Bild der letzten Aufgabe ist eingefroren; nur der Aufgabentyp bleibt antippbar */
 .buehne.rueckblick>*{pointer-events:none}
-.leiste.rb .hilfen{visibility:hidden}
+.buehne.rueckblick .wasl{pointer-events:auto}
 /* Fenster vor dem Wechsel ins Einzeltraining eines Aufgabentyps */
 .efrage{width:min(94vw,27rem)}
 .efrage .reihe{grid-template-columns:minmax(0,1fr) minmax(4rem,9rem) auto}
@@ -811,7 +811,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v4.5';
+const VERSION='v4.6';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1466,7 +1466,7 @@ function zeigeEinzelFrage(id){const t=TYP[id];if(!t||$('.efrage'))return;clearTi
     '<div class="reihe"><b>'+t.titel+'</b>'+bandHTML(t)+'<span>'+markeHTML(t,empfohlen())+'</span></div>'+
     '<p class="klein">Nur Aufgaben dieses Typs.</p>'+
     '<div class="eknoepfe"><button class="kn" data-zu>Abbrechen</button><button class="haupt" data-los>Start</button></div></div></div>');
-  ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();if(e.target.closest('[data-los]')){ov.remove();startEinzel(id,true);}});
+  ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();if(e.target.closest('[data-los]')){ov.remove();startEinzel(id,S.modus==='gesamt'||!!(S.einzel&&S.einzel.vonGesamt));}});
   document.body.appendChild(ov);const b=$('[data-los]',ov);if(b)b.focus();}
 function startEinzel(id,vonGesamt){S.modus='einzel';S.einzel={id,pkt:0,vollNeu:false,vonGesamt:!!vonGesamt};trainingRahmen();neueAufgabe(true);}
 const offenKey=()=>S.modus==='gesamt'?'gesamt':'einzel-'+S.einzel.id;
@@ -1740,7 +1740,8 @@ function abgeben(ok,hinweis,art){
 /* ---------- Rückblick: die letzte gewertete Aufgabe noch einmal ansehen (Lehrkraft 21.11.2026) ----------
    Verlässt man eine gewertete Aufgabe, bleibt ein Bild ihrer Bühne stehen: eine Kopie, eingefroren, nichts antippbar, nichts zählt.
    „‹ Letzte Aufgabe“ (rechts in der Zeile mit dem Aufgabentyp) zeigt es. Die laufende Aufgabe wird solange aus der Seite genommen
-   und danach unverändert wieder eingehängt: Eingaben und Bedienung bleiben. Es gibt genau eine Aufgabe zurück, keinen Verlauf. */
+   und danach unverändert wieder eingehängt: Eingaben und Bedienung bleiben. Es gibt genau eine Aufgabe zurück, keinen Verlauf.
+   Im Rückblick bleiben drei Wege offen (Lehrkraft 21.11.2026): der Aufgabentyp führt in sein Einzeltraining, dazu Denkanstoß und Erklärung dieser Aufgabe. */
 var RB=null;
 function merkeLetzte(){const m=$('.buehne');
   if(!m||S.rueckblick||!A.gewertet||!m.firstChild||m.dataset.nr!==String(A.nr)||(S.letzte&&S.letzte.nr===A.nr))return;
@@ -1748,17 +1749,21 @@ function merkeLetzte(){const m=$('.buehne');
   const k=m.cloneNode(true);$$('.wasr',k).forEach(x=>x.remove());
   $$('.wasl',k).forEach(x=>{const b=document.createElement('b');b.innerHTML=x.innerHTML;x.replaceWith(b);});
   $$('.was',k).forEach(w=>w.appendChild(el('<span class="wasm">Letzte Aufgabe</span>')));
-  S.letzte={nr:A.nr,klasse:m.className,bild:k};}
+  S.letzte={nr:A.nr,klasse:m.className,bild:k,t:A.t,auf:A.auf};}
 function zeigeLetzte(){if(!S.letzte||S.rueckblick||S.ansicht!=='aufgabe')return;const m=$('.buehne'),h=$('.leiste .haupt'),l=$('.leiste');if(!m||!h)return;
   clearTimeout(A.auto);
   RB={frag:document.createDocumentFragment(),klasse:m.className,scroll:m.scrollTop,htext:h.textContent,hdis:h.disabled,hhid:h.hidden};
   while(m.firstChild)RB.frag.appendChild(m.firstChild);
   m.className=S.letzte.klasse+' rueckblick';Array.from(S.letzte.bild.childNodes).forEach(c=>m.appendChild(c.cloneNode(true)));m.scrollTop=0;
-  h.hidden=false;h.disabled=false;h.textContent='Weiter';if(l)l.classList.add('rb');S.rueckblick=true;}
-function endeLetzte(){if(!S.rueckblick)return;S.rueckblick=false;const m=$('.buehne'),h=$('.leiste .haupt'),l=$('.leiste');
+  const L=S.letzte,b=$('.was>span>b',m),d=$('.denk',m),hi=$('.hilfen');
+  if(b&&!(S.modus==='einzel'&&S.einzel&&S.einzel.id===L.t.id)){const x=el('<button class="wasl" data-akt="einzeltyp" data-typ="'+L.t.id+'"></button>');x.innerHTML=b.innerHTML;b.replaceWith(x);}
+  L.denkAn=!!(d&&!d.hidden);
+  if(hi)hi.innerHTML=(L.auf.denk&&d?'<button class="hk'+(L.denkAn?' an':'')+'" data-akt="ldenk">Denkanstoß</button>':'')+(L.auf.erkl?'<button class="hk erkl" data-akt="lerkl">Erklärung</button>':'');
+  h.hidden=false;h.disabled=false;h.textContent='Weiter';S.rueckblick=true;}
+function endeLetzte(){if(!S.rueckblick)return;S.rueckblick=false;const m=$('.buehne'),h=$('.leiste .haupt');
   if(m&&RB){m.textContent='';m.className=RB.klasse;m.appendChild(RB.frag);m.scrollTop=RB.scroll;
     if(h){h.textContent=RB.htext;h.disabled=RB.hdis;h.hidden=RB.hhid;}}
-  if(l)l.classList.remove('rb');RB=null;}
+  RB=null;zeigeHilfen();}
 
 function weiter(){
   clearTimeout(A.auto);if(!A.gewertet)return;
@@ -2407,6 +2412,7 @@ function zeigeTafel(){
 /* =====================================================================
    Bedienung
    ===================================================================== */
+const erklFuer=k=>({info1:zeigeInfo1,info2:zeigeInfo2,info3:zeigeInfo3}[k]||zeigeInfo1);     // die Erklärung, die zu einer Aufgabe gehört
 const AKT={
   start:vStart,gesamt:startGesamt,einzel:()=>vEinzel(),erkl:vErkl,
   einzelstart:b=>startEinzel(b.dataset.typ),
@@ -2419,7 +2425,9 @@ const AKT={
   haupt:()=>{if(S.rueckblick)return endeLetzte();if(S.ansicht==='werk'){if(W.fn)W.fn();return;}if(A.haupt==='pruefen'){const r=A.pruefe();abgeben(r.ok,r.hinweis);}else weiter();},
   denk:()=>{A.denk=!A.denk;const d=$('.denk');if(d){d.hidden=!A.denk;d.innerHTML=A.auf.denk;}zeigeHilfen();},
   schritt:naechsterSchritt,loesung,
-  erklaerung:()=>{clearTimeout(A.auto);({info1:zeigeInfo1,info2:zeigeInfo2,info3:zeigeInfo3}[A.auf.erkl]||zeigeInfo1)();},
+  erklaerung:()=>{clearTimeout(A.auto);erklFuer(A.auf.erkl)();},
+  lerkl:()=>{if(S.letzte)erklFuer(S.letzte.auf.erkl)();},
+  ldenk:()=>{const L=S.letzte,d=$('.buehne .denk');if(!L||!d)return;L.denkAn=!L.denkAn;d.hidden=!L.denkAn;d.innerHTML=L.auf.denk;const b=$('[data-akt="ldenk"]');if(b)b.classList.toggle('an',L.denkAn);},
   info1:()=>{adresse('info-1');zeigeInfo1()._ende=()=>adresse('erklaerungen');},
   tafel:()=>{adresse('tafel-runde');zeigeTafel()._ende=()=>adresse('erklaerungen');},
   info2:()=>{adresse('info-2');zeigeInfo2()._ende=()=>adresse('erklaerungen');},
