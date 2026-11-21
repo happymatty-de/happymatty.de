@@ -136,13 +136,12 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 /* Rückblick: das Bild der letzten Aufgabe ist eingefroren; nur der Aufgabentyp bleibt antippbar */
 .buehne.rueckblick>*{pointer-events:none}
 .buehne.rueckblick .wasl{pointer-events:auto}
-/* Einzeltraining: der Ort steht vor dem Aufgabentyp neben dem Balken */
-.el .elm{font-weight:400;color:var(--grau)}
 /* Fenster vor dem Wechsel ins Einzeltraining eines Aufgabentyps */
 .efrage{width:min(94vw,27rem)}
 .efrage .reihe{grid-template-columns:minmax(0,1fr) minmax(4rem,9rem) auto}
 .efrage .eknoepfe{display:flex;justify-content:flex-end;align-items:center;gap:.6rem;margin-top:.2rem}
 .efrage .eknoepfe .kn{min-height:3rem;padding:.3rem 1rem}
+.efrage .ehier{margin:0}
 
 /* Nach einer falschen Antwort steht der Denkanstoß als Regel unter dem Fehler */
 .rueck small.regel{color:#3D4853;font-size:.92rem;margin-top:.25rem}
@@ -1118,7 +1117,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v2.7';
+const VERSION='v2.8';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1727,9 +1726,10 @@ function trainingRahmen(){
     '<main class="buehne"></main><footer class="leiste"><div class="hilfen"></div><button class="haupt" data-akt="haupt" disabled>Prüfen</button></footer><div class="toasts"></div>','tr');
   zeigeEtappe();
 }
-/* Im Einzeltraining steht „Einzeltraining ·“ vor dem Aufgabentyp: Der Knopf links nennt nur den Rückweg, nicht den Ort (Lehrkraft 21.11.2026) */
+/* Im Einzeltraining steht neben dem Balken nur „Einzeltraining“, wo im Gesamttraining die Etappe steht: Der Knopf links nennt nur den Rückweg, nicht den Ort.
+   Der Aufgabentyp steht schon über der Aufgabe; mit ihm war die Kopfzeile zu voll (Lehrkraft 21.11.2026) */
 function zeigeEtappe(){const l=$('.el'),b=$('.eb i');if(!l)return;
-  const p=S.modus==='gesamt'?S.pkt:S.einzel.pkt;l.innerHTML=S.modus==='gesamt'?'Etappe '+S.etappe:'<span class="elm">Einzeltraining · </span>'+TYP[S.einzel.id].titel;b.style.width=Math.min(100,Math.round(p/ETAPPE*100))+'%';}
+  const p=S.modus==='gesamt'?S.pkt:S.einzel.pkt;l.textContent=S.modus==='gesamt'?'Etappe '+S.etappe:'Einzeltraining';b.style.width=Math.min(100,Math.round(p/ETAPPE*100))+'%';}
 function setHaupt(art,an){const h=$('.leiste .haupt');if(!h)return;A.haupt=art;h.hidden=false;h.textContent=art==='pruefen'?'Prüfen':'Weiter';h.disabled=!an;}
 function toast(t,alt,neu,text){const host=$('.toasts');if(!host)return;
   const e=el('<div class="toast"><b>'+t.titel+'</b>'+bandHTML(t,alt)+'<span class="tx">'+text+'</span></div>');host.appendChild(e);
@@ -1737,14 +1737,16 @@ function toast(t,alt,neu,text){const host=$('.toasts');if(!host)return;
 
 function startGesamt(){S.modus='gesamt';if(werkDran())return startWerk('gesamt');trainingRahmen();neueAufgabe(true);}
 /* Vom Gesamttraining ins Einzeltraining eines Aufgabentyps (Lehrkraft 21.11.2026): Ein kleines Fenster macht den Wechsel zum bewussten Schritt.
-   Wer so hineinkommt, hat oben links „‹ Gesamttraining“ und landet mit einem Tipp wieder bei der Aufgabe, die dort stehen geblieben ist. */
+   Wer so hineinkommt, hat oben links „‹ Gesamttraining“ und landet mit einem Tipp wieder bei der Aufgabe, die dort stehen geblieben ist.
+   Im Einzeltraining dieses Typs zeigt dasselbe Fenster nur den Hinweis „Du bist schon in diesem Einzeltraining.“ mit „OK“ (Lehrkraft 21.11.2026). */
 function zeigeEinzelFrage(id){const t=TYP[id];if(!t||$('.efrage'))return;clearTimeout(A.auto);
+  const hier=S.modus==='einzel'&&!!S.einzel&&S.einzel.id===id;
   const ov=el('<div class="ov dunkel"><div class="panel efrage" role="dialog" aria-label="Einzeltraining"><div class="pkopf"><h2>Einzeltraining</h2></div>'+
     '<div class="reihe"><b>'+t.titel+'</b>'+bandHTML(t)+'<span>'+markeHTML(t,empfohlen())+'</span></div>'+
-    '<p class="klein">Nur Aufgaben dieses Typs.</p>'+
-    '<div class="eknoepfe"><button class="kn" data-zu>Abbrechen</button><button class="haupt" data-los>Start</button></div></div></div>');
+    (hier?'<p class="ehier">Du bist schon in diesem Einzeltraining.</p><div class="eknoepfe"><button class="haupt" data-zu>OK</button></div>'
+         :'<p class="klein">Nur Aufgaben dieses Typs.</p><div class="eknoepfe"><button class="kn" data-zu>Abbrechen</button><button class="haupt" data-los>Start</button></div>')+'</div></div>');
   ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();if(e.target.closest('[data-los]')){ov.remove();startEinzel(id,S.modus==='gesamt'||!!(S.einzel&&S.einzel.vonGesamt));}});
-  document.body.appendChild(ov);const b=$('[data-los]',ov);if(b)b.focus();}
+  document.body.appendChild(ov);const b=$('.haupt',ov);if(b)b.focus();}
 function startEinzel(id,vonGesamt){S.modus='einzel';S.einzel={id,pkt:0,vollNeu:false,vonGesamt:!!vonGesamt};trainingRahmen();neueAufgabe(true);}
 const offenKey=()=>S.modus==='gesamt'?'gesamt':'einzel-'+S.einzel.id;
 
@@ -1774,8 +1776,8 @@ function zeigeLeer(){
 }
 // Trennstellen in langen Wörtern der Antwortkacheln: Auf dem Handy passt sonst ein Wort nicht in die halbe Breite
 const weich=h=>h.replace(/Normalparabel/g,'Normal\u00ADparabel').replace(/Scheitelpunktform/g,'Scheitel\u00ADpunkt\u00ADform').replace(/Nullstellenform/g,'Null\u00ADstellen\u00ADform').replace(/Allgemeine/g,'All\u00ADgemeine');
-// Aufgabenkopf: im Gesamttraining führt der Aufgabentyp (fett, blau) in sein Einzeltraining; das Level steht nur als Zahl da
-const wasZeile=()=>'<p class="was"><span>'+(S.modus==='gesamt'?'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button>':'<b>'+A.t.titel+'</b>')+' · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
+// Aufgabenkopf: der Aufgabentyp (fett, blau) führt über ein kleines Fenster in sein Einzeltraining; im Einzeltraining dieses Typs sagt das Fenster nur, dass man schon dort ist. Das Level steht nur als Zahl da
+const wasZeile=()=>'<p class="was"><span><button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button> · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
 const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
 const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3>'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
 function zeigeSchritte(){const z=$('.zeilen');if(!z)return;const s=A.auf.schritte||[];
@@ -2167,7 +2169,7 @@ function zeigeLetzte(){if(!S.letzte||S.rueckblick||S.ansicht!=='aufgabe')return;
   while(m.firstChild)RB.frag.appendChild(m.firstChild);
   m.className=S.letzte.klasse+' rueckblick';Array.from(S.letzte.bild.childNodes).forEach(c=>m.appendChild(c.cloneNode(true)));m.scrollTop=0;
   const L=S.letzte,b=$('.was>span>b',m),d=$('.denk',m),hi=$('.hilfen');
-  if(b&&!(S.modus==='einzel'&&S.einzel&&S.einzel.id===L.t.id)){const x=el('<button class="wasl" data-akt="einzeltyp" data-typ="'+L.t.id+'"></button>');x.innerHTML=b.innerHTML;b.replaceWith(x);}
+  if(b){const x=el('<button class="wasl" data-akt="einzeltyp" data-typ="'+L.t.id+'"></button>');x.innerHTML=b.innerHTML;b.replaceWith(x);}
   L.denkAn=!!(d&&!d.hidden);
   if(hi)hi.innerHTML=(L.auf.denk&&d?'<button class="hk'+(L.denkAn?' an':'')+'" data-akt="ldenk">Denkanstoß</button>':'')+(L.auf.erkl?'<button class="hk erkl" data-akt="lerkl">Erklärung</button>':'');
   h.hidden=false;h.disabled=false;h.textContent='Weiter';S.rueckblick=true;}
