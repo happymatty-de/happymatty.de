@@ -878,6 +878,20 @@ svg.zieh{touch-action:none}
 .zeilen .cm,.zeilen .cb{white-space:nowrap}
 /* Handschrift kennt kein Fett: Künstlich gefettet wirkt dasselbe Orange dunkler */
 .zeilen .cm,.zeilen .cb,.ezeilen .cm,.ezeilen .cb,.kzeil .cm,.kzeil .cb,.wnot .cm,.wnot .cb{font-weight:400}
+/* ---------- 22.11.2026, dritte Runde (Lehrkraft): Folgefehler ----------
+   Eine Eingabe, die richtig aus einer eigenen falschen Eingabe folgt, bekommt den grünen Haken in grünen Klammern, wie in den Klassenarbeiten der Lehrkraft
+   („ja, es ist richtig, aber es ist hinter einem Fehler“). Das Zeichen sitzt, wo sonst ✓ oder ✗ sitzt; es ist hell mit grünem Rand statt voll grün: richtig gedacht, im Ergebnis falsch. */
+.umsch.folge{border-color:var(--gruen);overflow:visible}
+.umsch:not(.wegw).folge button:first-child{border-radius:.46rem 0 0 .46rem}
+.umsch:not(.wegw).folge button:last-child{border-radius:0 .46rem .46rem 0}
+.gesperrt .umsch.folge{opacity:1}
+.feld.folge{border-style:solid;border-color:var(--gruen);background:#F6FAF4}
+.feld.folge.aktiv::after{display:none}
+.umsch:not(.wegw).folge button.an::before,.feld.folge::before{content:'(✓)';
+  position:absolute;top:-.68rem;right:.1rem;left:auto;z-index:1;height:1.2rem;padding:0 .3rem;border-radius:.7rem;border:.1rem solid var(--gruen);box-sizing:content-box;background:#fff;
+  color:var(--gruen);font-family:var(--satz);font-size:.86rem;font-weight:700;font-style:normal;line-height:1;white-space:nowrap;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.feld.folge::before{right:-.7rem}
+.fpf{color:var(--text)}
 
 </style></head>
 <body><div id="app"></div>
@@ -888,7 +902,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v6';
+const VERSION='v6.1';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1675,7 +1689,7 @@ const FORM={
     const felder=$$('.feld',m),ums=$$('.umsch',m),w={};let aktiv=0;
     /* Nach „Prüfen“ trägt jede Eingabe ihr Urteil: grün mit ✓ oder rot mit ✗ (Lehrkraft 22.11.2026). pruefe() nennt in falsch alle falschen Eingaben;
        was nicht darin steht, ist richtig. Nennt es nichts, gibt es kein Urteil. Danach ist die Aufgabe zu Ende: Wer falsch prüft, sieht gleich die Lösung (abgeben, zeigt). */
-    const ohneUrteil=()=>felder.concat(ums).forEach(x=>x.classList.remove('ok','falsch'));
+    const ohneUrteil=()=>felder.concat(ums).forEach(x=>x.classList.remove('ok','falsch','folge'));
     if(felder.length<2){const p=$('[data-k="weiter"]',m);p.remove();}
     const gueltig=s=>!!s&&/\d$/.test(s);
     const zeig=()=>{felder.forEach((f,i)=>{f.classList.toggle('aktiv',i===aktiv&&!A.fertig);f.textContent=w[f.dataset.f]||'';});
@@ -1685,15 +1699,16 @@ const FORM={
       if(k==='del')s=s.slice(0,-1);else if(k==='−')s=s.startsWith('−')?s.slice(1):'−'+s;
       else if(k===','){if(!s.includes(',')&&/\d$/.test(s))s+=',';}
       else if(/^\d$/.test(k)){if(s.replace(/[−,]/g,'').length<4)s+=k;}
-      if(s!==(w[id]||''))felder[aktiv].classList.remove('ok','falsch');w[id]=s;zeig();};
+      if(s!==(w[id]||''))felder[aktiv].classList.remove('ok','falsch','folge');w[id]=s;zeig();};
     $$('.tasten button',m).forEach(b=>b.addEventListener('click',()=>A.taste(b.dataset.k)));
     felder.forEach((f,i)=>f.addEventListener('click',()=>{if(A.fertig)return;aktiv=i;zeig();}));
-    ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;um.classList.remove('ok','falsch');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));
+    ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;um.classList.remove('ok','falsch','folge');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));
       if(um.dataset.w==='art'){const pl=$('.pl',m);if(pl)pl.textContent=b.dataset.v;}zeig();})));
     A.pruefe=()=>{const r=auf.pruefe(w),F=r.falsch||[];ohneUrteil();if(!r.ok&&!F.length)return r;
       /* offene Aufgabe, eigene Antwort richtig: Die Lösung zeigt die eigene Antwort statt des Beispiels (Lehrkraft 22.11.2026). auf.eigen(w) liefert Schritte und Überschrift */
       if(r.ok&&auf.eigen&&!w.keine){const e=auf.eigen(w);if(e){auf.schritte=e.schritte;const z=$('.rechnung .zeilen',m),h=$('.rechnung h3.lt',m);if(z)z.innerHTML='';if(h&&e.rtitel)h.textContent=e.rtitel;}}
-      felder.forEach(f=>f.classList.add(F.includes(f.dataset.f)?'falsch':'ok'));ums.forEach(u=>u.classList.add(F.includes(u.dataset.w)?'falsch':'ok'));return r;};
+      /* Folgefehler (Lehrkraft 22.11.2026): Was pruefe() in „folge“ nennt, folgt richtig aus einer eigenen falschen Eingabe und bekommt den Haken in Klammern, wie in den Klassenarbeiten */
+      const G=r.folge||[],urt=id=>F.includes(id)?'falsch':G.includes(id)?'folge':'ok';felder.forEach(f=>f.classList.add(urt(f.dataset.f)));ums.forEach(u=>u.classList.add(urt(u.dataset.w)));return r;};
     A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));};
     zeig();
   },
@@ -1816,7 +1831,7 @@ const FORM={
     const felder=$$('.feld',m),kb=$('.keine',m),w={};let aktiv=0,keine=false;const gueltig=s=>!!s&&/\d$/.test(s);
     /* Urteil an jeder Eingabe wie in der Form „Eingabe“ (Lehrkraft 22.11.2026). Bei einer Lösungsmenge zählt die Reihenfolge nicht: treffer nennt die eingegebenen
        Zahlen, die Lösungen sind; ihre Felder bekommen ✓, auch wenn die Menge nicht stimmt. Ein leeres Feld bekommt kein Urteil. */
-    const ohneUrteil=()=>felder.concat([kb]).forEach(x=>x.classList.remove('ok','falsch'));
+    const ohneUrteil=()=>felder.concat([kb]).forEach(x=>x.classList.remove('ok','falsch','folge'));
     const zeig=()=>{felder.forEach((f,i)=>{f.classList.toggle('aktiv',i===aktiv&&!A.fertig&&!keine);f.classList.toggle('matt',keine);f.textContent=keine?'':(w[f.dataset.f]||'');});
       kb.classList.toggle('an',keine);kb.setAttribute('aria-pressed',keine);setHaupt('pruefen',keine||felder.some(f=>gueltig(w[f.dataset.f])));};
     A.taste=k=>{if(A.fertig)return;if(keine){keine=false;ohneUrteil();}const id=felder[aktiv].dataset.f;let s=w[id]||'';
@@ -1824,7 +1839,7 @@ const FORM={
       if(k==='del')s=s.slice(0,-1);else if(k==='−')s=s.startsWith('−')?s.slice(1):'−'+s;
       else if(k===','){if(!s.includes(',')&&/\d$/.test(s))s+=',';}
       else if(/^\d$/.test(k)){if(s.replace(/[−,]/g,'').length<4)s+=k;}
-      if(s!==(w[id]||''))felder[aktiv].classList.remove('ok','falsch');w[id]=s;zeig();};
+      if(s!==(w[id]||''))felder[aktiv].classList.remove('ok','falsch','folge');w[id]=s;zeig();};
     $$('.tasten button',m).forEach(b=>b.addEventListener('click',()=>A.taste(b.dataset.k)));
     felder.forEach((f,i)=>f.addEventListener('click',()=>{if(A.fertig)return;if(keine){keine=false;ohneUrteil();}aktiv=i;zeig();}));
     kb.addEventListener('click',()=>{if(A.fertig)return;keine=!keine;ohneUrteil();zeig();});
