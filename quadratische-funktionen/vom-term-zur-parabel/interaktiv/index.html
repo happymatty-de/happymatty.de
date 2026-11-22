@@ -212,7 +212,9 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .tasten button:active{transform:translateY(.1rem);box-shadow:none;background:#EAF3F9}
 .tasten .breit{grid-column:span 2}
 .tasten .fn{background:#EEF1F4;font-size:1.2rem}
-.gesperrt .tasten,.gesperrt .umsch{opacity:.45;pointer-events:none}
+/* nach dem Prüfen und nach „Lösung“ ist das Ziffernfeld weg: Es wird nicht mehr gebraucht, und die Rechnung hat mehr Platz (Lehrkraft 22.11.2026) */
+.gesperrt .tasten{display:none}
+.gesperrt .umsch{opacity:.45;pointer-events:none}
 
 /* Wischkarte */
 .wischfeld{padding:.9rem 1.2rem 1.2rem;display:flex;justify-content:center;overflow:hidden}
@@ -682,7 +684,7 @@ button.eka.tipp{background:#E3EFDF}
 
 /* ---------- Urteil an jeder Eingabe nach „Prüfen“ (Lehrkraft 22.11.2026) ----------
    Grün mit ✓ oder rot mit ✗ an der Ecke, Rand durchgezogen, helle Füllung: Das Zeichen trägt die Aussage mit, nicht nur die Farbe.
-   Blau heißt nur noch: Hier tippe ich. Der Cursor steht nach einem Fehler im ersten falschen Feld. */
+   Blau heißt nur noch: Hier tippe ich. */
 .feld,.umsch,.keine{position:relative}
 .feld.ok,.feld.falsch{border-style:solid}
 .feld.ok{border-color:var(--gruen);background:#EAF4E6;box-shadow:0 0 0 .16rem #D3E8CC}
@@ -706,6 +708,22 @@ button.eka.tipp{background:#E3EFDF}
   color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .feld.ok::before,.umsch:not(.wegw).ok::before,.umsch.wegw.ok button.an::before,.keine.ok::before{content:'✓';background:var(--gruen)}
 .feld.falsch::before,.umsch:not(.wegw).falsch::before,.umsch.wegw.falsch button.an::before,.keine.falsch::before{content:'✗';background:var(--rot)}
+/* Punkte setzen: Kommt die Lösung, verblasst das eigene Falsche (Lehrkraft 22.11.2026) */
+.sp.falsch.blass{opacity:.3}
+.pko.falsch.blass{opacity:.45}
+
+/* ---------- Gleichung am Graphen (Lehrkraft 22.11.2026) ----------
+   Steht die Lösung da, steht die Gleichung im Bild neben ihrem Graphen, in seiner Farbe; der bloße Name am Graphen entfällt dann */
+.bild.mitgl{position:relative}
+.bild.mitgl .gname{display:none}
+.glg{position:absolute;left:0;top:0;font-size:1.05rem;line-height:1.05;white-space:nowrap;pointer-events:none;padding:.1em .32em;border-radius:.35em;background:rgba(255,255,255,.88);color:var(--blau);animation:glkommt .4s ease-out backwards}
+.glg *{color:inherit!important}
+.glg.lg,.glg.ls{color:var(--gruen)}.glg.lr{color:var(--rot)}.glg.lb{color:var(--blau)}.glg.ll{color:var(--lila)}
+.glg.glspaet{animation-delay:1.5s}
+@keyframes glkommt{from{opacity:0}}
+@media (max-width:760px){.glg{font-size:.9rem}}
+.achsbild .glg{font-size:.92rem}
+.gk.eigen.blass{opacity:.28}
 
 </style></head>
 <body><div id="app"></div>
@@ -715,7 +733,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v7';
+const VERSION='v7.1';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -906,6 +924,12 @@ let gid=0;
 const GX=[-5,5],GY=[-5,5],GE=30,GR=18,GW=GR*2+(GX[1]-GX[0])*GE,GH=GR*2+(GY[1]-GY[0])*GE;
 const gx=x=>GR+(x-GX[0])*GE, gy=y=>GR+(GY[1]-y)*GE;
 function pfad(a,u,v){let d='';for(let i=0;i<=200;i++){const x=GX[0]+i*(GX[1]-GX[0])/200;const y=Math.max(-60,Math.min(60,a*(x-u)*(x-u)+v));d+=(i?'L':'M')+gx(x).toFixed(1)+' '+gy(y).toFixed(1);}return d;}
+/* Gleichung am Graphen (zeigeGl): Angaben für eine Parabel a(x − u)² + v im Koordinatensystem von graph() */
+function glParabel(html,g,kl,o){o=o||{};const P=[],H=[];
+  for(let x=GX[0];x<=GX[1]+.001;x+=.05){const y=g.a*(x-g.u)*(x-g.u)+g.v;if(y>=GY[0]&&y<=GY[1])P.push([gx(x),gy(y)]);}
+  for(let t=GX[0];t<=GX[1]+.001;t+=.25)H.push([gx(t),gy(0)],[gx(t),gy(-.55)],[gx(0),gy(t)],[gx(-.5),gy(t)]);
+  (o.andere||[]).forEach(q=>{for(let x=GX[0];x<=GX[1]+.001;x+=.1){const y=q.a*(x-q.u)*(x-q.u)+q.v;if(y>=GY[0]&&y<=GY[1])H.push([gx(x),gy(y)]);}});
+  return {html,kl:kl||'lb',pkt:P,rahmen:[GR,GR,GW-GR,GH-GR],hind:H,spaet:!!o.spaet};}
 function graph(kurven){
   const id='clip'+(++gid);
   let s='<svg class="graph" viewBox="0 0 '+GW+' '+GH+'" role="img" aria-label="Koordinatensystem mit Parabel"><defs><clipPath id="'+id+'"><rect x="'+GR+'" y="'+GR+'" width="'+(GW-2*GR)+'" height="'+(GH-2*GR)+'"/></clipPath></defs>';
@@ -947,7 +971,7 @@ const GEN={
       kand.push({k:[a2,u,v],hinweis:'Geh vom '+wort+' eins nach rechts: Es geht um '+zahl(Math.abs(a))+' nach '+(a>0?'oben':'unten')+'.'});
       if(u!==v&&u!==0&&v!==0)kand.push({k:[a,v,u],hinweis:'Die beiden Zahlen sind vertauscht: In der Klammer steht die Verschiebung nach rechts oder links.'});
       const falsch=shuffle(kand).slice(0,2);
-      return {form:'wahl',frage:'Welcher Term gehört zum Graphen?',bild:graph([{a,u,v}]),erkl:'info2',
+      return {form:'wahl',frage:'Welcher Term gehört zum Graphen?',bild:graph([{a,u,v}]),erkl:'info2',gl:()=>glParabel(fx(termSPF(a,u,v)),{a,u,v}),
         denk:'Lies zuerst den Hoch- oder Tiefpunkt ab.',
         opts:shuffle([{html:termSPF(a,u,v),ok:true}].concat(falsch.map(f=>({html:termSPF(f.k[0],f.k[1],f.k[2]),hinweis:f.hinweis}))))};},
     b(){const g=this.zahlen();
@@ -990,7 +1014,7 @@ const GEN={
     schritte(g){return [{h:V('f')+'('+zahl(g.px)+') '+SOLL+' '+zahl(g.py)},{h:g.ein(g.px)+' = '+zahl(g.py)}].concat(g.rest);},
     hinweis(g,w){const tausch=V('x')+' und '+V('y')+' sind vertauscht: '+zahl(g.px)+' ist der '+V('x')+'-Wert, '+zahl(g.py)+' ist das Ergebnis.';
       for(const [z,txt] of g.kand)if(Number.isFinite(z)&&gleich(z,w)&&!gleich(z,g.ges))return txt==='T'?tausch:txt;
-      return 'Noch nicht. Setze den Punkt ein und löse Schritt für Schritt auf.';},
+      return 'Nicht richtig. Setze den Punkt ein und löse Schritt für Schritt auf.';},
     denk:V('P')+' liegt auf dem Graphen: Was kommt heraus, wenn du für '+V('x')+' den '+V('x')+'-Wert von '+V('P')+' einsetzt?',
     q(){const g=this.zahlen(),{px,py}=g;
       return {form:'wahl',frage:'Der Punkt '+V('P')+' liegt auf dem Graphen. Welcher Ansatz stimmt?',term:this.kopf(g),denk:this.denk,g,
@@ -1165,7 +1189,7 @@ const GEN={
             if(a===1&&b===n-m&&c===-m*n)h=k===-1?'Das Minus vor den Klammern gilt für jedes Glied.':'Die '+zahl(k)+' vor den Klammern wird mit jedem Glied multipliziert.';
             else if(c===-L.c)h='Vorzeichen beim letzten Glied: (−'+m+') · '+n+' = −'+(m*n)+'.';
             else if(b===k*(n+m)||b===-L.b)h='Vorzeichen beim mittleren Glied: '+(dreh?'−'+e(m)+x+' + '+e(n)+x:e(n)+x+' − '+e(m)+x)+' = '+poly(0,n-m,0)+'.';
-            else h='Noch nicht. Multipliziere erst die beiden Klammern aus, jeder mit jedem, dann mit der Zahl davor.';
+            else h='Nicht richtig. Multipliziere erst die beiden Klammern aus, jeder mit jedem, dann mit der Zahl davor.';
             return {ok:false,hinweis:h,falsch:F};}};}
       const g=this.bin(true),{t,A,B,C,p,q}=g,K=this.klammer(t),pr=this.produkte(t),L={a:A,b:B,c:C};
       return {form:'eingabe',frage:'Schreibe ohne Klammern und fasse zusammen.',term:K+Q+' =',ein,notiz,loes:{felder:L},
@@ -1177,8 +1201,8 @@ const GEN={
           else if(gleich(a,A)&&gleich(c,C)&&gleich(b,-B))h='Vorzeichen beim mittleren Glied: '+pr[1].label+' = '+this.glied(pr[1].k,pr[1].e)+'.';
           else if(gleich(a,C)&&gleich(c,A)&&A!==C)h='Vertauscht: Vor '+x+Q+' steht die Zahl, die mit '+x+' quadriert wurde.';
           else if(gleich(a,q)&&q>1)h='Auch die '+q+' wird quadriert: ('+q+x+')'+Q+' = '+A+x+Q+'.';
-          else if(gleich(c,-C))h='Das Quadrat einer Zahl ist nie negativ. Schau noch einmal auf das letzte Glied.';
-          else h='Noch nicht. Schreibe die Klammer zweimal hin und multipliziere jeden mit jedem.';
+          else if(gleich(c,-C))h='Das Quadrat einer Zahl ist nie negativ. Schau auf das letzte Glied.';
+          else h='Nicht richtig. Schreibe die Klammer zweimal hin und multipliziere jeden mit jedem.';
           return {ok:false,hinweis:h,falsch:F};}};}
   },
 };
@@ -1234,7 +1258,7 @@ const WERKG={
         [-H,'Vor '+A+' steht noch '+z4(q)+': Teile '+zahl(-H)+' durch '+z4(q)+'.']],
       pruefe(wt){const z=num(wt.x);if(gleich(z,a))return {ok:true};
         for(const [f,t] of this.kand)if(Number.isFinite(f)&&gleich(f,z)&&!gleich(f,a))return {ok:false,hinweis:t,falsch:['x']};
-        return {ok:false,hinweis:'Noch nicht. Setze den Punkt ein und löse Schritt für Schritt auf.',falsch:['x']};},
+        return {ok:false,hinweis:'Nicht richtig. Setze den Punkt ein und löse Schritt für Schritt auf.',falsch:['x']};},
       notiz:'Fuß ('+zahl(w)+' | 0): '+A+' = '+zahl(a)+', also '+fx(poly(a,0,H))};},
   /* Schritt 2, erste Frage: Was ist zu berechnen? */
   s2a(g){const {name,des,b,k,h}=g,x=V('x'),F=z=>V('f')+'('+zahl(z)+')';
@@ -1256,7 +1280,7 @@ const WERKG={
         [a*b*b+H,'Das ist '+V('f')+'('+zahl(b)+'). Gesucht ist '+F+'.'],[H,'Das ist die Höhe in der Mitte. An der Kante ist das Tor niedriger.']],
       pruefe(wt){const z=num(wt.x);if(gleich(z,fk))return {ok:true};
         for(const [f,t] of this.kand)if(Number.isFinite(f)&&gleich(r4(f),z)&&!gleich(r4(f),fk))return {ok:false,hinweis:t,falsch:['x']};
-        return {ok:false,hinweis:'Noch nicht. Setze '+zahl(k)+' für '+x+' ein: erst quadrieren, dann mal '+zahl(a)+', dann plus '+zahl(H)+'.',falsch:['x']};},
+        return {ok:false,hinweis:'Nicht richtig. Setze '+zahl(k)+' für '+x+' ein: erst quadrieren, dann mal '+zahl(a)+', dann plus '+zahl(H)+'.',falsch:['x']};},
       notiz:F+' = '+zahl(fk)+': An der Kante ist das Tor '+m2(fk)+' m hoch.'};},
   /* Schritt 3: vergleichen, entscheiden, den Abstand nennen. Aufgelöst wird beim Abspielen */
   s3(g){const {name,h,fk,passt,cm}=g;
@@ -1394,6 +1418,31 @@ function zeigeRueck(kl,txt,klein,regel){const r=$('.rueck');if(!r)return;r.hidde
   r.innerHTML='<span class="z">'+(kl==='gut'?'✓':kl==='schlecht'?'✗':'i')+'</span><span>'+txt+(regel?'<small class="regel">'+regel+'</small>':'')+(klein?'<small>'+klein+'</small>':'')+'</span>';
   r.scrollIntoView({block:'nearest',behavior:'smooth'});}
 
+/* ---------- Gleichung am Graphen (Lehrkraft 22.11.2026) ----------
+   Steht die Lösung da, steht die Gleichung des Graphen im Bild, in seiner Farbe: „Da kann man das noch viel besser sehen.“
+   Eine Aufgabe gibt dazu gl an (oder eine Form setzt A.gl): {html, kl, pkt, rahmen, hind, spaet}. pkt sind Punkte des Graphen, rahmen ist die Zeichenfläche
+   [links, oben, rechts, unten], hind sind Punkte, die frei bleiben sollen (Achsen mit ihren Zahlen, andere Graphen), alles in Koordinaten der viewBox.
+   Das Schild ist HTML über dem SVG, damit Brüche wie im Text stehen. Sein Platz wird am fertigen Bild gemessen: dicht neben dem Graphen, möglichst frei
+   von Achsen und anderem, eher oben. Nach dem Drehen des Geräts wird neu gemessen. */
+function zeigeGl(spec,wo){const bild=wo||$('.buehne .bild');if(!bild||!spec||!spec.pkt||!spec.pkt.length)return;if(!$('svg',bild))return;
+  $$('.glg',bild).forEach(x=>x.remove());const e=el('<div class="glg '+(spec.kl||'')+(spec.spaet?' glspaet':'')+'">'+spec.html+'</div>');
+  bild.classList.add('mitgl');bild.appendChild(e);e._gl=spec;setzeGl(e);requestAnimationFrame(()=>{if(e.isConnected)setzeGl(e);});}
+function setzeGl(e){const spec=e._gl,bild=e.parentNode,svg=bild&&$('svg',bild),M=svg&&svg.getScreenCTM();if(!spec||!M)return;
+  const pt=svg.createSVGPoint(),S=p=>{pt.x=p[0];pt.y=p[1];const q=pt.matrixTransform(M);return [q.x,q.y];};
+  const B=bild.getBoundingClientRect(),r=e.getBoundingClientRect(),w=r.width,h=r.height;if(!B.width||!w)return;
+  const [x0,y0]=S([spec.rahmen[0],spec.rahmen[1]]),[x1,y1]=S([spec.rahmen[2],spec.rahmen[3]]),P=spec.pkt.map(S),H=(spec.hind||[]).map(S),g=Math.max(5,h*.24);
+  const ab=(bx,by,p)=>Math.hypot(Math.max(bx-p[0],0,p[0]-bx-w),Math.max(by-p[1],0,p[1]-by-h));
+  /* alle Plätze im Raster durchgehen: senkrecht in der Zeichenfläche, waagerecht bis an den Bildrand. Am besten ist, wer den Graphen nicht berührt, dicht an ihm
+     liegt (Abstand g) und von Achsen und anderem frei ist; passt das Schild nirgends frei hin, gewinnt der Platz, der am wenigsten vom Graphen verdeckt */
+  let best=null;const st=Math.max(4,h*.2);
+  for(let by=y0+2;by+h<=y1-2;by+=st)for(let bx=B.left+1;bx+w<=B.right-1;bx+=st){
+    let dk=1e9,n=0,dh=1e9;for(const p of P){const d=ab(bx,by,p);if(d<dk)dk=d;if(d===0)n++;}for(const p of H)dh=Math.min(dh,ab(bx,by,p));
+    const note=(dk<g*.5?-1000-n*10:0)-Math.abs(dk-g)*2+Math.min(dh,2*h)-(by-y0)*.06-(Math.max(0,x0-bx)+Math.max(0,bx+w-x1))*4;      /* über den Rand der Zeichenfläche nur, wenn es sonst nicht passt */
+    if(!best||note>best[0])best=[note,bx,by];}
+  if(!best)best=[0,x0+6,y0+6];
+  e.style.left=((best[1]-B.left)/B.width*100).toFixed(2)+'%';e.style.top=((best[2]-B.top)/B.height*100).toFixed(2)+'%';}
+window.addEventListener('resize',()=>$$('.glg').forEach(e=>{if(e._gl)setzeGl(e);}));
+
 const FORM={
   /* Quick: Antippen ist die Antwort */
   wahl(auf,m){
@@ -1416,7 +1465,7 @@ const FORM={
       (satz?'<section class="karte rechnung">'+T+'<h3>'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>':rechnungKarte(rt,rl));
     const felder=$$('.feld',m),ums=$$('.umsch',m),w={};let aktiv=0;
     /* Nach „Prüfen“ trägt jede Eingabe ihr Urteil: grün mit ✓ oder rot mit ✗ (Lehrkraft 22.11.2026). pruefe() nennt in falsch alle falschen Eingaben;
-       was nicht darin steht, ist richtig. Nennt es nichts, gibt es kein Urteil. Der Cursor springt ins erste falsche Feld; wird eine Eingabe geändert, verschwindet ihr Urteil. */
+       was nicht darin steht, ist richtig. Nennt es nichts, gibt es kein Urteil. Danach ist die Aufgabe zu Ende: Wer falsch prüft, sieht gleich die Lösung (abgeben, zeigt). */
     const ohneUrteil=()=>felder.concat(ums).forEach(x=>x.classList.remove('ok','falsch'));
     if(felder.length<2){const p=$('[data-k="weiter"]',m);p.remove();}
     const gueltig=s=>!!s&&/\d$/.test(s);
@@ -1433,8 +1482,7 @@ const FORM={
     ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;um.classList.remove('ok','falsch');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));
       if(um.dataset.w==='art'){const pl=$('.pl',m);if(pl)pl.textContent=b.dataset.v;}zeig();})));
     A.pruefe=()=>{const r=auf.pruefe(w),F=r.falsch||[];ohneUrteil();if(!r.ok&&!F.length)return r;
-      felder.forEach(f=>f.classList.add(F.includes(f.dataset.f)?'falsch':'ok'));ums.forEach(u=>u.classList.add(F.includes(u.dataset.w)?'falsch':'ok'));
-      if(!r.ok){const i=felder.findIndex(f=>f.classList.contains('falsch'));if(i>=0)aktiv=i;zeig();}return r;};
+      felder.forEach(f=>f.classList.add(F.includes(f.dataset.f)?'falsch':'ok'));ums.forEach(u=>u.classList.add(F.includes(u.dataset.w)?'falsch':'ok'));return r;};
     A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));};
     zeig();
   },
@@ -1468,9 +1516,10 @@ const FORM={
       const gut=['a','u','v'].filter(p=>ok[p]).map(p=>V(p)+' stimmt');let h=gut.length?gut.join(', ')+'. ':'';
       if(!ok.u&&w.u===-g.u)h+='Bei '+V('u')+' das Vorzeichen: Nach rechts verschoben heißt ('+V('x')+' − …)'+Q+', nach links ('+V('x')+' + …)'+Q+'.';
       else if(!ok.u||!ok.v)h+='Vergleiche die '+g.wort+'e: Wo liegt deiner, wo der gesuchte?';
-      else h+=V('a')+' stimmt noch nicht: Geh vom '+g.wort+' eins nach rechts. Wie weit geht es nach '+(g.a>0?'oben':'unten')+'?';
+      else h+=V('a')+' stimmt nicht: Geh vom '+g.wort+' eins nach rechts. Wie weit geht es nach '+(g.a>0?'oben':'unten')+'?';
       return {ok:false,hinweis:h};};
-    A.sperre=()=>zeig();
+    A.sperre=()=>{const e=$('.gk.eigen',m);if(e&&!(w.a===g.a&&w.u===g.u&&w.v===g.v))e.classList.add('blass');      // steht die Lösung da, verblasst die eigene falsche Parabel
+      A.gl=glParabel(fx(termSPF(g.a,g.u,g.v)),g);zeig();};
     zeig();setHaupt('pruefen',true);
   },
   /* Quick: Mehrere Aussagen können stimmen. Antippen wählt aus, „Prüfen“ wertet einmal aus */
@@ -1545,9 +1594,9 @@ const FORM={
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="bild setz" style="max-width:22rem;width:100%;margin:0 auto">'+graph([{a:1,u:0,v:0,kl:'norm'}])+'</div></section>'+
       '<section class="karte rechnung"><h3>Deine Punkte</h3><p class="zaehler"></p><div class="pliste"></div><div class="rueck" hidden></div><div class="zeilen"></div></section>';
     const svg=$('svg.graph',m),gp=document.createElementNS(NS,'g');svg.appendChild(gp);
-    const zeig=()=>{gp.innerHTML=pts.map(p=>'<circle class="sp'+(p.f?' falsch':'')+(p.l?' loes':'')+'" cx="'+gx(p.x)+'" cy="'+gy(p.y)+'" r="7"/>').join('');
+    const zeig=()=>{gp.innerHTML=pts.map(p=>'<circle class="sp'+(p.f?' falsch':'')+(p.l?' loes':'')+(p.f&&A.fertig?' blass':'')+'" cx="'+gx(p.x)+'" cy="'+gy(p.y)+'" r="7"/>').join('');
       const z=$('.zaehler',m);z.hidden=A.fertig;z.innerHTML='<b>'+pts.length+' von 5.</b> Setze den Hoch- oder Tiefpunkt und je zwei Punkte links und rechts davon. Tippe dazu ins Gitter; ein Tipp auf einen Punkt nimmt ihn wieder weg.';
-      $('.pliste',m).innerHTML=pts.slice().sort((p,q)=>p.x-q.x||p.y-q.y).map(p=>'<span class="pko'+(p.f?' falsch':'')+(p.l?' loes':'')+'">('+zahl(p.x)+' | '+zahl(p.y)+')</span>').join('');
+      $('.pliste',m).innerHTML=pts.slice().sort((p,q)=>p.x-q.x||p.y-q.y).map(p=>'<span class="pko'+(p.f?' falsch':'')+(p.l?' loes':'')+(p.f&&A.fertig?' blass':'')+'">('+zahl(p.x)+' | '+zahl(p.y)+')</span>').join('');
       if(!A.fertig)setHaupt('pruefen',pts.length===5);};
     A.tippe=(x,y)=>{if(A.fertig||x<GX[0]||x>GX[1]||y<GY[0]||y>GY[1])return;const j=pts.findIndex(p=>p.x===x&&p.y===y);pts.forEach(p=>p.f=false);
       if(j>=0)pts.splice(j,1);else if(pts.length<5)pts.push({x,y});else{const z=$('.zaehler',m);z.classList.remove('zittert');void z.offsetWidth;z.classList.add('zittert');}
@@ -1558,7 +1607,7 @@ const FORM={
     A.pruefe=()=>{const auf2=q=>pts.every(p=>gleich(p.y,q.a*(p.x-q.u)*(p.x-q.u)+q.v));
       pts.forEach(p=>p.f=!gleich(p.y,f(p.x)));const n=pts.filter(p=>p.f).length;zeig();
       if(!n){const s=pts.some(p=>p.x===g.u),l=pts.filter(p=>p.x<g.u).length;if(s&&l===2)return {ok:true};
-        return {ok:false,hinweis:s?'Alle Punkte liegen auf dem Graphen. Setze je zwei Punkte links und rechts vom '+g.wort+'.':'Alle Punkte liegen auf dem Graphen, aber der '+g.wort+' fehlt noch.'};}
+        return {ok:false,hinweis:s?'Alle Punkte liegen auf dem Graphen. Setze je zwei Punkte links und rechts vom '+g.wort+'.':'Alle Punkte liegen auf dem Graphen, aber der '+g.wort+' fehlt.'};}
       const kx='('+V('x')+(g.u>0?' − ':' + ')+zahl(Math.abs(g.u))+')'+Q;
       const alt=[[{a:-g.a,u:g.u,v:g.v},g.a<0?'Vorn steht ein Minus: Der Graph ist gespiegelt, also nach unten geöffnet.':'Vorn steht kein Minus: Der Graph ist nach oben geöffnet.'],
         [{a:g.a,u:-g.u,v:g.v},'Falsche Richtung: '+kx+' verschiebt nach '+(g.u>0?'rechts':'links')+'.'],
@@ -1567,7 +1616,7 @@ const FORM={
         [{a:g.a>0?1:-1,u:g.u,v:g.v},'Der Graph ist gestreckt: Vom '+g.wort+' 1 zur Seite geht es '+zahl(Math.abs(g.a))+' nach '+(g.a>0?'oben':'unten')+'.']];
       for(const [q,txt] of alt)if((q.a!==g.a||q.u!==g.u||q.v!==g.v)&&auf2(q))return {ok:false,hinweis:txt};
       return {ok:false,hinweis:(n===1?'Ein Punkt liegt':n+' Punkte liegen')+' nicht auf dem Graphen (rot). Geh vom '+g.wort+' aus: 1 zur Seite, dann 2 zur Seite.'};};
-    A.sperre=()=>{kurve();const stimmt=pts.length===5&&pts.every(p=>gleich(p.y,f(p.x)));
+    A.sperre=()=>{kurve();A.gl=glParabel(auf.term,g);const stimmt=pts.length===5&&pts.every(p=>gleich(p.y,f(p.x)));
       if(!stimmt){pts=pts.filter(p=>!gleich(p.y,f(p.x)));pts.forEach(p=>p.f=true);[-2,-1,0,1,2].forEach(d=>pts.push({x:g.u+d,y:f(g.u+d),l:true}));}
       zeig();};
     zeig();
@@ -1593,7 +1642,7 @@ function loesung(){const n=A.auf.schritte.length;if(A.fertig)return;hilfeGenutzt
 
 /* ---------- Auswertung ---------- */
 function abgeben(ok,hinweis,art){
-  const erst=!A.gewertet,einmal=A.form==='wahl'||A.form==='wisch'||A.form==='mehr',still=einmal||A.form==='ordnen'||A.form==='legen'||A.form==='zuordnen';let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern
+  const erst=!A.gewertet,einmal=A.form==='wahl'||A.form==='wisch'||A.form==='mehr',zeigt=['eingabe','punkte','ziel'].includes(A.form),still=einmal||zeigt||A.form==='ordnen'||A.form==='legen'||A.form==='zuordnen';let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
   if(erst){
     A.gewertet=true;const zaehlt=!A.hilfe&&art!=='loesung',alt=band(A.t);
     S.zeiten.push({typ:A.t.titel,key:A.key,s:Math.round((performance.now()-A.start)/100)/10,ok:ok&&art!=='loesung',hilfe:!zaehlt});
@@ -1609,10 +1658,11 @@ function abgeben(ok,hinweis,art){
   if(art==='loesung')zeigeRueck('neutral','Lösung angesehen. Diese Aufgabe zählt nicht und kommt mit neuen Zahlen wieder.');
   else if(ok&&erst&&A.hilfe)zeigeRueck('neutral','Mit Hilfe gelöst. Diese Aufgabe zählt nicht und kommt mit neuen Zahlen wieder.');
   else if(ok)zeigeRueck('gut',erst?'Richtig.':'Jetzt stimmt es.');
-  else zeigeRueck('schlecht',hinweis||'Noch nicht richtig.',still?emp:(emp||'Du kannst verbessern und noch einmal prüfen.'),A.auf.denk&&!A.denk?A.auf.denk:'');     // die Regel der Aufgabe gleich dazu, wenn der Denkanstoß nicht schon offen ist
-  if(ok||art==='loesung'||einmal){A.fertig=true;if(A.sperre)A.sperre();
+  else zeigeRueck('schlecht',hinweis||'Nicht richtig.',emp,A.auf.denk&&!A.denk&&!(zeigt&&A.auf.schritte)?A.auf.denk:'');     // die Regel der Aufgabe gleich dazu, wenn der Denkanstoß nicht schon offen ist; nicht, wo ohnehin gleich die Schritte der Lösung stehen („zu viel Text“, Lehrkraft 22.11.2026)
+  if(ok||art==='loesung'||einmal||zeigt){A.fertig=true;if(A.sperre)A.sperre();
     if(A.auf.schritte&&!einmal){A.gezeigt=A.auf.schritte.length;zeigeSchritte();}}
   setHaupt('weiter',true);zeigeHilfen();
+  if(A.fertig){const gl=A.gl||A.auf.gl;if(gl)zeigeGl(typeof gl==='function'?gl():gl);}      // die Gleichung am Graphen, sobald die Lösung dasteht
   if(ok&&erst&&A.key==='q'){const nr=A.nr;A.auto=setTimeout(()=>{if(A.nr===nr&&S.ansicht==='aufgabe'&&!$('.ov')&&!$('.ebene'))weiter();},1100);}
 }
 /* ---------- Rückblick: die letzte gewertete Aufgabe noch einmal ansehen (Lehrkraft 21.11.2026) ----------
