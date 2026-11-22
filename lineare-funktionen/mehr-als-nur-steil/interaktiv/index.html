@@ -1237,6 +1237,12 @@ svg.zieh{touch-action:none}
   color:var(--gruen);font-family:var(--satz);font-size:.86rem;font-weight:700;font-style:normal;line-height:1;white-space:nowrap;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .feld.folge::before{right:-.7rem}
 .fpf{color:var(--text)}
+/* ---------- 22.11.2026, dritte Runde (Lehrkraft): Denkanstoß in zwei Stufen ----------
+   Hat eine Aufgabe einen zweiten Denkanstoß, trägt der erste eine kleine 1 in der Ecke („dann weiß man, okay, das ist der erste Denkanstoß, und dann verlockt das ja … nochmal drauf zu drücken“);
+   der zweite Tipp auf den Knopf stellt den zweiten mit einer 2 darunter, der dritte schließt. Die Zahl: lila mit lila Rand, gefüllt wie der Kasten. */
+.denk .dz{display:flex;align-items:flex-start;justify-content:space-between;gap:.6rem}
+.denk .dz+.dz{margin-top:.35rem;padding-top:.35rem;border-top:.06rem solid #DDD2E6}
+.dnr{flex:none;box-sizing:border-box;min-width:1.2rem;height:1.2rem;padding:0 .2rem;border:.09rem solid var(--lila);border-radius:.3rem;background:#F4EFF7;color:var(--lila);font-size:.78rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;margin-top:.05rem}
 
 </style></head>
 <body><div id="app"></div>
@@ -1247,7 +1253,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v4.2';
+const VERSION='v4.3';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1979,7 +1985,7 @@ function zeigeGl(spec,wo){const bild=wo||$('.buehne .bild');if(!bild||!$('svg',b
 function setzeGl(e){const spec=e._gl,bild=e.parentNode,svg=bild&&$('svg',bild),M=svg&&svg.getScreenCTM();if(!spec||!M)return;
   const pt=svg.createSVGPoint(),S=p=>{pt.x=p[0];pt.y=p[1];const q=pt.matrixTransform(M);return [q.x,q.y];};
   const B=bild.getBoundingClientRect(),r=e.getBoundingClientRect(),w=r.width,h=r.height;if(!B.width||!w)return;
-  const [x0,y0]=S([spec.rahmen[0],spec.rahmen[1]]),[x1,y1]=S([spec.rahmen[2],spec.rahmen[3]]),P=spec.pkt.map(S),H=(spec.hind||[]).map(S),g=Math.max(5,h*.24);
+  const [x0,y0]=S([spec.rahmen[0],spec.rahmen[1]]),[x1,y1]=S([spec.rahmen[2],spec.rahmen[3]]),P=spec.pkt.map(S),H=(spec.hind||[]).map(S),HH=(spec.hart||[]).map(S),g=Math.max(5,h*.24);      /* hart: ein zweiter Graph, auf dem das Schild nicht liegen darf (QF1 Zielparabel: gegebener und eigener Graph tragen je ein Schild) */
   const ab=(bx,by,p)=>Math.hypot(Math.max(bx-p[0],0,p[0]-bx-w),Math.max(by-p[1],0,p[1]-by-h));
   const R=[];for(let v=e.previousElementSibling;v;v=v.previousElementSibling)if(v.classList.contains('glg'))R.push(v.getBoundingClientRect());      // Schilder, die schon stehen
   /* alle Plätze im Raster durchgehen: senkrecht in der Zeichenfläche, waagerecht bis an den Bildrand. Am besten ist, wer den Graphen nicht berührt, dicht an ihm
@@ -1987,8 +1993,8 @@ function setzeGl(e){const spec=e._gl,bild=e.parentNode,svg=bild&&$('svg',bild),M
   let best=null;const st=Math.max(4,h*.2);
   for(let by=y0+2;by+h<=y1-2;by+=st)for(let bx=B.left+1;bx+w<=B.right-1;bx+=st){
     let dk=1e9,n=0,dh=1e9;for(const p of P){const d=ab(bx,by,p);if(d<dk)dk=d;if(d===0)n++;}for(const p of H)dh=Math.min(dh,ab(bx,by,p));
-    const auf=R.some(q=>bx<q.right+4&&bx+w>q.left-4&&by<q.bottom+4&&by+h>q.top-4);
-    const note=(dk<g*.5?-1000-n*10:0)-(auf?600:0)-Math.abs(dk-g)*2+Math.min(dh,2*h)-(by-y0)*.06-(Math.max(0,x0-bx)+Math.max(0,bx+w-x1))*4;      /* über den Rand der Zeichenfläche nur, wenn es sonst nicht passt */
+    const auf=R.some(q=>bx<q.right+4&&bx+w>q.left-4&&by<q.bottom+4&&by+h>q.top-4);let nh=0;for(const p of HH)if(ab(bx,by,p)<g*.5)nh++;
+    const note=(dk<g*.5?-1000-n*10:0)-(nh?700+nh*10:0)-(auf?600:0)-Math.abs(dk-g)*2-(HH.length?Math.min(250,Math.max(0,dk-1.2*h)*10):0)+Math.min(dh,2*h)-(by-y0)*.06-(Math.max(0,x0-bx)+Math.max(0,bx+w-x1))*4;      /* über den Rand der Zeichenfläche nur, wenn es sonst nicht passt. Mit einem zweiten Graphen im Bild (hart): nicht auf ihm; weiter als gut eine Schildhöhe vom eigenen Graphen weg ist dann teurer als Rand oder Achse, sonst stünde das Schild neben dem anderen Graphen */
     if(!best||note>best[0])best=[note,bx,by];}
   if(!best)best=[0,x0+6,y0+6];
   e.style.left=((best[1]-B.left)/B.width*100).toFixed(2)+'%';e.style.top=((best[2]-B.top)/B.height*100).toFixed(2)+'%';}
@@ -2375,6 +2381,9 @@ const FORM={
 };
 
 /* ---------- Hilfen ---------- */
+/* Denkanstoß in zwei Stufen (Lehrkraft 22.11.2026): Nennt eine Aufgabe einen zweiten (auf.denk2), zeigt der erste Tipp auf den Knopf den ersten mit einer kleinen 1,
+   der zweite Tipp stellt den zweiten mit einer 2 darunter, der dritte schließt. Ohne denk2 bleibt es beim Auf und Zu. A.denk zählt mit: 0 zu, 1 oder 2 offen. */
+const denkHTML=(auf,n)=>!auf.denk2?auf.denk:'<span class="dz"><span>'+auf.denk+'</span><b class="dnr">1</b></span>'+(n>=2?'<span class="dz"><span>'+auf.denk2+'</span><b class="dnr">2</b></span>':'');
 function zeigeHilfen(){const h=$('.hilfen');if(!h)return;const a=A.auf;if(!a){h.innerHTML='';return;}let s='';
   const n=(a.schritte||[]).length,offen=n&&A.gezeigt<n&&!A.fertig;
   if(a.denk)s+='<button class="hk'+(A.denk?' an':'')+'" data-akt="denk">Denkanstoß</button>';
@@ -3575,11 +3584,11 @@ const AKT={
   ton:()=>{S.ton=!S.ton;$$('.kn.ton').forEach(b=>b.innerHTML=S.ton?TON_AN:TON_AUS);if(!S.ton)return;      // der Ton ist am Anfang aus; das Antippen schaltet ihn ein und lässt ihn sofort hören
     Sound.init();const c=Sound.ctx,los=()=>Sound.richtig();if(c&&c.state!=='running'&&c.resume)c.resume().then(los).catch(()=>{});else los();},
   haupt:()=>{if(S.rueckblick)return endeLetzte();if(S.ansicht==='werk'){if(W.fn)W.fn();return;}if(A.haupt==='pruefen'){const r=A.pruefe();abgeben(r.ok,r.hinweis);}else weiter();},
-  denk:()=>{A.denk=!A.denk;const d=$('.denk');if(d){d.hidden=!A.denk;d.innerHTML=A.auf.denk;}zeigeHilfen();},
+  denk:()=>{A.denk=((+A.denk||0)+1)%(A.auf.denk2?3:2);const d=$('.denk');if(d){d.hidden=!A.denk;d.innerHTML=denkHTML(A.auf,A.denk);}zeigeHilfen();},
   schritt:naechsterSchritt,loesung,
   erklaerung:()=>{clearTimeout(A.auto);erklFuer(A.auf.erkl)();},
   lerkl:()=>{if(S.letzte)erklFuer(S.letzte.auf.erkl)();},
-  ldenk:()=>{const L=S.letzte,d=$('.buehne .denk');if(!L||!d)return;L.denkAn=!L.denkAn;d.hidden=!L.denkAn;d.innerHTML=L.auf.denk;const b=$('[data-akt="ldenk"]');if(b)b.classList.toggle('an',L.denkAn);},
+  ldenk:()=>{const L=S.letzte,d=$('.buehne .denk');if(!L||!d)return;L.denkAn=((+L.denkAn||0)+1)%(L.auf.denk2?3:2);d.hidden=!L.denkAn;d.innerHTML=denkHTML(L.auf,L.denkAn);const b=$('[data-akt="ldenk"]');if(b)b.classList.toggle('an',!!L.denkAn);},
   info1:()=>{adresse('info-1');zeigeInfo1()._ende=()=>adresse('erklaerungen');},
   tafel:()=>{adresse('tafel-runde');zeigeTafel()._ende=()=>adresse('erklaerungen');},
   info2:()=>{adresse('info-2');zeigeInfo2()._ende=()=>adresse('erklaerungen');},

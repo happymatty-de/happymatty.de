@@ -805,6 +805,16 @@ button.eka.tipp{background:#E3EFDF}
 .pfarb .pu{color:var(--cu);font-weight:700}
 .pfarb .pv{color:var(--cv);font-weight:700}
 .pfarb .zeilen .pa,.pfarb .zeilen .pu,.pfarb .zeilen .pv{font-weight:400}
+/* ---------- 22.11.2026, dritte Runde (Lehrkraft): Denkanstoß in zwei Stufen ----------
+   Hat eine Aufgabe einen zweiten Denkanstoß, trägt der erste eine kleine 1 in der Ecke („dann weiß man, okay, das ist der erste Denkanstoß, und dann verlockt das ja … nochmal drauf zu drücken“);
+   der zweite Tipp auf den Knopf stellt den zweiten mit einer 2 darunter, der dritte schließt. Die Zahl: lila mit lila Rand, gefüllt wie der Kasten. */
+.denk .dz{display:flex;align-items:flex-start;justify-content:space-between;gap:.6rem}
+.denk .dz+.dz{margin-top:.35rem;padding-top:.35rem;border-top:.06rem solid #DDD2E6}
+.dnr{flex:none;box-sizing:border-box;min-width:1.2rem;height:1.2rem;padding:0 .2rem;border:.09rem solid var(--lila);border-radius:.3rem;background:#F4EFF7;color:var(--lila);font-size:.78rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;margin-top:.05rem}
+/* Zielparabel: gegebener Graph grün, eigene Parabel Akzentgelb, halb durchsichtig und etwas breiter, damit beide zu sehen sind, wenn sie aufeinanderliegen */
+.pfarb .gk{stroke:var(--gruen)}
+.pfarb .gk.eigen{stroke:var(--cc);stroke-width:5;opacity:.72}
+.glg.lgelb{color:var(--cc)}
 
 </style></head>
 <body><div id="app"></div>
@@ -814,7 +824,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v8.3';
+const VERSION='v8.4';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1015,7 +1025,8 @@ function glParabel(html,g,kl,o){o=o||{};const P=[],H=[];
   for(let x=GX[0];x<=GX[1]+.001;x+=.05){const y=g.a*(x-g.u)*(x-g.u)+g.v;if(y>=GY[0]&&y<=GY[1])P.push([gx(x),gy(y)]);}
   for(let t=GX[0];t<=GX[1]+.001;t+=.25)H.push([gx(t),gy(0)],[gx(t),gy(-.55)],[gx(0),gy(t)],[gx(-.5),gy(t)]);
   (o.andere||[]).forEach(q=>{for(let x=GX[0];x<=GX[1]+.001;x+=.1){const y=q.a*(x-q.u)*(x-q.u)+q.v;if(y>=GY[0]&&y<=GY[1])H.push([gx(x),gy(y)]);}});
-  return {html,kl:kl||'lb',pkt:P,rahmen:[GR,GR,GW-GR,GH-GR],hind:H,spaet:!!o.spaet};}
+  const HH=[];(o.andere||[]).forEach(q=>{for(let x=GX[0];x<=GX[1]+.001;x+=.05){const y=q.a*(x-q.u)*(x-q.u)+q.v;if(y>=GY[0]&&y<=GY[1])HH.push([gx(x),gy(y)]);}});
+  return {html,kl:kl||'lb',pkt:P,rahmen:[GR,GR,GW-GR,GH-GR],hind:H,hart:HH,spaet:!!o.spaet};}
 function graph(kurven){
   const id='clip'+(++gid);
   let s='<svg class="graph" viewBox="0 0 '+GW+' '+GH+'" role="img" aria-label="Koordinatensystem mit Parabel"><defs><clipPath id="'+id+'"><rect x="'+GR+'" y="'+GR+'" width="'+(GW-2*GR)+'" height="'+(GH-2*GR)+'"/></clipPath></defs>';
@@ -1062,7 +1073,8 @@ const GEN={
         opts:shuffle([{html:termSPF(a,u,v),ok:true}].concat(falsch.map(f=>({html:termSPF(f.k[0],f.k[1],f.k[2]),hinweis:f.hinweis}))))};},
     b(){const g=this.zahlen();
       return {form:'ziel',frage:'Stelle '+P('a',V('a'))+', '+P('u',V('u'))+' und '+P('v',V('v'))+' so ein, dass dein Term zum Graphen passt.',g,erkl:'info2',
-        denk:'Lies zuerst den '+g.wort+' ab: Er gibt dir '+P('u',V('u'))+' und '+P('v',V('v'))+'.',schritte:this.schritte(g)};}
+        denk:'Lies zuerst den '+g.wort+' ab: Er gibt dir '+P('u',V('u'))+' und '+P('v',V('v'))+'.',
+        denk2:'Für '+P('a',V('a'))+': von dort eins nach rechts. Wie weit '+(g.a>0?'hoch':'runter')+'?',schritte:this.schritte(g)};}
   },
   /* ---- 1.5 Punkt auf dem Graphen: Terme in allen drei Formen, wie Aufgabe 6 des Blattes ---- */
   punkt:{
@@ -1528,7 +1540,7 @@ function zeigeGl(spec,wo){const bild=wo||$('.buehne .bild');if(!bild||!$('svg',b
 function setzeGl(e){const spec=e._gl,bild=e.parentNode,svg=bild&&$('svg',bild),M=svg&&svg.getScreenCTM();if(!spec||!M)return;
   const pt=svg.createSVGPoint(),S=p=>{pt.x=p[0];pt.y=p[1];const q=pt.matrixTransform(M);return [q.x,q.y];};
   const B=bild.getBoundingClientRect(),r=e.getBoundingClientRect(),w=r.width,h=r.height;if(!B.width||!w)return;
-  const [x0,y0]=S([spec.rahmen[0],spec.rahmen[1]]),[x1,y1]=S([spec.rahmen[2],spec.rahmen[3]]),P=spec.pkt.map(S),H=(spec.hind||[]).map(S),g=Math.max(5,h*.24);
+  const [x0,y0]=S([spec.rahmen[0],spec.rahmen[1]]),[x1,y1]=S([spec.rahmen[2],spec.rahmen[3]]),P=spec.pkt.map(S),H=(spec.hind||[]).map(S),HH=(spec.hart||[]).map(S),g=Math.max(5,h*.24);      /* hart: ein zweiter Graph, auf dem das Schild nicht liegen darf (QF1 Zielparabel: gegebener und eigener Graph tragen je ein Schild) */
   const ab=(bx,by,p)=>Math.hypot(Math.max(bx-p[0],0,p[0]-bx-w),Math.max(by-p[1],0,p[1]-by-h));
   const R=[];for(let v=e.previousElementSibling;v;v=v.previousElementSibling)if(v.classList.contains('glg'))R.push(v.getBoundingClientRect());      // Schilder, die schon stehen
   /* alle Plätze im Raster durchgehen: senkrecht in der Zeichenfläche, waagerecht bis an den Bildrand. Am besten ist, wer den Graphen nicht berührt, dicht an ihm
@@ -1536,8 +1548,8 @@ function setzeGl(e){const spec=e._gl,bild=e.parentNode,svg=bild&&$('svg',bild),M
   let best=null;const st=Math.max(4,h*.2);
   for(let by=y0+2;by+h<=y1-2;by+=st)for(let bx=B.left+1;bx+w<=B.right-1;bx+=st){
     let dk=1e9,n=0,dh=1e9;for(const p of P){const d=ab(bx,by,p);if(d<dk)dk=d;if(d===0)n++;}for(const p of H)dh=Math.min(dh,ab(bx,by,p));
-    const auf=R.some(q=>bx<q.right+4&&bx+w>q.left-4&&by<q.bottom+4&&by+h>q.top-4);
-    const note=(dk<g*.5?-1000-n*10:0)-(auf?600:0)-Math.abs(dk-g)*2+Math.min(dh,2*h)-(by-y0)*.06-(Math.max(0,x0-bx)+Math.max(0,bx+w-x1))*4;      /* über den Rand der Zeichenfläche nur, wenn es sonst nicht passt */
+    const auf=R.some(q=>bx<q.right+4&&bx+w>q.left-4&&by<q.bottom+4&&by+h>q.top-4);let nh=0;for(const p of HH)if(ab(bx,by,p)<g*.5)nh++;
+    const note=(dk<g*.5?-1000-n*10:0)-(nh?700+nh*10:0)-(auf?600:0)-Math.abs(dk-g)*2-(HH.length?Math.min(250,Math.max(0,dk-1.2*h)*10):0)+Math.min(dh,2*h)-(by-y0)*.06-(Math.max(0,x0-bx)+Math.max(0,bx+w-x1))*4;      /* über den Rand der Zeichenfläche nur, wenn es sonst nicht passt. Mit einem zweiten Graphen im Bild (hart): nicht auf ihm; weiter als gut eine Schildhöhe vom eigenen Graphen weg ist dann teurer als Rand oder Achse, sonst stünde das Schild neben dem anderen Graphen */
     if(!best||note>best[0])best=[note,bx,by];}
   if(!best)best=[0,x0+6,y0+6];
   e.style.left=((best[1]-B.left)/B.width*100).toFixed(2)+'%';e.style.top=((best[2]-B.top)/B.height*100).toFixed(2)+'%';}
@@ -1632,11 +1644,13 @@ const FORM={
       const ok={a:w.a===g.a,u:w.u===g.u,v:w.v===g.v};if(ok.a&&ok.u&&ok.v)return {ok:true};
       const gut=['a','u','v'].filter(p=>ok[p]).map(p=>P(p,V(p))+' stimmt');let h=gut.length?gut.join(', ')+'. ':'';
       if(!ok.u&&w.u===-g.u)h+='Bei '+P('u',V('u'))+' das Vorzeichen: Nach rechts verschoben heißt ('+V('x')+' − …)'+Q+', nach links ('+V('x')+' + …)'+Q+'.';
-      else if(!ok.u||!ok.v)h+='Vergleiche die '+g.wort+'e: Wo liegt deiner, wo der gesuchte?';
+      else if(!ok.u||!ok.v)h+='Vergleiche die '+((w.a>0)===(g.a>0)?g.wort:'Scheitelpunkt')+'e: Wo liegt deiner, wo der gesuchte?';   /* Öffnet die eigene Parabel anders als die gesuchte, hat die eine einen Hochpunkt und die andere einen Tiefpunkt: dann „Scheitelpunkte“ (Lehrkraft 22.11.2026; „Extrempunkt“ kennen die Schüler noch nicht) */
       else h+=P('a',V('a'))+' stimmt nicht: Geh vom '+g.wort+' eins nach rechts. Wie weit geht es nach '+(g.a>0?'oben':'unten')+'?';
       return {ok:false,hinweis:h};};
-    A.sperre=()=>{const e=$('.gk.eigen',m);if(e&&!(w.a===g.a&&w.u===g.u&&w.v===g.v))e.classList.add('blass');      // steht die Lösung da, verblasst die eigene falsche Parabel
-      A.gl=glParabel(fx(termSPF(g.a,g.u,g.v)),g);zeig();};
+    /* Der gegebene Graph ist grün, damit er sich von a (blau), u (lila) und v (pink) abhebt; die eigene Parabel liegt nach „Prüfen“ in Akzentgelb halb durchsichtig darüber.
+       Beide tragen ihre Gleichung in ihrer Farbe, auch wenn sie gleich sind (Lehrkraft 22.11.2026: „wir machen das immer … Dann sieht man das nochmal in der Grafik zusammen“). Das Eigene verblasst hier nicht. */
+    A.sperre=()=>{const e=$('.gk.eigen',m);
+      A.gl=[glParabel(fx(termSPF(g.a,g.u,g.v)),g,'lg',e?{andere:[w]}:{})].concat(e?[glParabel(fx(termSPF(w.a,w.u,w.v)),w,'lgelb',{andere:[g]})]:[]);zeig();};
     zeig();setHaupt('pruefen',true);
   },
   /* Quick: Mehrere Aussagen können stimmen. Antippen wählt aus, „Prüfen“ wertet einmal aus */
@@ -1769,6 +1783,9 @@ const FORM={
 };
 
 /* ---------- Hilfen ---------- */
+/* Denkanstoß in zwei Stufen (Lehrkraft 22.11.2026): Nennt eine Aufgabe einen zweiten (auf.denk2), zeigt der erste Tipp auf den Knopf den ersten mit einer kleinen 1,
+   der zweite Tipp stellt den zweiten mit einer 2 darunter, der dritte schließt. Ohne denk2 bleibt es beim Auf und Zu. A.denk zählt mit: 0 zu, 1 oder 2 offen. */
+const denkHTML=(auf,n)=>!auf.denk2?auf.denk:'<span class="dz"><span>'+auf.denk+'</span><b class="dnr">1</b></span>'+(n>=2?'<span class="dz"><span>'+auf.denk2+'</span><b class="dnr">2</b></span>':'');
 function zeigeHilfen(){const h=$('.hilfen');if(!h)return;const a=A.auf;if(!a){h.innerHTML='';return;}let s='';
   const n=(a.schritte||[]).length,offen=n&&A.gezeigt<n&&!A.fertig;
   if(a.denk)s+='<button class="hk'+(A.denk?' an':'')+'" data-akt="denk">Denkanstoß</button>';
@@ -2220,7 +2237,7 @@ const INFO1=[
   {neu:1,titel:'Parabel und Normalparabel',term:fx(V('x')+Q),mk:[],text:'Der Graph einer quadratischen Funktion heißt Parabel. Die einfachste ist die Normalparabel. In den Bildern ist sie grün gestrichelt.'},
   {neu:1,titel:'Ein Graph, drei Terme',term:'',mk:[],text:'Zu dieser Parabel gehört ein Term, den man auf drei Arten schreiben kann. Jede Form zeigt etwas anderes auf einen Blick.'},
   {neu:1,titel:'Allgemeine Form',form:AFORM,term:fx(I1.af),mk:['c'],text:'Die Zahl ohne '+V('x')+' ist '+P('c',V('c')+' = −6')+': Dort schneidet der Graph die '+V('y')+'-Achse.'},
-  {neu:1,titel:'Scheitelpunktform',form:SPF,term:fx(I1.spf),mk:['t'],text:'Der Graph ist um '+P('u','1')+' nach rechts und um '+P('v','8')+' nach unten verschoben. Man liest den Tiefpunkt ab: <span style="white-space:nowrap">'+V('T')+'('+P('u','1')+' | '+P('v','−8')+').</span>'},
+  {neu:1,titel:'Scheitelpunktform',form:SPF,term:fx(I1.spf),mk:['t'],text:'Der Graph ist um '+P('u','1')+' nach rechts und um '+P('v','8')+' nach unten verschoben. Man liest den Tiefpunkt ab: <span style="white-space:nowrap">'+V('T')+'('+P('u','1')+' | '+P('v','−8')+').</span> Von dort eins nach rechts geht es '+P('a','2')+' nach oben.'},
   {neu:1,titel:'Nullstellenform',form:NFORM,term:fx(I1.nf),mk:['n'],text:'Man liest die Nullstellen ab: '+P('x1','−1')+' und '+P('x2','3')+'. Diese Form gibt es nur, wenn der Graph die '+V('x')+'-Achse trifft.'},
   {neu:1,titel:'Dreimal derselbe Graph',term:fx(I1.af)+'<br><span class="gl2">= '+I1.spf+'</span><br><span class="gl2">= '+I1.nf+'</span>',mk:['c','t','n'],
    text:'In allen drei Formen steht vorn dieselbe Zahl '+P('a',V('a')+' = 2')+': nach oben geöffnet und gestreckt.'}
@@ -2233,7 +2250,7 @@ function zeigeInfo1(){
   e.classList.add('info1');
   const norm=$$('.gk',e)[0],k=$$('.gk',e)[1],mk=$('.marken',e);let i=0;
   const pkt=(x,y,kl,txt,dx,dy,anker)=>'<circle class="gpkt '+kl+'" cx="'+r.x(x)+'" cy="'+r.y(y)+'" r="5.5"/><text class="gbs '+kl+'" x="'+(r.x(x)+dx)+'" y="'+(r.y(y)+dy)+'"'+(anker?' text-anchor="'+anker+'"':'')+'>'+txt+'</text>';
-  const MK={c:()=>pkt(0,-6,'pc','',0,0),t:()=>pfeilSVG(r.x(0),r.y(0),r.x(1),r.y(0),'pu')+pfeilSVG(r.x(1),r.y(0),r.x(1),r.y(-8),'pv')+pkt(1,-8,'','T',10,5),n:()=>pkt(-1,0,'px1','−1',-8,-9,'end')+pkt(3,0,'px2','3',8,-9)};
+  const MK={c:()=>pkt(0,-6,'pc','',0,0),t:()=>pfeilSVG(r.x(0),r.y(0),r.x(1),r.y(0),'pu')+pfeilSVG(r.x(1),r.y(0),r.x(1),r.y(-8),'pv')+'<line class="stufe" x1="'+r.x(1)+'" y1="'+r.y(-8)+'" x2="'+r.x(2)+'" y2="'+r.y(-8)+'"/>'+pfeilSVG(r.x(2),r.y(-8),r.x(2),r.y(-6),'ps')+pkt(1,-8,'','T',-10,5,'end'),      /* die Stufe bei a wie im Erkunder: gestrichelt eins nach rechts, hellblau a nach oben (Lehrkraft 22.11.2026) */n:()=>pkt(-1,0,'px1','−1',-8,-9,'end')+pkt(3,0,'px2','3',8,-9)};
   const zeig=()=>{const s=INFO1[i],fo=$('.ex-form',e);$('.ex-titel',e).textContent=s.titel;$('.ex-titel',e).classList.toggle('norm',i===0);
     fo.innerHTML=s.form||'';fo.hidden=!s.form;$('.ex-term',e).innerHTML=s.term;$('.ex-term',e).hidden=!s.term;$('.ex-text',e).innerHTML=s.text;
     norm.classList.toggle('weg',i>1);k.classList.toggle('weg',i===0);mk.innerHTML=s.mk.map(x=>MK[x]()).join('');
@@ -2504,11 +2521,11 @@ const AKT={
   ton:()=>{S.ton=!S.ton;$$('.kn.ton').forEach(b=>b.innerHTML=S.ton?TON_AN:TON_AUS);if(!S.ton)return;      // der Ton ist am Anfang aus; das Antippen schaltet ihn ein und lässt ihn sofort hören
     Sound.init();const c=Sound.ctx,los=()=>Sound.richtig();if(c&&c.state!=='running'&&c.resume)c.resume().then(los).catch(()=>{});else los();},
   haupt:()=>{if(S.rueckblick)return endeLetzte();if(S.ansicht==='werk'){if(W.fn)W.fn();return;}if(A.haupt==='pruefen'){const r=A.pruefe();abgeben(r.ok,r.hinweis);}else weiter();},
-  denk:()=>{A.denk=!A.denk;const d=$('.denk');if(d){d.hidden=!A.denk;d.innerHTML=A.auf.denk;}zeigeHilfen();},
+  denk:()=>{A.denk=((+A.denk||0)+1)%(A.auf.denk2?3:2);const d=$('.denk');if(d){d.hidden=!A.denk;d.innerHTML=denkHTML(A.auf,A.denk);}zeigeHilfen();},
   schritt:naechsterSchritt,loesung,
   erklaerung:()=>{clearTimeout(A.auto);erklFuer(A.auf.erkl)();},
   lerkl:()=>{if(S.letzte)erklFuer(S.letzte.auf.erkl)();},
-  ldenk:()=>{const L=S.letzte,d=$('.buehne .denk');if(!L||!d)return;L.denkAn=!L.denkAn;d.hidden=!L.denkAn;d.innerHTML=L.auf.denk;const b=$('[data-akt="ldenk"]');if(b)b.classList.toggle('an',L.denkAn);},
+  ldenk:()=>{const L=S.letzte,d=$('.buehne .denk');if(!L||!d)return;L.denkAn=((+L.denkAn||0)+1)%(L.auf.denk2?3:2);d.hidden=!L.denkAn;d.innerHTML=denkHTML(L.auf,L.denkAn);const b=$('[data-akt="ldenk"]');if(b)b.classList.toggle('an',!!L.denkAn);},
   info1:()=>{adresse('info-1');zeigeInfo1()._ende=()=>adresse('erklaerungen');},
   tafel:()=>{adresse('tafel-runde');zeigeTafel()._ende=()=>adresse('erklaerungen');},
   info2:()=>{adresse('info-2');zeigeInfo2()._ende=()=>adresse('erklaerungen');},
