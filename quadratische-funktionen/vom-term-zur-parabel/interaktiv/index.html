@@ -216,24 +216,19 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .gesperrt .tasten{display:none}
 .gesperrt .umsch{opacity:.45;pointer-events:none}
 
-/* Wischkarte */
+/* Wischkarte (Lehrkraft 22.11.2026): Die Karte bleibt weiß. Term und was zu prüfen ist stehen nebeneinander, mittig, mit viel Luft;
+   schmal rutscht das Zweite darunter. Nach der Antwort ist nur die gewählte Seite gefärbt, ganz grün oder ganz rot, das Zeichen an der Ecke. */
 .wischfeld{padding:.9rem 1.2rem 1.2rem;display:flex;justify-content:center;overflow:hidden}
-.wk{position:relative;width:min(100%,31rem);background:#fff;border:1px solid var(--rand);border-top:4px solid var(--blau);border-radius:6px;padding:1.1rem 1.3rem 2.5rem;box-shadow:0 .25rem .9rem rgba(31,41,51,.10);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
-.wk .term{font-size:1.9rem;margin:0 0 .5rem}
-.aussage{margin:0;font-size:1.35rem;line-height:1.35}
-.wk.zuja{border-top-color:var(--gruen)}
-.wk.zunein{border-top-color:var(--rot)}
-.wk.ok{border-color:#9CC98F;border-top-color:var(--gruen);background:#F3F9F1}
-.wk.falsch{border-color:#D9A6A3;border-top-color:var(--rot);background:#FBF2F1}
-.stempel{position:absolute;right:1rem;bottom:.55rem;font-family:var(--hand);font-size:1.5rem;line-height:1;transform:rotate(5deg)}
-.wk.ok .stempel{color:var(--gruen)}
-.wk.falsch .stempel{color:var(--rot)}
+.wk{position:relative;width:min(100%,31rem);background:#fff;border:1px solid var(--rand);border-top:4px solid var(--blau);border-radius:6px;padding:1.9rem 1.6rem;box-shadow:0 .25rem .9rem rgba(31,41,51,.10);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.6rem 3.2rem}
+.wk .term{font-size:1.9rem;margin:0;line-height:1.2;white-space:nowrap}
 .wknoepfe{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 .wknoepfe .opt{padding:.4rem .8rem;font-size:1.25rem}
-.wknoepfe .opt.nein:not(:disabled){color:var(--rot)}
-.wknoepfe .opt.ja:not(:disabled){color:var(--gruen)}
 .pfl{font-weight:700}
-.wknoepfe .opt.ok::after,.wknoepfe .opt.falsch::after{position:static;transform:none;margin-left:.5rem}
+.wknoepfe .opt.ziel{background:#EAF3F9;box-shadow:0 0 0 .2rem #CFE3F1}
+.wknoepfe .opt.ok::after,.wknoepfe .opt.falsch::after{content:none}
+.wknoepfe .opt.ok::before,.wknoepfe .opt.falsch::before{position:absolute;top:-.6rem;right:-.5rem;z-index:1;width:1.35rem;height:1.35rem;border-radius:50%;border:.12rem solid #fff;box-sizing:content-box;color:#fff;font-family:var(--satz);font-size:.9rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
+.wknoepfe .opt.ok::before{content:'✓';background:var(--gruen)}
+.wknoepfe .opt.falsch::before{content:'✗';background:var(--rot)}
 
 /* Satz mit Lücken, Notiz, falsche Felder */
 .ein>span{white-space:nowrap}
@@ -647,6 +642,7 @@ button.eka.tipp{background:#E3EFDF}
   .exm .bild.hoch{max-width:13rem}
   .plaetze{grid-template-columns:1fr 1fr}
     .wk .term{font-size:1.6rem}
+  .wk{gap:.4rem 2rem;padding:1.4rem 1.1rem}
   .aussage{font-size:1.2rem}
   .wknoepfe .opt{font-size:1.1rem;padding:.4rem .4rem}
   .formw button{font-size:.88rem;padding:.3rem .25rem}
@@ -824,7 +820,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v8.4';
+const VERSION='v9';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1180,17 +1176,22 @@ const GEN={
         breit:'Vor der Klammer steht '+zahl(a)+'. '+(n>1?'Ohne Vorzeichen ist das größer als 1: gestreckt, also schmaler.':'Ohne Vorzeichen liegt das zwischen 0 und 1: gestaucht, also breiter.'),
         lr:u>0?'('+x+' − '+zahl(u)+')'+Q+' verschiebt um '+zahl(u)+' nach rechts.':'('+x+' + '+zahl(-u)+')'+Q+' = ('+x+' − ('+zahl(u)+'))'+Q+': um '+zahl(-u)+' nach links.',
         ou:'Hinter der Klammer steht '+(v>0?'+ ':'− ')+zahl(Math.abs(v))+': um '+zahl(Math.abs(v))+' nach '+(v>0?'oben':'unten')+'.'}[art];},
-    q(){const g=this.zahlen(false),{a,u,v}=g,n=Math.abs(a),b=s=>'<b>'+s+'</b>',wort=a>0?'Tiefpunkt':'Hochpunkt',pk=a>0?'T':'H';
-      const art=pick(['auf','lr','lr','ou','pkt','pkt'].concat(n!==1?['breit','breit']:[])),stimmt=Math.random()<.5;let aussage,hinweis=this.grund(art,g);
-      if(art==='auf')aussage='Der Graph ist nach '+b((a>0)===stimmt?'oben':'unten')+' geöffnet.';
-      else if(art==='breit'){const schmal=(n>1)===stimmt;aussage=Math.random()<.5?'Der Graph ist '+b(schmal?'schmaler':'breiter')+' als die Normalparabel.':'Der Graph ist '+b(schmal?'gestreckt':'gestaucht')+'.';}
-      else if(art==='lr')aussage='Der Graph ist um '+zahl(Math.abs(u))+' nach '+b((u>0)===stimmt?'rechts':'links')+' verschoben.';
-      else if(art==='ou')aussage='Der Graph ist um '+zahl(Math.abs(v))+' nach '+b((v>0)===stimmt?'oben':'unten')+' verschoben.';
-      else{const f=stimmt?0:pick([1,2,3]),p=f===1?[-u,v]:f===2?[v,u]:[u,v],w2=f===3?(a>0?'Hochpunkt':'Tiefpunkt'):wort,k2=f===3?(a>0?'H':'T'):pk;      // der Hoch- oder Tiefpunkt: richtig, mit falschem Vorzeichen, vertauscht oder mit dem falschen Namen
-        aussage='Der '+b(w2)+' ist '+punkt(k2,p[0],p[1])+'.';
-        hinweis=(f===1?this.grund('lr',g):f===2?'Vertauscht: Die Zahl in der Klammer gehört zu '+V('x')+', die Zahl dahinter zu '+V('y')+'.':this.grund('ht',g))+' Also '+wort+' '+punkt(pk,u,v)+'.';}
-      return {form:'wisch',frage:'Stimmt die Aussage?',term:fx(termSPF(a,u,v)),aussage,stimmt,hinweis,erkl:'info2',g,
-        denk:'Scheitelpunktform: '+SPF+'. Welche der drei Zahlen entscheidet hier?'};},
+    /* Quick: Wischkarte mit Sachfragen, je Frage ihr Wortpaar (Lehrkraft 22.11.2026: keine „stimmt“-Aussagen mehr). Der Hoch- oder
+       Tiefpunkt hat kein Wortpaar: Er kommt als Wahl unter vier Punkten (richtig, Vorzeichen, vertauscht, falscher Name). */
+    q(){const g=this.zahlen(false),{a,u,v}=g,n=Math.abs(a),wort=a>0?'Tiefpunkt':'Hochpunkt',pk=a>0?'T':'H';
+      const art=pick(['auf','lr','lr','ou','pkt','pkt'].concat(n!==1?['breit','breit']:[])),hinweis=this.grund(art,g),
+        D={form:'wisch',term:fx(termSPF(a,u,v)),erkl:'info2',g,art,hinweis,denk:'Scheitelpunktform: '+SPF+'. Welche der drei Zahlen entscheidet hier?'};
+      if(art==='auf')return Object.assign(D,{frage:'Wie ist der Graph geöffnet?',nein:'nach unten',ja:'nach oben',stimmt:a>0});
+      if(art==='lr')return Object.assign(D,{frage:'Ist der Graph nach links oder nach rechts verschoben?',nein:'nach links',ja:'nach rechts',stimmt:u>0});
+      if(art==='ou')return Object.assign(D,{frage:'Ist der Graph nach oben oder nach unten verschoben?',nein:'nach unten',ja:'nach oben',stimmt:v>0});
+      if(art==='breit')return Object.assign(D,Math.random()<.5?{frage:'Ist der Graph schmaler oder breiter als die Normalparabel?',nein:'breiter',ja:'schmaler',stimmt:n>1}
+        :{frage:'Ist der Graph gestreckt oder gestaucht?',nein:'gestaucht',ja:'gestreckt',stimmt:n>1});
+      const anders=a>0?'Hochpunkt':'Tiefpunkt',ak=a>0?'H':'T',also=' Also '+wort+' '+punkt(pk,u,v)+'.';
+      const opts=shuffle([{html:wort+' '+punkt(pk,u,v),ok:true},
+        {html:wort+' '+punkt(pk,-u,v),hinweis:this.grund('lr',g)+also},
+        {html:wort+' '+punkt(pk,v,u),hinweis:'Vertauscht: Die Zahl in der Klammer gehört zu '+V('x')+', die Zahl dahinter zu '+V('y')+'.'+also},
+        {html:anders+' '+punkt(ak,u,v),hinweis:this.grund('ht',g)+also}]);
+      return {form:'wahl',frage:'Welchen Scheitelpunkt hat der Graph?',term:D.term,erkl:'info2',g,art,opts,denk:D.denk};},
     b(){const g=this.zahlen(true),{a,u,v}=g,n=Math.abs(a),x=V('x'),wort=a>0?'Tiefpunkt':'Hochpunkt',pk=a>0?'T':'H';
       const L={sp:a<0?'j':'n',st:n>1?'gestreckt':'gestaucht',ru:u>0?'rechts':'links',rv:v>0?'oben':'unten',art:pk},Z={f:n,du:Math.abs(u),dv:Math.abs(v),hu:u,hv:v};
       const um=(id,w)=>'<span class="umsch" data-w="'+id+'">'+w.map(([k,t])=>'<button type="button" data-v="'+k+'">'+t+'</button>').join('')+'</span>';
@@ -1666,23 +1667,27 @@ const FORM={
       return zuviel?{ok:false,hinweis:zuviel.hinweis}:fehlt?{ok:false,hinweis:'Da stimmt noch mehr. '+fehlt.grund}:{ok:true};};
     setHaupt('pruefen',false);
   },
-  /* Quick: Wischkarte. Nach rechts „stimmt“, nach links „stimmt nicht“; die Knöpfe und die Pfeiltasten tun dasselbe */
+  /* Quick: Wischkarte. Eine Sachfrage mit zwei Antworten aus der Sache, links die verneinende („liegt nicht drauf“), rechts die
+     bejahende („liegt drauf“), nie „stimmt“, „richtig“, „ja“ oder „wahr“: Grün und Rot sind das Urteil, und die Wörter sollen ihm nicht
+     widersprechen (Lehrkraft 22.11.2026). Die Aufgabe nennt nein, ja und stimmt (true: die rechte Antwort ist richtig); auf der Karte
+     steht der Term, daneben, was zu prüfen ist (neben). Wischen, Knöpfe und Pfeiltasten tun dasselbe. Nach der Antwort trägt nur die
+     gewählte Seite das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der rechten oberen Ecke; die andere bleibt blass, die Karte weiß. */
   wisch(auf,m){
     m.className='buehne eins';
     m.innerHTML='<section class="karte">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div>'+
-      '<div class="wischfeld"><div class="wk"><p class="term">'+auf.term+'</p><p class="aussage">'+auf.aussage+'</p><span class="stempel"></span></div></div>'+
-      '<div class="wknoepfe"><button class="opt nein" data-w="0"><span class="pfl">←</span> stimmt nicht</button><button class="opt ja" data-w="1">stimmt <span class="pfl">→</span></button></div><div class="rueck" hidden></div></section>';
-    const k=$('.wk',m);let x0=null,dx=0;
+      '<div class="wischfeld"><div class="wk"><p class="term">'+auf.term+'</p>'+(auf.neben?'<p class="term">'+auf.neben+'</p>':'')+'</div></div>'+
+      '<div class="wknoepfe"><button class="opt nein" data-w="0"><span class="pfl">←</span> '+auf.nein+'</button><button class="opt ja" data-w="1">'+auf.ja+' <span class="pfl">→</span></button></div><div class="rueck" hidden></div></section>';
+    const k=$('.wk',m),kn=$$('.wknoepfe .opt',m);let x0=null,dx=0;
     A.wisch=ja=>{if(A.gewertet)return;const ok=ja===auf.stimmt;
-      k.style.transition='transform .25s ease-out';k.style.transform='translateX('+(ja?7:-7)+'%) rotate('+(ja?3:-3)+'deg)';k.classList.remove('zuja','zunein');k.classList.add(ok?'ok':'falsch');
-      $('.stempel',k).textContent=ja?'stimmt':'stimmt nicht';
-      $$('.wknoepfe .opt',m).forEach(b=>{const bj=b.dataset.w==='1';b.disabled=true;if(bj===auf.stimmt)b.classList.add('ok');else if(bj===ja)b.classList.add('falsch');});
+      k.style.transition='transform .25s ease-out';k.style.transform='translateX('+(ja?7:-7)+'%) rotate('+(ja?3:-3)+'deg)';
+      kn.forEach(b=>{const bj=b.dataset.w==='1';b.disabled=true;b.classList.remove('ziel');if(bj===ja)b.classList.add(ok?'ok':'falsch');});
       abgeben(ok,ok?null:auf.hinweis);};
-    $$('.wknoepfe .opt',m).forEach(b=>b.addEventListener('click',()=>A.wisch(b.dataset.w==='1')));
+    kn.forEach(b=>b.addEventListener('click',()=>A.wisch(b.dataset.w==='1')));
     k.addEventListener('pointerdown',e=>{if(A.gewertet)return;x0=e.clientX;dx=0;k.style.transition='none';try{k.setPointerCapture(e.pointerId);}catch(_){}});
-    k.addEventListener('pointermove',e=>{if(x0===null||A.gewertet)return;dx=e.clientX-x0;k.style.transform='translateX('+dx+'px) rotate('+(dx/24)+'deg)';k.classList.toggle('zuja',dx>40);k.classList.toggle('zunein',dx<-40);});
+    k.addEventListener('pointermove',e=>{if(x0===null||A.gewertet)return;dx=e.clientX-x0;k.style.transform='translateX('+dx+'px) rotate('+(dx/24)+'deg)';
+      kn[1].classList.toggle('ziel',dx>40);kn[0].classList.toggle('ziel',dx<-40);});      // beim Ziehen leuchtet die Antwort auf, zu der es geht
     const ende=()=>{if(x0===null)return;x0=null;if(A.gewertet)return;
-      if(Math.abs(dx)>70)A.wisch(dx>0);else{k.classList.remove('zuja','zunein');k.style.transition='transform .2s ease-out';k.style.transform='';}};
+      if(Math.abs(dx)>70)A.wisch(dx>0);else{kn.forEach(b=>b.classList.remove('ziel'));k.style.transition='transform .2s ease-out';k.style.transform='';}};
     k.addEventListener('pointerup',ende);k.addEventListener('pointercancel',ende);
     setHaupt('weiter',false);
   },

@@ -8,5 +8,5 @@
   "platz": 1,
   "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "QF1_Vom_Term_zur_Parabel_Aufgabenblatt_v13.1.pdf", "stand": "10.11.2026" },
   "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF1_Vom_Term_zur_Parabel_Loesung_v13.1.pdf", "stand": "10.11.2026" },
-  "interaktiv": { "vorhanden": true, "freigegeben": true, "quelle": "QF1-Training v8.4 (Backup: QF1_Vom_Term_zur_Parabel_Training_v8.4.html)", "stand": "22.11.2026", "text": "Trainieren" }
+  "interaktiv": { "vorhanden": true, "freigegeben": true, "quelle": "QF1-Training v9 (Backup: QF1_Vom_Term_zur_Parabel_Training_v9.html)", "stand": "22.11.2026", "text": "Trainieren" }
 }

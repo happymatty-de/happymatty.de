@@ -216,24 +216,19 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .gesperrt .tasten{display:none}
 .gesperrt .umsch{opacity:.45;pointer-events:none}
 
-/* Wischkarte */
+/* Wischkarte (Lehrkraft 22.11.2026): Die Karte bleibt weiß. Term und was zu prüfen ist stehen nebeneinander, mittig, mit viel Luft;
+   schmal rutscht das Zweite darunter. Nach der Antwort ist nur die gewählte Seite gefärbt, ganz grün oder ganz rot, das Zeichen an der Ecke. */
 .wischfeld{padding:.9rem 1.2rem 1.2rem;display:flex;justify-content:center;overflow:hidden}
-.wk{position:relative;width:min(100%,31rem);background:#fff;border:1px solid var(--rand);border-top:4px solid var(--blau);border-radius:6px;padding:1.1rem 1.3rem 2.5rem;box-shadow:0 .25rem .9rem rgba(31,41,51,.10);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
-.wk .term{font-size:1.9rem;margin:0 0 .5rem}
-.aussage{margin:0;font-size:1.35rem;line-height:1.35}
-.wk.zuja{border-top-color:var(--gruen)}
-.wk.zunein{border-top-color:var(--rot)}
-.wk.ok{border-color:#9CC98F;border-top-color:var(--gruen);background:#F3F9F1}
-.wk.falsch{border-color:#D9A6A3;border-top-color:var(--rot);background:#FBF2F1}
-.stempel{position:absolute;right:1rem;bottom:.55rem;font-family:var(--hand);font-size:1.5rem;line-height:1;transform:rotate(5deg)}
-.wk.ok .stempel{color:var(--gruen)}
-.wk.falsch .stempel{color:var(--rot)}
+.wk{position:relative;width:min(100%,31rem);background:#fff;border:1px solid var(--rand);border-top:4px solid var(--blau);border-radius:6px;padding:1.9rem 1.6rem;box-shadow:0 .25rem .9rem rgba(31,41,51,.10);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.6rem 3.2rem}
+.wk .term{font-size:1.9rem;margin:0;line-height:1.2;white-space:nowrap}
 .wknoepfe{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 .wknoepfe .opt{padding:.4rem .8rem;font-size:1.25rem}
-.wknoepfe .opt.nein:not(:disabled){color:var(--rot)}
-.wknoepfe .opt.ja:not(:disabled){color:var(--gruen)}
 .pfl{font-weight:700}
-.wknoepfe .opt.ok::after,.wknoepfe .opt.falsch::after{position:static;transform:none;margin-left:.5rem}
+.wknoepfe .opt.ziel{background:#EAF3F9;box-shadow:0 0 0 .2rem #CFE3F1}
+.wknoepfe .opt.ok::after,.wknoepfe .opt.falsch::after{content:none}
+.wknoepfe .opt.ok::before,.wknoepfe .opt.falsch::before{position:absolute;top:-.6rem;right:-.5rem;z-index:1;width:1.35rem;height:1.35rem;border-radius:50%;border:.12rem solid #fff;box-sizing:content-box;color:#fff;font-family:var(--satz);font-size:.9rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
+.wknoepfe .opt.ok::before{content:'✓';background:var(--gruen)}
+.wknoepfe .opt.falsch::before{content:'✗';background:var(--rot)}
 
 /* Satz mit Lücken, Notiz, falsche Felder */
 .ein>span{white-space:nowrap}
@@ -908,7 +903,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v6.2';
+const VERSION='v7';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1493,9 +1488,9 @@ const GEN={
         grund=(a>0?'Tiefpunkt':'Hochpunkt')+' '+punkt(a>0?'T':'H',u,v)+(a*v<0?(a>0?' liegt unter der ':' liegt über der ')+x+'-Achse, und der Graph ist nach '+(a>0?'oben':'unten')+' geöffnet: zwei Nullstellen.':(a>0?' liegt über der ':' liegt unter der ')+x+'-Achse, und der Graph ist nach '+(a>0?'oben':'unten')+' geöffnet: keine Nullstelle.');}
       return {t,n,grund,f:fn};},
     q(){let art;do{art=pick(['plus','minus','null','negplus','negminus','nf','plus','minus','spf']);}while(art===this._letzt);this._letzt=art;
-      const f=this.fall(art),W=['keine Nullstelle','genau eine Nullstelle','genau zwei Nullstellen'],stimmt=Math.random()<.5;
-      const beh=stimmt?f.n:pick([0,1,2].filter(k=>k!==f.n));
-      return {form:'wisch',frage:'Stimmt die Aussage?',term:fx(f.t),aussage:V('f')+' hat <b>'+W[beh]+'</b>.',stimmt,hinweis:f.grund,grund:f.grund,erkl:'info1',denk:DENK.anzahl,f};}
+      const f=this.fall(art);      // drei Stapel wie in QF3 „Wie viele Lösungen?“, keine „stimmt“-Aussage mehr (Lehrkraft 22.11.2026)
+      return {form:'stapel',frage:'Wie viele Nullstellen hat '+V('f')+'?',term:fx(f.t),erkl:'info1',denk:DENK.anzahl,f,
+        stapel:[{id:'2',html:'zwei Nullstellen'},{id:'1',html:'eine Nullstelle'},{id:'0',html:'keine Nullstelle'}],ok:String(f.n),hinweis:{'2':f.grund,'1':f.grund,'0':f.grund},grund:f.grund};}
   }
 };
 
@@ -1744,23 +1739,27 @@ const FORM={
       return zuviel?{ok:false,hinweis:zuviel.hinweis}:fehlt?{ok:false,hinweis:'Da stimmt noch mehr. '+fehlt.grund}:{ok:true};};
     setHaupt('pruefen',false);
   },
-  /* Quick: Wischkarte. Nach rechts „stimmt“, nach links „stimmt nicht“; die Knöpfe und die Pfeiltasten tun dasselbe */
+  /* Quick: Wischkarte. Eine Sachfrage mit zwei Antworten aus der Sache, links die verneinende („liegt nicht drauf“), rechts die
+     bejahende („liegt drauf“), nie „stimmt“, „richtig“, „ja“ oder „wahr“: Grün und Rot sind das Urteil, und die Wörter sollen ihm nicht
+     widersprechen (Lehrkraft 22.11.2026). Die Aufgabe nennt nein, ja und stimmt (true: die rechte Antwort ist richtig); auf der Karte
+     steht der Term, daneben, was zu prüfen ist (neben). Wischen, Knöpfe und Pfeiltasten tun dasselbe. Nach der Antwort trägt nur die
+     gewählte Seite das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der rechten oberen Ecke; die andere bleibt blass, die Karte weiß. */
   wisch(auf,m){
     m.className='buehne eins';
     m.innerHTML='<section class="karte">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div>'+
-      '<div class="wischfeld"><div class="wk"><p class="term">'+auf.term+'</p><p class="aussage">'+auf.aussage+'</p><span class="stempel"></span></div></div>'+
-      '<div class="wknoepfe"><button class="opt nein" data-w="0"><span class="pfl">←</span> stimmt nicht</button><button class="opt ja" data-w="1">stimmt <span class="pfl">→</span></button></div><div class="rueck" hidden></div></section>';
-    const k=$('.wk',m);let x0=null,dx=0;
+      '<div class="wischfeld"><div class="wk"><p class="term">'+auf.term+'</p>'+(auf.neben?'<p class="term">'+auf.neben+'</p>':'')+'</div></div>'+
+      '<div class="wknoepfe"><button class="opt nein" data-w="0"><span class="pfl">←</span> '+auf.nein+'</button><button class="opt ja" data-w="1">'+auf.ja+' <span class="pfl">→</span></button></div><div class="rueck" hidden></div></section>';
+    const k=$('.wk',m),kn=$$('.wknoepfe .opt',m);let x0=null,dx=0;
     A.wisch=ja=>{if(A.gewertet)return;const ok=ja===auf.stimmt;
-      k.style.transition='transform .25s ease-out';k.style.transform='translateX('+(ja?7:-7)+'%) rotate('+(ja?3:-3)+'deg)';k.classList.remove('zuja','zunein');k.classList.add(ok?'ok':'falsch');
-      $('.stempel',k).textContent=ja?'stimmt':'stimmt nicht';
-      $$('.wknoepfe .opt',m).forEach(b=>{const bj=b.dataset.w==='1';b.disabled=true;if(bj===auf.stimmt)b.classList.add('ok');else if(bj===ja)b.classList.add('falsch');});
+      k.style.transition='transform .25s ease-out';k.style.transform='translateX('+(ja?7:-7)+'%) rotate('+(ja?3:-3)+'deg)';
+      kn.forEach(b=>{const bj=b.dataset.w==='1';b.disabled=true;b.classList.remove('ziel');if(bj===ja)b.classList.add(ok?'ok':'falsch');});
       abgeben(ok,ok?null:auf.hinweis);};
-    $$('.wknoepfe .opt',m).forEach(b=>b.addEventListener('click',()=>A.wisch(b.dataset.w==='1')));
+    kn.forEach(b=>b.addEventListener('click',()=>A.wisch(b.dataset.w==='1')));
     k.addEventListener('pointerdown',e=>{if(A.gewertet)return;x0=e.clientX;dx=0;k.style.transition='none';try{k.setPointerCapture(e.pointerId);}catch(_){}});
-    k.addEventListener('pointermove',e=>{if(x0===null||A.gewertet)return;dx=e.clientX-x0;k.style.transform='translateX('+dx+'px) rotate('+(dx/24)+'deg)';k.classList.toggle('zuja',dx>40);k.classList.toggle('zunein',dx<-40);});
+    k.addEventListener('pointermove',e=>{if(x0===null||A.gewertet)return;dx=e.clientX-x0;k.style.transform='translateX('+dx+'px) rotate('+(dx/24)+'deg)';
+      kn[1].classList.toggle('ziel',dx>40);kn[0].classList.toggle('ziel',dx<-40);});      // beim Ziehen leuchtet die Antwort auf, zu der es geht
     const ende=()=>{if(x0===null)return;x0=null;if(A.gewertet)return;
-      if(Math.abs(dx)>70)A.wisch(dx>0);else{k.classList.remove('zuja','zunein');k.style.transition='transform .2s ease-out';k.style.transform='';}};
+      if(Math.abs(dx)>70)A.wisch(dx>0);else{kn.forEach(b=>b.classList.remove('ziel'));k.style.transition='transform .2s ease-out';k.style.transform='';}};
     k.addEventListener('pointerup',ende);k.addEventListener('pointercancel',ende);
     setHaupt('weiter',false);
   },

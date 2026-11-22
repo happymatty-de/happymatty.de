@@ -216,24 +216,19 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .gesperrt .tasten{display:none}
 .gesperrt .umsch{opacity:.45;pointer-events:none}
 
-/* Wischkarte */
+/* Wischkarte (Lehrkraft 22.11.2026): Die Karte bleibt weiß. Term und was zu prüfen ist stehen nebeneinander, mittig, mit viel Luft;
+   schmal rutscht das Zweite darunter. Nach der Antwort ist nur die gewählte Seite gefärbt, ganz grün oder ganz rot, das Zeichen an der Ecke. */
 .wischfeld{padding:.9rem 1.2rem 1.2rem;display:flex;justify-content:center;overflow:hidden}
-.wk{position:relative;width:min(100%,31rem);background:#fff;border:1px solid var(--rand);border-top:4px solid var(--blau);border-radius:6px;padding:1.1rem 1.3rem 2.5rem;box-shadow:0 .25rem .9rem rgba(31,41,51,.10);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab}
-.wk .term{font-size:1.9rem;margin:0 0 .5rem}
-.aussage{margin:0;font-size:1.35rem;line-height:1.35}
-.wk.zuja{border-top-color:var(--gruen)}
-.wk.zunein{border-top-color:var(--rot)}
-.wk.ok{border-color:#9CC98F;border-top-color:var(--gruen);background:#F3F9F1}
-.wk.falsch{border-color:#D9A6A3;border-top-color:var(--rot);background:#FBF2F1}
-.stempel{position:absolute;right:1rem;bottom:.55rem;font-family:var(--hand);font-size:1.5rem;line-height:1;transform:rotate(5deg)}
-.wk.ok .stempel{color:var(--gruen)}
-.wk.falsch .stempel{color:var(--rot)}
+.wk{position:relative;width:min(100%,31rem);background:#fff;border:1px solid var(--rand);border-top:4px solid var(--blau);border-radius:6px;padding:1.9rem 1.6rem;box-shadow:0 .25rem .9rem rgba(31,41,51,.10);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.6rem 3.2rem}
+.wk .term{font-size:1.9rem;margin:0;line-height:1.2;white-space:nowrap}
 .wknoepfe{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 .wknoepfe .opt{padding:.4rem .8rem;font-size:1.25rem}
-.wknoepfe .opt.nein:not(:disabled){color:var(--rot)}
-.wknoepfe .opt.ja:not(:disabled){color:var(--gruen)}
 .pfl{font-weight:700}
-.wknoepfe .opt.ok::after,.wknoepfe .opt.falsch::after{position:static;transform:none;margin-left:.5rem}
+.wknoepfe .opt.ziel{background:#EAF3F9;box-shadow:0 0 0 .2rem #CFE3F1}
+.wknoepfe .opt.ok::after,.wknoepfe .opt.falsch::after{content:none}
+.wknoepfe .opt.ok::before,.wknoepfe .opt.falsch::before{position:absolute;top:-.6rem;right:-.5rem;z-index:1;width:1.35rem;height:1.35rem;border-radius:50%;border:.12rem solid #fff;box-sizing:content-box;color:#fff;font-family:var(--satz);font-size:.9rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
+.wknoepfe .opt.ok::before{content:'✓';background:var(--gruen)}
+.wknoepfe .opt.falsch::before{content:'✗';background:var(--rot)}
 
 /* Satz mit Lücken, Notiz, falsche Felder */
 .ein>span{white-space:nowrap}
@@ -647,6 +642,7 @@ button.eka.tipp{background:#E3EFDF}
   .exm .bild.hoch{max-width:13rem}
   .plaetze{grid-template-columns:1fr 1fr}
     .wk .term{font-size:1.6rem}
+  .wk{gap:.4rem 2rem;padding:1.4rem 1.1rem}
   .aussage{font-size:1.2rem}
   .wknoepfe .opt{font-size:1.1rem;padding:.4rem .4rem}
   .formw button{font-size:.88rem;padding:.3rem .25rem}
@@ -1253,7 +1249,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v4.3';
+const VERSION='v5';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1709,25 +1705,26 @@ const GEN={
   /* ---- 4 Waagerecht und senkrecht ---- */
   wsk:{_n:0,
     q(){return this._n++%3===2?GEN.wsk.stapel():GEN.wsk.wisch();},
-    wisch(){const c=zufB(-4,5,true);let a;do{a=zufB(-5,5,false);}while(a===c);const w=Math.random()<.5;let T,A_;
-      if(w){const nm=pick(['f','h','k']);T=fn(nm,zahl(c));
-        A_=[[V(nm)+' ist eine Funktion.',true,'Zu jedem '+X+' gehört genau ein y-Wert, nämlich '+zahl(c)+'. Also ist '+V(nm)+' eine Funktion, eine konstante.'],
-          ['Die Steigung ist 0.',true,'Waagerecht: weder hoch noch runter, '+CM(V('m')+' = 0')+'.'],
-          ['Die Steigung ist '+zahl(c)+'.',false,'Im Term steht kein '+X+': '+CM(V('m')+' = 0')+'. Die '+zahl(c)+' ist '+BL+'.'],
-          ['Die Gerade geht durch '+P_(a,c)+'.',true,'Jeder Punkt der Geraden hat den y-Wert '+zahl(c)+': ('+X+' | '+zahl(c)+').'],
-          ['Die Gerade geht durch '+P_(c,a)+'.',false,'Jeder Punkt der Geraden hat den y-Wert '+zahl(c)+'. Der Punkt '+P_(c,a)+' hat den y-Wert '+zahl(a)+'.'],
-          ['Die Gerade ist senkrecht.',false,V(nm)+'('+X+') = '+zahl(c)+' ist waagerecht: Alle Punkte haben den y-Wert '+zahl(c)+'.'],
-          [V(nm)+'('+zahl(a*10)+') = '+zahl(c),true,'Konstant: Für jedes '+X+' kommt '+zahl(c)+' heraus.']];}
-      else{const nm=pick(['g','s']);T=senk(nm,c);
-        A_=[[V(nm)+' ist eine Funktion.',false,'Zu '+X+' = '+zahl(c)+' gehören unendlich viele y-Werte. Also ist '+V(nm)+' keine Funktion.'],
-          ['Die Gerade ist senkrecht.',true,'Alle Punkte haben den x-Wert '+zahl(c)+': Die Gerade ist senkrecht.'],
-          ['Die Gerade geht durch '+P_(c,a)+'.',true,'Jeder Punkt der Geraden hat den x-Wert '+zahl(c)+': ('+zahl(c)+' | '+V('y')+').'],
-          ['Die Gerade geht durch '+P_(a,c)+'.',false,'Jeder Punkt der Geraden hat den x-Wert '+zahl(c)+'. Der Punkt '+P_(a,c)+' hat den x-Wert '+zahl(a)+'.'],
-          ['Man kann '+V(nm)+'(5) berechnen.',false,V(nm)+' ist keine Funktion. Die Schreibweise '+V(nm)+'('+X+') gibt es nicht.'],
-          ['Die Steigung ist 0.',false,'Die Steigung 0 hat eine waagerechte Gerade. Diese ist senkrecht.'],
-          ['Die Gerade schneidet die x-Achse bei '+zahl(c)+'.',true,'Sie geht durch '+P_(c,0)+'.']];}
-      const [aussage,stimmt,hinweis]=pick(A_);
-      return {form:'wisch',frage:'Stimmt die Aussage?',term:T,aussage,stimmt,hinweis,erkl:'info3',denk:DENK.wsk};},
+    /* Wischkarte mit Sachfragen (Lehrkraft 22.11.2026: keine „stimmt“-Aussagen mehr): Funktion oder nicht, waagerecht oder senkrecht,
+       welche Steigung, liegt ein Punkt drauf. Die Aufgabe nennt art für den Prüflauf. */
+    wisch(){const c=zufB(-4,5,true);let a;do{a=zufB(-5,5,false);}while(a===c);const w=Math.random()<.5;
+      const nm=w?pick(['f','h','k']):pick(['g','s']),T=w?fn(nm,zahl(c)):senk(nm,c);
+      const art=pick(w?['fkt','lage','stg','punkt','punkt']:['fkt','lage','punkt','punkt','achse']);
+      const PK={frage:'Liegt der Punkt auf der Geraden?',nein:'liegt nicht drauf',ja:'liegt drauf'};let A_;
+      if(art==='fkt')A_={frage:'Beschreibt die Gleichung eine Funktion?',nein:'keine Funktion',ja:'Funktion',stimmt:w,
+        hinweis:w?'Zu jedem '+X+' gehört genau ein y-Wert, nämlich '+zahl(c)+'. Also ist '+V(nm)+' eine Funktion, eine konstante.'
+          :'Zu '+X+' = '+zahl(c)+' gehören unendlich viele y-Werte. Also ist '+V(nm)+' keine Funktion. Die Schreibweise '+V(nm)+'('+X+') gibt es nicht.'};
+      else if(art==='lage')A_={frage:'Liegt die Gerade waagerecht oder senkrecht?',nein:'waagerecht',ja:'senkrecht',stimmt:!w,
+        hinweis:w?V(nm)+'('+X+') = '+zahl(c)+' ist waagerecht: Alle Punkte haben den y-Wert '+zahl(c)+'.':'„'+X+' = '+zahl(c)+'“: Alle Punkte haben den x-Wert '+zahl(c)+'. Die Gerade ist senkrecht.'};
+      else if(art==='stg'){const rechts=Math.random()<.5;      // m = 0 mal links, mal rechts
+        A_={frage:'Welche Steigung hat die Gerade?',nein:CM(V('m')+' = '+(rechts?zahl(c):'0')),ja:CM(V('m')+' = '+(rechts?'0':zahl(c))),stimmt:rechts,
+          hinweis:'Waagerecht: weder hoch noch runter, '+CM(V('m')+' = 0')+'. Im Term steht kein '+X+'; die '+zahl(c)+' ist '+BL+'.'};}
+      else if(art==='achse')A_=Object.assign({},PK,{neben:V('P')+P_(c,0),stimmt:true,hinweis:'Jeder Punkt der Geraden hat den x-Wert '+zahl(c)+', auch der Punkt auf der x-Achse: '+P_(c,0)+'.'});
+      else{const drauf=Math.random()<.5,px=w?(drauf?a:c):(drauf?c:a),py=w?(drauf?c:a):(drauf?a:c);
+        A_=Object.assign({},PK,{neben:V('P')+P_(px,py),stimmt:drauf,
+          hinweis:w?(drauf?'Jeder Punkt der Geraden hat den y-Wert '+zahl(c)+': ('+X+' | '+zahl(c)+').':'Jeder Punkt der Geraden hat den y-Wert '+zahl(c)+'. Der Punkt '+P_(px,py)+' hat den y-Wert '+zahl(py)+'.')
+            :(drauf?'Jeder Punkt der Geraden hat den x-Wert '+zahl(c)+': ('+zahl(c)+' | '+V('y')+').':'Jeder Punkt der Geraden hat den x-Wert '+zahl(c)+'. Der Punkt '+P_(px,py)+' hat den x-Wert '+zahl(px)+'.')});}
+      return Object.assign({form:'wisch',term:T,erkl:'info3',denk:DENK.wsk,art,senk:!w,c},A_);},
     stapel(){const c=zufB(-4,4,true),art=pick(['w','s','m','m2']);let T,ok,s=null;
       if(art==='w'){T=fn(pick(['f','h']),zahl(c));ok='w';}
       else if(art==='s'){T=senk(pick(['g','s']),c);ok='s';}
@@ -1754,7 +1751,7 @@ const GEN={
     q(){const f=probeFall(),nm=pick(['f','g','h']),dez=Math.random()<.3,T=fn(nm,term(f.s,f.b,{dez}));let y0=f.y,x0=f.x0;
       if(Math.random()<.55){const F=probeFehler(f);if(F.length)y0=pick(F)[0];else y0=f.y+pick([-1,1]);}
       const stimmt=gleich(y0,f.y),rech=einsetzen(nm,f.s,f.b,x0,dez);
-      return {form:'wisch',frage:'Stimmt die Aussage?',term:T,aussage:'Der Punkt '+V('P')+P_(x0,y0)+' liegt auf der Geraden von '+V(nm)+'.',stimmt,
+      return {form:'wisch',frage:'Liegt der Punkt auf der Geraden?',term:T,neben:V('P')+P_(x0,y0),nein:'liegt nicht drauf',ja:'liegt drauf',stimmt,
         hinweis:rech+(stimmt?'. Das ist der y-Wert von '+V('P')+': '+V('P')+' liegt auf der Geraden.':(' ≠ '+zahl(y0)+'. '+V('P')+' liegt nicht auf der Geraden.')),erkl:'probe',denk:DENK.probe};},
     w(){const f=probeFall({gross:Math.random()<.7}),nm=pick(['f','g']),T=fn(nm,term(f.s,f.b)),F_=probeFehler(f);let y0=f.y;
       if(Math.random()<.5){y0=F_.length?pick(F_)[0]:f.y+pick([-2,2]);}
@@ -2096,23 +2093,27 @@ const FORM={
       return zuviel?{ok:false,hinweis:zuviel.hinweis}:fehlt?{ok:false,hinweis:'Da stimmt noch mehr. '+fehlt.grund}:{ok:true};};
     setHaupt('pruefen',false);
   },
-  /* Quick: Wischkarte. Nach rechts „stimmt“, nach links „stimmt nicht“; die Knöpfe und die Pfeiltasten tun dasselbe */
+  /* Quick: Wischkarte. Eine Sachfrage mit zwei Antworten aus der Sache, links die verneinende („liegt nicht drauf“), rechts die
+     bejahende („liegt drauf“), nie „stimmt“, „richtig“, „ja“ oder „wahr“: Grün und Rot sind das Urteil, und die Wörter sollen ihm nicht
+     widersprechen (Lehrkraft 22.11.2026). Die Aufgabe nennt nein, ja und stimmt (true: die rechte Antwort ist richtig); auf der Karte
+     steht der Term, daneben, was zu prüfen ist (neben). Wischen, Knöpfe und Pfeiltasten tun dasselbe. Nach der Antwort trägt nur die
+     gewählte Seite das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der rechten oberen Ecke; die andere bleibt blass, die Karte weiß. */
   wisch(auf,m){
     m.className='buehne eins';
     m.innerHTML='<section class="karte">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div>'+
-      '<div class="wischfeld"><div class="wk"><p class="term">'+auf.term+'</p><p class="aussage">'+auf.aussage+'</p><span class="stempel"></span></div></div>'+
-      '<div class="wknoepfe"><button class="opt nein" data-w="0"><span class="pfl">←</span> stimmt nicht</button><button class="opt ja" data-w="1">stimmt <span class="pfl">→</span></button></div><div class="rueck" hidden></div></section>';
-    const k=$('.wk',m);let x0=null,dx=0;
+      '<div class="wischfeld"><div class="wk"><p class="term">'+auf.term+'</p>'+(auf.neben?'<p class="term">'+auf.neben+'</p>':'')+'</div></div>'+
+      '<div class="wknoepfe"><button class="opt nein" data-w="0"><span class="pfl">←</span> '+auf.nein+'</button><button class="opt ja" data-w="1">'+auf.ja+' <span class="pfl">→</span></button></div><div class="rueck" hidden></div></section>';
+    const k=$('.wk',m),kn=$$('.wknoepfe .opt',m);let x0=null,dx=0;
     A.wisch=ja=>{if(A.gewertet)return;const ok=ja===auf.stimmt;
-      k.style.transition='transform .25s ease-out';k.style.transform='translateX('+(ja?7:-7)+'%) rotate('+(ja?3:-3)+'deg)';k.classList.remove('zuja','zunein');k.classList.add(ok?'ok':'falsch');
-      $('.stempel',k).textContent=ja?'stimmt':'stimmt nicht';
-      $$('.wknoepfe .opt',m).forEach(b=>{const bj=b.dataset.w==='1';b.disabled=true;if(bj===auf.stimmt)b.classList.add('ok');else if(bj===ja)b.classList.add('falsch');});
+      k.style.transition='transform .25s ease-out';k.style.transform='translateX('+(ja?7:-7)+'%) rotate('+(ja?3:-3)+'deg)';
+      kn.forEach(b=>{const bj=b.dataset.w==='1';b.disabled=true;b.classList.remove('ziel');if(bj===ja)b.classList.add(ok?'ok':'falsch');});
       abgeben(ok,ok?null:auf.hinweis);};
-    $$('.wknoepfe .opt',m).forEach(b=>b.addEventListener('click',()=>A.wisch(b.dataset.w==='1')));
+    kn.forEach(b=>b.addEventListener('click',()=>A.wisch(b.dataset.w==='1')));
     k.addEventListener('pointerdown',e=>{if(A.gewertet)return;x0=e.clientX;dx=0;k.style.transition='none';try{k.setPointerCapture(e.pointerId);}catch(_){}});
-    k.addEventListener('pointermove',e=>{if(x0===null||A.gewertet)return;dx=e.clientX-x0;k.style.transform='translateX('+dx+'px) rotate('+(dx/24)+'deg)';k.classList.toggle('zuja',dx>40);k.classList.toggle('zunein',dx<-40);});
+    k.addEventListener('pointermove',e=>{if(x0===null||A.gewertet)return;dx=e.clientX-x0;k.style.transform='translateX('+dx+'px) rotate('+(dx/24)+'deg)';
+      kn[1].classList.toggle('ziel',dx>40);kn[0].classList.toggle('ziel',dx<-40);});      // beim Ziehen leuchtet die Antwort auf, zu der es geht
     const ende=()=>{if(x0===null)return;x0=null;if(A.gewertet)return;
-      if(Math.abs(dx)>70)A.wisch(dx>0);else{k.classList.remove('zuja','zunein');k.style.transition='transform .2s ease-out';k.style.transform='';}};
+      if(Math.abs(dx)>70)A.wisch(dx>0);else{kn.forEach(b=>b.classList.remove('ziel'));k.style.transition='transform .2s ease-out';k.style.transform='';}};
     k.addEventListener('pointerup',ende);k.addEventListener('pointercancel',ende);
     setHaupt('weiter',false);
   },
