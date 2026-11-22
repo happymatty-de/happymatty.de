@@ -798,6 +798,13 @@ button.eka.tipp{background:#E3EFDF}
   color:var(--gruen);font-family:var(--satz);font-size:.86rem;font-weight:700;font-style:normal;line-height:1;white-space:nowrap;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .feld.folge::before{right:-.7rem}
 .fpf{color:var(--text)}
+/* ---------- 22.11.2026, dritte Runde (Lehrkraft): Parameterfarben in der Zielparabel ----------
+   a blau, u lila, v pink, überall zugleich: am Buchstaben und am Wert des Reglers, in der Formel, an den Zahlen im eigenen Term, in Frage, Rückmeldung und Lösung
+   („für alles nehmen wir die Farben“). Die Rechenzeichen bleiben schwarz: Das Minus in der Klammer gehört zur Form, nicht zu u. In Handschrift ohne Fett. */
+.pfarb .pa{color:var(--ca);font-weight:700}
+.pfarb .pu{color:var(--cu);font-weight:700}
+.pfarb .pv{color:var(--cv);font-weight:700}
+.pfarb .zeilen .pa,.pfarb .zeilen .pu,.pfarb .zeilen .pv{font-weight:400}
 
 </style></head>
 <body><div id="app"></div>
@@ -807,7 +814,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v8.2';
+const VERSION='v8.3';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1038,9 +1045,9 @@ const GEN={
     zahlen(){let a,u,v;do{a=pick([-2,-1,-0.5,0.5,1,2]);u=pick([-3,-2,-1,0,1,2,3]);v=pick([-3,-2,-1,0,1,2,3]);}while((u===0&&v===0)||(a>0&&v>2)||(a<0&&v<-2));
       return {a,u,v,art:a>0?'T':'H',wort:a>0?'Tiefpunkt':'Hochpunkt'};},
     schritte(g){const {a,u,v,art}=g,w=Math.abs(a)===0.5;
-      return [{h:punkt(art,u,v)+': '+V('u')+' = '+zahl(u)+', '+V('v')+' = '+zahl(v),text:true},
-        {h:'Von '+V(art)+' '+(w?'zwei':'eins')+' nach rechts: '+zahl(w?Math.abs(a)*4:Math.abs(a))+' nach '+(a>0?'oben':'unten')+', also '+V('a')+' = '+zahl(a),text:true},
-        {h:fx(termSPF(a,u,v))}];},
+      return [{h:punkt(art,u,v)+': '+P('u',V('u')+' = '+zahl(u))+', '+P('v',V('v')+' = '+zahl(v)),text:true},      // die Parameterfarben auch in der Lösung (sie wirken nur in der Zielparabel, Klasse pfarb)
+        {h:'Von '+V(art)+' '+(w?'zwei':'eins')+' nach rechts: '+zahl(w?Math.abs(a)*4:Math.abs(a))+' nach '+(a>0?'oben':'unten')+', also '+P('a',V('a')+' = '+zahl(a)),text:true},
+        {h:fx(termTeile(a,u,v))}];},
     q(){const g=this.zahlen(),{a,u,v,wort}=g;const A2=[-2,-1,-0.5,0.5,1,2];
       const kand=[];
       if(u!==0)kand.push({k:[a,-u,v],hinweis:'Der '+wort+' liegt bei '+V('x')+' = '+zahl(u)+': Im Term steht dann ('+V('x')+(u>0?' − ':' + ')+zahl(Math.abs(u))+')'+Q+'.'});
@@ -1054,8 +1061,8 @@ const GEN={
         denk:'Lies zuerst den Hoch- oder Tiefpunkt ab.',
         opts:shuffle([{html:termSPF(a,u,v),ok:true}].concat(falsch.map(f=>({html:termSPF(f.k[0],f.k[1],f.k[2]),hinweis:f.hinweis}))))};},
     b(){const g=this.zahlen();
-      return {form:'ziel',frage:'Stelle '+V('a')+', '+V('u')+' und '+V('v')+' so ein, dass dein Term zum Graphen passt.',g,erkl:'info2',
-        denk:'Lies zuerst den '+g.wort+' ab: Er gibt dir '+V('u')+' und '+V('v')+'.',schritte:this.schritte(g)};}
+      return {form:'ziel',frage:'Stelle '+P('a',V('a'))+', '+P('u',V('u'))+' und '+P('v',V('v'))+' so ein, dass dein Term zum Graphen passt.',g,erkl:'info2',
+        denk:'Lies zuerst den '+g.wort+' ab: Er gibt dir '+P('u',V('u'))+' und '+P('v',V('v'))+'.',schritte:this.schritte(g)};}
   },
   /* ---- 1.5 Punkt auf dem Graphen: Terme in allen drei Formen, wie Aufgabe 6 des Blattes ---- */
   punkt:{
@@ -1606,23 +1613,27 @@ const FORM={
     setHaupt('weiter',false);
   },
   /* Build: die Zielparabel treffen; die eigene Parabel erscheint erst nach „Prüfen“ */
+  /* Build: Zielparabel. Die Parameterfarben stehen überall zugleich (Lehrkraft 22.11.2026: „für alles nehmen wir die Farben“): a blau, u lila, v pink an Buchstabe und Wert des Reglers,
+     in der Formel und an den Zahlen im eigenen Term. So sieht man, welche Zahl im Term zu welchem Regler gehört; das Minus in der Klammer bleibt schwarz, es gehört zur Form.
+     Minus und Plus ändern den Wert des Parameters. Verworfen: „+ u“ in der Formel (Blatt, GeoGebra und Klassenarbeit schreiben „− u“ mit dem Punkt (u | v)) und Pfeile an den Tasten
+     („wir verraten halt mit den Pfeilen dann, wo es lang geht“). */
   ziel(auf,m){
-    m.className='buehne';const g=auf.g,AW=[-2,-1,-0.5,0.5,1,2],w={a:1,u:0,v:0};
+    m.className='buehne pfarb';const g=auf.g,AW=[-2,-1,-0.5,0.5,1,2],w={a:1,u:0,v:0};
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="bild" style="max-width:22rem;width:100%;margin:0 auto">'+graph([{a:g.a,u:g.u,v:g.v}])+'</div></section>'+
-      '<section class="karte rechnung"><h3>Dein Term</h3>'+formZeile+'<p class="term eigen"></p><div class="reglerfeld">'+['a','u','v'].map(p=>'<div class="regler" data-p="'+p+'"><span>'+V(p)+'</span><button class="st" data-d="-1" aria-label="'+p+' kleiner">−</button><output></output><button class="st" data-d="1" aria-label="'+p+' größer">+</button></div>').join('')+'</div>'+
+      '<section class="karte rechnung"><h3>Dein Term</h3>'+formZeile+'<p class="term eigen"></p><div class="reglerfeld">'+['a','u','v'].map(p=>'<div class="regler" data-p="'+p+'"><span class="p'+p+'">'+V(p)+'</span><button class="st" data-d="-1" aria-label="'+p+' kleiner">−</button><output class="p'+p+'"></output><button class="st" data-d="1" aria-label="'+p+' größer">+</button></div>').join('')+'</div>'+
       '<div class="rueck" hidden></div><div class="zeilen"></div></section>';
     const weg=()=>{const e=$('.gk.eigen',m);if(e)e.remove();};
-    const zeig=()=>{$('.term.eigen',m).innerHTML=fx(termSPF(w.a,w.u,w.v));$$('.regler',m).forEach(r=>{const p=r.dataset.p;$('output',r).textContent=zahl(w[p]);
+    const zeig=()=>{$('.term.eigen',m).innerHTML=fx(termTeile(w.a,w.u,w.v));$$('.regler',m).forEach(r=>{const p=r.dataset.p;$('output',r).textContent=zahl(w[p]);
         const mn=p==='a'?AW[0]:-4,mx=p==='a'?AW[AW.length-1]:4;$('[data-d="-1"]',r).disabled=w[p]<=mn||A.fertig;$('[data-d="1"]',r).disabled=w[p]>=mx||A.fertig;});};
     $$('.st',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;const p=b.parentNode.dataset.p,d=+b.dataset.d;
       if(p==='a')w.a=AW[Math.max(0,Math.min(AW.length-1,AW.indexOf(w.a)+d))];else w[p]=Math.max(-4,Math.min(4,w[p]+d));
       weg();zeig();setHaupt('pruefen',true);}));
     A.pruefe=()=>{weg();const k=document.createElementNS('http://www.w3.org/2000/svg','path');k.setAttribute('class','gk eigen');k.setAttribute('pathLength','1');k.setAttribute('d',pfad(w.a,w.u,w.v));$('.kurven',m).appendChild(k);
       const ok={a:w.a===g.a,u:w.u===g.u,v:w.v===g.v};if(ok.a&&ok.u&&ok.v)return {ok:true};
-      const gut=['a','u','v'].filter(p=>ok[p]).map(p=>V(p)+' stimmt');let h=gut.length?gut.join(', ')+'. ':'';
-      if(!ok.u&&w.u===-g.u)h+='Bei '+V('u')+' das Vorzeichen: Nach rechts verschoben heißt ('+V('x')+' − …)'+Q+', nach links ('+V('x')+' + …)'+Q+'.';
+      const gut=['a','u','v'].filter(p=>ok[p]).map(p=>P(p,V(p))+' stimmt');let h=gut.length?gut.join(', ')+'. ':'';
+      if(!ok.u&&w.u===-g.u)h+='Bei '+P('u',V('u'))+' das Vorzeichen: Nach rechts verschoben heißt ('+V('x')+' − …)'+Q+', nach links ('+V('x')+' + …)'+Q+'.';
       else if(!ok.u||!ok.v)h+='Vergleiche die '+g.wort+'e: Wo liegt deiner, wo der gesuchte?';
-      else h+=V('a')+' stimmt nicht: Geh vom '+g.wort+' eins nach rechts. Wie weit geht es nach '+(g.a>0?'oben':'unten')+'?';
+      else h+=P('a',V('a'))+' stimmt nicht: Geh vom '+g.wort+' eins nach rechts. Wie weit geht es nach '+(g.a>0?'oben':'unten')+'?';
       return {ok:false,hinweis:h};};
     A.sperre=()=>{const e=$('.gk.eigen',m);if(e&&!(w.a===g.a&&w.u===g.u&&w.v===g.v))e.classList.add('blass');      // steht die Lösung da, verblasst die eigene falsche Parabel
       A.gl=glParabel(fx(termSPF(g.a,g.u,g.v)),g);zeig();};
