@@ -1148,23 +1148,51 @@ svg.zieh{touch-action:none}
 .gesperrt .umsch.ok,.gesperrt .umsch.falsch{opacity:1}
 .keine.ok,.keine.an.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
 .keine.an.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
-.feld.ok::before,.feld.falsch::before,.umsch:not(.wegw).ok::before,.umsch:not(.wegw).falsch::before,.umsch.wegw.ok button.an::before,.umsch.wegw.falsch button.an::before,.keine.ok::before,.keine.falsch::before{
+.feld.ok::before,.feld.falsch::before,.umsch.wegw.ok button.an::before,.umsch.wegw.falsch button.an::before,.keine.ok::before,.keine.falsch::before{
   position:absolute;top:-.55rem;right:-.5rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
   color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.feld.ok::before,.umsch:not(.wegw).ok::before,.umsch.wegw.ok button.an::before,.keine.ok::before{content:'✓';background:var(--gruen)}
-.feld.falsch::before,.umsch:not(.wegw).falsch::before,.umsch.wegw.falsch button.an::before,.keine.falsch::before{content:'✗';background:var(--rot)}
+.feld.ok::before,.umsch.wegw.ok button.an::before,.keine.ok::before{content:'✓';background:var(--gruen)}
+.feld.falsch::before,.umsch.wegw.falsch button.an::before,.keine.falsch::before{content:'✗';background:var(--rot)}
 
 /* ---------- Gleichung am Graphen (Lehrkraft 22.11.2026) ----------
    Steht die Lösung da, steht die Gleichung im Bild neben ihrem Graphen, in seiner Farbe; der bloße Name am Graphen entfällt dann */
 .bild.mitgl{position:relative}
-.bild.mitgl .gname{display:none}
 .glg{position:absolute;left:0;top:0;font-size:1.05rem;line-height:1.05;white-space:nowrap;pointer-events:none;padding:.1em .32em;border-radius:.35em;background:rgba(255,255,255,.88);color:var(--blau);animation:glkommt .4s ease-out backwards}
 .glg *{color:inherit!important}
 .glg.lg,.glg.ls{color:var(--gruen)}.glg.lr{color:var(--rot)}.glg.lb{color:var(--blau)}.glg.ll{color:var(--lila)}
 .glg.glspaet{animation-delay:1.5s}
+.glg.lgr{color:var(--grau)}
+.tafelr .glg{font-size:1.2rem}
 @keyframes glkommt{from{opacity:0}}
 @media (max-width:760px){.glg{font-size:.9rem}}
 .achsbild .glg{font-size:.92rem}
+
+/* ---------- 22.11.2026, zweite Runde (Lehrkraft) ---------- */
+/* Urteil am Umschalter: Das Zeichen sitzt an der gewählten Seite, nicht an der Ecke der Gruppe („direkt dort dran …, was blau unterlegt ist“). Der Rand der Gruppe bleibt. */
+.umsch button{position:relative}
+.umsch:not(.wegw).ok button.an::before,.umsch:not(.wegw).falsch button.an::before{
+  position:absolute;top:-.62rem;left:50%;right:auto;margin-left:-.65rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
+  color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.umsch:not(.wegw).ok button.an::before{content:'✓';background:var(--gruen)}
+.umsch:not(.wegw).falsch button.an::before{content:'✗';background:var(--rot)}
+/* Leere Lösungskarte: keine Ankündigung, was später wo erscheint. Die Überschrift (Lösung, Rechnung, So geht’s) kommt mit dem Inhalt. */
+.leer:empty{display:none}
+.rechnung:not(:has(.zeilen>*,.ezeilen>*,.vor>*)) h3.lt{display:none}
+/* Level-Menü: Level, die es im Aufgabentyp nicht gibt */
+.mz.fehlt b{color:#B7BEC7}
+.sw:disabled{background:#E9ECF0;cursor:default}
+.sw:disabled::after{background:#F8F9FA;box-shadow:0 0 0 1px #DCE1E6}
+/* Lösung beim Zuordnen: Nummer des Paars in Grün, die Gleichung schwarz wie auf der Karte, dahinter in Handschrift, was man an ihr abliest */
+.zl.zul>span{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 .9rem}
+.zl.zul .lnr{font-family:var(--satz);font-weight:700;color:var(--gruen);font-size:1.2rem;min-width:1rem}
+.zl.zul .lgl{font-family:var(--satz);color:var(--text);font-size:1.2rem;min-width:11rem}
+.zl.zul .lgl i{font-style:italic}
+.zl.zul .lre{flex:1 1 12rem;min-width:0}
+.zl.zul,.zuo~.zeilen .zl.zul.text{font-size:1.4rem;line-height:1.3;margin:.12rem 0}
+/* m = … und b = … bleiben am Zeilenende zusammen */
+.zeilen .cm,.zeilen .cb{white-space:nowrap}
+/* Handschrift kennt kein Fett: Künstlich gefettet wirkt dasselbe Orange dunkler */
+.zeilen .cm,.zeilen .cb,.ezeilen .cm,.ezeilen .cb,.kzeil .cm,.kzeil .cb,.wnot .cm,.wnot .cb{font-weight:400}
 
 </style></head>
 <body><div id="app"></div>
@@ -1175,7 +1203,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v3.2';
+const VERSION='v3.3';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1307,8 +1335,13 @@ const alleVoll=()=>sechsVoll()&&(!ANW||werkVoll());
    Es braucht den Stift: Ist Level 3 abgeschaltet, wartet es */
 function werkDran(){return ANW&&!werkVoll()&&S.filter.w&&(!!S.werk.lauf.gesamt||sechsVoll()||(S.pkt===0&&S.etappe>=S.werk.faellig));}
 const etappeText=()=>'Gesamttraining. Etappe '+S.etappe+(werkDran()?': '+WERKSTOR.titel+'.':'.');
-function aktLevel(t){const st=S.typ[t.id];for(let i=st.top;i<t.level.length;i++)if(S.filter[t.level[i]])return i;return null;}
-function auffrLevel(t){for(let i=t.level.length-1;i>=0;i--)if(S.filter[t.level[i]])return i;return null;}
+/* Level, die es im Aufgabentyp nicht gibt, sind im Einzeltraining ausgegraut (Lehrkraft 22.11.2026). Kommt dort keins der eingeschalteten Level vor,
+   gelten alle Level des Typs: Kein Einzeltraining bleibt ohne Aufgaben. Im Gesamttraining gilt die Einstellung, wie sie ist. */
+const lvFrei=t=>S.modus==='einzel'&&!t.level.some(k=>S.filter[k]);
+const lvAn=(t,k)=>lvFrei(t)||!!S.filter[k];
+const lvTyp=()=>S.modus==='einzel'&&S.einzel&&S.ansicht==='aufgabe'?TYP[S.einzel.id]:null;
+function aktLevel(t){const st=S.typ[t.id];for(let i=st.top;i<t.level.length;i++)if(lvAn(t,t.level[i]))return i;return null;}
+function auffrLevel(t){for(let i=t.level.length-1;i>=0;i--)if(lvAn(t,t.level[i]))return i;return null;}
 const punkteFuer=(t,key)=>(t.punkte&&t.punkte[key])||PUNKTE[key];
 function empfohlen(){              // höchstens zwei Marken zugleich: die mit den meisten Fehlern nacheinander
   return TYPEN.filter(t=>t.aktiv&&!voll(t)&&S.typ[t.id].falsch>=2).sort((a,b)=>S.typ[b.id].falsch-S.typ[a.id].falsch).slice(0,2).map(t=>t.id);}
@@ -1436,6 +1469,9 @@ const num=s=>{s=String(s==null?'':s).replace(/−/g,'-').replace(',','.');if(s.i
 const gleich=(a,b)=>Math.abs(a-b)<1e-9;
 const X=V('x');
 const zl=(h,op,text)=>({h,op:op||undefined,text:!!text});
+/* Lösungszeile beim Zuordnen (Lehrkraft 22.11.2026): Nummer des Paars, die Gleichung wie auf der Karte, dahinter in Handschrift, was man an ihr abliest */
+const zul=(id,gl,rest,text)=>({h:'<span class="lnr" data-id="'+id+'"></span><span class="lgl">'+gl+'</span><span class="lre">'+rest+'</span>',kl:'zul',text:!!text});
+
 const svgI=s=>'<tspan font-style="italic">'+s+'</tspan>';      // kursiv in SVG-Texten (ein <i> würde das SVG verlassen)
 const bruch=(z,n)=>'<span class="br"><span>'+z+'</span><span>'+n+'</span></span>';
 const zz=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
@@ -1564,14 +1600,15 @@ const GEN={
         stapel:[{id:'s',html:'steigt'},{id:'f',html:'fällt'},{id:'w',html:'waagerecht'}],ok,hinweis:{s:grund,f:grund,w:grund},grund};},
     /* Build: drei Gleichungen, vier Beschreibungen */
     b(){const b0=zz(1,5),typen=shuffle([['s',b0],['f',b0],['s',-b0],['f',-b0]]),drei=typen.slice(0,3),nn=shuffle(['f','g','h']);
-      const links=drei.map(([r,bb],j)=>{let s;do{s=pick(STG_ALLE);}while((s.z>0)!==(r==='s'));const o={rev:Math.random()<.35,dez:Math.random()<.3};
-        return {id:'g'+j,html:fn(nn[j],term(s,bb,o)),ok:r+bb,s,bb,dez:o.dez};});
+      const links=shuffle(drei.map(([r,bb],j)=>{let s;do{s=pick(STG_ALLE);}while((s.z>0)!==(r==='s'));const o={rev:Math.random()<.35,dez:Math.random()<.3};
+        return {id:'g'+j,html:fn(nn[j],term(s,bb,o)),ok:r+bb,s,bb,dez:o.dez};}));
       const rechts=typen.map(([r,bb])=>({id:r+bb,html:(r==='s'?'steigt':'fällt')+', schneidet die y-Achse bei '+zahl(bb)}));
       links.forEach(l=>{l.h={};rechts.forEach(r=>{if(r.id===l.ok)return;
         l.h[r.id]=r.id[0]!==l.ok[0]?CM(V('m')+' = '+mText(l.s,l.dez))+' ist '+(l.s.z>0?'positiv: Die Gerade steigt.':'negativ: Die Gerade fällt.')
           :CB(V('b')+' = '+zahl(l.bb))+': Die Gerade schneidet die y-Achse bei '+zahl(l.bb)+'.';});});
       return {form:'zuordnen',frage:'Welche Beschreibung passt? Tippe eine Gleichung an und dann ihre Beschreibung. Eine bleibt übrig.',erkl:'info1',denk:DENK.mb,
-        links:shuffle(links),rechts:shuffle(rechts),folge:links.map(l=>l.id),schritte:links.map(l=>zl(l.html+' &nbsp;→&nbsp; '+mbText(l.s,l.bb,l.dez)))};}
+        links,rechts:shuffle(rechts),folge:links.map(l=>l.id),      // die Lösung steht in der Reihenfolge der Aufgabe, jede Zeile mit der Nummer ihres Paars; die Gleichung schwarz, damit das Orange von m sich abhebt
+        schritte:links.map(l=>zul(l.id,l.html,CM(V('m')+' = '+mText(l.s,l.dez)+' → '+(l.s.z>0?'steigt':'fällt')+';')+' &nbsp;'+CB(V('b')+' = '+zahl(l.bb))))};}
   },
   /* ---- 2 Gerade zeichnen ---- */
   zeichnen:{
@@ -1656,7 +1693,7 @@ const GEN={
       const um='<span class="umsch" data-w="art"><button type="button" data-v="w">'+V('f')+'('+X+') =</button><button type="button" data-v="s">'+V('g')+': '+X+' =</button></span>';
       const sch=[zl(w?'Waagerecht: Alle Punkte haben den y-Wert '+zahl(c)+'.':'Senkrecht: Alle Punkte haben den x-Wert '+zahl(c)+'.',null,true),zl(w?fn('f',zahl(c)):senk('g',c))];
       return {form:'eingabe',einKl:'satz',bild,frage:'Wie lautet die Gleichung der Geraden? Wähle die Schreibweise und tippe die Zahl ein.',erkl:'info3',denk:DENK.wsk,gl:()=>glGerade(w?fn('f',zahl(c)):senk('g',c),w?{m:0,b:c}:{senk:c},w?'lg':'lr'),
-        ein:'<span class="sz">'+um+' '+FELD('c')+'</span>',schritte:sch,rtitel:'Lösung',rleer:'Hier steht die Lösung, wenn du fertig bist oder Hilfe holst.',
+        ein:'<span class="sz">'+um+' '+FELD('c')+'</span>',schritte:sch,rtitel:'Lösung',rleer:'',
         pruefe:v=>{const F=[];if(v.art!==(w?'w':'s'))F.push('art');if(!gleich(num(v.c),c))F.push('c');if(!F.length)return {ok:true};
           const h=F.includes('art')?(w?'Waagerecht: Jeder Punkt hat den y-Wert '+zahl(c)+'. Das ist die konstante Funktion '+fn('f',zahl(c))+'.':'Senkrecht: Jeder Punkt hat den x-Wert '+zahl(c)+'. Das ist keine Funktion: '+senk('g',c)+'.')
             :(w?'Lies an der y-Achse ab: Die Gerade schneidet sie bei '+zahl(c)+'.':'Lies an der x-Achse ab: Die Gerade schneidet sie bei '+zahl(c)+'.');
@@ -1720,7 +1757,7 @@ const GEN={
         sch=[zl('Gleicher Punkt auf der y-Achse: '+CB(V('b')+' = '+zahl(b))+'.',null,true),zl(fallend?'Fallend: '+ML+' negativ, zum Beispiel '+CM(V('m')+' = −1')+'.':'Steigend: '+ML+' positiv, zum Beispiel '+CM(V('m')+' = 1')+'.',null,true),zl(fn('h',term(bsp,b)))];
         pr=(mm,bb)=>[(fallend?!(mm<0):!(mm>0))&&['m',fallend?'Fallend heißt: '+ML+' ist negativ.':'Steigend heißt: '+ML+' ist positiv.'],!gleich(bb,b)&&['b',V('f')+' schneidet die y-Achse bei '+zahl(b)+': '+CB(V('b')+' = '+zahl(b))+'.']];}
       return {form:'eingabe',einKl:'pq',bruch:true,bild,frage,term:T,erkl:'erkunder',denk:art==='fall'?DENK.gleichb:DENK.parallel,
-        ein:'<span class="pqf">'+ML+' = '+FELD('m')+'</span><span class="pqf">'+BL+' = '+FELD('b')+'</span>',schritte:sch,rtitel:'Ein Beispiel',
+        ein:'<span class="pqf">'+ML+' = '+FELD('m')+'</span><span class="pqf">'+BL+' = '+FELD('b')+'</span>',schritte:sch,rtitel:art==='durch'?'Lösung':'Eine mögliche Lösung',
         pruefe:v=>{const mm=num(v.m),bb=num(v.b),r=pr(mm,bb).filter(Boolean);if(!r.length)return {ok:true};return {ok:false,hinweis:r[0][1],falsch:r.map(x=>x[0])};}};}      // pr: erst m, dann b, je für sich; der Hinweis nennt den ersten Fehler
   }
 };
@@ -1787,7 +1824,7 @@ function vErkl(){
 }
 
 /* ---------- Training: Rahmen ---------- */
-function filterName(){const an=['q','b','w'].filter(k=>S.filter[k]);return an.length===3?'Automatik':'Level '+an.map(k=>LEVELNR[k]).join(' + ');}
+function filterName(){const t=lvTyp(),alle=t?t.level:['q','b','w'],an=alle.filter(k=>t?lvAn(t,k):S.filter[k]);return an.length===alle.length&&alle.length>1?'Automatik':'Level '+an.map(k=>LEVELNR[k]).join(' + ');}
 function trainingRahmen(){
   S.ansicht='aufgabe';adresse(S.modus==='gesamt'?'gesamttraining':'einzeltraining');
   setApp('<header class="kopf trk"><button class="kn" data-akt="zurueck">‹ '+(S.modus==='gesamt'?'Start':S.einzel.vonGesamt?'Gesamttraining':'Einzeltraining')+'</button>'+
@@ -1832,7 +1869,7 @@ const offenKey=()=>S.modus==='gesamt'?'gesamt':'einzel-'+S.einzel.id;
 function neueAufgabe(wieder){
   clearTimeout(A.auto);if(S.rueckblick)endeLetzte();merkeLetzte();
   let t,li,auf;const o=wieder&&S.offen[offenKey()];
-  if(o&&S.filter[o.t.level[o.li]]&&(aktLevel(o.t)===o.li||aktLevel(o.t)===null)){t=o.t;li=o.li;auf=o.auf;}   // die angefangene Aufgabe steht noch da
+  if(o&&lvAn(o.t,o.t.level[o.li])&&(aktLevel(o.t)===o.li||aktLevel(o.t)===null)){t=o.t;li=o.li;auf=o.auf;}   // die angefangene Aufgabe steht noch da
   else{
     if(S.modus==='gesamt'){const r=naechste();if(!r)return zeigeLeer();t=r[0];li=r[1];}
     else{t=TYP[S.einzel.id];li=aktLevel(t);if(li===null)li=auffrLevel(t);if(li===null)return zeigeLeer();}
@@ -1860,10 +1897,10 @@ const weich=h=>h.replace(/Normalparabel/g,'Normal\u00ADparabel').replace(/Scheit
 const ortHTML=()=>'<span class="waso"><button class="wasol" data-akt="ort">'+(S.modus==='einzel'?'Einzeltraining':'Gesamttraining')+'</button> · </span>';
 const wasZeile=()=>'<p class="was"><span>'+ortHTML()+'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button> · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
 const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
-const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3>'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
+const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3 class="lt">'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
 function zeigeSchritte(){const z=$('.zeilen');if(!z)return;const s=A.auf.schritte||[];
-  for(let i=z.children.length;i<A.gezeigt&&i<s.length;i++)z.appendChild(el('<div class="zl'+(s[i].text?' text':'')+'"><span>'+s[i].h+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</div>'));
-  const l=$('.rechnung .leer');if(l&&A.gezeigt>0)l.hidden=true;}
+  for(let i=z.children.length;i<A.gezeigt&&i<s.length;i++)z.appendChild(el('<div class="zl'+(s[i].text?' text':'')+(s[i].kl?' '+s[i].kl:'')+'"><span>'+s[i].h+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</div>'));
+  const l=$('.rechnung .leer');if(l&&A.gezeigt>0)l.hidden=true;if(A.nachZeilen)A.nachZeilen();}
 function zeigeRueck(kl,txt,klein,regel){const r=$('.rueck');if(!r)return;r.hidden=false;r.className='rueck '+kl;
   r.innerHTML='<span class="z">'+(kl==='gut'?'✓':kl==='schlecht'?'✗':'i')+'</span><span>'+txt+(regel?'<small class="regel">'+regel+'</small>':'')+(klein?'<small>'+klein+'</small>':'')+'</span>';
   r.scrollIntoView({block:'nearest',behavior:'smooth'});}
@@ -1874,24 +1911,46 @@ function zeigeRueck(kl,txt,klein,regel){const r=$('.rueck');if(!r)return;r.hidde
    [links, oben, rechts, unten], hind sind Punkte, die frei bleiben sollen (Achsen mit ihren Zahlen, andere Graphen), alles in Koordinaten der viewBox.
    Das Schild ist HTML über dem SVG, damit Brüche wie im Text stehen. Sein Platz wird am fertigen Bild gemessen: dicht neben dem Graphen, möglichst frei
    von Achsen und anderem, eher oben. Nach dem Drehen des Geräts wird neu gemessen. */
-function zeigeGl(spec,wo){const bild=wo||$('.buehne .bild');if(!bild||!spec||!spec.pkt||!spec.pkt.length)return;if(!$('svg',bild))return;
-  $$('.glg',bild).forEach(x=>x.remove());const e=el('<div class="glg '+(spec.kl||'')+(spec.spaet?' glspaet':'')+'">'+spec.html+'</div>');
-  bild.classList.add('mitgl');bild.appendChild(e);e._gl=spec;setzeGl(e);requestAnimationFrame(()=>{if(e.isConnected)setzeGl(e);});}
+function zeigeGl(spec,wo){const bild=wo||$('.buehne .bild');if(!bild||!$('svg',bild))return;
+  /* spec: ein Schild oder eine Liste (mehrere Graphen im Bild, Tafel-Runde). Ein Schild, das schon steht, bleibt stehen und blendet nicht neu ein. */
+  const L=(Array.isArray(spec)?spec:[spec]).filter(s=>s&&s.pkt&&s.pkt.length),alt=$$('.glg',bild),key=s=>(s.kl||'')+'|'+s.html;
+  alt.forEach(x=>{if(!L.some(s=>key(s)===x._key))x.remove();});
+  L.forEach(s=>{let e=alt.find(x=>x.isConnected&&x._key===key(s));
+    if(!e){e=el('<div class="glg '+(s.kl||'')+(s.spaet?' glspaet':'')+'">'+s.html+'</div>');e._key=key(s);bild.appendChild(e);
+      if(s.sel){const k=$(s.sel,bild);if(k)e.style.color=getComputedStyle(k).stroke;}}      // sel: Das Schild nimmt die Farbe dieser Kurve
+    e._gl=s;});
+  bild.classList.toggle('mitgl',L.length>0);
+  /* Der bloße Name am Graphen weicht seinem Schild. namen: nur diese Namen; ohne Angabe alle */
+  const weg=L.some(s=>!s.namen)?null:[].concat(...L.map(s=>s.namen));
+  $$('.gname',bild).forEach(x=>{x.style.display=L.length&&(!weg||weg.includes(x.textContent.trim()))?'none':'';});
+  const alle=$$('.glg',bild);alle.forEach(setzeGl);requestAnimationFrame(()=>alle.forEach(e=>{if(e.isConnected)setzeGl(e);}));}
 function setzeGl(e){const spec=e._gl,bild=e.parentNode,svg=bild&&$('svg',bild),M=svg&&svg.getScreenCTM();if(!spec||!M)return;
   const pt=svg.createSVGPoint(),S=p=>{pt.x=p[0];pt.y=p[1];const q=pt.matrixTransform(M);return [q.x,q.y];};
   const B=bild.getBoundingClientRect(),r=e.getBoundingClientRect(),w=r.width,h=r.height;if(!B.width||!w)return;
   const [x0,y0]=S([spec.rahmen[0],spec.rahmen[1]]),[x1,y1]=S([spec.rahmen[2],spec.rahmen[3]]),P=spec.pkt.map(S),H=(spec.hind||[]).map(S),g=Math.max(5,h*.24);
   const ab=(bx,by,p)=>Math.hypot(Math.max(bx-p[0],0,p[0]-bx-w),Math.max(by-p[1],0,p[1]-by-h));
+  const R=[];for(let v=e.previousElementSibling;v;v=v.previousElementSibling)if(v.classList.contains('glg'))R.push(v.getBoundingClientRect());      // Schilder, die schon stehen
   /* alle Plätze im Raster durchgehen: senkrecht in der Zeichenfläche, waagerecht bis an den Bildrand. Am besten ist, wer den Graphen nicht berührt, dicht an ihm
      liegt (Abstand g) und von Achsen und anderem frei ist; passt das Schild nirgends frei hin, gewinnt der Platz, der am wenigsten vom Graphen verdeckt */
   let best=null;const st=Math.max(4,h*.2);
   for(let by=y0+2;by+h<=y1-2;by+=st)for(let bx=B.left+1;bx+w<=B.right-1;bx+=st){
     let dk=1e9,n=0,dh=1e9;for(const p of P){const d=ab(bx,by,p);if(d<dk)dk=d;if(d===0)n++;}for(const p of H)dh=Math.min(dh,ab(bx,by,p));
-    const note=(dk<g*.5?-1000-n*10:0)-Math.abs(dk-g)*2+Math.min(dh,2*h)-(by-y0)*.06-(Math.max(0,x0-bx)+Math.max(0,bx+w-x1))*4;      /* über den Rand der Zeichenfläche nur, wenn es sonst nicht passt */
+    const auf=R.some(q=>bx<q.right+4&&bx+w>q.left-4&&by<q.bottom+4&&by+h>q.top-4);
+    const note=(dk<g*.5?-1000-n*10:0)-(auf?600:0)-Math.abs(dk-g)*2+Math.min(dh,2*h)-(by-y0)*.06-(Math.max(0,x0-bx)+Math.max(0,bx+w-x1))*4;      /* über den Rand der Zeichenfläche nur, wenn es sonst nicht passt */
     if(!best||note>best[0])best=[note,bx,by];}
   if(!best)best=[0,x0+6,y0+6];
   e.style.left=((best[1]-B.left)/B.width*100).toFixed(2)+'%';e.style.top=((best[2]-B.top)/B.height*100).toFixed(2)+'%';}
 window.addEventListener('resize',()=>$$('.glg').forEach(e=>{if(e._gl)setzeGl(e);}));
+/* Angaben für das Schild an einer Kurve in einem Koordinatensystem k (koord: x, y, X, Y). f: Funktion oder {senk:c}; o.von, o.bis: Abschnitt der Kurve;
+   o.andere: weitere Funktionen im Bild; o.frei: Punkte, die frei bleiben; o.sel: Kurve, deren Farbe das Schild nimmt; o.namen: Namen am Graphen, die dem Schild weichen */
+function glKurve(k,html,f,kl,o){o=o||{};const P=[],H=[],X=k.X,Y=k.Y,dx=(X[1]-X[0])/160,dy=(Y[1]-Y[0])/160,von=o.von===undefined?X[0]:o.von,bis=o.bis===undefined?X[1]:o.bis;
+  if(f.senk!==undefined)for(let y=Y[0];y<=Y[1]+1e-9;y+=dy)P.push([k.x(f.senk),k.y(y)]);
+  else for(let x=von;x<=bis+1e-9;x+=dx){const y=f(x);if(y>=Y[0]&&y<=Y[1])P.push([k.x(x),k.y(y)]);}
+  const x0=X[0]<=0&&X[1]>=0?0:X[0],y0=Y[0]<=0&&Y[1]>=0?0:Y[0];
+  for(let i=0;i<=40;i++){const tx=X[0]+i*(X[1]-X[0])/40,ty=Y[0]+i*(Y[1]-Y[0])/40;H.push([k.x(tx),k.y(y0)],[k.x(tx),k.y(y0)+15],[k.x(x0),k.y(ty)],[k.x(x0)-15,k.y(ty)]);}
+  (o.andere||[]).forEach(a=>{for(let x=X[0];x<=X[1]+1e-9;x+=dx*2){const y=a(x);if(y>=Y[0]&&y<=Y[1])H.push([k.x(x),k.y(y)]);}});
+  (o.frei||[]).forEach(q=>H.push([k.x(q[0]),k.y(q[1])]));
+  return {html,kl:kl||'',pkt:P,rahmen:[k.x(X[0]),k.y(Y[1]),k.x(X[1]),k.y(Y[0])],hind:H,spaet:!!o.spaet,sel:o.sel,namen:o.namen};}
 
 /* Feldinhalt: „2/3“ als Bruch mit Strich, auch halb fertig („2/“) */
 const feldHTML=v=>{if(!v||!v.includes('/'))return v||'';const t=v.split('/'),n=t[0].startsWith('−');return (n?'−':'')+'<span class="br fbr"><span>'+(t[0].replace('−','')||'&nbsp;')+'</span><span>'+(t[1]||'&nbsp;')+'</span></span>';};
@@ -1913,13 +1972,13 @@ const FORM={
     const keys=['7','8','9','del','4','5','6','−','1','2','3',',','0'].concat(auf.bruch?['/']:[]);
     const T='<div class="tasten">'+keys.map(k=>'<button type="button" data-k="'+k+'" class="'+(k==='0'&&!auf.bruch?'breit':'')+(k==='del'?' fn':'')+(k==='/'?' fn bk':'')+'"'+(k==='del'?' aria-label="Löschen"':k==='/'?' aria-label="Bruchstrich"':'')+'>'+(k==='del'?'⌫':k==='/'?'<span class="br"><span>a</span><span>b</span></span>':k)+'</button>').join('')+
       '<button type="button" data-k="weiter" class="breit fn" aria-label="Nächstes Feld">→</button></div>',satz=auf.einKl==='satz';
-    const rt=auf.rtitel||'Rechnung',rl=auf.rleer||'Rechne mit dem Stift. Hier steht die Rechnung, wenn du fertig bist oder Hilfe holst.';
+    const rt=auf.rtitel||'Rechnung',rl=auf.rleer!==undefined?auf.rleer:'Rechne mit dem Stift.';      // keine Ankündigung, was später hier steht (Lehrkraft 22.11.2026): nur der Auftrag; die Überschrift kommt mit dem Inhalt
     const kern='<div class="ein'+(auf.einKl?' '+auf.einKl:'')+'">'+auf.ein+'</div>'+(auf.notiz?'<p class="notiz">'+auf.notiz+'</p>':'')+'<div class="rueck" hidden></div>'+(satz?'':T);
     if(auf.bild)m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="bild">'+auf.bild+'</div></section>'+      // mit Bild: links Frage und Bild, rechts Eingabe, Tasten und Rechnung (LF2)
       '<section class="karte rechnung mitein"><div class="ein'+(auf.einKl?' '+auf.einKl:'')+'">'+auf.ein+'</div>'+(auf.notiz?'<p class="notiz">'+auf.notiz+'</p>':'')+'<div class="rueck" hidden></div>'+T+
-      '<h3>'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>';
+      '<h3 class="lt">'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>';
     else m.innerHTML='<section class="karte">'+kopfTeil(auf)+kern+'</section>'+
-      (satz?'<section class="karte rechnung">'+T+'<h3>'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>':rechnungKarte(rt,rl));
+      (satz?'<section class="karte rechnung">'+T+'<h3 class="lt">'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>':rechnungKarte(rt,rl));
     if(auf.keineText)$('.ein',m).insertAdjacentHTML('afterend','<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">'+auf.keineText+'</button></p>');
     const felder=$$('.feld[data-f]',m),spiegel=$$('.feld.spiegel',m),ums=$$('.umsch',m),kb=$('.keine',m),w={};let aktiv=0;
     /* Nach „Prüfen“ trägt jede Eingabe ihr Urteil: grün mit ✓ oder rot mit ✗ (Lehrkraft 22.11.2026). pruefe() nennt in falsch alle falschen Eingaben;
@@ -2063,8 +2122,8 @@ const FORM={
     const lab=auf.lab||[V('x')+' =','oder '+V('x')+' ='];
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+(auf.wege?'<div class="wegzeile"><span class="wegl">Weg:</span>'+auf.wege+'</div>':'')+'<div class="ein menge"><span>'+lab[0]+'</span>'+FELD('a')+'<span>'+lab[1]+'</span>'+FELD('b')+(lab[2]?'<span>'+lab[2]+'</span>':'')+'</div>'+
       '<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">keine Lösung</button></p><p class="notiz">'+(auf.mnotiz||'Tippe die Lösungen ein, negative mit Minus. Gibt es keine, tippe auf „keine Lösung“.')+'</p><div class="rueck" hidden></div>'+(auf.tastenRechts?'':T)+'</section>'+
-      (auf.tastenRechts?'<section class="karte rechnung">'+T+'<h3>Rechnung</h3><div class="zeilen"></div><p class="leer">Rechne mit dem Stift. Hier steht die Rechnung, wenn du fertig bist oder Hilfe holst.</p></section>'
-        :rechnungKarte('Rechnung','Rechne mit dem Stift. Hier steht die Rechnung, wenn du fertig bist oder Hilfe holst.'));
+      (auf.tastenRechts?'<section class="karte rechnung">'+T+'<h3 class="lt">Rechnung</h3><div class="zeilen"></div><p class="leer">Rechne mit dem Stift.</p></section>'
+        :rechnungKarte('Rechnung','Rechne mit dem Stift.'));
     const felder=$$('.feld',m),kb=$('.keine',m),ums=$$('.umsch',m),w={};let aktiv=0,keine=false;const gueltig=s=>!!s&&/\d$/.test(s);
     /* Urteil an jeder Eingabe wie in der Form „Eingabe“ (Lehrkraft 22.11.2026). Bei einer Lösungsmenge zählt die Reihenfolge nicht: treffer nennt die eingegebenen
        Zahlen, die Lösungen sind; ihre Felder bekommen ✓, auch wenn die Menge nicht stimmt. Ein leeres Feld bekommt kein Urteil. */
@@ -2096,7 +2155,7 @@ const FORM={
     m.innerHTML='<section class="karte">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div>'+
       '<p class="term lg2"><span>'+auf.term+' =</span> <span class="pl2" data-i="0"><small>'+auf.plaetze[0]+'</small></span><span class="mal">·</span><span class="pl2" data-i="1"><small>'+auf.plaetze[1]+'</small></span></p>'+
       '<div class="chips">'+auf.chips.map((c,j)=>'<button class="chip" data-j="'+j+'">'+c.html+'</button>').join('')+'</div><div class="rueck" hidden></div></section>'+
-      rechnungKarte('Rechnung','Hier steht die Rechnung, wenn beide Kärtchen liegen.');
+      rechnungKarte('Rechnung','');
     const lege=(i,b)=>{const c=auf.chips.find(x=>x.ziel===i),p=$('.pl2[data-i="'+i+'"]',m);p.innerHTML=c.html;p.classList.add('voll');voll[i]=true;if(b)b.remove();else{const bb=$('.chip[data-j="'+auf.chips.indexOf(c)+'"]',m);if(bb)bb.remove();}};
     $$('.chip',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||voll.every(v=>v))return;const c=auf.chips[+b.dataset.j];
       if(c.ziel!==undefined&&!voll[c.ziel]){lege(c.ziel,b);if(voll.every(v=>v))abgeben(true);}
@@ -2158,7 +2217,7 @@ const FORM={
     const slot=r=>'<span class="es es'+r+'"><small>'+V(r)+'</small></span>';
     const formel=idx(X,'1,2')+' = −'+bruch(slot('p'),'2')+' ± '+wurzel(klg(bruch(slot('p'),'2'))+Q+' − '+slot('q'));
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<p class="eform">'+formel+'</p><div class="chips echips">'+auf.chips.map((c,j)=>'<button class="chip" data-j="'+j+'">'+zahl(c.wert)+'</button>').join('')+'</div><div class="rueck" hidden></div></section>'+
-      '<section class="karte rechnung"><h3>Rechnung</h3><div class="ezeilen"></div><p class="leer">Hier geht die Rechnung weiter, wenn '+PL+' und '+QL+' eingesetzt sind.</p></section>';
+      '<section class="karte rechnung"><h3 class="lt">Rechnung</h3><div class="ezeilen"></div><p class="leer"></p></section>';
     const mark=()=>$$('.es',m).forEach(e=>e.classList.toggle('dran',!A.fertig&&!!dran&&e.classList.contains('es'+dran)));
     const rech=anim=>{const z=$('.ezeilen',m),l=$('.rechnung .leer',m);if(l)l.hidden=true;
       auf.rech.forEach((r,j)=>{const e=el('<div class="zl'+(r.text?' text':'')+'"><span>'+r.h+'</span>'+(r.op?'<span class="op">'+r.op+'</span>':'')+'</div>');
@@ -2182,7 +2241,7 @@ const FORM={
   zeichnen(auf,m){
     m.className='buehne';const K=geradeK(),s=auf.s,b=auf.b;let pts=[],farbe='',frisch=false,loes='',loesK='';
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="bild setz zbild">'+K.svg('<g class="zk-k"></g>','<g class="zk-m"></g>')+'</div><p class="notiz zzaehl"></p></section>'+
-      '<section class="karte rechnung"><div class="rueck" hidden></div><h3>So geht’s</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">Hier stehen die Schritte, wenn du prüfst oder Hilfe holst.</p></section>';      // die Rückmeldung steht rechts über den Schritten: So bleiben Bild, Urteil und Schritte zusammen im Blick, ohne zu rollen
+      '<section class="karte rechnung"><div class="rueck" hidden></div><h3 class="lt">So geht’s</h3><div class="vor"></div><div class="zeilen"></div><p class="leer"></p></section>';      // die Rückmeldung steht rechts über den Schritten: So bleiben Bild, Urteil und Schritte zusammen im Blick, ohne zu rollen
     const svg=$('svg',m),gk=$('.zk-k',svg),gm=$('.zk-m',svg),aufG=t=>gleich(t.y,s.w*t.x+b);
     const schraeg=()=>pts.length===2&&pts[0].x!==pts[1].x&&pts[0].y!==pts[1].y;
     const linie=()=>{if(pts.length<2)return '';const [p,q]=pts,kl='gk '+(farbe||'lmein');      // die eigene Gerade: grau, nach „Prüfen“ grün oder rot
@@ -2219,7 +2278,8 @@ const FORM={
     const karte=(k,j,s)=>'<button class="zk zu '+s+'" data-s="'+s+'" data-j="'+j+'"><span>'+k.html+'</span><span class="znr"></span></button>';
     m.innerHTML='<section class="karte rechnung">'+kopfTeil(auf)+'<div class="zuo"><div class="zsp">'+auf.links.map((k,j)=>karte(k,j,'l')).join('')+'</div><div class="zsp">'+auf.rechts.map((k,j)=>karte(k,j,'r')).join('')+'</div></div>'+
       '<div class="rueck" hidden></div><div class="zeilen"></div></section>';
-    const paar=(bl,br)=>{nr++;[bl,br].forEach(b=>{b.classList.remove('gew');b.classList.add('voll');b.disabled=true;$('.znr',b).textContent=nr;});fertig[auf.links[+bl.dataset.j].id]=true;wahl=null;};
+    const paar=(bl,br)=>{nr++;[bl,br].forEach(b=>{b.classList.remove('gew');b.classList.add('voll');b.disabled=true;$('.znr',b).textContent=nr;});fertig[auf.links[+bl.dataset.j].id]=nr;wahl=null;A.nachZeilen();};
+    A.nachZeilen=()=>{$$('.lnr',m).forEach(x=>{x.textContent=fertig[x.dataset.id]||'';});const z=$('.zeilen',m).lastElementChild;if(z)z.scrollIntoView({block:'nearest',behavior:RUHIG?'auto':'smooth'});};      // die Lösung nennt jedes Paar bei seiner Nummer (Lehrkraft 22.11.2026)
     A.paare=id=>{if(fertig[id])return;const j=auf.links.findIndex(k=>k.id===id);paar($('.zu.l[data-j="'+j+'"]',m),$('.zu.r[data-j="'+auf.rechts.findIndex(r=>r.id===auf.links[j].ok)+'"]',m));};
     $$('.zu',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||b.disabled)return;
       if(!wahl||wahl.dataset.s===b.dataset.s){if(wahl)wahl.classList.remove('gew');wahl=wahl===b?null:b;if(wahl)wahl.classList.add('gew');return;}
@@ -2321,13 +2381,17 @@ function weiter(){
 function schliesse(){$$('.ov,.menue').forEach(e=>{if(e._zu)e._zu();else e.remove();});}
 function zeigeMenue(){
   if($('.menue'))return schliesse();
-  const ov=el('<div class="ov"></div>'),mn=el('<div class="menue" role="dialog" aria-label="Level wählen">'+['q','b','w'].map(k=>'<div class="mz"><b>Level '+LEVELNR[k]+'</b><span></span><button class="sw'+(S.filter[k]?' an':'')+'" data-k="'+k+'" role="switch" aria-checked="'+S.filter[k]+'" aria-label="Level '+LEVELNR[k]+'"></button></div>').join('')+'<p class="klein">Alle an: Automatik. Erst Level 1, dann 2, dann 3.</p></div>');
+  /* Im Einzeltraining sind die Schalter der Level grau, die es in diesem Aufgabentyp nicht gibt (Lehrkraft 22.11.2026) */
+  const t=lvTyp(),gibt=k=>!t||t.level.includes(k),an=k=>gibt(k)&&(t?lvAn(t,k):S.filter[k]),da=['q','b','w'].filter(gibt);
+  const ov=el('<div class="ov"></div>'),mn=el('<div class="menue" role="dialog" aria-label="Level wählen">'+['q','b','w'].map(k=>'<div class="mz'+(gibt(k)?'':' fehlt')+'"><b>Level '+LEVELNR[k]+'</b><span></span><button class="sw'+(an(k)?' an':'')+'" data-k="'+k+'" role="switch" aria-checked="'+an(k)+'" aria-label="Level '+LEVELNR[k]+(gibt(k)?'':': gibt es bei diesem Aufgabentyp nicht')+'"'+(gibt(k)?'':' disabled')+'></button></div>').join('')+
+    (da.length>1?'<p class="klein">Alle an: Automatik. Erst Level '+da.map(k=>LEVELNR[k]).join(', dann ')+'.</p>':'')+'</div>');
   ov.addEventListener('click',schliesse);ov._zu=()=>{ov.remove();mn.remove();};
-  $$('.sw',mn).forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.k;
-    if(S.filter[k]&&['q','b','w'].filter(x=>S.filter[x]).length===1){b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert');return;}
+  $$('.sw',mn).forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.k;if(!gibt(k))return;
+    if(t&&lvFrei(t))t.level.forEach(x=>{S.filter[x]=true;});      // bisher galten hier alle Level, weil keins der eingeschalteten vorkommt: Jetzt wird daraus die Einstellung
+    if(S.filter[k]&&da.filter(x=>S.filter[x]).length===1){b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert');return;}
     S.filter[k]=!S.filter[k];b.classList.toggle('an',S.filter[k]);b.setAttribute('aria-checked',S.filter[k]);
     const f=$('.kn.auto .fn');if(f)f.textContent=filterName();
-    if(S.ansicht==='aufgabe'&&(!A.auf||(!A.gewertet&&!S.filter[A.key])))neueAufgabe();}));
+    if(S.ansicht==='aufgabe'&&(!A.auf||(!A.gewertet&&!(t?lvAn(t,A.key):S.filter[A.key]))))neueAufgabe();}));
   document.body.appendChild(ov);document.body.appendChild(mn);
 }
 function zeigeStand(){
@@ -3293,6 +3357,7 @@ const TAFEL=[
     const {s,b}=tfFall((s,b)=>art==='steigt'?s.z>0&&s.n>1:art==='faellt'?s.z<0&&s.n>1:art==='ganz'?s.n===1:art==='bruch'?s.n>=3:art==='dez'?s.n===2:b<0&&s.z<0),dez=art==='dez',K=geradeK(),p2=[s.n,b+s.z];
     return {frage:'Zeichnet die Gerade. Sagt die Punkte an, ich setze sie ins Koordinatensystem.',term:fn('f',term(s,b,{dez})),notiz:'Antippen setzt einen Punkt, noch einmal antippen nimmt ihn weg.',
       bild:()=>K.svg('<g class="tz-k"></g>','<g class="tz-m"></g><g class="tz-p"></g>'),an:(r,d)=>tfTippen(K,r,d),
+      gl:n=>n>=3?glGerade(fn('f',term(s,b,{dez})),{m:s.w,b},'lg',{frei:[[0,b],[s.n,b],[s.n,b+s.z]]}):null,
       schritte:[zl(CB(V('b')+' = '+zahl(b))+': Punkt '+P_(0,b)+'.'),zl(CM(V('m')+' = '+mText(s,dez)+(s.n===1||dez?' = '+mBr(s):''))+': '+dreieck(s)+'. Punkt '+P_(p2[0],p2[1])+'.'),zl('Gerade durch '+P_(0,b)+' und '+P_(p2[0],p2[1])+'.')],
       zeig(n,r){const svg=$('svg',r);$('.tz-m',svg).innerHTML=(n>=2?dreieckSVG(K,0,b,s,'loes',n<3):'')+(n>=1?tfPkt(K,0,b,'loesb'):'')+(n>=2?tfPkt(K,p2[0],p2[1],'loesg'):'');
         $('.tz-k',svg).innerHTML=(n>=2?dreieckFl(K,0,b,s,'loes'):'')+(n>=3?'<path class="gk lg" d="'+K.pfad(x=>s.w*x+b)+'"/>':'');}};}},
@@ -3301,16 +3366,17 @@ const TAFEL=[
     const {s,b}=art==='null'?{s:stg(0,1),b:zufB(-4,4,true)}:tfFall((s,b)=>art==='steigt'?s.z>0&&s.n>1:art==='faellt'?s.z<0&&s.n>1:art==='ganz'?s.n===1:s.n>=3),K=geradeK(),nm='f';
     const sch=s.z===0?[zl(CB(V('b')+' = '+zahl(b))+': Schnitt mit der y-Achse.'),zl('Waagerecht: '+CM(V('m')+' = 0')+'.'),zl(fn(nm,zahl(b)))]
       :[zl(CB(V('b')+' = '+zahl(b))+': Schnitt mit der y-Achse.'),zl('Steigungsdreieck von '+P_(0,b)+' nach '+P_(s.n,b+s.z)+': '+dreieck(s)+'.'),zl(CM(V('m')+' = '+mBr(s)+(s.n===1?' = '+zahl(s.z):''))),zl(fn(nm,term(s,b)))];
-    return {frage:'Wie lautet die Gleichung der Geraden?',schritte:sch,bild:()=>K.svg('<g class="tz-f"></g><path class="gk lg" d="'+K.pfad(x=>s.w*x+b)+'"/>','<g class="tz-m"></g><g class="tz-p"></g>'+nameMarke(K,{m:s.w,b,name:nm})),an:(r,d)=>tfTippen(K,r,d),
+    return {frage:'Wie lautet die Gleichung der Geraden?',schritte:sch,gl:n=>n>=sch.length?glGerade(fn(nm,s.z===0?zahl(b):term(s,b)),{m:s.w,b},'lg',{frei:[[0,b],[s.n,b],[s.n,b+s.z]]}):null,bild:()=>K.svg('<g class="tz-f"></g><path class="gk lg" d="'+K.pfad(x=>s.w*x+b)+'"/>','<g class="tz-m"></g><g class="tz-p"></g>'+nameMarke(K,{m:s.w,b,name:nm})),an:(r,d)=>tfTippen(K,r,d),
       zeig(n,r){const svg=$('svg',r);$('.tz-f',svg).innerHTML=n>=2&&s.z!==0?dreieckFl(K,0,b,s,'loes'):'';
         $('.tz-m',svg).innerHTML=(n>=1?tfStrecke(K,b)+tfPkt(K,0,b,'loesb'):'')+(n>=2&&s.z!==0?dreieckSVG(K,0,b,s,'loes')+tfPkt(K,s.n,b+s.z,'loesg'):'');}};}},
   /* 4 Waagerecht und senkrecht */
   {typ:'Waagerecht und senkrecht',form:'Begründen',arten:['w','s','paar','punkte'],gen(art){const c=zufB(-4,4,true),K=geradeK();
-    if(art==='w')return {frage:'Wie lautet die Gleichung der Geraden? Ist das eine Funktion?',bild:()=>geradeSVG([{m:0,b:c,name:'f'}],{K}),
+    if(art==='w')return {frage:'Wie lautet die Gleichung der Geraden? Ist das eine Funktion?',bild:()=>geradeSVG([{m:0,b:c,name:'f'}],{K}),gl:n=>n>=2?glGerade(fn('f',zahl(c)),{m:0,b:c},'lg'):null,
       schritte:[zl('Alle Punkte haben den y-Wert '+zahl(c)+': (0 | '+zahl(c)+'), (1 | '+zahl(c)+'), … allgemein: ('+X+' | '+zahl(c)+')'),zl(fn('f',zahl(c))+', also '+CM(V('m')+' = 0')+', '+CB(V('b')+' = '+zahl(c))),zl('Eine Funktion: Zu jedem '+X+' gehört genau ein y-Wert. Sie heißt konstant.',null,true)]};
-    if(art==='s')return {frage:'Wie lautet die Gleichung der Geraden? Ist das eine Funktion?',bild:()=>geradeSVG([{senk:c,name:'g',kl:'lr'}],{K}),
+    if(art==='s')return {frage:'Wie lautet die Gleichung der Geraden? Ist das eine Funktion?',bild:()=>geradeSVG([{senk:c,name:'g',kl:'lr'}],{K}),gl:n=>n>=2?glGerade(senk('g',c),{senk:c},'lr'):null,
       schritte:[zl('Alle Punkte haben den x-Wert '+zahl(c)+': ('+zahl(c)+' | 0), ('+zahl(c)+' | 1), … allgemein: ('+zahl(c)+' | '+V('y')+')'),zl(senk('g',c)),zl('Keine Funktion: Zu '+X+' = '+zahl(c)+' gehören unendlich viele y-Werte. '+V('g')+'('+X+') gibt es nicht.',null,true)]};
     if(art==='paar')return {frage:'Wie lauten die beiden Gleichungen? Welche Gerade gehört zu einer Funktion?',bild:()=>geradeSVG([{m:0,b:c,name:'f',kl:'lb'},{senk:c,name:'g',kl:'lr'}],{K}),
+      gl:n=>{const L=[-5,-4,-3,-2,-1,0,1,2,3,4,5];return [n>=1&&Object.assign(glGerade(fn('f',zahl(c)),{m:0,b:c},'lb',{frei:L.map(y=>[c,y])}),{namen:['f']}),n>=2&&Object.assign(glGerade(senk('g',c),{senk:c},'lr',{frei:L.map(x=>[x,c])}),{namen:['g']})].filter(Boolean);},
       schritte:[zl(fn('f',zahl(c))+': waagerecht, alle Punkte ('+X+' | '+zahl(c)+')'),zl(senk('g',c)+': senkrecht, alle Punkte ('+zahl(c)+' | '+V('y')+')'),zl('Nur '+V('f')+' ist eine Funktion. Die '+zahl(c)+' steht einmal beim y-Wert, einmal beim x-Wert.',null,true)]};
     return {frage:'Nennt drei Punkte auf jeder der beiden Geraden.',term:fn('f',zahl(c))+' &nbsp; und &nbsp; '+senk('g',c),
       schritte:[zl(V('f')+': (0 | '+zahl(c)+'), (1 | '+zahl(c)+'), (5 | '+zahl(c)+'), … jeder Punkt hat den y-Wert '+zahl(c)),zl(V('g')+': ('+zahl(c)+' | 0), ('+zahl(c)+' | 1), ('+zahl(c)+' | 5), … jeder Punkt hat den x-Wert '+zahl(c)),zl('Nur '+V('f')+' ist eine Funktion.',null,true)]};}},
@@ -3327,10 +3393,11 @@ const TAFEL=[
   /* 6 Fehler finden: Wo steckt der Fehler? */
   {typ:'Fehler finden',form:'Fehler finden',arten:['vertauscht','ursprung','vorzeichen','reihenfolge','bminus'],gen(art){const K=geradeK(),nm=pick(NAMEN);
     if(art==='vertauscht'){const s=pick(L_([[2,3],[1,3],[3,4],[-2,3],[-1,4]])),b=zufB(-3,2,true),fal=stg(Math.sign(s.z)*s.n,Math.abs(s.z));
-      return {frage:nm+' liest die Gleichung ab: '+fn('f',term(fal,b))+'. Wo steckt der Fehler?',bild:()=>geradeSVG([{m:s.w,b,name:'f'}],{K}),
+      return {frage:nm+' liest die Gleichung ab: '+fn('f',term(fal,b))+'. Wo steckt der Fehler?',bild:()=>geradeSVG([{m:s.w,b,name:'f'}],{K}),gl:n=>n>=3?glGerade(fn('f',term(s,b)),{m:s.w,b},'lg'):null,
         schritte:[zl('Steigungsdreieck: '+dreieck(s)+'.'),zl(ML+' = Höhe durch Länge = '+CM(mBr(s))+', nicht '+mBr(fal)+'.'),zl('Richtig: '+fn('f',term(s,b)))]};}
     if(art==='ursprung'){const s=stg(pick([2,3,-2]),1),b=pick([-3,-2,3,2]);
       return {frage:nm+' zeichnet die Gerade zu '+fn('f',term(s,b))+'. Was ist falsch?',bild:()=>K.svg(dreieckFl(K,0,0,s,'')+'<path class="gk lfalsch" d="'+K.pfad(x=>s.w*x)+'"/><g class="tz-k"></g>','<g class="tz-m">'+dreieckSVG(K,0,0,s,'')+'</g>'),
+        gl:n=>n>=3?glGerade(fn('f',term(s,b)),{m:s.w,b},'lg',{andere:[{m:s.w,b:0}],frei:[[0,b],[1,b],[1,b+s.z]]}):null,
         schritte:[zl(nm+' hat das Steigungsdreieck im Ursprung angesetzt.',null,true),zl('Es beginnt beim Punkt '+P_(0,b)+', denn '+CB(V('b')+' = '+zahl(b))+'.'),zl('Die richtige Gerade ist parallel dazu und geht durch '+P_(0,b)+'.',null,true)],
         zeig(n,r){const svg=$('svg',r);$('.tz-k',svg).innerHTML=(n>=2?dreieckFl(K,0,b,s,'loes'):'')+(n>=3?'<path class="gk lg" d="'+K.pfad(x=>s.w*x+b)+'"/>':'');if(n>=2)$('.tz-m',svg).innerHTML=dreieckSVG(K,0,0,s,'')+dreieckSVG(K,0,b,s,'loes',n<3)+tfPkt(K,0,b,'loesb');}};}
     if(art==='vorzeichen'){const m=pick([-3,-2,-4]),b=zz(2,6),x0=pick([-20,-10,-5]),y=m*x0+b,fal=-m*x0+b;
@@ -3341,7 +3408,7 @@ const TAFEL=[
       return {frage:nm+' sagt: Bei '+fn('f',term(stg(m,1),b,{rev:true}))+' ist '+CM(V('m')+' = '+zahl(b))+' und '+CB(V('b')+' = '+zahl(m))+'. Wo steckt der Fehler?',
         schritte:[zl(ML+' ist die Zahl vor '+X+', mit Vorzeichen: '+CM(V('m')+' = '+zahl(m))+'.'),zl(BL+' ist die Zahl ohne '+X+': '+CB(V('b')+' = '+zahl(b))+'.'),zl('Die Reihenfolge im Term ist egal. Die Gerade fällt.',null,true)]};}
     const s=pick(L_([[1,2],[2,1],[-1,2],[3,2]])),b=zz(-3,-1);
-    return {frage:nm+' liest die Gleichung ab: '+fn('f',term(s,-b))+'. Wo steckt der Fehler?',bild:()=>geradeSVG([{m:s.w,b,name:'f'}],{K}),
+    return {frage:nm+' liest die Gleichung ab: '+fn('f',term(s,-b))+'. Wo steckt der Fehler?',bild:()=>geradeSVG([{m:s.w,b,name:'f'}],{K}),gl:n=>n>=3?glGerade(fn('f',term(s,b)),{m:s.w,b},'lg'):null,
       schritte:[zl('Die Gerade schneidet die y-Achse bei '+zahl(b)+', nicht bei '+zahl(-b)+'.'),zl(CB(V('b')+' = '+zahl(b))+', mit Vorzeichen.'),zl('Richtig: '+fn('f',term(s,b)))]};}},
   /* 7 Eine eigene Gerade finden: zwischen zwei Parallelen oder durch denselben Punkt der y-Achse */
   {typ:'Eigene Gerade',form:'Erfinden',arten:['zw','zw2','b','par'],gen(art){const K=geradeK();
@@ -3349,6 +3416,7 @@ const TAFEL=[
       return {frage:'Nennt eine Gleichung, deren Gerade zwischen '+V('f')+' und '+V('g')+' verläuft und keine der beiden schneidet.',term:fn('f',term(s,b1))+' &nbsp; und &nbsp; '+fn('g',term(s,b2)),
         bild:()=>K.svg('<path class="gk lg" d="'+K.pfad(x=>s.w*x+b1)+'"/><path class="gk ll" d="'+K.pfad(x=>s.w*x+b2)+'"/><g class="tz-k"></g>',nameMarke(K,{m:s.w,b:b1,name:'f'})+nameMarke(K,{m:s.w,b:b2,name:'g',kl:'ll'})),
         schritte:[zl('Keine schneiden heißt: parallel, also gleiche Steigung '+CM(V('m')+' = '+mText(s))+'.'),zl(BL+' zwischen '+zahl(b1)+' und '+zahl(b2)+', zum Beispiel '+zahl(bm)+' oder '+zahl(bm+1)+'.'),zl('Zum Beispiel '+fn('h',term(s,bm))+'.')],
+        gl:n=>n>=3?Object.assign(glGerade(fn('h',term(s,bm)),{m:s.w,b:bm},'ls',{andere:[{m:s.w,b:b1},{m:s.w,b:b2}]}),{namen:[]}):null,
         zeig(n,r){$('.tz-k',r).innerHTML=n>=3?'<path class="gk ls" d="'+K.pfad(x=>s.w*x+bm)+'"/>':'';}};}
     const s=pick(L_([[2,1],[-1,2],[3,4],[-3,1]])),b=zufB(-3,3,true);
     if(art==='b')return {frage:'Nennt zwei Geraden, die die y-Achse im selben Punkt schneiden wie '+V('f')+': eine, die steigt, und eine, die fällt.',term:fn('f',term(s,b)),
@@ -3359,17 +3427,18 @@ const TAFEL=[
   {typ:'Der Akku',form:'Ansatz finden',arten:['wert','zeit','gleichung','bereich','voll'],gen(art){const A_=V('A'),x=X,Ax=A_+'('+x+')';
     const lage=(b,m)=>'Ein Handy zeigt beim Einstecken '+b+' %. Pro Minute kommen '+m+' % dazu, bis 80 % gleichmäßig.';
     const K=(b,m,bis)=>{const k=koord([0,60],[0,100],{ex:5.5,ey:2.6,sx:5,sy:10,lx:10,ly:20,xn:svgI('x')+' [min]',yn:svgI('A')+'('+svgI('x')+') [%]',label:'Akkustand'});
-      return ()=>k.svg('<line class="ak80l" x1="'+k.x(0)+'" y1="'+k.y(80)+'" x2="'+k.x(60)+'" y2="'+k.y(80)+'"/><path class="gk lg" d="'+k.pfad(z=>m*z+b,0,bis)+'"/>','');};
+      const bild=()=>k.svg('<line class="ak80l" x1="'+k.x(0)+'" y1="'+k.y(80)+'" x2="'+k.x(60)+'" y2="'+k.y(80)+'"/><path class="gk lg" d="'+k.pfad(z=>m*z+b,0,bis)+'"/>','');
+      bild.gl=n=>n>=1?glKurve(k,Ax+' = '+(m===1?'':m)+x+' + '+b,z=>m*z+b,'lg',{von:0,bis,frei:[0,10,20,30,40,50,60].map(z=>[z,80])}):null;return bild;};
     if(art==='wert'){const b=pick([10,20,30]),m=2,t=pick([15,20,25]);
       return {frage:'Wie voll ist der Akku nach '+t+' Minuten?',term:lage(b,m),schritte:[zl(Ax+' = '+m+x+' + '+b),zl(A_+'('+t+') = '+m+' · '+t+' + '+b+' = '+(m*t+b)),zl('Nach '+t+' Minuten zeigt der Akku '+(m*t+b)+' %.',null,true)]};}
     if(art==='zeit'){const b=pick([20,10,40]),m=2,Z=80,t=(Z-b)/m;
-      return {frage:'Nach wie vielen Minuten zeigt der Akku 80 %?',term:lage(b,m),bild:K(b,m,t),
+      const bild=K(b,m,t);return {frage:'Nach wie vielen Minuten zeigt der Akku 80 %?',term:lage(b,m),bild,gl:bild.gl,
         schritte:[zl(m+x+' + '+b+' = 80','| − '+b),zl(m+x+' = '+(Z-b)),zl(x+' = '+bruch(Z-b,m)+' = '+t),zl('Nach '+t+' Minuten zeigt der Akku 80 %.',null,true)]};}
     if(art==='gleichung'){const b=pick([35,25,15]),m=1;
       return {frage:'Stellt die Funktionsgleichung auf. Was sind '+ML+' und '+BL+', mit Einheit?',term:lage(b,m),
         schritte:[zl(CB(V('b')+' = '+b)+': Akkustand beim Einstecken in %',null,true),zl(CM(V('m')+' = 1')+': 1 % pro Minute',null,true),zl(Ax+' = '+x+' + '+b)]};}
     if(art==='bereich'){const b=20,m=2;
-      return {frage:'Die Gleichung gilt nur, solange der Akku gleichmäßig lädt. Gebt einen sinnvollen Definitionsbereich an.',term:lage(b,m),bild:K(b,m,30),
+      return {frage:'Die Gleichung gilt nur, solange der Akku gleichmäßig lädt. Gebt einen sinnvollen Definitionsbereich an.',term:lage(b,m),bild:K(b,m,30),gl:K(b,m,30).gl,
         schritte:[zl(Ax+' = 2'+x+' + 20'),zl('80 % sind erreicht bei 2'+x+' + 20 = 80, also '+x+' = 30.'),zl('𝔻 = [0; 30]')]};}
     const nm=pick(NAMEN);
     return {frage:nm+' sagt: „Nach 50 Minuten zeigt mein Akku 2 · 50 + 20 = 120 %.“ Was stimmt daran nicht?',term:lage(20,2),
@@ -3396,9 +3465,9 @@ function zeigeTafel(){
     $('.tf-frage',e).innerHTML=d.frage;$('.tf-term',e).innerHTML=d.term||'';$('.tf-term',e).hidden=!d.term;$('.tf-notiz',e).innerHTML=d.notiz||'';$('.tf-notiz',e).hidden=!d.notiz;
     $('.tf-zeilen',e).innerHTML=d.schritte.slice(0,d.n).map(zeile).join('');
     const b=$('.tf-bild',e);b.innerHTML=d.bild?d.bild():'';b.hidden=!d.bild;main.classList.toggle('ohne',!d.bild);main.classList.toggle('rechbild',!!d.rech);
-    if(d.an)d.an(b,d);if(d.zeig)d.zeig(d.n,b,false);knoepfe();e.scrollTop=0;};
+    if(d.an)d.an(b,d);if(d.zeig)d.zeig(d.n,b,false);zeigeGl(d.gl?d.gl(d.n):[],b);knoepfe();e.scrollTop=0;};
   const aufloesen=()=>{const d=K[i];if(d.n>=d.schritte.length)return;d.n++;
-    const z=el(zeile(d.schritte[d.n-1]));$('.tf-zeilen',e).appendChild(z);if(d.zeig)d.zeig(d.n,$('.tf-bild',e),true);knoepfe();
+    const z=el(zeile(d.schritte[d.n-1]));$('.tf-zeilen',e).appendChild(z);if(d.zeig)d.zeig(d.n,$('.tf-bild',e),true);zeigeGl(d.gl?d.gl(d.n):[],$('.tf-bild',e));knoepfe();
     z.scrollIntoView({block:'nearest',behavior:RUHIG?'auto':'smooth'});};
   const karte=j=>{i=(j+N)%N;zeig();};
   auf.addEventListener('click',aufloesen);

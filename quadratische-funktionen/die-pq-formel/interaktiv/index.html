@@ -992,23 +992,51 @@ svg.zieh{touch-action:none}
 .gesperrt .umsch.ok,.gesperrt .umsch.falsch{opacity:1}
 .keine.ok,.keine.an.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
 .keine.an.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
-.feld.ok::before,.feld.falsch::before,.umsch:not(.wegw).ok::before,.umsch:not(.wegw).falsch::before,.umsch.wegw.ok button.an::before,.umsch.wegw.falsch button.an::before,.keine.ok::before,.keine.falsch::before{
+.feld.ok::before,.feld.falsch::before,.umsch.wegw.ok button.an::before,.umsch.wegw.falsch button.an::before,.keine.ok::before,.keine.falsch::before{
   position:absolute;top:-.55rem;right:-.5rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
   color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.feld.ok::before,.umsch:not(.wegw).ok::before,.umsch.wegw.ok button.an::before,.keine.ok::before{content:'✓';background:var(--gruen)}
-.feld.falsch::before,.umsch:not(.wegw).falsch::before,.umsch.wegw.falsch button.an::before,.keine.falsch::before{content:'✗';background:var(--rot)}
+.feld.ok::before,.umsch.wegw.ok button.an::before,.keine.ok::before{content:'✓';background:var(--gruen)}
+.feld.falsch::before,.umsch.wegw.falsch button.an::before,.keine.falsch::before{content:'✗';background:var(--rot)}
 
 /* ---------- Gleichung am Graphen (Lehrkraft 22.11.2026) ----------
    Steht die Lösung da, steht die Gleichung im Bild neben ihrem Graphen, in seiner Farbe; der bloße Name am Graphen entfällt dann */
 .bild.mitgl{position:relative}
-.bild.mitgl .gname{display:none}
 .glg{position:absolute;left:0;top:0;font-size:1.05rem;line-height:1.05;white-space:nowrap;pointer-events:none;padding:.1em .32em;border-radius:.35em;background:rgba(255,255,255,.88);color:var(--blau);animation:glkommt .4s ease-out backwards}
 .glg *{color:inherit!important}
 .glg.lg,.glg.ls{color:var(--gruen)}.glg.lr{color:var(--rot)}.glg.lb{color:var(--blau)}.glg.ll{color:var(--lila)}
 .glg.glspaet{animation-delay:1.5s}
+.glg.lgr{color:var(--grau)}
+.tafelr .glg{font-size:1.2rem}
 @keyframes glkommt{from{opacity:0}}
 @media (max-width:760px){.glg{font-size:.9rem}}
 .achsbild .glg{font-size:.92rem}
+
+/* ---------- 22.11.2026, zweite Runde (Lehrkraft) ---------- */
+/* Urteil am Umschalter: Das Zeichen sitzt an der gewählten Seite, nicht an der Ecke der Gruppe („direkt dort dran …, was blau unterlegt ist“). Der Rand der Gruppe bleibt. */
+.umsch button{position:relative}
+.umsch:not(.wegw).ok button.an::before,.umsch:not(.wegw).falsch button.an::before{
+  position:absolute;top:-.62rem;left:50%;right:auto;margin-left:-.65rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
+  color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.umsch:not(.wegw).ok button.an::before{content:'✓';background:var(--gruen)}
+.umsch:not(.wegw).falsch button.an::before{content:'✗';background:var(--rot)}
+/* Leere Lösungskarte: keine Ankündigung, was später wo erscheint. Die Überschrift (Lösung, Rechnung, So geht’s) kommt mit dem Inhalt. */
+.leer:empty{display:none}
+.rechnung:not(:has(.zeilen>*,.ezeilen>*,.vor>*)) h3.lt{display:none}
+/* Level-Menü: Level, die es im Aufgabentyp nicht gibt */
+.mz.fehlt b{color:#B7BEC7}
+.sw:disabled{background:#E9ECF0;cursor:default}
+.sw:disabled::after{background:#F8F9FA;box-shadow:0 0 0 1px #DCE1E6}
+/* Lösung beim Zuordnen: Nummer des Paars in Grün, die Gleichung schwarz wie auf der Karte, dahinter in Handschrift, was man an ihr abliest */
+.zl.zul>span{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 .9rem}
+.zl.zul .lnr{font-family:var(--satz);font-weight:700;color:var(--gruen);font-size:1.2rem;min-width:1rem}
+.zl.zul .lgl{font-family:var(--satz);color:var(--text);font-size:1.2rem;min-width:11rem}
+.zl.zul .lgl i{font-style:italic}
+.zl.zul .lre{flex:1 1 12rem;min-width:0}
+.zl.zul,.zuo~.zeilen .zl.zul.text{font-size:1.4rem;line-height:1.3;margin:.12rem 0}
+/* m = … und b = … bleiben am Zeilenende zusammen */
+.zeilen .cm,.zeilen .cb{white-space:nowrap}
+/* Handschrift kennt kein Fett: Künstlich gefettet wirkt dasselbe Orange dunkler */
+.zeilen .cm,.zeilen .cb,.ezeilen .cm,.ezeilen .cb,.kzeil .cm,.kzeil .cb,.wnot .cm,.wnot .cb{font-weight:400}
 
 </style></head>
 <body><div id="app"></div>
@@ -1019,7 +1047,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v3.1';
+const VERSION='v3.2';
 const TITEL='Die <i>p</i>,<i>q</i>-Formel',KURZ='QF3';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Gleichungen lösen'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1150,8 +1178,13 @@ const alleVoll=()=>sechsVoll()&&(!ANW||werkVoll());
    Es braucht den Stift: Ist Level 3 abgeschaltet, wartet es */
 function werkDran(){return ANW&&!werkVoll()&&S.filter.w&&(!!S.werk.lauf.gesamt||sechsVoll()||(S.pkt===0&&S.etappe>=S.werk.faellig));}
 const etappeText=()=>'Gesamttraining. Etappe '+S.etappe+(werkDran()?': '+WERKSTOR.titel+'.':'.');
-function aktLevel(t){const st=S.typ[t.id];for(let i=st.top;i<t.level.length;i++)if(S.filter[t.level[i]])return i;return null;}
-function auffrLevel(t){for(let i=t.level.length-1;i>=0;i--)if(S.filter[t.level[i]])return i;return null;}
+/* Level, die es im Aufgabentyp nicht gibt, sind im Einzeltraining ausgegraut (Lehrkraft 22.11.2026). Kommt dort keins der eingeschalteten Level vor,
+   gelten alle Level des Typs: Kein Einzeltraining bleibt ohne Aufgaben. Im Gesamttraining gilt die Einstellung, wie sie ist. */
+const lvFrei=t=>S.modus==='einzel'&&!t.level.some(k=>S.filter[k]);
+const lvAn=(t,k)=>lvFrei(t)||!!S.filter[k];
+const lvTyp=()=>S.modus==='einzel'&&S.einzel&&S.ansicht==='aufgabe'?TYP[S.einzel.id]:null;
+function aktLevel(t){const st=S.typ[t.id];for(let i=st.top;i<t.level.length;i++)if(lvAn(t,t.level[i]))return i;return null;}
+function auffrLevel(t){for(let i=t.level.length-1;i>=0;i--)if(lvAn(t,t.level[i]))return i;return null;}
 const punkteFuer=(t,key)=>(t.punkte&&t.punkte[key])||PUNKTE[key];
 function empfohlen(){              // höchstens zwei Marken zugleich: die mit den meisten Fehlern nacheinander
   return TYPEN.filter(t=>t.aktiv&&!voll(t)&&S.typ[t.id].falsch>=2).sort((a,b)=>S.typ[b.id].falsch-S.typ[a.id].falsch).slice(0,2).map(t=>t.id);}
@@ -1280,6 +1313,9 @@ const gleich=(a,b)=>Math.abs(a-b)<1e-9;
 const X=V('x');
 const gl0=t=>t+' = 0';
 const zl=(h,op,text)=>({h,op:op||undefined,text:!!text});
+/* Lösungszeile beim Zuordnen (Lehrkraft 22.11.2026): Nummer des Paars, die Gleichung wie auf der Karte, dahinter in Handschrift, was man an ihr abliest */
+const zul=(id,gl,rest,text)=>({h:'<span class="lnr" data-id="'+id+'"></span><span class="lgl">'+gl+'</span><span class="lre">'+rest+'</span>',kl:'zul',text:!!text});
+
 const plus=z=>(z<0?'| − ':'| + ')+zahl(Math.abs(z));          // Umformung: auf beiden Seiten z addieren
 const durch=z=>'| : '+kl(z);
 const WURZ='| √';
@@ -1641,9 +1677,9 @@ const GEN={
       return {form:'wahl',frage:'Welcher Weg ist am schnellsten?',term:f.term,erkl:'info3',denk:DENK.weg,f,opts,nachher:''};},
     b(){let F;for(let n=0;n<50;n++){const arten=shuffle(['w','a','p','f']).slice(0,3),fs=arten.map(ok=>{let f;do{f=wegFall(pick(WEGARTEN.filter(a=>wegFall0(a)===ok)));}while(f.ok!==ok);return f;});
         if(new Set(fs.map(f=>f.term)).size===3){F=fs;break;}}
-      const links=F.map((f,j)=>({id:'g'+j,html:f.term,ok:f.ok,h:f.h,grund:f.grund})),rechts=['w','a','p','f'].map(id=>({id,html:WEGE[id]}));
+      const links=shuffle(F.map((f,j)=>({id:'g'+j,html:f.term,ok:f.ok,h:f.h,grund:f.grund}))),rechts=['w','a','p','f'].map(id=>({id,html:WEGE[id]}));
       return {form:'zuordnen',frage:'Welcher Weg ist jeweils am schnellsten? Tippe eine Gleichung an und dann ihren Weg. Ein Weg bleibt übrig.',erkl:'info3',denk:DENK.weg,
-        links:shuffle(links),rechts,folge:links.map(l=>l.id),schritte:links.map(l=>zl(l.html+' &nbsp;→&nbsp; <b>'+WEGE[l.ok]+'</b>'))};},
+        links,rechts,folge:links.map(l=>l.id),schritte:links.map(l=>zul(l.id,l.html,'→ '+WEGE[l.ok]))};},
     w(){const f=this.fall(),kand=f.g?pqFehlerKand(f.g):[];
       if(f.ok==='w'&&f.L.length===2)kand.push([[Math.abs(f.L[1])],'Beim Wurzelziehen gibt es zwei Lösungen: + und −.']);
       if(f.ok==='a')kand.push([[f.L.find(z=>z!==0)],'Die 0 fehlt: Auch der Faktor '+X+' vor der Klammer kann null werden. Nie durch '+X+' teilen.']);
@@ -1679,8 +1715,7 @@ const GEN={
         ein='<span class="sz">'+term+' = ('+x+' '+vz+' '+FELD('a')+')'+Q+'</span>';loes={keine:true};
         sch=[zl(zahl(2*a)+x+' = 2 · '+x+' · '+zahl(a)+', aber '+zahl(c)+' ≠ '+zahl(a)+Q+' = '+zahl(a*a)),zl('keine binomische Formel',null,true)];
         pruefe=w=>w.keine?{ok:true}:{ok:false,hinweis:zahl(2*a)+x+' = 2 · '+x+' · '+zahl(a)+', aber '+zahl(c)+' ≠ '+zahl(a)+Q+' = '+zahl(a*a)+': keine binomische Formel. Tippe auf „keine binomische Formel“.',falsch:['a','vz']};}
-      return {form:'eingabe',einKl:'binb',frage:'Schreibe mit einer binomischen Formel als Produkt.',term,erkl:'info4',denk:DENK.binom,ein,loes,schritte:sch,pruefe,keineText:'keine binomische Formel',art,
-        rleer:'Hier steht die Rechnung, wenn du fertig bist oder Hilfe holst.'};}
+      return {form:'eingabe',einKl:'binb',frage:'Schreibe mit einer binomischen Formel als Produkt.',term,erkl:'info4',denk:DENK.binom,ein,loes,schritte:sch,pruefe,keineText:'keine binomische Formel',art,rleer:''};}
   }
 };
 /* welcher Weg gehört zu welcher Art (für die Zuordnung) */
@@ -1732,7 +1767,7 @@ function vErkl(){
 }
 
 /* ---------- Training: Rahmen ---------- */
-function filterName(){const an=['q','b','w'].filter(k=>S.filter[k]);return an.length===3?'Automatik':'Level '+an.map(k=>LEVELNR[k]).join(' + ');}
+function filterName(){const t=lvTyp(),alle=t?t.level:['q','b','w'],an=alle.filter(k=>t?lvAn(t,k):S.filter[k]);return an.length===alle.length&&alle.length>1?'Automatik':'Level '+an.map(k=>LEVELNR[k]).join(' + ');}
 function trainingRahmen(){
   S.ansicht='aufgabe';adresse(S.modus==='gesamt'?'gesamttraining':'einzeltraining');
   setApp('<header class="kopf trk"><button class="kn" data-akt="zurueck">‹ '+(S.modus==='gesamt'?'Start':S.einzel.vonGesamt?'Gesamttraining':'Einzeltraining')+'</button>'+
@@ -1777,7 +1812,7 @@ const offenKey=()=>S.modus==='gesamt'?'gesamt':'einzel-'+S.einzel.id;
 function neueAufgabe(wieder){
   clearTimeout(A.auto);if(S.rueckblick)endeLetzte();merkeLetzte();
   let t,li,auf;const o=wieder&&S.offen[offenKey()];
-  if(o&&S.filter[o.t.level[o.li]]&&(aktLevel(o.t)===o.li||aktLevel(o.t)===null)){t=o.t;li=o.li;auf=o.auf;}   // die angefangene Aufgabe steht noch da
+  if(o&&lvAn(o.t,o.t.level[o.li])&&(aktLevel(o.t)===o.li||aktLevel(o.t)===null)){t=o.t;li=o.li;auf=o.auf;}   // die angefangene Aufgabe steht noch da
   else{
     if(S.modus==='gesamt'){const r=naechste();if(!r)return zeigeLeer();t=r[0];li=r[1];}
     else{t=TYP[S.einzel.id];li=aktLevel(t);if(li===null)li=auffrLevel(t);if(li===null)return zeigeLeer();}
@@ -1805,10 +1840,10 @@ const weich=h=>h.replace(/Normalparabel/g,'Normal\u00ADparabel').replace(/Scheit
 const ortHTML=()=>'<span class="waso"><button class="wasol" data-akt="ort">'+(S.modus==='einzel'?'Einzeltraining':'Gesamttraining')+'</button> · </span>';
 const wasZeile=()=>'<p class="was"><span>'+ortHTML()+'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button> · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
 const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
-const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3>'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
+const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3 class="lt">'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
 function zeigeSchritte(){const z=$('.zeilen');if(!z)return;const s=A.auf.schritte||[];
-  for(let i=z.children.length;i<A.gezeigt&&i<s.length;i++)z.appendChild(el('<div class="zl'+(s[i].text?' text':'')+'"><span>'+s[i].h+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</div>'));
-  const l=$('.rechnung .leer');if(l&&A.gezeigt>0)l.hidden=true;}
+  for(let i=z.children.length;i<A.gezeigt&&i<s.length;i++)z.appendChild(el('<div class="zl'+(s[i].text?' text':'')+(s[i].kl?' '+s[i].kl:'')+'"><span>'+s[i].h+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</div>'));
+  const l=$('.rechnung .leer');if(l&&A.gezeigt>0)l.hidden=true;if(A.nachZeilen)A.nachZeilen();}
 function zeigeRueck(kl,txt,klein,regel){const r=$('.rueck');if(!r)return;r.hidden=false;r.className='rueck '+kl;
   r.innerHTML='<span class="z">'+(kl==='gut'?'✓':kl==='schlecht'?'✗':'i')+'</span><span>'+txt+(regel?'<small class="regel">'+regel+'</small>':'')+(klein?'<small>'+klein+'</small>':'')+'</span>';
   r.scrollIntoView({block:'nearest',behavior:'smooth'});}
@@ -1819,24 +1854,46 @@ function zeigeRueck(kl,txt,klein,regel){const r=$('.rueck');if(!r)return;r.hidde
    [links, oben, rechts, unten], hind sind Punkte, die frei bleiben sollen (Achsen mit ihren Zahlen, andere Graphen), alles in Koordinaten der viewBox.
    Das Schild ist HTML über dem SVG, damit Brüche wie im Text stehen. Sein Platz wird am fertigen Bild gemessen: dicht neben dem Graphen, möglichst frei
    von Achsen und anderem, eher oben. Nach dem Drehen des Geräts wird neu gemessen. */
-function zeigeGl(spec,wo){const bild=wo||$('.buehne .bild');if(!bild||!spec||!spec.pkt||!spec.pkt.length)return;if(!$('svg',bild))return;
-  $$('.glg',bild).forEach(x=>x.remove());const e=el('<div class="glg '+(spec.kl||'')+(spec.spaet?' glspaet':'')+'">'+spec.html+'</div>');
-  bild.classList.add('mitgl');bild.appendChild(e);e._gl=spec;setzeGl(e);requestAnimationFrame(()=>{if(e.isConnected)setzeGl(e);});}
+function zeigeGl(spec,wo){const bild=wo||$('.buehne .bild');if(!bild||!$('svg',bild))return;
+  /* spec: ein Schild oder eine Liste (mehrere Graphen im Bild, Tafel-Runde). Ein Schild, das schon steht, bleibt stehen und blendet nicht neu ein. */
+  const L=(Array.isArray(spec)?spec:[spec]).filter(s=>s&&s.pkt&&s.pkt.length),alt=$$('.glg',bild),key=s=>(s.kl||'')+'|'+s.html;
+  alt.forEach(x=>{if(!L.some(s=>key(s)===x._key))x.remove();});
+  L.forEach(s=>{let e=alt.find(x=>x.isConnected&&x._key===key(s));
+    if(!e){e=el('<div class="glg '+(s.kl||'')+(s.spaet?' glspaet':'')+'">'+s.html+'</div>');e._key=key(s);bild.appendChild(e);
+      if(s.sel){const k=$(s.sel,bild);if(k)e.style.color=getComputedStyle(k).stroke;}}      // sel: Das Schild nimmt die Farbe dieser Kurve
+    e._gl=s;});
+  bild.classList.toggle('mitgl',L.length>0);
+  /* Der bloße Name am Graphen weicht seinem Schild. namen: nur diese Namen; ohne Angabe alle */
+  const weg=L.some(s=>!s.namen)?null:[].concat(...L.map(s=>s.namen));
+  $$('.gname',bild).forEach(x=>{x.style.display=L.length&&(!weg||weg.includes(x.textContent.trim()))?'none':'';});
+  const alle=$$('.glg',bild);alle.forEach(setzeGl);requestAnimationFrame(()=>alle.forEach(e=>{if(e.isConnected)setzeGl(e);}));}
 function setzeGl(e){const spec=e._gl,bild=e.parentNode,svg=bild&&$('svg',bild),M=svg&&svg.getScreenCTM();if(!spec||!M)return;
   const pt=svg.createSVGPoint(),S=p=>{pt.x=p[0];pt.y=p[1];const q=pt.matrixTransform(M);return [q.x,q.y];};
   const B=bild.getBoundingClientRect(),r=e.getBoundingClientRect(),w=r.width,h=r.height;if(!B.width||!w)return;
   const [x0,y0]=S([spec.rahmen[0],spec.rahmen[1]]),[x1,y1]=S([spec.rahmen[2],spec.rahmen[3]]),P=spec.pkt.map(S),H=(spec.hind||[]).map(S),g=Math.max(5,h*.24);
   const ab=(bx,by,p)=>Math.hypot(Math.max(bx-p[0],0,p[0]-bx-w),Math.max(by-p[1],0,p[1]-by-h));
+  const R=[];for(let v=e.previousElementSibling;v;v=v.previousElementSibling)if(v.classList.contains('glg'))R.push(v.getBoundingClientRect());      // Schilder, die schon stehen
   /* alle Plätze im Raster durchgehen: senkrecht in der Zeichenfläche, waagerecht bis an den Bildrand. Am besten ist, wer den Graphen nicht berührt, dicht an ihm
      liegt (Abstand g) und von Achsen und anderem frei ist; passt das Schild nirgends frei hin, gewinnt der Platz, der am wenigsten vom Graphen verdeckt */
   let best=null;const st=Math.max(4,h*.2);
   for(let by=y0+2;by+h<=y1-2;by+=st)for(let bx=B.left+1;bx+w<=B.right-1;bx+=st){
     let dk=1e9,n=0,dh=1e9;for(const p of P){const d=ab(bx,by,p);if(d<dk)dk=d;if(d===0)n++;}for(const p of H)dh=Math.min(dh,ab(bx,by,p));
-    const note=(dk<g*.5?-1000-n*10:0)-Math.abs(dk-g)*2+Math.min(dh,2*h)-(by-y0)*.06-(Math.max(0,x0-bx)+Math.max(0,bx+w-x1))*4;      /* über den Rand der Zeichenfläche nur, wenn es sonst nicht passt */
+    const auf=R.some(q=>bx<q.right+4&&bx+w>q.left-4&&by<q.bottom+4&&by+h>q.top-4);
+    const note=(dk<g*.5?-1000-n*10:0)-(auf?600:0)-Math.abs(dk-g)*2+Math.min(dh,2*h)-(by-y0)*.06-(Math.max(0,x0-bx)+Math.max(0,bx+w-x1))*4;      /* über den Rand der Zeichenfläche nur, wenn es sonst nicht passt */
     if(!best||note>best[0])best=[note,bx,by];}
   if(!best)best=[0,x0+6,y0+6];
   e.style.left=((best[1]-B.left)/B.width*100).toFixed(2)+'%';e.style.top=((best[2]-B.top)/B.height*100).toFixed(2)+'%';}
 window.addEventListener('resize',()=>$$('.glg').forEach(e=>{if(e._gl)setzeGl(e);}));
+/* Angaben für das Schild an einer Kurve in einem Koordinatensystem k (koord: x, y, X, Y). f: Funktion oder {senk:c}; o.von, o.bis: Abschnitt der Kurve;
+   o.andere: weitere Funktionen im Bild; o.frei: Punkte, die frei bleiben; o.sel: Kurve, deren Farbe das Schild nimmt; o.namen: Namen am Graphen, die dem Schild weichen */
+function glKurve(k,html,f,kl,o){o=o||{};const P=[],H=[],X=k.X,Y=k.Y,dx=(X[1]-X[0])/160,dy=(Y[1]-Y[0])/160,von=o.von===undefined?X[0]:o.von,bis=o.bis===undefined?X[1]:o.bis;
+  if(f.senk!==undefined)for(let y=Y[0];y<=Y[1]+1e-9;y+=dy)P.push([k.x(f.senk),k.y(y)]);
+  else for(let x=von;x<=bis+1e-9;x+=dx){const y=f(x);if(y>=Y[0]&&y<=Y[1])P.push([k.x(x),k.y(y)]);}
+  const x0=X[0]<=0&&X[1]>=0?0:X[0],y0=Y[0]<=0&&Y[1]>=0?0:Y[0];
+  for(let i=0;i<=40;i++){const tx=X[0]+i*(X[1]-X[0])/40,ty=Y[0]+i*(Y[1]-Y[0])/40;H.push([k.x(tx),k.y(y0)],[k.x(tx),k.y(y0)+15],[k.x(x0),k.y(ty)],[k.x(x0)-15,k.y(ty)]);}
+  (o.andere||[]).forEach(a=>{for(let x=X[0];x<=X[1]+1e-9;x+=dx*2){const y=a(x);if(y>=Y[0]&&y<=Y[1])H.push([k.x(x),k.y(y)]);}});
+  (o.frei||[]).forEach(q=>H.push([k.x(q[0]),k.y(q[1])]));
+  return {html,kl:kl||'',pkt:P,rahmen:[k.x(X[0]),k.y(Y[1]),k.x(X[1]),k.y(Y[0])],hind:H,spaet:!!o.spaet,sel:o.sel,namen:o.namen};}
 
 const FORM={
   /* Quick: Antippen ist die Antwort */
@@ -1855,9 +1912,9 @@ const FORM={
     m.className='buehne';
     const T='<div class="tasten">'+['7','8','9','del','4','5','6','−','1','2','3',',','0'].map(k=>'<button type="button" data-k="'+k+'" class="'+(k==='0'?'breit':'')+(k==='del'?' fn':'')+'"'+(k==='del'?' aria-label="Löschen"':'')+'>'+(k==='del'?'⌫':k)+'</button>').join('')+
       '<button type="button" data-k="weiter" class="breit fn" aria-label="Nächstes Feld">→</button></div>',satz=auf.einKl==='satz';
-    const rt=auf.rtitel||'Rechnung',rl=auf.rleer||'Rechne mit dem Stift. Hier steht die Rechnung, wenn du fertig bist oder Hilfe holst.';
+    const rt=auf.rtitel||'Rechnung',rl=auf.rleer!==undefined?auf.rleer:'Rechne mit dem Stift.';      // keine Ankündigung, was später hier steht (Lehrkraft 22.11.2026): nur der Auftrag; die Überschrift kommt mit dem Inhalt
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="ein'+(auf.einKl?' '+auf.einKl:'')+'">'+auf.ein+'</div>'+(auf.notiz?'<p class="notiz">'+auf.notiz+'</p>':'')+'<div class="rueck" hidden></div>'+(satz?'':T)+'</section>'+
-      (satz?'<section class="karte rechnung">'+T+'<h3>'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>':rechnungKarte(rt,rl));
+      (satz?'<section class="karte rechnung">'+T+'<h3 class="lt">'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>':rechnungKarte(rt,rl));
     if(auf.keineText)$('.ein',m).insertAdjacentHTML('afterend','<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">'+auf.keineText+'</button></p>');
     const felder=$$('.feld[data-f]',m),spiegel=$$('.feld.spiegel',m),ums=$$('.umsch',m),kb=$('.keine',m),w={};let aktiv=0;
     /* Nach „Prüfen“ trägt jede Eingabe ihr Urteil: grün mit ✓ oder rot mit ✗ (Lehrkraft 22.11.2026). pruefe() nennt in falsch alle falschen Eingaben;
@@ -2000,8 +2057,8 @@ const FORM={
     const lab=auf.lab||[V('x')+' =','oder '+V('x')+' ='];
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+(auf.wege?'<div class="wegzeile"><span class="wegl">Weg:</span>'+auf.wege+'</div>':'')+'<div class="ein menge"><span>'+lab[0]+'</span>'+FELD('a')+'<span>'+lab[1]+'</span>'+FELD('b')+(lab[2]?'<span>'+lab[2]+'</span>':'')+'</div>'+
       '<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">keine Lösung</button></p><p class="notiz">'+(auf.mnotiz||'Tippe die Lösungen ein, negative mit Minus. Gibt es keine, tippe auf „keine Lösung“.')+'</p><div class="rueck" hidden></div>'+(auf.tastenRechts?'':T)+'</section>'+
-      (auf.tastenRechts?'<section class="karte rechnung">'+T+'<h3>Rechnung</h3><div class="zeilen"></div><p class="leer">Rechne mit dem Stift. Hier steht die Rechnung, wenn du fertig bist oder Hilfe holst.</p></section>'
-        :rechnungKarte('Rechnung','Rechne mit dem Stift. Hier steht die Rechnung, wenn du fertig bist oder Hilfe holst.'));
+      (auf.tastenRechts?'<section class="karte rechnung">'+T+'<h3 class="lt">Rechnung</h3><div class="zeilen"></div><p class="leer">Rechne mit dem Stift.</p></section>'
+        :rechnungKarte('Rechnung','Rechne mit dem Stift.'));
     const felder=$$('.feld',m),kb=$('.keine',m),ums=$$('.umsch',m),w={};let aktiv=0,keine=false;const gueltig=s=>!!s&&/\d$/.test(s);
     /* Urteil an jeder Eingabe wie in der Form „Eingabe“ (Lehrkraft 22.11.2026). Bei einer Lösungsmenge zählt die Reihenfolge nicht: treffer nennt die eingegebenen
        Zahlen, die Lösungen sind; ihre Felder bekommen ✓, auch wenn die Menge nicht stimmt. Ein leeres Feld bekommt kein Urteil. */
@@ -2032,7 +2089,7 @@ const FORM={
     m.innerHTML='<section class="karte">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div>'+
       '<p class="term lg2"><span>'+auf.term+' =</span> <span class="pl2" data-i="0"><small>'+auf.plaetze[0]+'</small></span><span class="mal">·</span><span class="pl2" data-i="1"><small>'+auf.plaetze[1]+'</small></span></p>'+
       '<div class="chips">'+auf.chips.map((c,j)=>'<button class="chip" data-j="'+j+'">'+c.html+'</button>').join('')+'</div><div class="rueck" hidden></div></section>'+
-      rechnungKarte('Rechnung','Hier steht die Rechnung, wenn beide Kärtchen liegen.');
+      rechnungKarte('Rechnung','');
     const lege=(i,b)=>{const c=auf.chips.find(x=>x.ziel===i),p=$('.pl2[data-i="'+i+'"]',m);p.innerHTML=c.html;p.classList.add('voll');voll[i]=true;if(b)b.remove();else{const bb=$('.chip[data-j="'+auf.chips.indexOf(c)+'"]',m);if(bb)bb.remove();}};
     $$('.chip',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||voll.every(v=>v))return;const c=auf.chips[+b.dataset.j];
       if(c.ziel!==undefined&&!voll[c.ziel]){lege(c.ziel,b);if(voll.every(v=>v))abgeben(true);}
@@ -2094,7 +2151,7 @@ const FORM={
     const slot=r=>'<span class="es es'+r+'"><small>'+V(r)+'</small></span>';
     const formel=idx(X,'1,2')+' = −'+bruch(slot('p'),'2')+' ± '+wurzel(klg(bruch(slot('p'),'2'))+Q+' − '+slot('q'));
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<p class="eform">'+formel+'</p><div class="chips echips">'+auf.chips.map((c,j)=>'<button class="chip" data-j="'+j+'">'+zahl(c.wert)+'</button>').join('')+'</div><div class="rueck" hidden></div></section>'+
-      '<section class="karte rechnung"><h3>Rechnung</h3><div class="ezeilen"></div><p class="leer">Hier geht die Rechnung weiter, wenn '+PL+' und '+QL+' eingesetzt sind.</p></section>';
+      '<section class="karte rechnung"><h3 class="lt">Rechnung</h3><div class="ezeilen"></div><p class="leer"></p></section>';
     const mark=()=>$$('.es',m).forEach(e=>e.classList.toggle('dran',!A.fertig&&!!dran&&e.classList.contains('es'+dran)));
     const rech=anim=>{const z=$('.ezeilen',m),l=$('.rechnung .leer',m);if(l)l.hidden=true;
       auf.rech.forEach((r,j)=>{const e=el('<div class="zl'+(r.text?' text':'')+'"><span>'+r.h+'</span>'+(r.op?'<span class="op">'+r.op+'</span>':'')+'</div>');
@@ -2116,7 +2173,8 @@ const FORM={
     const karte=(k,j,s)=>'<button class="zk zu '+s+'" data-s="'+s+'" data-j="'+j+'"><span>'+k.html+'</span><span class="znr"></span></button>';
     m.innerHTML='<section class="karte rechnung">'+kopfTeil(auf)+'<div class="zuo"><div class="zsp">'+auf.links.map((k,j)=>karte(k,j,'l')).join('')+'</div><div class="zsp">'+auf.rechts.map((k,j)=>karte(k,j,'r')).join('')+'</div></div>'+
       '<div class="rueck" hidden></div><div class="zeilen"></div></section>';
-    const paar=(bl,br)=>{nr++;[bl,br].forEach(b=>{b.classList.remove('gew');b.classList.add('voll');b.disabled=true;$('.znr',b).textContent=nr;});fertig[auf.links[+bl.dataset.j].id]=true;wahl=null;};
+    const paar=(bl,br)=>{nr++;[bl,br].forEach(b=>{b.classList.remove('gew');b.classList.add('voll');b.disabled=true;$('.znr',b).textContent=nr;});fertig[auf.links[+bl.dataset.j].id]=nr;wahl=null;A.nachZeilen();};
+    A.nachZeilen=()=>{$$('.lnr',m).forEach(x=>{x.textContent=fertig[x.dataset.id]||'';});const z=$('.zeilen',m).lastElementChild;if(z)z.scrollIntoView({block:'nearest',behavior:RUHIG?'auto':'smooth'});};      // die Lösung nennt jedes Paar bei seiner Nummer (Lehrkraft 22.11.2026)
     A.paare=id=>{if(fertig[id])return;const j=auf.links.findIndex(k=>k.id===id);paar($('.zu.l[data-j="'+j+'"]',m),$('.zu.r[data-j="'+auf.rechts.findIndex(r=>r.id===auf.links[j].ok)+'"]',m));};
     $$('.zu',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||b.disabled)return;
       if(!wahl||wahl.dataset.s===b.dataset.s){if(wahl)wahl.classList.remove('gew');wahl=wahl===b?null:b;if(wahl)wahl.classList.add('gew');return;}
@@ -2218,13 +2276,17 @@ function weiter(){
 function schliesse(){$$('.ov,.menue').forEach(e=>{if(e._zu)e._zu();else e.remove();});}
 function zeigeMenue(){
   if($('.menue'))return schliesse();
-  const ov=el('<div class="ov"></div>'),mn=el('<div class="menue" role="dialog" aria-label="Level wählen">'+['q','b','w'].map(k=>'<div class="mz"><b>Level '+LEVELNR[k]+'</b><span></span><button class="sw'+(S.filter[k]?' an':'')+'" data-k="'+k+'" role="switch" aria-checked="'+S.filter[k]+'" aria-label="Level '+LEVELNR[k]+'"></button></div>').join('')+'<p class="klein">Alle an: Automatik. Erst Level 1, dann 2, dann 3.</p></div>');
+  /* Im Einzeltraining sind die Schalter der Level grau, die es in diesem Aufgabentyp nicht gibt (Lehrkraft 22.11.2026) */
+  const t=lvTyp(),gibt=k=>!t||t.level.includes(k),an=k=>gibt(k)&&(t?lvAn(t,k):S.filter[k]),da=['q','b','w'].filter(gibt);
+  const ov=el('<div class="ov"></div>'),mn=el('<div class="menue" role="dialog" aria-label="Level wählen">'+['q','b','w'].map(k=>'<div class="mz'+(gibt(k)?'':' fehlt')+'"><b>Level '+LEVELNR[k]+'</b><span></span><button class="sw'+(an(k)?' an':'')+'" data-k="'+k+'" role="switch" aria-checked="'+an(k)+'" aria-label="Level '+LEVELNR[k]+(gibt(k)?'':': gibt es bei diesem Aufgabentyp nicht')+'"'+(gibt(k)?'':' disabled')+'></button></div>').join('')+
+    (da.length>1?'<p class="klein">Alle an: Automatik. Erst Level '+da.map(k=>LEVELNR[k]).join(', dann ')+'.</p>':'')+'</div>');
   ov.addEventListener('click',schliesse);ov._zu=()=>{ov.remove();mn.remove();};
-  $$('.sw',mn).forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.k;
-    if(S.filter[k]&&['q','b','w'].filter(x=>S.filter[x]).length===1){b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert');return;}
+  $$('.sw',mn).forEach(b=>b.addEventListener('click',()=>{const k=b.dataset.k;if(!gibt(k))return;
+    if(t&&lvFrei(t))t.level.forEach(x=>{S.filter[x]=true;});      // bisher galten hier alle Level, weil keins der eingeschalteten vorkommt: Jetzt wird daraus die Einstellung
+    if(S.filter[k]&&da.filter(x=>S.filter[x]).length===1){b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert');return;}
     S.filter[k]=!S.filter[k];b.classList.toggle('an',S.filter[k]);b.setAttribute('aria-checked',S.filter[k]);
     const f=$('.kn.auto .fn');if(f)f.textContent=filterName();
-    if(S.ansicht==='aufgabe'&&(!A.auf||(!A.gewertet&&!S.filter[A.key])))neueAufgabe();}));
+    if(S.ansicht==='aufgabe'&&(!A.auf||(!A.gewertet&&!(t?lvAn(t,A.key):S.filter[A.key]))))neueAufgabe();}));
   document.body.appendChild(ov);document.body.appendChild(mn);
 }
 function zeigeStand(){
@@ -2815,7 +2877,7 @@ const TAFEL=[
         zl(V('f')+'(0) = '+zahl(q)+'. Wo ist '+V('f')+'('+x+') = '+zahl(q)+'?'),zl(polyV(1,p,0)+' = 0, also '+x+' · ('+x+(p<0?' − ':' + ')+zahl(Math.abs(p))+') = 0'),
         zl('gleich hoch bei '+x+' = 0 und '+x+' = '+zahl(p2)+'. Mitte: '+x+' = '+zahl(m),null,true),zl(V('f')+'('+zahl(m)+') = '+zahl(y)),zl('Tiefpunkt '+T,null,true)];}
     const pts=[[m,y],[0,q]].concat(r.L.map(z=>[z,0])),F=fenster(pts.concat([[m-3,y+9]]),{breite:330,hoehe:300}),k=koord(F.X,F.Y,F.o);
-    return {frage:'Bestimmt den Tiefpunkt von '+V('f')+'.',term,notiz:r.n?'':'Tipp: '+V('f')+' hat keine Nullstellen.',bild:()=>k.svg('<path class="gk tk weg" d="'+k.pfad(f)+'"/>',''),schritte,
+    return {frage:'Bestimmt den Tiefpunkt von '+V('f')+'.',term,notiz:r.n?'':'Tipp: '+V('f')+' hat keine Nullstellen.',bild:()=>k.svg('<path class="gk tk weg" d="'+k.pfad(f)+'"/>',''),schritte,gl:n=>n>=schritte.length?glKurve(k,term,f,'',{frei:[[m,y]]}):null,
       zeig(n,r2){const M=schritte.length;tfKurve(r2,n>=M);
         $('.marken',r2).innerHTML=(n>=M&&r.n?r.L.map((z,i)=>k.pkt(z,0,i?'px2':'px1','',0,0)).join(''):'')+(n>=M&&!r.n?k.pkt(0,q,'gn','',0,0)+k.pkt(-p,q,'gn','',0,0):'')+
           (n>=4?'<line class="mlin" x1="'+k.x(m)+'" y1="'+k.y(k.Y[1])+'" x2="'+k.x(m)+'" y2="'+k.y(k.Y[0])+'"/>':'')+(n>=M?k.pkt(m,y,'','T',10,18):'');}};}},
@@ -2843,6 +2905,7 @@ const TAFEL=[
     const linie=H!==null&&art!=='hoch'?'<line class="drohne" x1="'+k.x(-0.4)+'" y1="'+k.y(H)+'" x2="'+k.x(T1)+'" y2="'+k.y(H)+'"/><text class="gbs dr" x="'+(k.x(T1)-4)+'" y="'+(k.y(H)-7)+'" text-anchor="end">'+H+' m</text>':'';
     const bis=dach?3+Math.sqrt(11):6;
     return {frage,notiz:lage,bild:()=>k.svg('<path class="gk tk weg" d="'+k.pfad(f,0,bis)+'"/>'+linie,''),schritte,
+      gl:n=>n>=schritte.length?glKurve(k,ht+' = −5'+t+Q+' + 30'+t+(dach?' + 10':''),f,'',{von:0,bis,frei:(H!==null&&art!=='hoch'?[0,1,2,3,4,5,6].map(z=>[z,H]):[]).concat(pk)}):null,
       zeig(n,r){const M=schritte.length;tfKurve(r,n>=M);$('.marken',r).innerHTML=n>=M?pk.map(([a,b])=>k.pkt(a,b,'','',0,0)).join(''):'';}};}}
 ];
 function zeigeTafel(){
@@ -2866,9 +2929,9 @@ function zeigeTafel(){
     $('.tf-frage',e).innerHTML=d.frage;$('.tf-term',e).innerHTML=d.term||'';$('.tf-term',e).hidden=!d.term;$('.tf-notiz',e).innerHTML=d.notiz||'';$('.tf-notiz',e).hidden=!d.notiz;
     $('.tf-zeilen',e).innerHTML=d.schritte.slice(0,d.n).map(zeile).join('');
     const b=$('.tf-bild',e);b.innerHTML=d.bild?d.bild():'';b.hidden=!d.bild;main.classList.toggle('ohne',!d.bild);main.classList.toggle('rechbild',!!d.rech);
-    if(d.an)d.an(b,d);if(d.zeig)d.zeig(d.n,b,false);knoepfe();e.scrollTop=0;};
+    if(d.an)d.an(b,d);if(d.zeig)d.zeig(d.n,b,false);zeigeGl(d.gl?d.gl(d.n):[],b);knoepfe();e.scrollTop=0;};
   const aufloesen=()=>{const d=K[i];if(d.n>=d.schritte.length)return;d.n++;
-    const z=el(zeile(d.schritte[d.n-1]));$('.tf-zeilen',e).appendChild(z);if(d.zeig)d.zeig(d.n,$('.tf-bild',e),true);knoepfe();
+    const z=el(zeile(d.schritte[d.n-1]));$('.tf-zeilen',e).appendChild(z);if(d.zeig)d.zeig(d.n,$('.tf-bild',e),true);zeigeGl(d.gl?d.gl(d.n):[],$('.tf-bild',e));knoepfe();
     z.scrollIntoView({block:'nearest',behavior:RUHIG?'auto':'smooth'});};
   const karte=j=>{i=(j+N)%N;zeig();};
   auf.addEventListener('click',aufloesen);
