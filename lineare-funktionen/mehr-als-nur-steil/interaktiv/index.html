@@ -979,8 +979,18 @@ svg.zieh{touch-action:none}
 .gk.ls{stroke:var(--gruen)}
 .gnm{font-family:var(--satz);font-size:18px;fill:var(--gruen);paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
 .gnm.lr{fill:var(--rot)}.gnm.lb{fill:var(--blau)}.gnm.ll{fill:var(--lila)}
-.dr{fill:rgba(213,94,0,.16);stroke:var(--orange);stroke-width:2.4;stroke-linejoin:round}
-.dr.loes{fill:rgba(213,94,0,.1)}
+/* Steigungsdreieck (Lehrkraft 22.11.2026): orange nur die waagerechte und die senkrechte Seite (.dr), Fläche hellorange (.drf, liegt unter dem Graphen);
+   die dritte Seite ist der Graph in seiner Farbe */
+.dr{fill:none;stroke:var(--orange);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}
+.drf{fill:rgba(213,94,0,.16);stroke:none}
+.drf.loes{fill:rgba(213,94,0,.12)}
+/* Gerade zeichnen: die eigene Gerade ist grau, bis „Prüfen“ sie grün oder rot färbt; kommt die Lösung, verblasst das Eigene, und die Lösung erscheint danach */
+.gk.lmein{stroke:#5B6672;stroke-width:2.6}
+.zblass{opacity:.22;animation:zblass .6s ease-out .55s backwards}
+@keyframes zblass{from{opacity:1}}
+.zspaet{animation:zkommt .45s ease-out 1s backwards}
+@keyframes zkommt{from{opacity:0}}
+.gk.neu.spaet{animation-delay:1.1s}
 .sp.eins,.sp.loesb{fill:var(--blau)}.sp.zw,.sp.loesg{fill:var(--gruen)}
 .sp.eins.falsch,.sp.zw.falsch{fill:var(--rot)}
 .bstr{stroke:var(--blau);stroke-width:4;stroke-linecap:round}
@@ -1151,7 +1161,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v3';
+const VERSION='v3.1';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1460,8 +1470,14 @@ function geradeSVG(G,o){o=o||{};const K=o.K||geradeK();let ku='',mk='';
     else ku+='<path class="gk '+(g.kl||'lg')+'" d="'+K.pfad(x=>g.m*x+g.b)+'"/>';
     if(g.name)mk+=nameMarke(K,g);});
   return K.svg(ku,mk+(o.marken?o.marken(K):''));}
-/* Steigungsdreieck von (x | y) aus, orange */
-const dreieckSVG=(K,x,y,s,kl)=>'<path class="dr '+(kl||'')+'" d="M'+K.x(x)+' '+K.y(y)+'L'+K.x(x+s.n)+' '+K.y(y)+'L'+K.x(x+s.n)+' '+K.y(y+s.z)+'Z"/>';
+/* Steigungsdreieck (Lehrkraft 22.11.2026): Orange sind nur die waagerechte und die senkrechte Seite, die Fläche ist hellorange. Die dritte Seite ist der Graph,
+   durchgehend in seiner Farbe. Nur wo noch kein Graph gezeichnet ist (ganz), sind alle drei Seiten orange.
+   dreieckSeiten gehört zu den Marken (über dem Graphen), dreieckFl zu den Kurven vor den Graphen (darunter), damit die Fläche den Graphen nicht einfärbt. */
+const dreieckSeiten=(K,x0,y0,x1,y1,kl,ganz)=>'<path class="dr '+(kl||'')+'" d="M'+K.x(x0)+' '+K.y(y0)+'L'+K.x(x1)+' '+K.y(y0)+'L'+K.x(x1)+' '+K.y(y1)+(ganz?'Z':'')+'"/>';
+const dreieckFlaeche=(K,x0,y0,x1,y1,kl)=>'<path class="drf '+(kl||'')+'" d="M'+K.x(x0)+' '+K.y(y0)+'L'+K.x(x1)+' '+K.y(y0)+'L'+K.x(x1)+' '+K.y(y1)+'Z"/>';
+/* dasselbe von (x | y) aus mit der Steigung s */
+const dreieckSVG=(K,x,y,s,kl,ganz)=>dreieckSeiten(K,x,y,x+s.n,y+s.z,kl,ganz);
+const dreieckFl=(K,x,y,s,kl)=>dreieckFlaeche(K,x,y,x+s.n,y+s.z,kl);
 
 /* ---------- Denkanstöße ---------- */
 const DENK={
@@ -2114,33 +2130,40 @@ const FORM={
     mark();setHaupt('weiter',false);
   },
   /* Build: Zuordnen (aus QF1). Eine Gleichung antippen, dann ihren schnellsten Weg; ein Weg bleibt übrig */
-  /* Build: Gerade zeichnen (LF2, neu). Erst den Punkt (0 | b) antippen, dann den Endpunkt des Steigungsdreiecks; das Dreieck erscheint sofort,
-     die Gerade nach „Prüfen“. Jede Gerade durch zwei richtige Gitterpunkte zählt. Nach einem Fehler darf man verbessern. */
+  /* Build: Gerade zeichnen (LF2). Erst den Punkt (0 | b) antippen, dann den Endpunkt des Steigungsdreiecks. Mit dem zweiten Punkt stehen das Dreieck
+     (nur die beiden Seiten am rechten Winkel orange) und die eigene Gerade da, grau. „Prüfen“ färbt sie grün oder rot. Ist sie falsch, verblasst das Eigene,
+     und die Lösung erscheint mit ihren Schritten; verbessern gibt es dann nicht mehr (Lehrkraft 22.11.2026: „beim Prüfen muss auf jeden Fall die Lösung
+     angezeigt werden“). Dasselbe nach „Lösung“. Jede Gerade durch zwei richtige Gitterpunkte zählt. */
   zeichnen(auf,m){
-    m.className='buehne';const K=geradeK(),s=auf.s,b=auf.b;let pts=[],eigen='',loes='',loesK='';
-    m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="bild setz zbild">'+K.svg('<g class="zk-k"></g>','<g class="zk-m"></g>')+'</div><p class="notiz zzaehl"></p><div class="rueck" hidden></div></section>'+
-      rechnungKarte('So geht’s','Hier stehen die Schritte, wenn du Hilfe holst.');
+    m.className='buehne';const K=geradeK(),s=auf.s,b=auf.b;let pts=[],farbe='',frisch=false,loes='',loesK='';
+    m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="bild setz zbild">'+K.svg('<g class="zk-k"></g>','<g class="zk-m"></g>')+'</div><p class="notiz zzaehl"></p></section>'+
+      '<section class="karte rechnung"><div class="rueck" hidden></div><h3>So geht’s</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">Hier stehen die Schritte, wenn du prüfst oder Hilfe holst.</p></section>';      // die Rückmeldung steht rechts über den Schritten: So bleiben Bild, Urteil und Schritte zusammen im Blick, ohne zu rollen
     const svg=$('svg',m),gk=$('.zk-k',svg),gm=$('.zk-m',svg),aufG=t=>gleich(t.y,s.w*t.x+b);
-    const zeig=()=>{let h=loes;
-      if(pts.length===2&&pts[0].x!==pts[1].x&&pts[0].y!==pts[1].y){const [p,q]=pts;h+='<path class="dr" d="M'+K.x(p.x)+' '+K.y(p.y)+'L'+K.x(q.x)+' '+K.y(p.y)+'L'+K.x(q.x)+' '+K.y(q.y)+'Z"/>';}
+    const schraeg=()=>pts.length===2&&pts[0].x!==pts[1].x&&pts[0].y!==pts[1].y;
+    const linie=()=>{if(pts.length<2)return '';const [p,q]=pts,kl='gk '+(farbe||'lmein');      // die eigene Gerade: grau, nach „Prüfen“ grün oder rot
+      if(p.x===q.x)return '<line class="'+kl+'" x1="'+K.x(p.x)+'" y1="'+K.y(5.6)+'" x2="'+K.x(p.x)+'" y2="'+K.y(-5.6)+'"/>';
+      const sl=(q.y-p.y)/(q.x-p.x),bi=p.y-sl*p.x;return '<path class="'+kl+(frisch?' neu':'')+'" pathLength="1" d="'+K.pfad(x=>sl*x+bi)+'"/>';};
+    const zeig=()=>{const bl=A.fertig&&!A.richtig?' class="zblass"':'';let h='';      // steht die Lösung da und das Eigene stimmt nicht, verblasst es
+      if(schraeg())h+=dreieckSeiten(K,pts[0].x,pts[0].y,pts[1].x,pts[1].y,'');
       pts.forEach((p,i)=>{h+='<circle class="sp'+(i?' zw':' eins')+(p.k?' '+p.k:'')+'" cx="'+K.x(p.x)+'" cy="'+K.y(p.y)+'" r="7.5"/>';});
-      gm.innerHTML=h;gk.innerHTML=loesK+eigen;
+      gm.innerHTML='<g'+bl+'>'+h+'</g>'+loes;
+      gk.innerHTML='<g'+bl+'>'+(schraeg()?dreieckFlaeche(K,pts[0].x,pts[0].y,pts[1].x,pts[1].y,''):'')+linie()+'</g>'+loesK;frisch=false;
       const z=$('.zzaehl',m);if(A.fertig){z.textContent='';return;}
       z.innerHTML=pts.length===0?'Tippe den Punkt (0 | '+BL+') an.':pts.length===1?'Jetzt den Endpunkt des Steigungsdreiecks. Ein zweiter Tipp auf einen Punkt nimmt ihn wieder weg.':'Fertig? Dann „Prüfen“. Ein Tipp auf einen Punkt nimmt ihn wieder weg.';
       setHaupt('pruefen',pts.length===2);};
     svg.addEventListener('click',ev=>{if(A.fertig)return;const t=K.tipp(svg,ev);if(t.x<-5||t.x>5||t.y<-5||t.y>5)return;
       const j=pts.findIndex(p=>p.x===t.x&&p.y===t.y);if(j>=0)pts.splice(j,1);else if(pts.length<2)pts.push(t);else pts[1]=t;
-      eigen='';pts.forEach(p=>delete p.k);const r=$('.rueck',m);if(r&&A.gewertet)r.hidden=true;zeig();});
-    A.pruefe=()=>{const [p,q]=pts,ok=p.x!==q.x&&aufG(p)&&aufG(q);
-      if(p.x!==q.x){const sl=(q.y-p.y)/(q.x-p.x),bi=p.y-sl*p.x;eigen='<path class="gk '+(ok?'lg':'lfalsch')+' neu" pathLength="1" d="'+K.pfad(x=>sl*x+bi)+'"/>';}
-      else eigen='<line class="gk lfalsch" x1="'+K.x(p.x)+'" y1="'+K.y(5.6)+'" x2="'+K.x(p.x)+'" y2="'+K.y(-5.6)+'"/>';
+      farbe='';pts.forEach(p=>delete p.k);frisch=pts.length===2;zeig();});
+    A.pruefe=()=>{const [p,q]=pts,ok=p.x!==q.x&&aufG(p)&&aufG(q);farbe=ok?'lg':'lfalsch';
       pts.forEach(t=>{t.k=aufG(t)?'':'falsch';});A.richtig=ok;zeig();
       return {ok,hinweis:ok?null:auf.hinweis(pts)};};
-    const loesBis=n=>{const p2=auf.p2;let h='';
-      if(n>=2)h+=dreieckSVG(K,0,b,s,'loes');
-      if(n>=1)h+='<circle class="sp loesb" cx="'+K.x(0)+'" cy="'+K.y(b)+'" r="6.5"/>';
-      if(n>=2)h+='<circle class="sp loesg" cx="'+K.x(p2[0])+'" cy="'+K.y(p2[1])+'" r="6.5"/>';
-      loes=h;loesK=n>=3?'<path class="gk ls neu" pathLength="1" d="'+K.pfad(x=>s.w*x+b)+'"/>':'';zeig();};
+    /* die Lösung bis zum Schritt n: Punkt (0 | b), Steigungsdreieck mit zweitem Punkt, Gerade. Liegt schon Eigenes im Bild und ist die Aufgabe zu Ende,
+       kommt sie etwas später, wenn das Eigene verblasst ist */
+    const loesBis=n=>{const p2=auf.p2,sp=A.fertig&&pts.length?' zspaet':'';let h='';
+      if(n>=2)h+=dreieckSVG(K,0,b,s,'loes'+sp,n<3);
+      if(n>=1)h+='<circle class="sp loesb'+sp+'" cx="'+K.x(0)+'" cy="'+K.y(b)+'" r="6.5"/>';
+      if(n>=2)h+='<circle class="sp loesg'+sp+'" cx="'+K.x(p2[0])+'" cy="'+K.y(p2[1])+'" r="6.5"/>';
+      loes=h;loesK=(n>=2?dreieckFl(K,0,b,s,'loes'+sp):'')+(n>=3?'<path class="gk ls neu'+(sp?' spaet':'')+'" pathLength="1" d="'+K.pfad(x=>s.w*x+b)+'"/>':'');zeig();};
     A.hilfeSchritt=n=>loesBis(n);
     A.sperre=()=>{if(!A.richtig)loesBis(3);else zeig();};
     zeig();
@@ -2183,7 +2206,7 @@ function loesung(){const n=A.auf.schritte.length;if(A.fertig)return;hilfeGenutzt
 
 /* ---------- Auswertung ---------- */
 function abgeben(ok,hinweis,art){
-  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse'].includes(A.form),still=einmal||['ordnen','legen2','kette','puzzle','einsetzen','zuordnen'].includes(A.form);let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern
+  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse'].includes(A.form),zeigt=A.form==='zeichnen',still=einmal||zeigt||['ordnen','legen2','kette','puzzle','einsetzen','zuordnen'].includes(A.form);let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: falsch geprüft zeigt gleich die Lösung mit ihren Schritten (Gerade zeichnen, Lehrkraft 22.11.2026)
   if(erst){
     A.gewertet=true;const zaehlt=!A.hilfe&&art!=='loesung',alt=band(A.t);
     S.zeiten.push({typ:A.t.titel,key:A.key,s:Math.round((performance.now()-A.start)/100)/10,ok:ok&&art!=='loesung',hilfe:!zaehlt});
@@ -2200,7 +2223,7 @@ function abgeben(ok,hinweis,art){
   else if(ok&&erst&&A.hilfe)zeigeRueck('neutral','Mit Hilfe gelöst. Diese Aufgabe zählt nicht und kommt mit neuen Zahlen wieder.');
   else if(ok)zeigeRueck('gut',erst?'Richtig.':'Jetzt stimmt es.',A.auf.nachher||'');
   else zeigeRueck('schlecht',hinweis||'Noch nicht richtig.',still?emp:(emp||'Du kannst verbessern und noch einmal prüfen.'),A.auf.denk&&!A.denk?A.auf.denk:'');     // die Regel der Aufgabe gleich dazu, wenn der Denkanstoß nicht schon offen ist
-  if(ok||art==='loesung'||einmal){A.fertig=true;if(A.sperre)A.sperre();
+  if(ok||art==='loesung'||einmal||zeigt){A.fertig=true;if(A.sperre)A.sperre();
     if(A.auf.schritte&&!einmal){A.gezeigt=A.auf.schritte.length;zeigeSchritte();}}
   setHaupt('weiter',true);zeigeHilfen();
   if(ok&&erst&&A.key==='q'&&!A.auf.nachher){const nr=A.nr;A.auto=setTimeout(()=>{if(A.nr===nr&&S.ansicht==='aufgabe'&&!$('.ov')&&!$('.ebene'))weiter();},1100);}
@@ -3224,15 +3247,16 @@ const TAFEL=[
     return {frage:'Zeichnet die Gerade. Sagt die Punkte an, ich setze sie ins Koordinatensystem.',term:fn('f',term(s,b,{dez})),notiz:'Antippen setzt einen Punkt, noch einmal antippen nimmt ihn weg.',
       bild:()=>K.svg('<g class="tz-k"></g>','<g class="tz-m"></g><g class="tz-p"></g>'),an:(r,d)=>tfTippen(K,r,d),
       schritte:[zl(CB(V('b')+' = '+zahl(b))+': Punkt '+P_(0,b)+'.'),zl(CM(V('m')+' = '+mText(s,dez)+(s.n===1||dez?' = '+mBr(s):''))+': '+dreieck(s)+'. Punkt '+P_(p2[0],p2[1])+'.'),zl('Gerade durch '+P_(0,b)+' und '+P_(p2[0],p2[1])+'.')],
-      zeig(n,r){const svg=$('svg',r);$('.tz-m',svg).innerHTML=(n>=2?dreieckSVG(K,0,b,s,'loes'):'')+(n>=1?tfPkt(K,0,b,'loesb'):'')+(n>=2?tfPkt(K,p2[0],p2[1],'loesg'):'');
-        $('.tz-k',svg).innerHTML=n>=3?'<path class="gk lg" d="'+K.pfad(x=>s.w*x+b)+'"/>':'';}};}},
+      zeig(n,r){const svg=$('svg',r);$('.tz-m',svg).innerHTML=(n>=2?dreieckSVG(K,0,b,s,'loes',n<3):'')+(n>=1?tfPkt(K,0,b,'loesb'):'')+(n>=2?tfPkt(K,p2[0],p2[1],'loesg'):'');
+        $('.tz-k',svg).innerHTML=(n>=2?dreieckFl(K,0,b,s,'loes'):'')+(n>=3?'<path class="gk lg" d="'+K.pfad(x=>s.w*x+b)+'"/>':'');}};}},
   /* 3 Gleichung ablesen */
   {typ:'Gleichung ablesen',form:'Ablesen',arten:['steigt','faellt','ganz','bruch','null'],gen(art){
     const {s,b}=art==='null'?{s:stg(0,1),b:zufB(-4,4,true)}:tfFall((s,b)=>art==='steigt'?s.z>0&&s.n>1:art==='faellt'?s.z<0&&s.n>1:art==='ganz'?s.n===1:s.n>=3),K=geradeK(),nm='f';
     const sch=s.z===0?[zl(CB(V('b')+' = '+zahl(b))+': Schnitt mit der y-Achse.'),zl('Waagerecht: '+CM(V('m')+' = 0')+'.'),zl(fn(nm,zahl(b)))]
       :[zl(CB(V('b')+' = '+zahl(b))+': Schnitt mit der y-Achse.'),zl('Steigungsdreieck von '+P_(0,b)+' nach '+P_(s.n,b+s.z)+': '+dreieck(s)+'.'),zl(CM(V('m')+' = '+mBr(s)+(s.n===1?' = '+zahl(s.z):''))),zl(fn(nm,term(s,b)))];
-    return {frage:'Wie lautet die Gleichung der Geraden?',schritte:sch,bild:()=>K.svg('<path class="gk lg" d="'+K.pfad(x=>s.w*x+b)+'"/>','<g class="tz-m"></g><g class="tz-p"></g>'+nameMarke(K,{m:s.w,b,name:nm})),an:(r,d)=>tfTippen(K,r,d),
-      zeig(n,r){const svg=$('svg',r);$('.tz-m',svg).innerHTML=(n>=1?tfStrecke(K,b)+tfPkt(K,0,b,'loesb'):'')+(n>=2&&s.z!==0?dreieckSVG(K,0,b,s,'loes')+tfPkt(K,s.n,b+s.z,'loesg'):'');}};}},
+    return {frage:'Wie lautet die Gleichung der Geraden?',schritte:sch,bild:()=>K.svg('<g class="tz-f"></g><path class="gk lg" d="'+K.pfad(x=>s.w*x+b)+'"/>','<g class="tz-m"></g><g class="tz-p"></g>'+nameMarke(K,{m:s.w,b,name:nm})),an:(r,d)=>tfTippen(K,r,d),
+      zeig(n,r){const svg=$('svg',r);$('.tz-f',svg).innerHTML=n>=2&&s.z!==0?dreieckFl(K,0,b,s,'loes'):'';
+        $('.tz-m',svg).innerHTML=(n>=1?tfStrecke(K,b)+tfPkt(K,0,b,'loesb'):'')+(n>=2&&s.z!==0?dreieckSVG(K,0,b,s,'loes')+tfPkt(K,s.n,b+s.z,'loesg'):'');}};}},
   /* 4 Waagerecht und senkrecht */
   {typ:'Waagerecht und senkrecht',form:'Begründen',arten:['w','s','paar','punkte'],gen(art){const c=zufB(-4,4,true),K=geradeK();
     if(art==='w')return {frage:'Wie lautet die Gleichung der Geraden? Ist das eine Funktion?',bild:()=>geradeSVG([{m:0,b:c,name:'f'}],{K}),
@@ -3259,9 +3283,9 @@ const TAFEL=[
       return {frage:nm+' liest die Gleichung ab: '+fn('f',term(fal,b))+'. Wo steckt der Fehler?',bild:()=>geradeSVG([{m:s.w,b,name:'f'}],{K}),
         schritte:[zl('Steigungsdreieck: '+dreieck(s)+'.'),zl(ML+' = Höhe durch Länge = '+CM(mBr(s))+', nicht '+mBr(fal)+'.'),zl('Richtig: '+fn('f',term(s,b)))]};}
     if(art==='ursprung'){const s=stg(pick([2,3,-2]),1),b=pick([-3,-2,3,2]);
-      return {frage:nm+' zeichnet die Gerade zu '+fn('f',term(s,b))+'. Was ist falsch?',bild:()=>K.svg('<path class="gk lfalsch" d="'+K.pfad(x=>s.w*x)+'"/><g class="tz-k"></g>','<g class="tz-m">'+dreieckSVG(K,0,0,s,'')+'</g>'),
+      return {frage:nm+' zeichnet die Gerade zu '+fn('f',term(s,b))+'. Was ist falsch?',bild:()=>K.svg(dreieckFl(K,0,0,s,'')+'<path class="gk lfalsch" d="'+K.pfad(x=>s.w*x)+'"/><g class="tz-k"></g>','<g class="tz-m">'+dreieckSVG(K,0,0,s,'')+'</g>'),
         schritte:[zl(nm+' hat das Steigungsdreieck im Ursprung angesetzt.',null,true),zl('Es beginnt beim Punkt '+P_(0,b)+', denn '+CB(V('b')+' = '+zahl(b))+'.'),zl('Die richtige Gerade ist parallel dazu und geht durch '+P_(0,b)+'.',null,true)],
-        zeig(n,r){const svg=$('svg',r);$('.tz-k',svg).innerHTML=n>=3?'<path class="gk lg" d="'+K.pfad(x=>s.w*x+b)+'"/>':'';if(n>=2)$('.tz-m',svg).innerHTML=dreieckSVG(K,0,0,s,'')+dreieckSVG(K,0,b,s,'loes')+tfPkt(K,0,b,'loesb');}};}
+        zeig(n,r){const svg=$('svg',r);$('.tz-k',svg).innerHTML=(n>=2?dreieckFl(K,0,b,s,'loes'):'')+(n>=3?'<path class="gk lg" d="'+K.pfad(x=>s.w*x+b)+'"/>':'');if(n>=2)$('.tz-m',svg).innerHTML=dreieckSVG(K,0,0,s,'')+dreieckSVG(K,0,b,s,'loes',n<3)+tfPkt(K,0,b,'loesb');}};}
     if(art==='vorzeichen'){const m=pick([-3,-2,-4]),b=zz(2,6),x0=pick([-20,-10,-5]),y=m*x0+b,fal=-m*x0+b;
       return {frage:nm+' rechnet: Liegt '+V('Q')+P_(x0,fal)+' auf der Geraden von '+fn('g',term(stg(m,1),b))+'? Wo steckt der Fehler?',
         term:V('g')+'('+zahl(x0)+') = '+zahl(m)+' · ('+zahl(x0)+') + '+zahl(b)+' = '+zahl(-m*x0)+' + '+zahl(b)+' = '+zahl(fal)+'. Also liegt '+V('Q')+' drauf.',
