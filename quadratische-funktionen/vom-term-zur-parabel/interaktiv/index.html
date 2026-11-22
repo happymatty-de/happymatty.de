@@ -680,6 +680,33 @@ button.eka.tipp{background:#E3EFDF}
 }
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
 
+/* ---------- Urteil an jeder Eingabe nach „Prüfen“ (Lehrkraft 22.11.2026) ----------
+   Grün mit ✓ oder rot mit ✗ an der Ecke, Rand durchgezogen, helle Füllung: Das Zeichen trägt die Aussage mit, nicht nur die Farbe.
+   Blau heißt nur noch: Hier tippe ich. Der Cursor steht nach einem Fehler im ersten falschen Feld. */
+.feld,.umsch,.keine{position:relative}
+.feld.ok,.feld.falsch{border-style:solid}
+.feld.ok{border-color:var(--gruen);background:#EAF4E6;box-shadow:0 0 0 .16rem #D3E8CC}
+.feld.falsch{border-color:var(--rot);background:#F8E9E8;box-shadow:0 0 0 .16rem #F3D6D4}
+.feld.ok.aktiv::after{display:none}
+.feld.falsch.aktiv::after{background:var(--rot)}
+.umsch.ok{border-color:var(--gruen);box-shadow:0 0 0 .16rem #D3E8CC}
+.umsch.ok,.umsch.falsch{overflow:visible}
+.umsch:not(.wegw).ok button:first-child,.umsch:not(.wegw).falsch button:first-child{border-radius:.46rem 0 0 .46rem}
+.umsch:not(.wegw).ok button:last-child,.umsch:not(.wegw).falsch button:last-child{border-radius:0 .46rem .46rem 0}
+.umsch.wegw.ok{box-shadow:none}
+.umsch.wegw.ok button.an{border-color:var(--gruen);box-shadow:0 0 0 .16rem #D3E8CC}
+.umsch.wegw.falsch button{border-color:var(--blau)}
+.umsch.wegw.falsch button.an{border-color:var(--rot);box-shadow:0 0 0 .16rem #F3D6D4}
+.umsch.wegw button{position:relative}
+.gesperrt .umsch.ok,.gesperrt .umsch.falsch{opacity:1}
+.keine.ok,.keine.an.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
+.keine.an.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
+.feld.ok::before,.feld.falsch::before,.umsch:not(.wegw).ok::before,.umsch:not(.wegw).falsch::before,.umsch.wegw.ok button.an::before,.umsch.wegw.falsch button.an::before,.keine.ok::before,.keine.falsch::before{
+  position:absolute;top:-.55rem;right:-.5rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
+  color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.feld.ok::before,.umsch:not(.wegw).ok::before,.umsch.wegw.ok button.an::before,.keine.ok::before{content:'✓';background:var(--gruen)}
+.feld.falsch::before,.umsch:not(.wegw).falsch::before,.umsch.wegw.falsch button.an::before,.keine.falsch::before{content:'✗';background:var(--rot)}
+
 </style></head>
 <body><div id="app"></div>
 <script>
@@ -688,7 +715,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v6.15';
+const VERSION='v7';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -975,7 +1002,7 @@ const GEN={
     w(){const g=this.zahlen();
       return {form:'eingabe',frage:'Bestimme die fehlende Zahl.',term:this.kopf(g),denk:this.denk,schritte:this.schritte(g),loes:{x:g.ges},g,
         ein:V(g.sym)+' = '+FELD('x'),
-        pruefe:w=>{const z=num(w.x);return gleich(z,g.ges)?{ok:true}:{ok:false,hinweis:this.hinweis(g,z)};}};}
+        pruefe:w=>{const z=num(w.x);return gleich(z,g.ges)?{ok:true}:{ok:false,hinweis:this.hinweis(g,z),falsch:['x']};}};}
   },
   /* ---- Info 1: Drei Formen. Was zeigt welche Form auf einen Blick? ---- */
   formen:{
@@ -1388,21 +1415,26 @@ const FORM={
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="ein'+(auf.einKl?' '+auf.einKl:'')+'">'+auf.ein+'</div>'+(auf.notiz?'<p class="notiz">'+auf.notiz+'</p>':'')+'<div class="rueck" hidden></div>'+(satz?'':T)+'</section>'+
       (satz?'<section class="karte rechnung">'+T+'<h3>'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>':rechnungKarte(rt,rl));
     const felder=$$('.feld',m),ums=$$('.umsch',m),w={};let aktiv=0;
+    /* Nach „Prüfen“ trägt jede Eingabe ihr Urteil: grün mit ✓ oder rot mit ✗ (Lehrkraft 22.11.2026). pruefe() nennt in falsch alle falschen Eingaben;
+       was nicht darin steht, ist richtig. Nennt es nichts, gibt es kein Urteil. Der Cursor springt ins erste falsche Feld; wird eine Eingabe geändert, verschwindet ihr Urteil. */
+    const ohneUrteil=()=>felder.concat(ums).forEach(x=>x.classList.remove('ok','falsch'));
     if(felder.length<2){const p=$('[data-k="weiter"]',m);p.remove();}
     const gueltig=s=>!!s&&/\d$/.test(s);
     const zeig=()=>{felder.forEach((f,i)=>{f.classList.toggle('aktiv',i===aktiv&&!A.fertig);f.textContent=w[f.dataset.f]||'';});
       setHaupt('pruefen',felder.every(f=>gueltig(w[f.dataset.f]))&&ums.every(u=>!!w[u.dataset.w]));};
-    A.taste=k=>{if(A.fertig)return;const id=felder[aktiv].dataset.f;let s=w[id]||'';felder[aktiv].classList.remove('falsch');
+    A.taste=k=>{if(A.fertig)return;const id=felder[aktiv].dataset.f;let s=w[id]||'';
       if(k==='weiter'){aktiv=(aktiv+1)%felder.length;return zeig();}
       if(k==='del')s=s.slice(0,-1);else if(k==='−')s=s.startsWith('−')?s.slice(1):'−'+s;
       else if(k===','){if(!s.includes(',')&&/\d$/.test(s))s+=',';}
       else if(/^\d$/.test(k)){if(s.replace(/[−,]/g,'').length<4)s+=k;}
-      w[id]=s;zeig();};
+      if(s!==(w[id]||''))felder[aktiv].classList.remove('ok','falsch');w[id]=s;zeig();};
     $$('.tasten button',m).forEach(b=>b.addEventListener('click',()=>A.taste(b.dataset.k)));
     felder.forEach((f,i)=>f.addEventListener('click',()=>{if(A.fertig)return;aktiv=i;zeig();}));
-    ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;um.classList.remove('falsch');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));
+    ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;um.classList.remove('ok','falsch');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));
       if(um.dataset.w==='art'){const pl=$('.pl',m);if(pl)pl.textContent=b.dataset.v;}zeig();})));
-    A.pruefe=()=>{const r=auf.pruefe(w);(r.falsch||[]).forEach(id=>{const x=$('[data-f="'+id+'"],.umsch[data-w="'+id+'"]',m);if(x)x.classList.add('falsch');});return r;};
+    A.pruefe=()=>{const r=auf.pruefe(w),F=r.falsch||[];ohneUrteil();if(!r.ok&&!F.length)return r;
+      felder.forEach(f=>f.classList.add(F.includes(f.dataset.f)?'falsch':'ok'));ums.forEach(u=>u.classList.add(F.includes(u.dataset.w)?'falsch':'ok'));
+      if(!r.ok){const i=felder.findIndex(f=>f.classList.contains('falsch'));if(i>=0)aktiv=i;zeig();}return r;};
     A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));};
     zeig();
   },

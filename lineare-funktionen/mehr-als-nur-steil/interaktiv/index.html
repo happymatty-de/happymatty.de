@@ -1115,6 +1115,33 @@ svg.zieh{touch-action:none}
 .akku .wlage b{color:var(--text)}
 .akku .rkszene{flex-basis:10.5rem;max-width:11.5rem}
 
+/* ---------- Urteil an jeder Eingabe nach „Prüfen“ (Lehrkraft 22.11.2026) ----------
+   Grün mit ✓ oder rot mit ✗ an der Ecke, Rand durchgezogen, helle Füllung: Das Zeichen trägt die Aussage mit, nicht nur die Farbe.
+   Blau heißt nur noch: Hier tippe ich. Der Cursor steht nach einem Fehler im ersten falschen Feld. */
+.feld,.umsch,.keine{position:relative}
+.feld.ok,.feld.falsch{border-style:solid}
+.feld.ok{border-color:var(--gruen);background:#EAF4E6;box-shadow:0 0 0 .16rem #D3E8CC}
+.feld.falsch{border-color:var(--rot);background:#F8E9E8;box-shadow:0 0 0 .16rem #F3D6D4}
+.feld.ok.aktiv::after{display:none}
+.feld.falsch.aktiv::after{background:var(--rot)}
+.umsch.ok{border-color:var(--gruen);box-shadow:0 0 0 .16rem #D3E8CC}
+.umsch.ok,.umsch.falsch{overflow:visible}
+.umsch:not(.wegw).ok button:first-child,.umsch:not(.wegw).falsch button:first-child{border-radius:.46rem 0 0 .46rem}
+.umsch:not(.wegw).ok button:last-child,.umsch:not(.wegw).falsch button:last-child{border-radius:0 .46rem .46rem 0}
+.umsch.wegw.ok{box-shadow:none}
+.umsch.wegw.ok button.an{border-color:var(--gruen);box-shadow:0 0 0 .16rem #D3E8CC}
+.umsch.wegw.falsch button{border-color:var(--blau)}
+.umsch.wegw.falsch button.an{border-color:var(--rot);box-shadow:0 0 0 .16rem #F3D6D4}
+.umsch.wegw button{position:relative}
+.gesperrt .umsch.ok,.gesperrt .umsch.falsch{opacity:1}
+.keine.ok,.keine.an.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
+.keine.an.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
+.feld.ok::before,.feld.falsch::before,.umsch:not(.wegw).ok::before,.umsch:not(.wegw).falsch::before,.umsch.wegw.ok button.an::before,.umsch.wegw.falsch button.an::before,.keine.ok::before,.keine.falsch::before{
+  position:absolute;top:-.55rem;right:-.5rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
+  color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.feld.ok::before,.umsch:not(.wegw).ok::before,.umsch.wegw.ok button.an::before,.keine.ok::before{content:'✓';background:var(--gruen)}
+.feld.falsch::before,.umsch:not(.wegw).falsch::before,.umsch.wegw.falsch button.an::before,.keine.falsch::before{content:'✗';background:var(--rot)}
+
 </style></head>
 <body><div id="app"></div>
 <script>
@@ -1124,7 +1151,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v2.15';
+const VERSION='v3';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1643,20 +1670,20 @@ const GEN={
         T=fn('f',term(s,b1))+' &nbsp; und &nbsp; '+fn('g',term(s,b2));bild=geradeSVG([{m:s.w,b:b1,name:'f'},{m:s.w,b:b2,name:'g',kl:'ll'}]);
         frage='Erfinde eine Gerade, die zwischen den Geraden von '+V('f')+' und '+V('g')+' verläuft und keine der beiden schneidet.';
         sch=[zl('Keine schneiden heißt: parallel, also gleiche Steigung '+CM(V('m')+' = '+mText(s))+'.',null,true),zl(BL+' zwischen '+zahl(b1)+' und '+zahl(b2)+', zum Beispiel '+CB(V('b')+' = '+zahl(bm))+'.',null,true),zl(fn('h',term(s,bm)),null)];
-        pr=(mm,bb)=>!gleich(mm,s.w)?['m','Damit sie keine der beiden schneidet, muss sie parallel sein: gleiche Steigung '+CM(V('m')+' = '+mText(s))+'.']
-          :!(bb>b1+1e-9&&bb<b2-1e-9)?['b',BL+' muss zwischen '+zahl(b1)+' und '+zahl(b2)+' liegen'+(gleich(bb,b1)||gleich(bb,b2)?', nicht genau dort: Sonst ist es dieselbe Gerade.':'.')]:null;}
+        pr=(mm,bb)=>[!gleich(mm,s.w)&&['m','Damit sie keine der beiden schneidet, muss sie parallel sein: gleiche Steigung '+CM(V('m')+' = '+mText(s))+'.'],
+          !(bb>b1+1e-9&&bb<b2-1e-9)&&['b',BL+' muss zwischen '+zahl(b1)+' und '+zahl(b2)+' liegen'+(gleich(bb,b1)||gleich(bb,b2)?', nicht genau dort: Sonst ist es dieselbe Gerade.':'.')]];}
       else if(art==='durch'){const s=pick(STG_ALLE),b=zufB(-4,4,true);let c;do{c=zufB(-5,5,false);}while(c===b);T=fn('f',term(s,b));
         frage='Gib die Gerade an, die parallel zur Geraden von '+V('f')+' ist und die y-Achse bei '+zahl(c)+' schneidet.';
         sch=[zl('Parallel: gleiche Steigung '+CM(V('m')+' = '+mText(s))+'.',null,true),zl('Schnitt mit der y-Achse bei '+zahl(c)+': '+CB(V('b')+' = '+zahl(c))+'.',null,true),zl(fn('h',term(s,c)))];
-        pr=(mm,bb)=>!gleich(mm,s.w)?['m','Parallel heißt: gleiche Steigung, '+CM(V('m')+' = '+mText(s))+'.']:!gleich(bb,c)?['b',BL+' ist der Schnitt mit der y-Achse: '+CB(V('b')+' = '+zahl(c))+'.']:null;}
+        pr=(mm,bb)=>[!gleich(mm,s.w)&&['m','Parallel heißt: gleiche Steigung, '+CM(V('m')+' = '+mText(s))+'.'],!gleich(bb,c)&&['b',BL+' ist der Schnitt mit der y-Achse: '+CB(V('b')+' = '+zahl(c))+'.']];}
       else{const s=pick(STG_ALLE),b=zufB(-4,4,true),fallend=Math.random()<.5;T=fn('f',term(s,b));
         frage='Gib eine '+(fallend?'fallende':'steigende')+' Gerade an, die die y-Achse im selben Punkt schneidet wie die Gerade von '+V('f')+'.';
         const bsp=fallend?stg(-1,1):stg(1,1);
         sch=[zl('Gleicher Punkt auf der y-Achse: '+CB(V('b')+' = '+zahl(b))+'.',null,true),zl(fallend?'Fallend: '+ML+' negativ, zum Beispiel '+CM(V('m')+' = −1')+'.':'Steigend: '+ML+' positiv, zum Beispiel '+CM(V('m')+' = 1')+'.',null,true),zl(fn('h',term(bsp,b)))];
-        pr=(mm,bb)=>(fallend?!(mm<0):!(mm>0))?['m',fallend?'Fallend heißt: '+ML+' ist negativ.':'Steigend heißt: '+ML+' ist positiv.']:!gleich(bb,b)?['b',V('f')+' schneidet die y-Achse bei '+zahl(b)+': '+CB(V('b')+' = '+zahl(b))+'.']:null;}
+        pr=(mm,bb)=>[(fallend?!(mm<0):!(mm>0))&&['m',fallend?'Fallend heißt: '+ML+' ist negativ.':'Steigend heißt: '+ML+' ist positiv.'],!gleich(bb,b)&&['b',V('f')+' schneidet die y-Achse bei '+zahl(b)+': '+CB(V('b')+' = '+zahl(b))+'.']];}
       return {form:'eingabe',einKl:'pq',bruch:true,bild,frage,term:T,erkl:'erkunder',denk:art==='fall'?DENK.gleichb:DENK.parallel,
         ein:'<span class="pqf">'+ML+' = '+FELD('m')+'</span><span class="pqf">'+BL+' = '+FELD('b')+'</span>',schritte:sch,rtitel:'Ein Beispiel',
-        pruefe:v=>{const mm=num(v.m),bb=num(v.b),r=pr(mm,bb);if(!r)return {ok:true};return {ok:false,hinweis:r[1],falsch:[r[0]]};}};}
+        pruefe:v=>{const mm=num(v.m),bb=num(v.b),r=pr(mm,bb).filter(Boolean);if(!r.length)return {ok:true};return {ok:false,hinweis:r[0][1],falsch:r.map(x=>x[0])};}};}      // pr: erst m, dann b, je für sich; der Hinweis nennt den ersten Fehler
   }
 };
 
@@ -1832,26 +1859,32 @@ const FORM={
       (satz?'<section class="karte rechnung">'+T+'<h3>'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>':rechnungKarte(rt,rl));
     if(auf.keineText)$('.ein',m).insertAdjacentHTML('afterend','<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">'+auf.keineText+'</button></p>');
     const felder=$$('.feld[data-f]',m),spiegel=$$('.feld.spiegel',m),ums=$$('.umsch',m),kb=$('.keine',m),w={};let aktiv=0;
+    /* Nach „Prüfen“ trägt jede Eingabe ihr Urteil: grün mit ✓ oder rot mit ✗ (Lehrkraft 22.11.2026). pruefe() nennt in falsch alle falschen Eingaben;
+       was nicht darin steht, ist richtig. Nennt es nichts, gibt es kein Urteil. Der Cursor springt ins erste falsche Feld; wird eine Eingabe geändert, verschwindet ihr Urteil. */
+    const ohneUrteil=()=>felder.concat(ums,kb?[kb]:[]).forEach(x=>x.classList.remove('ok','falsch'));
     if(felder.length<2){const p=$('[data-k="weiter"]',m);p.remove();}
     const gueltig=s=>!!s&&/\d$/.test(s);
     const zeig=()=>{felder.forEach((f,i)=>{f.classList.toggle('aktiv',i===aktiv&&!A.fertig&&!w.keine);f.classList.toggle('matt',!!w.keine);f.innerHTML=feldHTML(w.keine?'':(w[f.dataset.f]||''));});
       spiegel.forEach(f=>{f.textContent=w.keine?'':(w[f.dataset.sp]||'');f.classList.toggle('matt',!!w.keine);});
       ums.forEach(u=>u.classList.toggle('matt',!!w.keine));if(kb){kb.classList.toggle('an',!!w.keine);kb.setAttribute('aria-pressed',!!w.keine);}
       setHaupt('pruefen',!!w.keine||(felder.every(f=>gueltig(w[f.dataset.f]))&&ums.every(u=>!!w[u.dataset.w])));};
-    if(kb)kb.addEventListener('click',()=>{if(A.fertig)return;w.keine=!w.keine;kb.classList.remove('falsch');felder.forEach(f=>f.classList.remove('falsch'));ums.forEach(u=>u.classList.remove('falsch'));zeig();});
+    if(kb)kb.addEventListener('click',()=>{if(A.fertig)return;w.keine=!w.keine;ohneUrteil();zeig();});
     A.keine=()=>{if(kb)kb.click();};
-    A.taste=k=>{if(A.fertig)return;if(w.keine){w.keine=false;}const id=felder[aktiv].dataset.f;let s=w[id]||'';felder[aktiv].classList.remove('falsch');
+    A.taste=k=>{if(A.fertig)return;if(w.keine){w.keine=false;ohneUrteil();}const id=felder[aktiv].dataset.f;let s=w[id]||'';
       if(k==='weiter'){aktiv=(aktiv+1)%felder.length;return zeig();}
       if(k==='del')s=s.slice(0,-1);else if(k==='−')s=s.startsWith('−')?s.slice(1):'−'+s;
       else if(k===','){if(!s.includes(',')&&!s.includes('/')&&/\d$/.test(s))s+=',';}
       else if(k==='/'){if(auf.bruch&&!s.includes('/')&&!s.includes(',')&&/\d$/.test(s))s+='/';}
       else if(/^\d$/.test(k)){if(s.replace(/[−,\/]/g,'').length<4)s+=k;}
-      w[id]=s;zeig();};
+      if(s!==(w[id]||''))felder[aktiv].classList.remove('ok','falsch');w[id]=s;zeig();};
     $$('.tasten button',m).forEach(b=>b.addEventListener('click',()=>A.taste(b.dataset.k)));
     felder.forEach((f,i)=>f.addEventListener('click',()=>{if(A.fertig)return;aktiv=i;zeig();}));
-    ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w.keine=false;w[um.dataset.w]=b.dataset.v;um.classList.remove('falsch');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));
+    ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;if(w.keine){w.keine=false;ohneUrteil();}w[um.dataset.w]=b.dataset.v;um.classList.remove('ok','falsch');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));
       if(um.dataset.w==='art'){const pl=$('.pl',m);if(pl)pl.textContent=b.dataset.v;}zeig();})));
-    A.pruefe=()=>{const r=auf.pruefe(w);(r.falsch||[]).forEach(id=>{const x=id==='keine'?kb:$('[data-f="'+id+'"],.umsch[data-w="'+id+'"]',m);if(x)x.classList.add('falsch');});return r;};
+    A.pruefe=()=>{const r=auf.pruefe(w),F=r.falsch||[];ohneUrteil();if(!r.ok&&!F.length)return r;
+      if(w.keine){if(kb)kb.classList.add(F.includes('keine')?'falsch':'ok');return r;}
+      felder.forEach(f=>f.classList.add(F.includes(f.dataset.f)?'falsch':'ok'));ums.forEach(u=>u.classList.add(F.includes(u.dataset.w)?'falsch':'ok'));
+      if(!r.ok){const i=felder.findIndex(f=>f.classList.contains('falsch'));if(i>=0)aktiv=i;zeig();}return r;};
     A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));if(kb)kb.disabled=true;};
     zeig();
   },
@@ -1971,22 +2004,28 @@ const FORM={
       (auf.tastenRechts?'<section class="karte rechnung">'+T+'<h3>Rechnung</h3><div class="zeilen"></div><p class="leer">Rechne mit dem Stift. Hier steht die Rechnung, wenn du fertig bist oder Hilfe holst.</p></section>'
         :rechnungKarte('Rechnung','Rechne mit dem Stift. Hier steht die Rechnung, wenn du fertig bist oder Hilfe holst.'));
     const felder=$$('.feld',m),kb=$('.keine',m),ums=$$('.umsch',m),w={};let aktiv=0,keine=false;const gueltig=s=>!!s&&/\d$/.test(s);
+    /* Urteil an jeder Eingabe wie in der Form „Eingabe“ (Lehrkraft 22.11.2026). Bei einer Lösungsmenge zählt die Reihenfolge nicht: treffer nennt die eingegebenen
+       Zahlen, die Lösungen sind; ihre Felder bekommen ✓, auch wenn die Menge noch nicht stimmt. Ein leeres Feld bekommt kein Urteil; fehlt nur noch eine Lösung, springt der Cursor dorthin. */
+    const ohneUrteil=()=>felder.concat(ums,[kb]).forEach(x=>x.classList.remove('ok','falsch'));
     const zeig=()=>{felder.forEach((f,i)=>{f.classList.toggle('aktiv',i===aktiv&&!A.fertig&&!keine);f.classList.toggle('matt',keine);f.textContent=keine?'':(w[f.dataset.f]||'');});
       kb.classList.toggle('an',keine);kb.setAttribute('aria-pressed',keine);setHaupt('pruefen',(keine||felder.some(f=>gueltig(w[f.dataset.f])))&&ums.every(u=>!!w[u.dataset.w]));};
-    ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;um.classList.remove('falsch');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));zeig();})));
-    A.taste=k=>{if(A.fertig)return;if(keine){keine=false;}const id=felder[aktiv].dataset.f;let s=w[id]||'';felder.forEach(f=>f.classList.remove('falsch'));kb.classList.remove('falsch');
+    ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;um.classList.remove('ok','falsch');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));zeig();})));
+    A.taste=k=>{if(A.fertig)return;if(keine){keine=false;ohneUrteil();}const id=felder[aktiv].dataset.f;let s=w[id]||'';
       if(k==='weiter'){aktiv=(aktiv+1)%felder.length;return zeig();}
       if(k==='del')s=s.slice(0,-1);else if(k==='−')s=s.startsWith('−')?s.slice(1):'−'+s;
       else if(k===','){if(!s.includes(',')&&!s.includes('/')&&/\d$/.test(s))s+=',';}
       else if(k==='/'){if(auf.bruch&&!s.includes('/')&&!s.includes(',')&&/\d$/.test(s))s+='/';}
       else if(/^\d$/.test(k)){if(s.replace(/[−,\/]/g,'').length<4)s+=k;}
-      w[id]=s;zeig();};
+      if(s!==(w[id]||''))felder[aktiv].classList.remove('ok','falsch');w[id]=s;zeig();};
     $$('.tasten button',m).forEach(b=>b.addEventListener('click',()=>A.taste(b.dataset.k)));
-    felder.forEach((f,i)=>f.addEventListener('click',()=>{if(A.fertig)return;keine=false;aktiv=i;zeig();}));
-    kb.addEventListener('click',()=>{if(A.fertig)return;keine=!keine;felder.forEach(f=>f.classList.remove('falsch'));kb.classList.remove('falsch');zeig();});
+    felder.forEach((f,i)=>f.addEventListener('click',()=>{if(A.fertig)return;if(keine){keine=false;ohneUrteil();}aktiv=i;zeig();}));
+    kb.addEventListener('click',()=>{if(A.fertig)return;keine=!keine;ohneUrteil();zeig();});
     A.keine=()=>kb.click();
-    A.pruefe=()=>{const E=felder.map(f=>w[f.dataset.f]).filter(gueltig).map(num),r=auf.pruefe(keine?[]:E,keine,w.weg);
-      (r.falsch||[]).forEach(id=>{if(id==='keine')kb.classList.add('falsch');else if(id==='weg'){const u=$('.umsch[data-w="weg"]',m);if(u)u.classList.add('falsch');}else{const f=$('[data-f="'+id+'"]',m);if(f&&gueltig(w[id]))f.classList.add('falsch');}});return r;};
+    A.pruefe=()=>{const E=felder.map(f=>w[f.dataset.f]).filter(gueltig).map(num),r=auf.pruefe(keine?[]:E,keine,w.weg),F=r.falsch||[],T=(r.treffer||[]).slice();ohneUrteil();if(!r.ok&&!F.length)return r;
+      if(keine)kb.classList.add(F.includes('keine')?'falsch':'ok');
+      else felder.forEach(f=>{const s=w[f.dataset.f];if(!gueltig(s))return;let u='ok';if(F.includes(f.dataset.f)){const i=T.findIndex(t=>gleich(t,num(s)));if(i>=0)T.splice(i,1);else u='falsch';}f.classList.add(u);});
+      ums.forEach(u=>{if(w[u.dataset.w])u.classList.add(F.includes(u.dataset.w)?'falsch':'ok');});
+      if(!r.ok&&!keine){let i=felder.findIndex(f=>f.classList.contains('falsch'));if(i<0)i=felder.findIndex(f=>!gueltig(w[f.dataset.f]));if(i>=0)aktiv=i;zeig();}return r;};
     A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));kb.disabled=true;};
     zeig();
   },
