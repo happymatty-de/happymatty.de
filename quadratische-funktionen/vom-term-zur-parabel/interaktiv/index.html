@@ -259,15 +259,6 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 /* Graph in der Aufgabe: Er passt mit Frage und Leiste auf den Bildschirm, auch am iPad quer in Safari */
 @media (min-width:761px){.buehne>.karte>.bild{max-width:min(22rem,calc(100dvh - 18.5rem))!important;min-width:14rem}}
 /* Zuordnen */
-.zuo{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:.6rem 1.4rem;margin-top:.2rem}
-.zsp{display:flex;flex-direction:column;gap:.5rem}
-.zk.zu{text-align:left;min-height:3rem}
-.zk.zu.r{font-size:1.15rem;border-color:#8DB9D9}
-.zk.zu.gew{background:#EAF3F9;box-shadow:0 0 0 .18rem #CFE3F1;border-color:var(--blau)}
-.zk.zu.voll{border-color:#9CC98F;background:#F3F9F1;box-shadow:none;color:var(--text)}
-.zk.zu:disabled:not(.voll){opacity:.45;box-shadow:none}
-.znr{font-weight:700;color:var(--gruen);min-width:1.1rem;text-align:right}
-.zuo~.zeilen .zl.text{font-size:1.15rem;line-height:1.3;margin-bottom:.1rem}
 /* Punkte setzen */
 .bild.setz svg{cursor:crosshair}
 .sp{fill:var(--blau);stroke:#fff;stroke-width:2}
@@ -655,9 +646,7 @@ button.eka.tipp{background:#E3EFDF}
   .kopf.trk .kn.voll,.ebene .kn.voll{display:none}
   .exm .bild.hoch{max-width:13rem}
   .plaetze{grid-template-columns:1fr 1fr}
-  .zuo{grid-template-columns:minmax(0,1fr);gap:1rem}
-  .zk.zu{font-size:1.2rem}
-  .wk .term{font-size:1.6rem}
+    .wk .term{font-size:1.6rem}
   .aussage{font-size:1.2rem}
   .wknoepfe .opt{font-size:1.1rem;padding:.4rem .4rem}
   .formw button{font-size:.88rem;padding:.3rem .25rem}
@@ -743,15 +732,58 @@ button.eka.tipp{background:#E3EFDF}
 .sw:disabled::after{background:#F8F9FA;box-shadow:0 0 0 1px #DCE1E6}
 /* Lösung beim Zuordnen: Nummer des Paars in Grün, die Gleichung schwarz wie auf der Karte, dahinter in Handschrift, was man an ihr abliest */
 .zl.zul>span{display:flex;align-items:baseline;flex-wrap:wrap;gap:0 .9rem}
-.zl.zul .lnr{font-family:var(--satz);font-weight:700;color:var(--gruen);font-size:1.2rem;min-width:1rem}
 .zl.zul .lgl{font-family:var(--satz);color:var(--text);font-size:1.2rem;min-width:11rem}
 .zl.zul .lgl i{font-style:italic}
 .zl.zul .lre{flex:1 1 12rem;min-width:0}
-.zl.zul,.zuo~.zeilen .zl.zul.text{font-size:1.4rem;line-height:1.3;margin:.12rem 0}
+.zl.zul,.zdock~.zeilen .zl.zul.text{font-size:1.4rem;line-height:1.3;margin:.12rem 0}
 /* m = … und b = … bleiben am Zeilenende zusammen */
 .zeilen .cm,.zeilen .cb{white-space:nowrap}
 /* Handschrift kennt kein Fett: Künstlich gefettet wirkt dasselbe Orange dunkler */
 .zeilen .cm,.zeilen .cb,.ezeilen .cm,.ezeilen .cb,.kzeil .cm,.kzeil .cb,.wnot .cm,.wnot .cb{font-weight:400}
+/* Zuordnen mit Andocken (Lehrkraft 22.11.2026): oben jede Gleichung mit ihrem Platz, darunter der Vorrat der Aussagen.
+   Eine angedockte Aussage bildet mit ihrer Gleichung eine Karte. Blau: gelegt, noch ohne Urteil. Nach „Prüfen“ grün mit ✓ oder rot mit ✗.
+   --zf ist die Farbe des Paars, --zn die der Naht zwischen Gleichung und Aussage, --zg der Grund. */
+.zdock{display:flex;flex-direction:column;gap:.9rem;margin-top:.2rem}
+.zreihen{display:flex;flex-direction:column;gap:.5rem}
+.zreihe{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:.5rem;position:relative;--zf:var(--blau);--zn:#8DB9D9;--zg:#F1F7FB}
+.zreihe.ok{--zf:var(--gruen);--zn:#9CC98F;--zg:#EAF4E6}
+.zreihe.gegeben{--zf:#9CC98F;--zn:#BBDAB2;--zg:#F3F9F1}
+.zreihe.falsch{--zf:var(--rot);--zn:#DDA9A6;--zg:#F8E9E8}
+.zplatz{box-sizing:border-box;min-height:3rem;display:flex;border:.13rem dashed #C4CDD6;border-radius:.7rem;cursor:pointer}
+.zreihe.gew .zplatz{border-color:var(--blau);background:#F4F9FC}
+.zreihe.voll .zplatz{border:0;background:none}
+.zvorrat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+.zheim{display:flex;min-height:3rem}
+.zk.zu{text-align:left;min-height:3rem;width:100%}
+.zk.zu.r{font-size:1.1rem;border-color:#8DB9D9}
+.zk.zu.r.gew,.zreihe.gew .zu.l{background:#EAF3F9;box-shadow:0 0 0 .18rem #CFE3F1;border-color:var(--blau)}
+.zreihe.voll{gap:0}
+.zreihe.voll .zu{background:var(--zg);border-color:var(--zf)}
+.zreihe.voll .zu.l{border-radius:.7rem 0 0 .7rem;border-right:.13rem dashed var(--zn)}
+.zreihe.voll .zu.r{border-radius:0 .7rem .7rem 0;border-left:0}
+.zreihe.voll.gew .zu.l{background:#EAF3F9}
+.zreihe.ok .zu,.zreihe.gegeben .zu,.zreihe.falsch .zu{box-shadow:none}
+.zflug{position:relative;z-index:5}
+.zreihe.ok::after,.zreihe.falsch::after{position:absolute;top:-.5rem;right:-.5rem;z-index:1;width:1.25rem;height:1.25rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
+  color:#fff;font-family:var(--satz);font-size:.86rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.zreihe.ok::after{content:'✓';background:var(--gruen)}
+.zreihe.falsch::after{content:'✗';background:var(--rot)}
+.zk.zu:disabled{color:var(--text);transform:none;cursor:default}
+.zdock.fertig .zvorrat .zu{opacity:.45;box-shadow:none}
+.zdock~.zeilen .zl.text{font-size:1.15rem;line-height:1.3;margin-bottom:.1rem}
+@media (max-width:760px){
+  .zreihe{grid-template-columns:minmax(0,1fr)}
+  .zplatz,.zheim{min-height:2.5rem}
+  .zvorrat{grid-template-columns:minmax(0,1fr)}
+  .zk.zu{font-size:1.2rem}
+  .zk.zu.r{font-size:1.05rem;min-height:2.5rem}
+  .zreihe.voll .zu.l{border-radius:.7rem .7rem 0 0;border-right:.13rem solid var(--zf);border-bottom:.13rem dashed var(--zn);box-shadow:none}
+  .zreihe.voll .zu.r{border-radius:0 0 .7rem .7rem;border-left:.13rem solid var(--zf);border-top:0}
+}
+.zdock.fertig .zheim:empty{display:none}
+.zreihe.voll .zu:hover,.zreihe.voll .zu:active{transform:none}
+@media (hover:hover){.zreihe.voll .zu:hover{background:var(--zg);box-shadow:0 .18rem 0 #C9D6E2}.zreihe.ok .zu:hover,.zreihe.gegeben .zu:hover,.zreihe.falsch .zu:hover{box-shadow:none}}
+.zl.zul>span{flex:1 1 auto;min-width:0}      /* die Lösungszeile nimmt die ganze Breite: Eine kurze Aussage (QF3: „→ Ausklammern“) rutschte sonst unter ihre Gleichung */
 
 </style></head>
 <body><div id="app"></div>
@@ -761,7 +793,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v7.3';
+const VERSION='v8';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1096,7 +1128,7 @@ const GEN={
       const falle=Math.random()<.5?{id:null,html:N(-x1,-x2),hinweis:'Achte auf die Vorzeichen: ('+x+(x1<0?' + ':' − ')+zahl(Math.abs(x1))+') wird null für '+x+' = '+zahl(x1)+'.'}
         :{id:null,html:S(-u,v),hinweis:'Achte auf das Vorzeichen in der Klammer: ('+x+(u>0?' − ':' + ')+zahl(Math.abs(u))+')'+Q+' verschiebt nach '+(u>0?'rechts':'links')+'.'};
       const links=shuffle([{id:'af',html:fx(g.af)},{id:'spf',html:fx(g.spf)},{id:'nf',html:fx(g.nf)}]);
-      const zul=(id,gl,rest)=>({h:'<span class="lnr" data-id="'+id+'"></span><span class="lgl">'+gl+'</span><span class="lre">'+rest+'</span>',kl:'zul',text:true});      // Lösungszeile: Nummer des Paars, der Term wie auf der Karte, dahinter in Handschrift, was er zeigt (Lehrkraft 22.11.2026)
+      const zul=(id,gl,rest)=>({h:'<span class="lgl">'+gl+'</span><span class="lre">'+rest+'</span>',kl:'zul',text:true});      // Lösungszeile: der Term wie auf der Karte, dahinter in Handschrift, was er zeigt (Lehrkraft 22.11.2026)
       const was={af:'Allgemeine Form: Die Zahl ohne '+x+' ist '+zahl(c)+', dort schneidet der Graph die '+V('y')+'-Achse',spf:'Scheitelpunktform: '+wort+' '+punkt(art,u,v),nf:'Nullstellenform: Nullstellen '+zahl(x1)+' und '+zahl(x2)};
       return {form:'zuordnen',frage:'Ein Graph, drei Terme: Was zeigt welche Form auf einen Blick? Tippe einen Term an, dann seine Aussage.',erkl:'info1',g,
         links,rechts:shuffle([{id:'af',html:Y(c)},{id:'spf',html:S(u,v)},{id:'nf',html:N(x1,x2)},falle]),
@@ -1630,23 +1662,50 @@ const FORM={
     setHaupt('weiter',false);
   },
   /* Build: Zuordnen. Einen Term antippen, dann die Aussage, die man an ihm direkt abliest; eine Aussage bleibt übrig */
+  /* Build: Zuordnen mit Andocken (Lehrkraft 22.11.2026). Oben steht jede Gleichung mit einem leeren Platz, darunter liegen die Aussagen als Vorrat, eine bleibt übrig.
+     Eine Gleichung antippen, dann ihre Aussage (oder umgekehrt): Die Aussage springt auf den Platz und dockt an. Ein Tipp auf eine angedockte Aussage legt sie zurück.
+     Ein Urteil gibt es erst mit „Prüfen“, wenn alle Plätze belegt sind: Dann trägt jedes Paar ✓ oder ✗, und die Lösung steht darunter; bis dahin ist ein Paar blau.
+     Früher kam das Urteil sofort bei jedem Paar, und die Aufgabe ließ sich durch Probieren lösen („die Aufgabe sollte halt fertig sein“). Ohne Nummern in den Karten
+     („dann noch mehr Zahlen hier drin“) und ohne Verbindungslinien (sie kreuzen sich, am Handy laufen sie über Karten). */
   zuordnen(auf,m){
-    m.className='buehne eins';let wahl=null,nr=0;const fertig={};
-    const karte=(k,j,s)=>'<button class="zk zu '+s+'" data-s="'+s+'" data-j="'+j+'"><span>'+k.html+'</span><span class="znr"></span></button>';
-    m.innerHTML='<section class="karte rechnung">'+kopfTeil(auf)+'<div class="zuo"><div class="zsp">'+auf.links.map((k,j)=>karte(k,j,'l')).join('')+'</div><div class="zsp">'+auf.rechts.map((k,j)=>karte(k,j,'r')).join('')+'</div></div>'+
+    m.className='buehne eins';let wahl=null;const L=auf.links,R=auf.rechts,zu=L.map(()=>null),fest=L.map(()=>false);      // zu[j]=k: Auf dem Platz der Gleichung j liegt die Aussage k; fest[j]: von der Hilfe gelegt
+    const passt=(l,r)=>l.ok!==undefined?l.ok===r.id:l.id===r.id,hinw=(l,r)=>l.h?l.h[r.id]:r.id===null?r.hinweis:auf.fremd;
+    m.innerHTML='<section class="karte rechnung">'+kopfTeil(auf)+'<div class="zdock"><div class="zreihen">'+L.map((k,j)=>'<div class="zreihe" data-j="'+j+'"><button class="zk zu l" data-j="'+j+'"><span>'+k.html+'</span></button><div class="zplatz" data-j="'+j+'"></div></div>').join('')+'</div>'+
+      '<div class="zvorrat">'+R.map((k,j)=>'<div class="zheim" data-k="'+j+'"><button class="zk zu r" data-k="'+j+'"><span>'+k.html+'</span></button></div>').join('')+'</div></div>'+
       '<div class="rueck" hidden></div><div class="zeilen"></div></section>';
-    const paar=(bl,br)=>{nr++;[bl,br].forEach(b=>{b.classList.remove('gew');b.classList.add('voll');b.disabled=true;$('.znr',b).textContent=nr;});fertig[auf.links[+bl.dataset.j].id]=nr;wahl=null;A.nachZeilen();};
-    A.nachZeilen=()=>{$$('.lnr',m).forEach(x=>{x.textContent=fertig[x.dataset.id]||'';});const z=$('.zeilen',m).lastElementChild;if(z)z.scrollIntoView({block:'nearest',behavior:RUHIG?'auto':'smooth'});};      // die Lösung nennt jedes Paar bei seiner Nummer (Lehrkraft 22.11.2026)
-    A.paare=id=>{if(fertig[id])return;paar($('.zu.l[data-j="'+auf.links.findIndex(k=>k.id===id)+'"]',m),$('.zu.r[data-j="'+auf.rechts.findIndex(k=>k.id===id)+'"]',m));};
-    $$('.zu',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||b.disabled)return;
-      if(!wahl||wahl.dataset.s===b.dataset.s){if(wahl)wahl.classList.remove('gew');wahl=wahl===b?null:b;if(wahl)wahl.classList.add('gew');return;}
-      const bl=b.dataset.s==='l'?b:wahl,br=b.dataset.s==='r'?b:wahl,l=auf.links[+bl.dataset.j],r=auf.rechts[+br.dataset.j];
-      if(l.id===r.id){paar(bl,br);if(auf.folge.every(id=>fertig[id]))abgeben(true);}
-      else{[bl,br].forEach(x=>{x.classList.remove('zittert','gew');void x.offsetWidth;x.classList.add('zittert');});wahl=null;abgeben(false,r.id===null?r.hinweis:auf.fremd);}}));
+    const reihe=j=>$('.zreihe[data-j="'+j+'"]',m),platz=j=>$('.zplatz[data-j="'+j+'"]',m),heim=k=>$('.zheim[data-k="'+k+'"]',m),kr=k=>$('.zu.r[data-k="'+k+'"]',m),wo=k=>zu.indexOf(k);
+    const zeig=()=>{L.forEach((l,j)=>{const r=reihe(j);r.classList.toggle('voll',zu[j]!==null);r.classList.toggle('gew',!!wahl&&wahl.s==='l'&&wahl.i===j);});
+      R.forEach((r,k)=>kr(k).classList.toggle('gew',!!wahl&&wahl.s==='r'&&wahl.i===k));
+      if(!A.fertig)setHaupt('pruefen',zu.every(k=>k!==null));};
+    /* Karten an ihren neuen Ort hängen und von der alten Stelle dorthin gleiten lassen */
+    const bewege=zuege=>{const vor=zuege.map(z=>z[0].getBoundingClientRect());zuege.forEach(z=>z[1].appendChild(z[0]));zeig();if(RUHIG)return;
+      zuege.forEach((z,i)=>{const b=z[0],n=b.getBoundingClientRect(),dx=vor[i].left-n.left,dy=vor[i].top-n.top;if(!b.animate||(!dx&&!dy))return;
+        b.classList.add('zflug');b.animate([{transform:'translate('+dx+'px,'+dy+'px)'},{transform:'none'}],{duration:260,easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish=()=>b.classList.remove('zflug');});};
+    const lege=(k,j)=>{if(zu[j]===k)return;const alt=zu[j],von=wo(k),zuege=[[kr(k),platz(j)]];
+      if(von>=0)zu[von]=null;else heim(k).style.minHeight=kr(k).offsetHeight+'px';      // der Platz im Vorrat bleibt frei, damit dort nichts nachrückt
+      if(alt!==null)zuege.push([kr(alt),heim(alt)]);zu[j]=k;wahl=null;bewege(zuege);if(alt!==null)heim(alt).style.minHeight='';};
+    const loese=k=>{const j=wo(k);if(j<0)return;zu[j]=null;wahl=null;bewege([[kr(k),heim(k)]]);heim(k).style.minHeight='';};
+    $('.zdock',m).addEventListener('click',ev=>{if(A.fertig)return;const r=ev.target.closest('.zu.r'),l=r?null:ev.target.closest('.zu.l,.zplatz');
+      if(r){const k=+r.dataset.k,j=wo(k);if(j>=0&&fest[j])return;
+        if(wahl&&wahl.s==='l'&&wahl.i!==j)return lege(k,wahl.i);                  // eine Gleichung ist gewählt: Die Aussage kommt zu ihr, auch von einem anderen Platz
+        if(wahl&&wahl.s==='r'&&j>=0)return lege(wahl.i,j);                        // eine Aussage aus dem Vorrat ist gewählt: Sie ersetzt die angedockte
+        if(j>=0)return loese(k);                                                  // sonst legt ein Tipp auf eine angedockte Aussage sie zurück
+        wahl=wahl&&wahl.s==='r'&&wahl.i===k?null:{s:'r',i:k};return zeig();}
+      if(l){const j=+l.dataset.j;if(fest[j])return;
+        if(wahl&&wahl.s==='r')return lege(wahl.i,j);
+        wahl=wahl&&wahl.s==='l'&&wahl.i===j?null:{s:'l',i:j};zeig();}});
+    /* Hilfe: Das richtige Paar steht da, grün und fest, ohne Urteil */
+    const gib=j=>{fest[j]=true;lege(R.findIndex(r=>passt(L[j],r)),j);reihe(j).classList.add('gegeben');$$('.zu',reihe(j)).forEach(b=>b.disabled=true);};
+    A.pruefe=()=>{A.geprueft=true;let erst=null,n=0;
+      L.forEach((l,j)=>{if(fest[j])return;const ok=passt(l,R[zu[j]]);reihe(j).classList.add(ok?'ok':'falsch');if(!ok){n++;if(!erst)erst=[l,R[zu[j]],j];}});
+      if(!n)return {ok:true};
+      const h=hinw(erst[0],erst[1]),wer=n>1?(erst[0].kurz?'Bei '+erst[0].kurz+': ':['Erstes Paar: ','Zweites Paar: ','Drittes Paar: '][erst[2]]||''):'';      // stimmen mehrere Paare nicht, sagt die Rückmeldung, von welchem sie spricht
+      return {ok:false,hinweis:h?wer+h:null};};
     A.gezeigt=0;
-    A.hilfeSchritt=n=>A.paare(auf.folge[n-1]);
-    A.sperre=()=>{auf.folge.forEach(id=>A.paare(id));$$('.zu',m).forEach(b=>b.disabled=true);};
-    setHaupt('weiter',false);
+    A.nachZeilen=()=>{const z=$('.zeilen',m).lastElementChild;if(z)z.scrollIntoView({block:'nearest',behavior:RUHIG?'auto':'smooth'});};
+    A.hilfeSchritt=n=>gib(L.findIndex(l=>l.id===auf.folge[n-1]));
+    A.sperre=()=>{if(!A.geprueft)L.forEach((l,j)=>{if(!fest[j])gib(j);});wahl=null;zeig();$$('.zu',m).forEach(b=>b.disabled=true);$('.zdock',m).classList.add('fertig');};      // nach „Prüfen“ bleiben die eigenen Paare mit ihrem Urteil stehen, nach „Lösung“ stehen die richtigen da
+    zeig();
   },
   /* Build: Punkte setzen. Die Parabel erscheint erst, wenn die fünf Punkte stimmen */
   punkte(auf,m){
@@ -1702,7 +1761,7 @@ function loesung(){const n=A.auf.schritte.length;if(A.fertig)return;hilfeGenutzt
 
 /* ---------- Auswertung ---------- */
 function abgeben(ok,hinweis,art){
-  const erst=!A.gewertet,einmal=A.form==='wahl'||A.form==='wisch'||A.form==='mehr',zeigt=['eingabe','punkte','ziel'].includes(A.form),still=einmal||zeigt||A.form==='ordnen'||A.form==='legen'||A.form==='zuordnen';let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
+  const erst=!A.gewertet,einmal=A.form==='wahl'||A.form==='wisch'||A.form==='mehr',zeigt=['eingabe','punkte','ziel','zuordnen'].includes(A.form),still=einmal||zeigt||A.form==='ordnen'||A.form==='legen';let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
   if(erst){
     A.gewertet=true;const zaehlt=!A.hilfe&&art!=='loesung',alt=band(A.t);
     S.zeiten.push({typ:A.t.titel,key:A.key,s:Math.round((performance.now()-A.start)/100)/10,ok:ok&&art!=='loesung',hilfe:!zaehlt});
