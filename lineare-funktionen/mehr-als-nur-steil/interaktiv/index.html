@@ -1155,10 +1155,10 @@ svg.zieh{touch-action:none}
 .achsbild .glg{font-size:.92rem}
 
 /* ---------- 22.11.2026, zweite Runde (Lehrkraft) ---------- */
-/* Urteil am Umschalter: Das Zeichen sitzt an der gewählten Seite, nicht an der Ecke der Gruppe („direkt dort dran …, was blau unterlegt ist“). Der Rand der Gruppe bleibt. */
+/* Urteil am Umschalter: Das Zeichen sitzt an der gewählten Seite, nicht an der Ecke der Gruppe („direkt dort dran …, was blau unterlegt ist“), und zwar an ihrer rechten oberen Ecke, knapp innerhalb, damit es nicht auf der Grenze zur Nachbarseite liegt (Lehrkraft 22.11.2026, dritte Runde: „Was mir daran nicht gefällt, ist, dass das in der Mitte sitzt“). Der Rand der Gruppe bleibt. */
 .umsch button{position:relative}
 .umsch:not(.wegw).ok button.an::before,.umsch:not(.wegw).falsch button.an::before{
-  position:absolute;top:-.62rem;left:50%;right:auto;margin-left:-.65rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
+  position:absolute;top:-.62rem;right:.15rem;left:auto;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
   color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
 .umsch:not(.wegw).ok button.an::before{content:'✓';background:var(--gruen)}
 .umsch:not(.wegw).falsch button.an::before{content:'✗';background:var(--rot)}
@@ -1233,7 +1233,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v4';
+const VERSION='v4.1';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
