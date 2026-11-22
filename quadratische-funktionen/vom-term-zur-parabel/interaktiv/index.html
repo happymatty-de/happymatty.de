@@ -761,7 +761,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v7.2';
+const VERSION='v7.3';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1539,6 +1539,8 @@ const FORM={
     ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;um.classList.remove('ok','falsch');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));
       if(um.dataset.w==='art'){const pl=$('.pl',m);if(pl)pl.textContent=b.dataset.v;}zeig();})));
     A.pruefe=()=>{const r=auf.pruefe(w),F=r.falsch||[];ohneUrteil();if(!r.ok&&!F.length)return r;
+      /* offene Aufgabe, eigene Antwort richtig: Die Lösung zeigt die eigene Antwort statt des Beispiels (Lehrkraft 22.11.2026). auf.eigen(w) liefert Schritte und Überschrift */
+      if(r.ok&&auf.eigen&&!w.keine){const e=auf.eigen(w);if(e){auf.schritte=e.schritte;const z=$('.rechnung .zeilen',m),h=$('.rechnung h3.lt',m);if(z)z.innerHTML='';if(h&&e.rtitel)h.textContent=e.rtitel;}}
       felder.forEach(f=>f.classList.add(F.includes(f.dataset.f)?'falsch':'ok'));ums.forEach(u=>u.classList.add(F.includes(u.dataset.w)?'falsch':'ok'));return r;};
     A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));};
     zeig();

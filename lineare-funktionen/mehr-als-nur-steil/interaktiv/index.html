@@ -1203,7 +1203,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v3.3';
+const VERSION='v3.4';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1740,11 +1740,15 @@ const GEN={
       return {form:'mehr',frage:par?'Tippe alle Geraden an, die parallel zur Geraden von '+V('f')+' sind.':'Tippe alle Geraden an, die die y-Achse im selben Punkt schneiden wie die Gerade von '+V('f')+'.',
         term:T,erkl:'erkunder',denk:par?DENK.parallel:DENK.gleichb,opts};},
     /* Write, offen: eine eigene Gleichung erfinden; jede passende zählt */
-    w(){const art=pick(['zw','zw','durch','fall']);let frage,T,bild=null,pr,sch;
+    w(){const art=pick(['zw','zw','durch','fall']);let frage,T,bild=null,pr,sch,eigen=null;
+      /* die eigene Eingabe, so wie sie getippt wurde: als Bruch (gekürzt), ganze Zahl oder Dezimalzahl; eigT: der Term der eigenen Geraden */
+      const einT=e=>{e=String(e);if(e.includes('/')){const t=e.replace(/−/g,'-').split('/'),s=stg(parseInt(t[0],10),parseInt(t[1],10));return mText(s);}return zahl(num(e));};
+      const eigT=v=>{const mm=num(v.m),bb=num(v.b),bt=einT(String(v.b).replace(/^[−-]/,''));return (gleich(mm,1)?X:gleich(mm,-1)?'−'+X:einT(v.m)+X)+(gleich(bb,0)?'':(bb<0?' − ':' + ')+bt);};
       if(art==='zw'){const s=pick(STG_GANZ.concat(L_([[1,2],[-1,2]]))),b1=zufB(-4,1,false),b2=b1+zz(2,4),bm=b1+1;
         T=fn('f',term(s,b1))+' &nbsp; und &nbsp; '+fn('g',term(s,b2));bild=geradeSVG([{m:s.w,b:b1,name:'f'},{m:s.w,b:b2,name:'g',kl:'ll'}]);
         frage='Erfinde eine Gerade, die zwischen den Geraden von '+V('f')+' und '+V('g')+' verläuft und keine der beiden schneidet.';
         sch=[zl('Keine schneiden heißt: parallel, also gleiche Steigung '+CM(V('m')+' = '+mText(s))+'.',null,true),zl(BL+' zwischen '+zahl(b1)+' und '+zahl(b2)+', zum Beispiel '+CB(V('b')+' = '+zahl(bm))+'.',null,true),zl(fn('h',term(s,bm)),null)];
+        eigen=v=>[sch[0],zl(BL+' zwischen '+zahl(b1)+' und '+zahl(b2)+', du hast '+CB(V('b')+' = '+einT(v.b))+' gewählt.',null,true),zl(fn('h',eigT(v)),null)];
         pr=(mm,bb)=>[!gleich(mm,s.w)&&['m','Damit sie keine der beiden schneidet, muss sie parallel sein: gleiche Steigung '+CM(V('m')+' = '+mText(s))+'.'],
           !(bb>b1+1e-9&&bb<b2-1e-9)&&['b',BL+' muss zwischen '+zahl(b1)+' und '+zahl(b2)+' liegen'+(gleich(bb,b1)||gleich(bb,b2)?', nicht genau dort: Sonst ist es dieselbe Gerade.':'.')]];}
       else if(art==='durch'){const s=pick(STG_ALLE),b=zufB(-4,4,true);let c;do{c=zufB(-5,5,false);}while(c===b);T=fn('f',term(s,b));
@@ -1755,9 +1759,10 @@ const GEN={
         frage='Gib eine '+(fallend?'fallende':'steigende')+' Gerade an, die die y-Achse im selben Punkt schneidet wie die Gerade von '+V('f')+'.';
         const bsp=fallend?stg(-1,1):stg(1,1);
         sch=[zl('Gleicher Punkt auf der y-Achse: '+CB(V('b')+' = '+zahl(b))+'.',null,true),zl(fallend?'Fallend: '+ML+' negativ, zum Beispiel '+CM(V('m')+' = −1')+'.':'Steigend: '+ML+' positiv, zum Beispiel '+CM(V('m')+' = 1')+'.',null,true),zl(fn('h',term(bsp,b)))];
+        eigen=v=>[sch[0],zl((fallend?'Fallend: '+ML+' negativ':'Steigend: '+ML+' positiv')+', du hast '+CM(V('m')+' = '+einT(v.m))+' gewählt.',null,true),zl(fn('h',eigT(v)))];
         pr=(mm,bb)=>[(fallend?!(mm<0):!(mm>0))&&['m',fallend?'Fallend heißt: '+ML+' ist negativ.':'Steigend heißt: '+ML+' ist positiv.'],!gleich(bb,b)&&['b',V('f')+' schneidet die y-Achse bei '+zahl(b)+': '+CB(V('b')+' = '+zahl(b))+'.']];}
       return {form:'eingabe',einKl:'pq',bruch:true,bild,frage,term:T,erkl:'erkunder',denk:art==='fall'?DENK.gleichb:DENK.parallel,
-        ein:'<span class="pqf">'+ML+' = '+FELD('m')+'</span><span class="pqf">'+BL+' = '+FELD('b')+'</span>',schritte:sch,rtitel:art==='durch'?'Lösung':'Eine mögliche Lösung',
+        ein:'<span class="pqf">'+ML+' = '+FELD('m')+'</span><span class="pqf">'+BL+' = '+FELD('b')+'</span>',schritte:sch,rtitel:art==='durch'?'Lösung':'Eine mögliche Lösung',eigen:eigen?v=>({schritte:eigen(v),rtitel:'Deine Lösung'}):null,
         pruefe:v=>{const mm=num(v.m),bb=num(v.b),r=pr(mm,bb).filter(Boolean);if(!r.length)return {ok:true};return {ok:false,hinweis:r[0][1],falsch:r.map(x=>x[0])};}};}      // pr: erst m, dann b, je für sich; der Hinweis nennt den ersten Fehler
   }
 };
@@ -2004,6 +2009,8 @@ const FORM={
     ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;if(w.keine){w.keine=false;ohneUrteil();}w[um.dataset.w]=b.dataset.v;um.classList.remove('ok','falsch');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));
       if(um.dataset.w==='art'){const pl=$('.pl',m);if(pl)pl.textContent=b.dataset.v;}zeig();})));
     A.pruefe=()=>{const r=auf.pruefe(w),F=r.falsch||[];ohneUrteil();if(!r.ok&&!F.length)return r;
+      /* offene Aufgabe, eigene Antwort richtig: Die Lösung zeigt die eigene Antwort statt des Beispiels (Lehrkraft 22.11.2026). auf.eigen(w) liefert Schritte und Überschrift */
+      if(r.ok&&auf.eigen&&!w.keine){const e=auf.eigen(w);if(e){auf.schritte=e.schritte;const z=$('.rechnung .zeilen',m),h=$('.rechnung h3.lt',m);if(z)z.innerHTML='';if(h&&e.rtitel)h.textContent=e.rtitel;}}
       if(w.keine){if(kb)kb.classList.add(F.includes('keine')?'falsch':'ok');return r;}
       felder.forEach(f=>f.classList.add(F.includes(f.dataset.f)?'falsch':'ok'));ums.forEach(u=>u.classList.add(F.includes(u.dataset.w)?'falsch':'ok'));return r;};
     A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));if(kb)kb.disabled=true;};
