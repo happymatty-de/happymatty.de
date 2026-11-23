@@ -245,7 +245,6 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .platz{display:flex;flex-direction:column;align-items:center;gap:.25rem;min-width:0}
 .pl-l{font-size:.95rem;color:var(--grau);white-space:nowrap;min-height:1.3em}
 .pl-f{width:100%;min-height:3rem;border:.14rem dashed #9FB3C6;border-radius:.5rem;background:#FAFCFE;display:flex;align-items:center;justify-content:center;font-size:1.4rem;white-space:nowrap}
-.platz.voll .pl-f{border-style:solid;border-color:#9CC98F;background:#F3F9F1}
 .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
 .chip{background:#fff;border:.13rem solid var(--blau);border-radius:.7rem;min-height:3rem;min-width:4.4rem;font-size:1.4rem;padding:.25rem .9rem;box-shadow:0 .18rem 0 #C9D6E2;color:var(--text);white-space:nowrap}
 .chip:active{transform:translateY(.1rem);box-shadow:none}
@@ -859,6 +858,30 @@ button.eka.tipp{background:#E3EFDF}
 .zl.zul,.zl.zul.text{font-family:var(--satz)}
 @media (max-width:760px){.tf-hand{font-size:1.7rem}}
 
+/* ---------- 23.11.2026 (Lehrkraft): Kärtchen legen mit Andocken ----------
+   Ein Kärtchen liegt im Platz (.kplatz), blau: gelegt, noch ohne Urteil. Der nächste freie Platz ist blau umrandet (QF1). Nach „Prüfen“ grün mit ✓ oder rot mit ✗
+   an jedem gelegten Kärtchen, die übrigen im Vorrat verblassen; von der Hilfe gelegte hellgrün, ohne Zeichen. Der Platz eines Kärtchens im Vorrat (.kheim) behält
+   seine Größe, damit dort nichts nachrückt. --of ist die Farbe des Kärtchens, --og sein Grund. */
+.kplatz{position:relative;box-sizing:border-box;--of:var(--blau);--og:#F1F7FB}
+.kplatz.naechst{border-color:var(--blau);background:#F4F9FC}
+.kplatz.voll{border:0;background:none;padding:0}
+.pl2.kplatz{min-height:3rem}      /* so hoch wie ein Kärtchen: Beim Legen rückt nichts */
+.kplatz.voll small{display:none}
+.kplatz .chip{flex:1 1 auto;align-self:stretch;width:100%;min-width:0;margin:0;background:var(--og);border-color:var(--of)}
+.kplatz.ok{--of:var(--gruen);--og:#EAF4E6}
+.kplatz.falsch{--of:var(--rot);--og:#F8E9E8}
+.kplatz.gegeben{--of:#9CC98F;--og:#F3F9F1}
+.kplatz.ok .chip,.kplatz.falsch .chip,.kplatz.gegeben .chip{box-shadow:none}
+.kplatz .chip:disabled{opacity:1;color:var(--text);transform:none;cursor:default}
+.kplatz.ok::after,.kplatz.falsch::after{position:absolute;top:-.5rem;right:-.5rem;z-index:1;width:1.25rem;height:1.25rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
+  color:#fff;font-family:var(--satz);font-size:.86rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.kplatz.ok::after{content:'✓';background:var(--gruen)}
+.kplatz.falsch::after{content:'✗';background:var(--rot)}
+.kheim{display:inline-flex}
+.kdock.fertig .kheim:empty{display:none}      /* nach „Prüfen“ fällt der leere Teil des Vorrats weg, wie beim Zuordnen */
+.kflug{position:relative;z-index:5}
+@media (hover:hover){.kplatz .chip:hover:not(:disabled){background:var(--og)}}
+
 </style></head>
 <body><div id="app"></div>
 <script>
@@ -867,7 +890,7 @@ button.eka.tipp{background:#E3EFDF}
    QF1-Training „Vom Term zur Parabel“: sechs Aufgabentypen, die Anwendung „Das Werkstor“, Erklärungen und Erkunder.
    Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    ===================================================================== */
-const VERSION='v10.2';
+const VERSION='v10.3';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1761,20 +1784,44 @@ const FORM={
     k.addEventListener('pointerup',ende);k.addEventListener('pointercancel',ende);
     setHaupt('weiter',false);
   },
-  /* Build: Teilprodukte. Welche vier Produkte entstehen? Ein richtiges Kärtchen wandert an seinen Platz; erst dann steht darunter, woraus es entstanden ist */
+  /* Build: Kärtchen legen mit Andocken (Lehrkraft 23.11.2026: „Gleich so umbauen in beiden Trainings.“). Welche vier Produkte entstehen? Ein Tipp legt ein Kärtchen
+     auf den nächsten freien Platz, blau und ohne Urteil; ein Tipp auf ein gelegtes legt es zurück, sein Platz im Vorrat bleibt frei, damit dort nichts nachrückt.
+     Die Reihenfolge der Produkte ist egal, jedes zählt einmal. Liegen vier, „Prüfen“: ✓ oder ✗ an jedem Kärtchen, unter den richtigen ihre Herkunft („4x · 1“),
+     die übrigen Kärtchen verblassen, rechts die Rechnung. Vorher kam das Urteil bei jedem Tipp: Raten lohnte sich, nach einem Fehler ging es an einer Aufgabe weiter,
+     die schon als falsch zählte, und „Weiter“ war mitten in der Aufgabe aktiv. Die Herkunft steht erst nach „Prüfen“ da: vorher verriete sie, dass ein Kärtchen stimmt. */
   legen(auf,m){
-    m.className='buehne';const pr=auf.pr,voll=pr.map(()=>false);
-    m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="plaetze">'+pr.map((p,j)=>'<div class="platz" data-j="'+j+'"><span class="pl-f"></span><span class="pl-l"></span></div>').join('')+'</div>'+
-      '<div class="chips">'+auf.chips.map((c,j)=>'<button class="chip" data-j="'+j+'">'+c.html+'</button>').join('')+'</div><div class="rueck" hidden></div></section>'+
-      rechnungKarte('Rechnung','');
-    const lege=(j,b)=>{const p=$('.platz[data-j="'+j+'"]',m);$('.pl-f',p).innerHTML='<span>'+auf.chipHTML(pr[j])+'</span>';$('.pl-l',p).innerHTML=pr[j].label;p.classList.add('voll');voll[j]=true;if(b)b.remove();};
+    m.className='buehne';const pr=auf.pr,C=auf.chips,zu=pr.map(()=>null),fest=pr.map(()=>false);      // zu[p]=j: Auf Platz p liegt das Kärtchen j; fest[p]: von der Hilfe gelegt
+    m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="kdock"><div class="plaetze">'+pr.map((p,i)=>'<div class="platz" data-p="'+i+'"><span class="pl-f kplatz"></span><span class="pl-l"></span></div>').join('')+'</div>'+
+      '<div class="chips">'+C.map((c,j)=>'<span class="kheim" data-j="'+j+'"><button class="chip" data-j="'+j+'">'+c.html+'</button></span>').join('')+'</div></div><div class="rueck" hidden></div></section>'+
+      rechnungKarte('Rechnung','').replace('karte rechnung','karte rechnung ordr');      // am Handy keine leere Karte unter der Aufgabe, solange die Lösung fehlt (wie Rechnung ordnen)
+    const kp=p=>$('.platz[data-p="'+p+'"] .kplatz',m),lab=p=>$('.platz[data-p="'+p+'"] .pl-l',m),chip=j=>$('.chip[data-j="'+j+'"]',m),heim=j=>$('.kheim[data-j="'+j+'"]',m),wo=j=>zu.indexOf(j);
+    const gleich=(c,p)=>c.k===p.k&&c.e===p.e;
+    const zeig=()=>{const frei=zu.indexOf(null);zu.forEach((j,p)=>{kp(p).classList.toggle('voll',j!==null);kp(p).classList.toggle('naechst',p===frei&&!A.fertig);});
+      if(!A.fertig)setHaupt('pruefen',frei<0);};
+    /* Kärtchen an ihren neuen Ort hängen und von der alten Stelle dorthin gleiten lassen; ihr Platz im Vorrat behält seine Größe */
+    const bewege=zuege=>{const vor=zuege.map(z=>chip(z[0]).getBoundingClientRect());
+      zuege.forEach(([j,ziel])=>{const h=heim(j);if(ziel!==h){const r=h.getBoundingClientRect();h.style.minWidth=r.width+'px';h.style.minHeight=r.height+'px';}ziel.appendChild(chip(j));if(ziel===h){h.style.minWidth='';h.style.minHeight='';}});
+      zeig();if(RUHIG)return;
+      zuege.forEach(([j],i)=>{const b=chip(j),n=b.getBoundingClientRect(),dx=vor[i].left-n.left,dy=vor[i].top-n.top;if(!b.animate||(!dx&&!dy))return;
+        b.classList.add('kflug');b.animate([{transform:'translate('+dx+'px,'+dy+'px)'},{transform:'none'}],{duration:260,easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish=()=>b.classList.remove('kflug');});};
+    const lege=(j,p)=>{const von=wo(j),alt=zu[p];if(alt===j)return;const zuege=[[j,kp(p)]];if(von>=0)zu[von]=null;if(alt!==null){zuege.push([alt,heim(alt)]);}zu[p]=j;bewege(zuege);};
+    const loese=j=>{const p=wo(j);if(p<0||fest[p])return;zu[p]=null;bewege([[j,heim(j)]]);};
+    $('.kdock',m).addEventListener('click',ev=>{if(A.fertig)return;const b=ev.target.closest('.chip');if(!b||b.disabled)return;const j=+b.dataset.j;
+      if(wo(j)>=0)return loese(j);const frei=zu.indexOf(null);if(frei>=0)lege(j,frei);});
+    /* Hilfe: Die erste Zeile der Rechnung nennt alle vier Produkte; „Nächster Schritt“ legt sie deshalb alle hin, hellgrün, fest und ohne Urteil, mit ihrer Herkunft.
+       Was vorher lag, geht zurück. „Lösung“ ebenso. Beides zählt nicht. */
+    const gibAlle=()=>{if(fest.every(f=>f))return;zu.forEach((j,p)=>{if(j!==null&&!fest[p])loese(j);});
+      pr.forEach((q,p)=>{const j=C.findIndex((c,k)=>gleich(c,q)&&wo(k)<0);lege(j,p);fest[p]=true;kp(p).classList.add('gegeben');chip(j).disabled=true;lab(p).innerHTML=q.label;});zeig();};
     A.gezeigt=0;
-    $$('.chip',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||voll.every(v=>v))return;const c=auf.chips[+b.dataset.j],j=pr.findIndex((p,i)=>!voll[i]&&p.k===c.k&&p.e===c.e);
-      if(j>=0){lege(j,b);if(voll.every(v=>v))abgeben(true);}
-      else{b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert');abgeben(false,c.hinweis||'Dieses Produkt entsteht hier nicht.');}}));
-    A.sperre=()=>{pr.forEach((p,j)=>{if(!voll[j])lege(j);});$$('.chip',m).forEach(b=>b.disabled=true);};
-    A.hilfeSchritt=()=>A.sperre();
-    setHaupt('weiter',false);
+    A.hilfeSchritt=()=>gibAlle();
+    A.pruefe=()=>{A.geprueft=true;const frei=pr.map(()=>true),falsch=[];
+      zu.forEach((j,p)=>{if(fest[p])return;const i=pr.findIndex((q,k)=>frei[k]&&gleich(C[j],q));
+        if(i>=0){frei[i]=false;kp(p).classList.add('ok');lab(p).innerHTML=pr[i].label;}else{kp(p).classList.add('falsch');falsch.push(j);}});
+      if(!falsch.length)return {ok:true};
+      const c=C[falsch[0]],h=c.hinweis||'Dieses Produkt entsteht hier nicht.';
+      return {ok:false,hinweis:falsch.length>1?'Bei '+c.html+': '+h:h};};      // stimmen mehrere nicht, sagt die Rückmeldung, von welchem Kärtchen sie spricht
+    A.sperre=()=>{if(!A.geprueft)gibAlle();$$('.chip',m).forEach(b=>b.disabled=true);$('.kdock',m).classList.add('fertig');zeig();};      // nach „Prüfen“ bleiben die eigenen Kärtchen mit ihrem Urteil liegen, die übrigen verblassen
+    zeig();
   },
   /* Build: Zuordnen. Einen Term antippen, dann die Aussage, die man an ihm direkt abliest; eine Aussage bleibt übrig */
   /* Build: Zuordnen mit Andocken (Lehrkraft 22.11.2026). Oben steht jede Gleichung mit einem leeren Platz, darunter liegen die Aussagen als Vorrat, eine bleibt übrig.
@@ -1878,7 +1925,7 @@ function loesung(){const n=A.auf.schritte.length;if(A.fertig)return;hilfeGenutzt
 
 /* ---------- Auswertung ---------- */
 function abgeben(ok,hinweis,art){
-  const erst=!A.gewertet,einmal=A.form==='wahl'||A.form==='wisch'||A.form==='mehr',zeigt=['eingabe','punkte','ziel','zuordnen','ordnen'].includes(A.form),still=einmal||zeigt||A.form==='ordnen'||A.form==='legen';let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
+  const erst=!A.gewertet,einmal=A.form==='wahl'||A.form==='wisch'||A.form==='mehr',zeigt=['eingabe','punkte','ziel','zuordnen','ordnen','legen'].includes(A.form),still=einmal||zeigt;let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
   if(erst){
     A.gewertet=true;const zaehlt=!A.hilfe&&art!=='loesung',alt=band(A.t);
     S.zeiten.push({typ:A.t.titel,key:A.key,s:Math.round((performance.now()-A.start)/100)/10,ok:ok&&art!=='loesung',hilfe:!zaehlt});

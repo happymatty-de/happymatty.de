@@ -245,7 +245,6 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .platz{display:flex;flex-direction:column;align-items:center;gap:.25rem;min-width:0}
 .pl-l{font-size:.95rem;color:var(--grau);white-space:nowrap;min-height:1.3em}
 .pl-f{width:100%;min-height:3rem;border:.14rem dashed #9FB3C6;border-radius:.5rem;background:#FAFCFE;display:flex;align-items:center;justify-content:center;font-size:1.4rem;white-space:nowrap}
-.platz.voll .pl-f{border-style:solid;border-color:#9CC98F;background:#F3F9F1}
 .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.5rem}
 .chip{background:#fff;border:.13rem solid var(--blau);border-radius:.7rem;min-height:3rem;min-width:4.4rem;font-size:1.4rem;padding:.25rem .9rem;box-shadow:0 .18rem 0 #C9D6E2;color:var(--text);white-space:nowrap}
 .chip:active{transform:translateY(.1rem);box-shadow:none}
@@ -735,7 +734,6 @@ svg.achse .gt{font-size:13px}svg.achse .gt.k0{font-weight:700}
 .term.lg2{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem}
 .pl2{display:inline-flex;align-items:center;justify-content:center;min-width:6.5rem;min-height:2.9rem;border:.14rem dashed #9FB3C6;border-radius:.55rem;background:#FAFCFE;padding:0 .5rem}
 .pl2 small{font-size:.8rem;color:#9AA4AF;font-family:var(--satz)}
-.pl2.voll{border:.14rem solid var(--gruen);background:#EAF4E6;animation:rein .3s}
 .term.lg2 .mal{color:#39424C}
 /* Watch: Info 1 bis 3 */
 .watch .wz{font-size:1.45rem;min-height:5rem}
@@ -944,6 +942,30 @@ svg.zieh{touch-action:none}
    Bei „Wurzel ziehen“, Level 2, stehen Umformungsstrich und Befehl in Standardgrau wie in den Musterlösungen (.opgrau). */
 .rechnung.opgrau .zl .op{color:var(--grau)}
 
+/* ---------- 23.11.2026 (Lehrkraft): Kärtchen legen mit Andocken ----------
+   Ein Kärtchen liegt im Platz (.kplatz), blau: gelegt, noch ohne Urteil. Der nächste freie Platz ist blau umrandet (QF1). Nach „Prüfen“ grün mit ✓ oder rot mit ✗
+   an jedem gelegten Kärtchen, die übrigen im Vorrat verblassen; von der Hilfe gelegte hellgrün, ohne Zeichen. Der Platz eines Kärtchens im Vorrat (.kheim) behält
+   seine Größe, damit dort nichts nachrückt. --of ist die Farbe des Kärtchens, --og sein Grund. */
+.kplatz{position:relative;box-sizing:border-box;--of:var(--blau);--og:#F1F7FB}
+.kplatz.naechst{border-color:var(--blau);background:#F4F9FC}
+.kplatz.voll{border:0;background:none;padding:0}
+.pl2.kplatz{min-height:3rem}      /* so hoch wie ein Kärtchen: Beim Legen rückt nichts */
+.kplatz.voll small{display:none}
+.kplatz .chip{flex:1 1 auto;align-self:stretch;width:100%;min-width:0;margin:0;background:var(--og);border-color:var(--of)}
+.kplatz.ok{--of:var(--gruen);--og:#EAF4E6}
+.kplatz.falsch{--of:var(--rot);--og:#F8E9E8}
+.kplatz.gegeben{--of:#9CC98F;--og:#F3F9F1}
+.kplatz.ok .chip,.kplatz.falsch .chip,.kplatz.gegeben .chip{box-shadow:none}
+.kplatz .chip:disabled{opacity:1;color:var(--text);transform:none;cursor:default}
+.kplatz.ok::after,.kplatz.falsch::after{position:absolute;top:-.5rem;right:-.5rem;z-index:1;width:1.25rem;height:1.25rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
+  color:#fff;font-family:var(--satz);font-size:.86rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.kplatz.ok::after{content:'✓';background:var(--gruen)}
+.kplatz.falsch::after{content:'✗';background:var(--rot)}
+.kheim{display:inline-flex}
+.kdock.fertig .kheim:empty{display:none}      /* nach „Prüfen“ fällt der leere Teil des Vorrats weg, wie beim Zuordnen */
+.kflug{position:relative;z-index:5}
+@media (hover:hover){.kplatz .chip:hover:not(:disabled){background:var(--og)}}
+
 </style></head>
 <body><div id="app"></div>
 <script>
@@ -953,7 +975,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v8.2';
+const VERSION='v8.3';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -1470,13 +1492,13 @@ const GEN={
       if(opts.length<4&&m>=1)opts.push({html:Fh+' · ('+glied(m,2)+(n<0?' − ':' + ')+glied(Math.abs(n),1)+')',hinweis:'Beim Teilen durch '+X+' wird aus '+X+Q+' ein '+X+', und aus '+zahl(Math.abs(w.B))+X+' wird eine Zahl.'});
       return {form:'wahl',frage:'Klammere so weit wie möglich aus.',term:w.term+' =',denk:DENK.aus,erkl:'info3',w,opts:shuffle(opts.slice(0,4))};},
     b(){const w=WEG.aus('k'),{g,m,n,Fh,inner}=w,chips=[];
-      chips.push({html:Fh,ziel:0},{html:inner,ziel:1});
-      if(g>1)chips.push({html:(w.s<0?'−':'')+X,hinweis:'Nicht so weit wie möglich: Auch die '+g+' steckt in beiden Gliedern.'});
-      if(g>1)chips.push({html:zahl(w.Fk),hinweis:'Auch '+X+' steckt in beiden Gliedern.'});
-      chips.push({html:lin(m,-n),hinweis:'Vorzeichen: Ausmultiplizieren muss wieder '+w.term+' ergeben.'});
-      chips.push({html:'('+glied(m,2)+(n<0?' − ':' + ')+glied(Math.abs(n),1)+')',hinweis:'Beim Teilen durch '+X+' wird aus '+X+Q+' ein '+X+'.'});
-      if(g>1)chips.push({html:lin(m,g*n),hinweis:'Auch '+zahl(Math.abs(w.B))+X+' wird durch '+Fh.replace('−','')+' geteilt.'});
-      if(g===1)chips.push({html:glied(w.s*2,1),hinweis:'Die 2 steckt nicht in beiden Gliedern.'});
+      chips.push({html:Fh,ziel:0,pl:0},{html:inner,ziel:1,pl:1});      // pl: der Platz, auf den das Kärtchen kommt (eine Klammer in die Klammer, alles andere davor)
+      if(g>1)chips.push({html:(w.s<0?'−':'')+X,pl:0,hinweis:'Nicht so weit wie möglich: Auch die '+g+' steckt in beiden Gliedern.'});
+      if(g>1)chips.push({html:zahl(w.Fk),pl:0,hinweis:'Auch '+X+' steckt in beiden Gliedern.'});
+      chips.push({html:lin(m,-n),pl:1,hinweis:'Vorzeichen: Ausmultiplizieren muss wieder '+w.term+' ergeben.'});
+      chips.push({html:'('+glied(m,2)+(n<0?' − ':' + ')+glied(Math.abs(n),1)+')',pl:1,hinweis:'Beim Teilen durch '+X+' wird aus '+X+Q+' ein '+X+'.'});
+      if(g>1)chips.push({html:lin(m,g*n),pl:1,hinweis:'Auch '+zahl(Math.abs(w.B))+X+' wird durch '+Fh.replace('−','')+' geteilt.'});
+      if(g===1)chips.push({html:glied(w.s*2,1),pl:0,hinweis:'Die 2 steckt nicht in beiden Gliedern.'});
       return {form:'legen2',frage:'Klammere so weit wie möglich aus: Lege die Kärtchen an ihren Platz.',term:w.term,denk:DENK.aus,erkl:'info3',w,
         plaetze:['vor die Klammer','in die Klammer'],chips:shuffle(chips),schritte:w.aus};},
     w(){const w=WEG.aus('w'),x2=r4(-w.n/w.m),kand=[[[x2],'Die 0 fehlt: Auch der Faktor '+X+' vor der Klammer kann null werden. Teile nie durch '+X+'.'],[[0,-x2],'Vorzeichen: '+w.inner.replace(/^\(|\)$/g,'')+' = 0 heißt '+X+' = '+zahl(x2)+'.']];
@@ -1931,21 +1953,42 @@ const FORM={
     A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));kb.disabled=true;};
     zeig();
   },
-  /* Build: Ausklammern mit Kärtchen. Ein Kärtchen vor die Klammer, eines in die Klammer; falsche liegen dabei (QF2) */
+  /* Build: Ausklammern mit Kärtchen, mit Andocken (Lehrkraft 23.11.2026: „Gleich so umbauen in beiden Trainings.“). Der Platz ergibt sich aus dem Kärtchen:
+     Eine Klammer kommt in die Klammer, alles andere davor (pl in der Aufgabe). Ein Tipp legt das Kärtchen dorthin, blau und ohne Urteil; liegt dort schon eins,
+     geht es zurück. Ein Tipp auf ein gelegtes Kärtchen legt es zurück, sein Platz im Vorrat bleibt frei. Liegen beide, „Prüfen“: ✓ oder ✗ an jedem, die übrigen
+     verblassen, rechts die Rechnung. Vorher kam das Urteil bei jedem Tipp: Raten lohnte sich, und nach einem Fehler ging es an einer Aufgabe weiter, die schon als
+     falsch zählte. Ein eigener Tipp auf den Platz entfällt: Der Platz hängt ohnehin an der Form des Kärtchens. */
   legen2(auf,m){
-    m.className='buehne';const voll=[false,false];
-    m.innerHTML='<section class="karte">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div>'+
-      '<p class="term lg2"><span>'+auf.term+' =</span> <span class="pl2" data-i="0"><small>'+auf.plaetze[0]+'</small></span><span class="mal">·</span><span class="pl2" data-i="1"><small>'+auf.plaetze[1]+'</small></span></p>'+
-      '<div class="chips">'+auf.chips.map((c,j)=>'<button class="chip" data-j="'+j+'">'+c.html+'</button>').join('')+'</div><div class="rueck" hidden></div></section>'+
-      rechnungKarte('Rechnung','');
-    const lege=(i,b)=>{const c=auf.chips.find(x=>x.ziel===i),p=$('.pl2[data-i="'+i+'"]',m);p.innerHTML=c.html;p.classList.add('voll');voll[i]=true;if(b)b.remove();else{const bb=$('.chip[data-j="'+auf.chips.indexOf(c)+'"]',m);if(bb)bb.remove();}};
-    $$('.chip',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||voll.every(v=>v))return;const c=auf.chips[+b.dataset.j];
-      if(c.ziel!==undefined&&!voll[c.ziel]){lege(c.ziel,b);if(voll.every(v=>v))abgeben(true);}
-      else{b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert');abgeben(false,c.hinweis||'Dieses Kärtchen passt nicht.');}}));
+    m.className='buehne';const C=auf.chips,zu=[null,null],fest=[false,false];      // zu[p]=j: Auf Platz p (0 vor, 1 in der Klammer) liegt das Kärtchen j; fest[p]: von der Hilfe gelegt
+    const art=c=>c.pl!==undefined?c.pl:c.ziel!==undefined?c.ziel:(/^\s*\(/.test(c.html)?1:0);
+    m.innerHTML='<section class="karte">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div><div class="kdock">'+
+      '<p class="term lg2"><span>'+auf.term+' =</span> <span class="pl2 kplatz" data-p="0"><small>'+auf.plaetze[0]+'</small></span><span class="mal">·</span><span class="pl2 kplatz" data-p="1"><small>'+auf.plaetze[1]+'</small></span></p>'+
+      '<div class="chips">'+C.map((c,j)=>'<span class="kheim" data-j="'+j+'"><button class="chip" data-j="'+j+'">'+c.html+'</button></span>').join('')+'</div></div><div class="rueck" hidden></div></section>'+
+      rechnungKarte('Rechnung','').replace('karte rechnung','karte rechnung ordr');      // am Handy keine leere Karte unter der Aufgabe, solange die Lösung fehlt (wie Rechnung ordnen)
+    const kp=p=>$('.kplatz[data-p="'+p+'"]',m),chip=j=>$('.chip[data-j="'+j+'"]',m),heim=j=>$('.kheim[data-j="'+j+'"]',m),wo=j=>zu.indexOf(j);
+    const zeig=()=>{zu.forEach((j,p)=>kp(p).classList.toggle('voll',j!==null));if(!A.fertig)setHaupt('pruefen',zu.every(j=>j!==null));};
+    /* Kärtchen an ihren neuen Ort hängen und von der alten Stelle dorthin gleiten lassen; ihr Platz im Vorrat behält seine Größe */
+    const bewege=zuege=>{const vor=zuege.map(z=>chip(z[0]).getBoundingClientRect());
+      zuege.forEach(([j,ziel])=>{const h=heim(j);if(ziel!==h){const r=h.getBoundingClientRect();h.style.minWidth=r.width+'px';h.style.minHeight=r.height+'px';}ziel.appendChild(chip(j));if(ziel===h){h.style.minWidth='';h.style.minHeight='';}});
+      zeig();if(RUHIG)return;
+      zuege.forEach(([j],i)=>{const b=chip(j),n=b.getBoundingClientRect(),dx=vor[i].left-n.left,dy=vor[i].top-n.top;if(!b.animate||(!dx&&!dy))return;
+        b.classList.add('kflug');b.animate([{transform:'translate('+dx+'px,'+dy+'px)'},{transform:'none'}],{duration:260,easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish=()=>b.classList.remove('kflug');});};
+    const lege=(j,p)=>{const alt=zu[p];if(alt===j)return;const zuege=[[j,kp(p)]];if(alt!==null)zuege.push([alt,heim(alt)]);zu[p]=j;bewege(zuege);};
+    const loese=j=>{const p=wo(j);if(p<0||fest[p])return;zu[p]=null;bewege([[j,heim(j)]]);};
+    $('.kdock',m).addEventListener('click',ev=>{if(A.fertig)return;const b=ev.target.closest('.chip');if(!b||b.disabled)return;const j=+b.dataset.j;
+      if(wo(j)>=0)return loese(j);const p=art(C[j]);if(!fest[p])lege(j,p);});
+    /* Hilfe: „Nächster Schritt“ zeigt die Zeile mit dem Faktor vor der Klammer und legt ihn hin, hellgrün, fest und ohne Urteil; was dort lag, geht zurück.
+       Der zweite Schritt ist die Lösung und legt auch die Klammer hin. Beides zählt nicht. */
+    const gib=p=>{if(fest[p])return;const j=C.findIndex(c=>c.ziel===p);if(zu[p]!==null&&zu[p]!==j)loese(zu[p]);lege(j,p);fest[p]=true;kp(p).classList.add('gegeben');chip(j).disabled=true;};
     A.gezeigt=0;
-    A.sperre=()=>{[0,1].forEach(i=>{if(!voll[i])lege(i);});$$('.chip',m).forEach(b=>b.disabled=true);};
-    A.hilfeSchritt=()=>A.sperre();
-    setHaupt('weiter',false);
+    A.hilfeSchritt=n=>{if(n===1)gib(0);};
+    A.pruefe=()=>{A.geprueft=true;const falsch=[];
+      zu.forEach((j,p)=>{if(fest[p])return;const ok=C[j].ziel===p;kp(p).classList.add(ok?'ok':'falsch');if(!ok)falsch.push(p);});
+      if(!falsch.length)return {ok:true};
+      const h=C[zu[falsch[0]]].hinweis||'Dieses Kärtchen passt nicht.';
+      return {ok:false,hinweis:falsch.length>1?['Vor der Klammer: ','In der Klammer: '][falsch[0]]+h:h};};      // stimmen beide nicht, sagt die Rückmeldung, von welchem Platz sie spricht
+    A.sperre=()=>{if(!A.geprueft){gib(0);gib(1);}$$('.chip',m).forEach(b=>b.disabled=true);$('.kdock',m).classList.add('fertig');zeig();};      // nach „Prüfen“ bleiben die eigenen Kärtchen mit ihrem Urteil liegen, die übrigen verblassen
+    zeig();
   },
 };
 
@@ -1970,7 +2013,7 @@ function loesung(){const n=A.auf.schritte.length;if(A.fertig)return;hilfeGenutzt
 
 /* ---------- Auswertung ---------- */
 function abgeben(ok,hinweis,art){
-  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse'].includes(A.form),zeigt=['eingabe','menge','ordnen'].includes(A.form),still=einmal||zeigt||A.form==='ordnen'||A.form==='legen2';let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
+  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse'].includes(A.form),zeigt=['eingabe','menge','ordnen','legen2'].includes(A.form),still=einmal||zeigt;let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
   if(erst){
     A.gewertet=true;const zaehlt=!A.hilfe&&art!=='loesung',alt=band(A.t);
     S.zeiten.push({typ:A.t.titel,key:A.key,s:Math.round((performance.now()-A.start)/100)/10,ok:ok&&art!=='loesung',hilfe:!zaehlt});
