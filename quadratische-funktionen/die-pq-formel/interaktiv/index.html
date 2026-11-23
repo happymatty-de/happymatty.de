@@ -1126,7 +1126,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v6';
+const VERSION='v6.1';
 const TITEL='Die <i>p</i>,<i>q</i>-Formel',KURZ='QF3';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Gleichungen lösen'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -2034,12 +2034,14 @@ const FORM={
   /* Build: Rechnung ordnen mit Andocken (Lehrkraft 23.11.2026: „ja dein Vorschlag ist gut. Bau es so um.“). Ein Tipp legt eine Zeile auf den nächsten freien Platz der eigenen
      Rechnung, blau und ohne Urteil; ein Tipp auf eine gelegte Zeile legt sie zurück, ihr Platz bleibt als Lücke frei und wird als Nächstes gefüllt. Liegen alle, „Prüfen“:
      ✓ oder ✗ an jeder Zeile, je nachdem, ob sie an ihrer Stelle steht; rechts die Lösung. Vorher kam das Urteil bei jedem Tipp: Raten lohnte sich, und nach einem Fehler
-     ging es an einer Aufgabe weiter, die schon als falsch zählte. Sichtbar sind nur die belegten Plätze und der nächste freie, damit die Karte nicht doppelt so hoch wird. */
+     ging es an einer Aufgabe weiter, die schon als falsch zählte. Sichtbar sind nur die belegten Plätze und der nächste freie, damit die Karte nicht doppelt so hoch wird.
+     Die Zeilen tragen keinen Umformungsstrich und keinen Befehl: „| − 3“ verriet, dass als Nächstes die Zeile mit „= −3“ kommt (Lehrkraft 23.11.2026: „ja lass die Befehle
+     in den Kärtchen weg“). In der Lösung rechts stehen sie. */
   ordnen(auf,m){
     m.className='buehne';const s=auf.schritte,n=s.length,zu=s.map(()=>null),fest=s.map(()=>false);      // zu[p]=i: Auf Platz p liegt die Zeile i; fest[p]: von der Hilfe gelegt
     let folge;do{folge=shuffle(s.map((z,i)=>i));}while(folge.every((x,i)=>x===i));
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="odock"><div class="oplaetze">'+s.map((z,p)=>'<div class="oplatz" data-p="'+p+'"></div>').join('')+'</div>'+
-      '<div class="opool">'+folge.map(i=>'<button class="zk ozk" data-i="'+i+'"><span>'+s[i].h+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</button>').join('')+'</div></div><div class="rueck" hidden></div></section>'+
+      '<div class="opool">'+folge.map(i=>'<button class="zk ozk" data-i="'+i+'"><span>'+s[i].h+'</span></button>').join('')+'</div></div><div class="rueck" hidden></div></section>'+
       rechnungKarte('Rechnung','').replace('karte rechnung','karte rechnung ordr'+(auf.kl?' '+auf.kl:''));
     const pool=$('.opool',m),platz=p=>$('.oplatz[data-p="'+p+'"]',m),zk=i=>$('.ozk[data-i="'+i+'"]',m),wo=i=>zu.indexOf(i);
     const zeig=()=>{const frei=zu.indexOf(null);let letzt=-1;zu.forEach((i,p)=>{if(i!==null)letzt=p;});
