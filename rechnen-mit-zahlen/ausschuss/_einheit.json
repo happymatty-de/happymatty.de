@@ -9,6 +9,11 @@
   "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "Ausschuss_Aufgabenblatt_v11.1.pdf", "stand": "10.11.2026" },
   "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "Ausschuss_Loesung_v11.1.pdf", "stand": "10.11.2026" },
   "interaktiv": { "vorhanden": false, "freigegeben": false },
+  "probetest": {
+    "test": { "vorhanden": true, "freigegeben": true, "quelle": "Ausschuss_Probetest_v1.pdf", "stand": "23.11.2026" },
+    "loesung": { "vorhanden": true, "freigegeben": true, "quelle": "Ausschuss_Probetest_Loesung_v1.pdf", "stand": "23.11.2026" },
+    "notentabelle": { "vorhanden": true, "freigegeben": true, "quelle": "Ausschuss_Probetest_Notentabelle_v1.pdf", "stand": "23.11.2026" }
+  },
   "kurztest": {
     "fassungen": [
       {
