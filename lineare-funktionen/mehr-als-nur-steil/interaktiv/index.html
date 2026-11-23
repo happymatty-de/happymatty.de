@@ -1240,6 +1240,35 @@ svg.zieh{touch-action:none}
 .denk .dz+.dz{margin-top:.35rem;padding-top:.35rem;border-top:.06rem solid #DDD2E6}
 .dnr{flex:none;box-sizing:border-box;min-width:1.2rem;height:1.2rem;padding:0 .2rem;border:.09rem solid var(--lila);border-radius:.3rem;background:#F4EFF7;color:var(--lila);font-size:.78rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;margin-top:.05rem}
 
+/* ---------- 23.11.2026 (Lehrkraft): Rechnung ordnen mit Andocken ----------
+   Oben die eigene Rechnung: die belegten Plätze und der nächste freie (gestrichelt, blau umrandet), darunter der Vorrat. Blau: gelegt, noch ohne Urteil.
+   Nach „Prüfen“ grün mit ✓ oder rot mit ✗ an jeder Zeile; von der Hilfe gelegte Zeilen hellgrün, ohne Zeichen. --of ist die Farbe der Zeile, --og ihr Grund. */
+.odock{display:flex;flex-direction:column;gap:.65rem;margin-top:.2rem}
+.oplaetze,.opool{display:flex;flex-direction:column;gap:.4rem}
+.opool:empty{display:none}
+.oplatz{box-sizing:border-box;min-height:3.1rem;display:flex;border:.13rem dashed #C4CDD6;border-radius:.7rem;position:relative;--of:var(--blau);--og:#F1F7FB}
+.oplatz.naechst{border-color:var(--blau);background:#F4F9FC}
+.oplatz.weg{display:none}
+.oplatz.voll{border:0;background:none}
+.oplatz .ozk{flex:1 1 auto;min-width:0;background:var(--og);border-color:var(--of)}
+.oplatz.ok{--of:var(--gruen);--og:#EAF4E6}
+.oplatz.falsch{--of:var(--rot);--og:#F8E9E8}
+.oplatz.gegeben{--of:#9CC98F;--og:#F3F9F1}
+.oplatz.ok .ozk,.oplatz.falsch .ozk,.oplatz.gegeben .ozk{box-shadow:none}
+.oplatz.ok::after,.oplatz.falsch::after{position:absolute;top:-.5rem;right:-.5rem;z-index:1;width:1.25rem;height:1.25rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
+  color:#fff;font-family:var(--satz);font-size:.86rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.oplatz.ok::after{content:'✓';background:var(--gruen)}
+.oplatz.falsch::after{content:'✗';background:var(--rot)}
+.ozk{text-align:left}
+.ozk:disabled{color:var(--text);transform:none;cursor:default}
+.oflug{position:relative;z-index:5}
+@media (max-width:760px){.rechnung.ordr:not(:has(.zeilen>*)){display:none}}      /* am Handy steht unter der Aufgabe keine leere Karte, solange die Lösung fehlt */
+@media (hover:hover){.oplatz .ozk:hover{background:var(--og)}.ozk:disabled:hover{transform:none;box-shadow:none}.oplatz .ozk:disabled:hover{background:var(--og)}}
+/* Roter Blitz hinter x² = negative Zahl, mit etwas Abstand: das Zeichen der Lehrkraft für „geht nicht“; darunter „Nicht möglich. Quadrate können nicht negativ sein.“
+   (Lehrkraft 23.11.2026, gilt für alle Lösungen). Gezeichnet statt als Zeichen ↯: Die eingebetteten Schriften haben es nicht. */
+.wblitz{display:inline-block;width:.62em;height:1em;margin-left:1em;vertical-align:-.16em;color:var(--rot)}
+.wblitz svg{display:block;width:100%;height:100%;overflow:visible}
+
 </style></head>
 <body><div id="app"></div>
 <script>
@@ -1249,7 +1278,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF2-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier die Wasserrakete.
    ===================================================================== */
-const VERSION='v5';
+const VERSION='v6';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -2067,18 +2096,39 @@ const FORM={
     A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));if(kb)kb.disabled=true;};
     zeig();
   },
-  /* Build: die Zeilen der Rechnung in die richtige Reihenfolge tippen */
+  /* Build: Rechnung ordnen mit Andocken (Lehrkraft 23.11.2026: „ja dein Vorschlag ist gut. Bau es so um.“). Ein Tipp legt eine Zeile auf den nächsten freien Platz der eigenen
+     Rechnung, blau und ohne Urteil; ein Tipp auf eine gelegte Zeile legt sie zurück, ihr Platz bleibt als Lücke frei und wird als Nächstes gefüllt. Liegen alle, „Prüfen“:
+     ✓ oder ✗ an jeder Zeile, je nachdem, ob sie an ihrer Stelle steht; rechts die Lösung. Vorher kam das Urteil bei jedem Tipp: Raten lohnte sich, und nach einem Fehler
+     ging es an einer Aufgabe weiter, die schon als falsch zählte. Sichtbar sind nur die belegten Plätze und der nächste freie, damit die Karte nicht doppelt so hoch wird. */
   ordnen(auf,m){
-    m.className='buehne';const s=auf.schritte;
+    m.className='buehne';const s=auf.schritte,n=s.length,zu=s.map(()=>null),fest=s.map(()=>false);      // zu[p]=i: Auf Platz p liegt die Zeile i; fest[p]: von der Hilfe gelegt
     let folge;do{folge=shuffle(s.map((z,i)=>i));}while(folge.every((x,i)=>x===i));
-    m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="pool">'+folge.map(i=>'<button class="zk" data-i="'+i+'"><span>'+s[i].h+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</button>').join('')+'</div><div class="rueck" hidden></div></section>'+
-      rechnungKarte('Rechnung','Tippe die Zeilen in der richtigen Reihenfolge an.');
+    m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="odock"><div class="oplaetze">'+s.map((z,p)=>'<div class="oplatz" data-p="'+p+'"></div>').join('')+'</div>'+
+      '<div class="opool">'+folge.map(i=>'<button class="zk ozk" data-i="'+i+'"><span>'+s[i].h+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</button>').join('')+'</div></div><div class="rueck" hidden></div></section>'+
+      rechnungKarte('Rechnung','').replace('karte rechnung','karte rechnung ordr'+(auf.kl?' '+auf.kl:''));
+    const pool=$('.opool',m),platz=p=>$('.oplatz[data-p="'+p+'"]',m),zk=i=>$('.ozk[data-i="'+i+'"]',m),wo=i=>zu.indexOf(i);
+    const zeig=()=>{const frei=zu.indexOf(null);let letzt=-1;zu.forEach((i,p)=>{if(i!==null)letzt=p;});
+      s.forEach((z,p)=>{const pl=platz(p);pl.classList.toggle('voll',zu[p]!==null);pl.classList.toggle('naechst',p===frei&&!A.fertig);pl.classList.toggle('weg',zu[p]===null&&(p>Math.max(letzt,frei)||!!A.fertig));});
+      if(!A.fertig)setHaupt('pruefen',frei<0);};
+    /* Zeilen an ihren neuen Ort hängen und von der alten Stelle dorthin gleiten lassen; was im Vorrat nachrückt, gleitet mit */
+    const bewege=fn=>{const alle=$$('.ozk',m),vor=alle.map(b=>b.getBoundingClientRect());fn();zeig();if(RUHIG)return;
+      alle.forEach((b,k)=>{const nn=b.getBoundingClientRect(),dx=vor[k].left-nn.left,dy=vor[k].top-nn.top;if(!b.animate||(!dx&&!dy))return;
+        b.classList.add('oflug');b.animate([{transform:'translate('+dx+'px,'+dy+'px)'},{transform:'none'}],{duration:260,easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish=()=>b.classList.remove('oflug');});};
+    const heim=i=>{const nach=folge.slice(folge.indexOf(i)+1).map(zk).find(b=>b&&b.parentNode===pool);pool.insertBefore(zk(i),nach||null);};      // zurück an ihren Platz im Vorrat
+    const lege=(i,p)=>{const von=wo(i),alt=zu[p];if(alt===i)return;bewege(()=>{if(von>=0)zu[von]=null;if(alt!==null){zu[p]=null;heim(alt);}zu[p]=i;platz(p).appendChild(zk(i));});};
+    const loese=i=>{const p=wo(i);if(p<0||fest[p])return;bewege(()=>{zu[p]=null;heim(i);});};
+    $('.odock',m).addEventListener('click',ev=>{if(A.fertig)return;const b=ev.target.closest('.ozk');if(!b||b.disabled)return;const i=+b.dataset.i;
+      if(wo(i)>=0)return loese(i);const frei=zu.indexOf(null);if(frei>=0)lege(i,frei);});
+    /* Hilfe: „Nächster Schritt“ legt die richtige Zeile auf ihren Platz, hellgrün, fest und ohne Urteil; eine Zeile, die dort lag, geht zurück. „Lösung“ legt alle so hin. */
+    const gib=p=>{lege(p,p);fest[p]=true;platz(p).classList.add('gegeben');zk(p).disabled=true;};
     A.gezeigt=0;
-    A.setze=i=>{const b=$('.zk[data-i="'+i+'"]',m);if(b)b.remove();A.gezeigt=i+1;zeigeSchritte();};
-    $$('.zk',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;const i=+b.dataset.i;
-      if(i===A.gezeigt){A.setze(i);if(A.gezeigt>=s.length)abgeben(true);}
-      else{b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert');abgeben(false,A.gezeigt===0?'Diese Zeile kommt noch nicht. Womit beginnt die Rechnung?':'Diese Zeile kommt noch nicht. Was passiert als Nächstes mit der Gleichung?');}}));
-    setHaupt('weiter',false);
+    A.setze=p=>{gib(p);A.gezeigt=p+1;};
+    A.pruefe=()=>{A.geprueft=true;let erst=-1;
+      s.forEach((z,p)=>{if(fest[p])return;const ok=zu[p]===p;platz(p).classList.add(ok?'ok':'falsch');if(!ok&&erst<0)erst=p;});
+      if(erst<0)return {ok:true};
+      return {ok:false,hinweis:erst===0?'Die Rechnung beginnt mit einer anderen Zeile.':'Ab der '+['ersten','zweiten','dritten','vierten','fünften','sechsten','siebten','achten','neunten'][erst]+' Zeile stimmt die Reihenfolge nicht.'};};
+    A.sperre=()=>{if(!A.geprueft)s.forEach((z,p)=>{if(!fest[p])gib(p);});$$('.ozk',m).forEach(b=>b.disabled=true);$('.odock',m).classList.add('fertig');zeig();};      // nach „Prüfen“ bleiben die eigenen Zeilen mit ihrem Urteil stehen, nach „Lösung“ stehen die richtigen da
+    zeig();
   },
   /* Quick: Mehrere Aussagen können stimmen. Antippen wählt aus, „Prüfen“ wertet einmal aus */
   mehr(auf,m){
@@ -2398,12 +2448,11 @@ function naechsterSchritt(){const n=A.auf.schritte.length;if(A.fertig||A.gezeigt
   else{A.gezeigt++;zeigeSchritte();if(A.hilfeSchritt)A.hilfeSchritt(A.gezeigt);if(A.gezeigt>=n)return abgeben(false,null,'loesung');}
   zeigeHilfen();}
 function loesung(){const n=A.auf.schritte.length;if(A.fertig)return;hilfeGenutzt();
-  if(A.form==='ordnen')$$('.zk').forEach(b=>b.remove());
   A.gezeigt=n;zeigeSchritte();abgeben(false,null,'loesung');}
 
 /* ---------- Auswertung ---------- */
 function abgeben(ok,hinweis,art){
-  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse'].includes(A.form),zeigt=['eingabe','menge','zeichnen','zuordnen'].includes(A.form),still=einmal||zeigt||['ordnen','legen2','kette','puzzle','einsetzen'].includes(A.form);let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
+  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse'].includes(A.form),zeigt=['eingabe','menge','zeichnen','zuordnen','ordnen'].includes(A.form),still=einmal||zeigt||['ordnen','legen2','kette','puzzle','einsetzen'].includes(A.form);let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
   if(erst){
     A.gewertet=true;const zaehlt=!A.hilfe&&art!=='loesung',alt=band(A.t);
     S.zeiten.push({typ:A.t.titel,key:A.key,s:Math.round((performance.now()-A.start)/100)/10,ok:ok&&art!=='loesung',hilfe:!zaehlt});
