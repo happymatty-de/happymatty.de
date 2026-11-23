@@ -922,12 +922,26 @@ svg.zieh{touch-action:none}
    (Lehrkraft 23.11.2026, gilt für alle Lösungen). Gezeichnet statt als Zeichen ↯: Die eingebetteten Schriften haben es nicht. */
 .wblitz{display:inline-block;width:.62em;height:1em;margin-left:1em;vertical-align:-.16em;color:var(--rot)}
 .wblitz svg{display:block;width:100%;height:100%;overflow:visible}
+
+/* ---------- 23.11.2026 (Lehrkraft): Mathematisches steht in der Textschrift ----------
+   Terme und Rechnungen stehen in der Textschrift, auch in Lösungen und in fremden Rechnungen („Fehler finden“, Tafel-Runde); die Farben bleiben.
+   Prosa wie ein Antwortsatz bleibt in Indie Flower, ebenso Überschriften und Beschriftungen im Bild. Variablen kursiv wie im Text.
+   „Mir gefällt die Standardschrift für die Rechnungen in den Lösungen besser als Indie Flower … mathematisches: Terme, Rechnungen etc. setzen wir ab sofort in Standardschrift.“ */
+.zeilen,.ezeilen,.kzeil,.wnot,.ffl,.ffl .op,.tf-rech,.tf-hand,.gh-fl{font-family:var(--satz)}
+.zeilen i,.ezeilen i,.kzeil i,.wnot i,.ffl i,.tf-rech i,.tf-hand i{font-style:italic}
+.zeilen,.ezeilen{font-size:1.45rem;line-height:1.6}
+.kzeil{font-size:1.55rem}
+.wnot{font-size:1rem;line-height:1.35}
+.ffl{font-size:1.3rem}
+.tf-rech{font-size:1.5rem}
+.tf-hand{font-size:2.15rem}
+.gh-fl{font-size:19px}
+.zl.text,.ffl.text,.ffl.text .op{font-family:var(--hand)}
+.zl.text i,.ffl.text i{font-style:normal}
+.zl.zul,.zl.zul.text{font-family:var(--satz)}
+@media (max-width:760px){.tf-hand{font-size:1.7rem}}
 /* ---------- 23.11.2026 (Lehrkraft), Probe nur im QF2-Training ----------
-   Die Rechnung der Lösung steht in der Textschrift im Lösungsorange: „Indie Flower ist aus meiner Sicht bei Rechnungen schwer zu lesen.“ Variablen kursiv wie im Text.
    Bei „Wurzel ziehen“, Level 2, stehen Umformungsstrich und Befehl in Standardgrau wie in den Musterlösungen (.opgrau). */
-.buehne .rechnung .zeilen{font-family:var(--satz);font-size:1.45rem;line-height:1.6}
-.buehne .rechnung .zeilen i{font-style:italic}
-.buehne .rechnung .zl.text{font-size:1.15rem;line-height:1.4;margin:.1rem 0 .3rem}
 .rechnung.opgrau .zl .op{color:var(--grau)}
 
 </style></head>
@@ -939,7 +953,7 @@ svg.zieh{touch-action:none}
    Gebaut auf dem Gerüst des QF1-Trainings (Skill interaktiv, Training). Nichts wird gespeichert; der Stand gilt, solange die Seite offen ist.
    Interne Namen der Anwendung (W, S.werk, werkDran …) stammen aus dem QF1-Training und meinen hier das Hühnergehege.
    ===================================================================== */
-const VERSION='v8.1';
+const VERSION='v8.2';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
