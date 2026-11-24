@@ -374,6 +374,8 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .ebene .innen{max-width:1240px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
 .ebene h1{color:var(--gruen)}
 .ebene .leiste.ex{position:sticky;bottom:0;z-index:2}
+.kn.ealle{border-color:var(--gruen);color:var(--gruen)}      /* „Alle Erklärungen“ in der Ebene: wie die Kopfknöpfe, Rand und Schrift Akzentgrün (Lehrkraft 24.11.2026) */
+.eueb-ebene .seite{padding-top:.6rem}
 .exm{flex:1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:1rem;padding:.2rem .9rem .7rem;align-items:center;min-height:0}
 .exm .bild{max-width:30rem;width:100%;justify-self:center}
 .ext{display:flex;flex-direction:column;gap:.6rem}
@@ -521,8 +523,7 @@ input[type=range]::-moz-range-thumb{width:1.8rem;height:1.8rem;border-radius:50%
 .werk .opts.n2 .opt{padding:.3rem .5rem;white-space:nowrap;min-height:3.1rem}
 .werk .ein{margin:0}
 .wtipp{display:inline-block;background:#EEF1F4;color:var(--dgrau);border-radius:.25rem;font-size:.8rem;font-weight:700;padding:.04rem .45rem .1rem;white-space:nowrap}
-.werk .opts.zwei .opt{font-size:1.2rem;line-height:1.3;padding:.4rem 1.5rem .45rem .5rem;white-space:nowrap}
-.werk .opts.zwei .opt::after{right:.45rem}
+.werk .opts.zwei .opt{font-size:1.2rem;line-height:1.3;padding:.4rem .5rem .45rem;white-space:nowrap}      /* das Urteil steht an der Ecke (.eck): rechts kein Platz mehr frei (24.11.2026) */
 .werk .tasten{grid-template-columns:repeat(5,1fr);max-width:none;gap:.35rem}
 .werk .tasten button{height:2.4rem;font-size:1.3rem}
 .werk .steht .tasten{display:none}
@@ -558,6 +559,8 @@ input[type=range]::-moz-range-thumb{width:1.8rem;height:1.8rem;border-radius:50%
 .wnoch{background:#fff;color:var(--blau);border:.14rem solid var(--blau);border-radius:.75rem;min-height:3rem;font-size:1.1rem;font-weight:700;padding:.3rem 1rem;box-shadow:0 .2rem 0 #C9D6E2;line-height:1.15}
 .wnoch:hover{background:#EAF3F9}
 .wnoch:active{transform:translateY(.14rem);box-shadow:none}
+.wneu{background:none;border:0;padding:0;margin:0;font:inherit;color:var(--blau);text-decoration:underline;text-underline-offset:.15em;cursor:pointer;white-space:nowrap}      /* „Neu anfangen, neue Zahlen“ in der roten Rückmeldung (Lehrkraft 24.11.2026) */
+.wneu:hover{color:var(--blau-d)}
 
 /* ---------- Tafel-Runde (Talk) ---------- */
 .tafelr .exm{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);align-items:start;padding-top:.6rem}
@@ -607,6 +610,7 @@ button.reihe:hover{background:#EDF4FA;border-color:#8DB9D9}
 .chip:hover:not(:disabled){background:#EDF4FA}
 .kn:hover,.hk:hover:not(:disabled),.tasten button:hover,.st:hover:not(:disabled),.umsch button:hover:not(.an){background:#EDF4FA;border-color:#8DB9D9}
 .hk.erkl:hover{background:#E3EFDF;border-color:var(--gruen)}
+.kn.ealle:hover{background:#E3EFDF;border-color:var(--gruen)}
 .punkte button:hover i{transform:scale(1.4)}
 .link:hover{color:#5B6672}}
 .haupt:active:not(:disabled),.opt:active:not(:disabled),.zk:active{transform:translateY(.14rem);box-shadow:none}
@@ -620,13 +624,8 @@ button.reihe:active{background:#EDF4FA}
 .seite>*:nth-child(3){animation-delay:.1s}
 .buehne>.karte{animation:ansicht .24s ease-out backwards}
 .buehne>.karte+.karte{animation-delay:.05s}
-/* „Los geht’s“: der große Knopf fällt nach innen in sich zusammen */
-@keyframes los{0%{transform:scale(1)}26%{transform:scale(1.04)}100%{transform:scale(.05);opacity:0;border-radius:4rem}}
-.gross.los,.mittel.los{animation:los .3s cubic-bezier(.5,0,.8,.3) forwards;pointer-events:none}
-.gross.los{background:var(--blau-d)}
-.mittel.los,.mittel.gr.los{background:#fff}
-.geht .gross:not(.los),.geht .mittel:not(.los),.seite.geht>*:not(.los){transition:opacity .22s;opacity:0}
 .tipp{background:#fff!important;pointer-events:none}      /* angetippte Kachel bleibt weiß, bis die Ansicht wechselt */
+.gross.tipp{background:var(--blau-d)!important}      /* der große Knopf kurz dunkelblau (Lehrkraft 24.11.2026; vorher fiel er in sich zusammen) */
 button.ka.tipp{background:#EDF4FA}
 button.eka.tipp{background:#E3EFDF}
 
@@ -711,6 +710,15 @@ html{font-size:clamp(15px,4.3vw,19px)}
 .leiste.wende .hilfen{display:none}
 .leiste.wende .wnoch,.leiste.wende .haupt{flex:1 1 0;min-width:0}
 .wnoch{font-size:1rem}}
+
+/* Anwendung auf breiten, niedrigen Bildschirmen (etwa 1180 × 730): Die Karten rücken enger zusammen, damit auch die Auflösung und eine
+   falsche Wahl mit „Neu anfangen“ ohne Scrollen passen (24.11.2026). Bei 1024 × 768 und darüber bleibt alles, wie es ist. */
+@media (min-width:761px) and (max-height:760px) and (min-aspect-ratio:3/2){
+.werk .wrechts,.werk .wlinks{gap:.3rem;padding-top:.5rem;padding-bottom:.6rem}
+.werk .rueck{padding:.3rem .7rem;line-height:1.3}
+.werk .rueck small{margin-top:.05rem}
+.werk .opts{gap:.4rem;margin-top:0}
+.werk .wkopf{row-gap:.15rem}}
 
 @media (prefers-reduced-motion:reduce){
 *{animation-duration:.01s!important;transition-duration:.01s!important}}
@@ -1173,7 +1181,7 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
    Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung.
    Gebaut wird mit build.py auf dem Trainingsrahmen (trainingsrahmen/ im Wurzelordner des Backups).
    ===================================================================== */
-const VERSION='v13.1';
+const VERSION='v13.2';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const TYPEN=[
@@ -1608,15 +1616,19 @@ function vEinzel(o){
     '<div class="zs"><span>Einzelne Aufgaben gezielt üben.</span></div>'+      // ohne das Wort „Zwischenstand“: Die Erfolgsbänder erklären sich selbst (Lehrkraft 21.11.2026)
     '<div class="kacheln">'+TYPEN.map(t=>kachel(t,emp)).join('')+(ANW?werkKachel():'')+'</div></main>');
 }
+/* Übersicht der Erklärungen (Variante B, Lehrkraft 24.11.2026): je Kachel nur der Titel (das Thema), wo nötig eine graue Unterzeile, und die Marke Watch, Try
+   oder Talk; keine Nummern („Info 1“, „Aufgabe 5“), nicht die Wörter „Erklärung“ und „Erkunder“, keine Zeile „Infoboxen · Watch: zusehen …“ mehr. Reihenfolge
+   nach Thema, jeder Erkunder direkt hinter seiner Erklärung, die Tafel-Runde am Schluss. Dieselben Kacheln stehen in der Ebene „Alle Erklärungen“ (erklEbene). */
+const ekaHTML=(akt,titel,marke,unter)=>'<button class="eka" data-akt="'+akt+'"><b>'+titel+'</b>'+(unter?'<span class="nr">'+unter+'</span>':'')+'<span class="mk dg">'+marke+'</span></button>';
+function erklKachelnHTML(){
+  return '<div class="ekacheln">'+
+    ekaHTML('info1','Drei verschiedene Formen','Watch')+ekaHTML('erkunder','Drei verschiedene Formen','Try')+ekaHTML('info2','Transformationen','Watch')+
+    ekaHTML('tafel','Tafel-Runde','Talk','mit der ganzen Klasse')+
+    '</div>';}
 function vErkl(){
   S.ansicht='erkl';adresse('erklaerungen');
   setApp('<header class="kopf"><button class="kn" data-akt="start">‹ Start</button><h1 style="color:var(--gruen)">Erklärungen</h1><span class="luft"></span>'+tonKnopf()+'</header>'+
-    '<main class="seite"><div class="zs"><b>Infoboxen</b><span>Watch: zusehen, Schritt für Schritt. Try: selbst ausprobieren. Talk: mit der ganzen Klasse.</span></div><div class="ekacheln">'+
-    '<button class="eka" data-akt="info1"><span class="nr">Info 1</span><b>Drei verschiedene Formen</b><span class="mk dg">Watch</span></button>'+
-    '<button class="eka" data-akt="info2"><span class="nr">Info 2</span><b>Transformationen</b><span class="mk dg">Watch</span></button>'+
-    '<button class="eka" data-akt="erkunder"><b class="gr">Erkunder</b><span class="nr">Regler für alle drei Formen</span><span class="mk dg">Try</span></button>'+
-    '<button class="eka" data-akt="tafel"><b class="gr">Tafel-Runde</b><span class="nr">Mit der ganzen Klasse</span><span class="mk dg">Talk</span></button>'+
-    '</div></main>');
+    '<main class="seite">'+erklKachelnHTML()+'</main>');
 }
 
 /* ---------- Training: Rahmen ---------- */
@@ -2303,7 +2315,7 @@ const WERKG={
   /* Schritt 2, zweite Frage: die Höhe des Tores an der Kante */
   s2b(g){const {H,a,b,k,fk}=g,q=r4(k*k),p=r4(a*q),x=V('x'),mal=a===-1?'−':zahl(a)+' · ',F=V('f')+'('+zahl(k)+')';
     const s=[{h:F+' = '+mal+zahl(k)+Q+' + '+zahl(H)}];if(k!==1)s.push({h:'= '+mal+z4(q)+' + '+zahl(H)});if(a!==-1)s.push({h:'= '+z4(p)+' + '+zahl(H)});s.push({h:'= '+zahl(fk)});
-    return {frage:'Berechne die Höhe an der Kante.',term:fx(poly(a,0,H)),ein:F+' = '+FELD('x'),loes:{x:fk},
+    return {text:'Die Kante '+g.des+' liegt bei '+x+' = '+zahl(k)+'.',frage:'Berechne die Höhe des Tores an dieser Stelle.',term:fx(poly(a,0,H)),ein:F+' = '+FELD('x'),loes:{x:fk},
       denk:'Setze '+zahl(k)+' für '+x+' ein. Erst quadrieren, dann multiplizieren, dann addieren.',schritte:s,
       kand:[[H-p,'Achte auf das Vorzeichen: '+mal+z4(q)+' = '+z4(p)+'.'],[a*k+H,'Die '+zahl(k)+' wird quadriert: '+zahl(k)+Q+' = '+z4(q)+'.'],
         [a*a*q+H,'Quadriert wird nur die '+zahl(k)+', nicht auch '+zahl(a)+'.'],[p,'Die '+zahl(H)+' gehört dazu: '+z4(p)+' + '+zahl(H)+'.'],
@@ -2439,8 +2451,8 @@ W.zeig=function(){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;clearTimeout(W.
   }else if(L.ph===1||L.ph===3){                          // eine Entscheidung: Antippen ist die Antwort
     const n=L.ph===1?1:2,d=W.dat(WDAT[L.ph-1]);
     r.innerHTML=kopf(n)+'<p class="wtext">'+d.text+'</p><p class="frage">'+d.frage+'</p><div class="denk" hidden></div><div class="opts n4'+(L.ph===1?' zwei':'')+'">'+d.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+o.html+'</button>').join('')+'</div><div class="rueck" hidden></div>';
-    const bs=$$('.opt',r),erg=()=>{const o=d.opts[sub.wahl];bs.forEach((x,i)=>{x.disabled=true;if(d.opts[i].ok)x.classList.add('ok');});if(!o.ok)bs[sub.wahl].classList.add('falsch');
-      zeigeRueck(o.ok?'gut':'schlecht',o.ok?'Richtig.':o.hinweis);W.setH('Weiter',true,W.vor);};
+    const bs=$$('.opt',r),erg=()=>{const o=d.opts[sub.wahl];W.urteil(bs,d.opts,sub.wahl);
+      zeigeRueck(o.ok?'gut':'schlecht',o.ok?'Richtig.':o.hinweis,o.ok?'':W.zaehltNicht(n));W.setH('Weiter',true,W.vor);};
     bs.forEach(b=>b.addEventListener('click',()=>{if(sub.fertig)return;sub.wahl=+b.dataset.i;sub.fertig=true;const ok=!!d.opts[sub.wahl].ok;W.wert(ok,false);erg();W.bild();W.rech();W.balken();W.hilfen();
       if(ok)W.timer=setTimeout(()=>{if(W.L===L&&S.ansicht==='werk'&&!$('.ov')&&!$('.ebene'))W.vor();},1500);}));
     if(sub.fertig)erg();else W.setH('Weiter',false);
@@ -2451,7 +2463,7 @@ W.zeig=function(){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;clearTimeout(W.
     const fertig=(kl,txt,klein)=>{sub.fertig=true;sub.w.x=zahl(d.loes.x);F.zeig();r.classList.add('gesperrt','steht');zeigeRueck(kl,txt,klein);W.setH('Weiter',true,W.vor);W.bild();W.rech();W.hilfen();W.balken();};
     const pruefen=()=>{const res=d.pruefe(sub.w),erst=!sub.gewertet;if(erst){sub.gewertet=true;W.wert(res.ok,sub.hilfe);}
       if(res.ok)fertig(erst&&sub.hilfe?'neutral':'gut',erst?(sub.hilfe?'Mit Hilfe gelöst.':'Richtig.'):'Jetzt stimmt es.');
-      else{const ein=sub.w.x||'';fertig('schlecht',/Denkanstoß zeigt den Anfang/.test(res.hinweis||'')?'Noch nicht richtig.':(res.hinweis||'Noch nicht richtig.'),(ein?'Deine Eingabe: '+ein+'. ':'')+'Im Feld und in der Rechnung steht jetzt die Lösung. Schritt '+n+' zählt in diesem Durchgang nicht.');}};   // falsch: die Lösung erscheint (Lehrkraft 20.11.2026)
+      else{const ein=sub.w.x||'';fertig('schlecht',/Denkanstoß zeigt den Anfang/.test(res.hinweis||'')?'Noch nicht richtig.':(res.hinweis||'Noch nicht richtig.'),(ein?'Deine Eingabe: '+ein+'. ':'')+'Im Feld und in der Rechnung steht jetzt die Lösung. '+W.zaehltNicht(n));}};   // falsch: die Lösung erscheint (Lehrkraft 20.11.2026)
     F=W.feld(r,sub,'x',ok=>{if(!sub.fertig)W.setH('Prüfen',ok,pruefen);});
     W.ab=()=>{if(!sub.gewertet){sub.gewertet=true;W.wert(false,true);}fertig('neutral','Lösung angesehen.');};
     if(sub.fertig){r.classList.add('gesperrt','steht');W.setH('Weiter',true,W.vor);}
@@ -2465,7 +2477,7 @@ W.zeig=function(){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;clearTimeout(W.
     bs.forEach(b=>b.addEventListener('click',()=>{sub.wahl=b.dataset.p==='1';satz();F.zeig();}));satz();
   }
   if(sub.denk){const e=$('.denk',r);if(e){e.hidden=false;e.innerHTML=W.dat(WDAT[L.ph-1]).denk;}}
-  W.hilfen();
+  W.hilfen();W.passe(r);
 };
 /* Nächster Schritt und Lösung gibt es bei den beiden Rechnungen */
 W.schritt=function(alle){const L=W.L,sub=L.sub;if(!(L.ph===2||L.ph===4)||sub.fertig)return;const N=W.dat(WDAT[L.ph-1]).schritte.length;sub.hilfe=true;
@@ -2507,6 +2519,28 @@ const schmal=()=>window.innerWidth<=760;
 W.setH=function(text,an,fn){const h=$('.leiste .haupt');if(!h)return;h.hidden=text===null;if(text!==null)h.textContent=text;h.disabled=!an;W.fn=an&&fn?fn:null;};
 W.balken=function(){const L=W.L,b=$('.eb i');if(b)b.style.width=Math.round(Math.min(6,L.ph+(L.sub.fertig?1:0))/6*100)+'%';};
 W.denk=function(){const L=W.L,d=L.ph>=1&&L.ph<=5?W.dat(WDAT[L.ph-1]):null,e=$('.wrechts .denk');if(!d||!e)return;L.sub.denk=!L.sub.denk;e.hidden=!L.sub.denk;e.innerHTML=d.denk;W.hilfen();};
+/* Urteil an den Antwortknöpfen einer Entscheidung wie bei der Wahl (Lehrkraft 24.11.2026: „Wir haben doch vereinbart, dass das immer oben an der Kante ist“):
+   Nur die gewählte trägt das Urteil, ✓ oder ✗ im Kreis an der rechten oberen Ecke (.opts.eck); nach einem Fehler ist die richtige weiß und grün gestrichelt
+   (.fehlt), alles andere verblasst (.uebrig). Vorher wurde die richtige grün mit ✓ am rechten Rand, auch neben einer falschen Wahl. */
+W.urteil=function(bs,opts,wahl){const o=opts[wahl];if(bs[0])bs[0].parentNode.classList.add('eck');
+  bs.forEach((x,i)=>{x.disabled=true;x.classList.add(i===wahl?(o.ok?'ok':'falsch'):opts[i].ok&&!o.ok?'fehlt':'uebrig');});};
+/* Kein Text läuft über den Rand eines Antwortknopfs (Lehrkraft 24.11.2026: „A(x) = 2x + (12 − 2x)“ lief über): Was nicht in die Zeile passt, wird kleiner
+   gesetzt, bis auf drei Viertel; erst wenn das nicht reicht, bricht es um. Neu gemessen wird nach jedem Aufbau der Station, nach dem Laden der Schriften und
+   beim Drehen des Geräts. */
+W.ueberRand=b=>{const g=document.createRange();g.selectNodeContents(b);const t=g.getBoundingClientRect(),k=b.getBoundingClientRect(),s=getComputedStyle(b);      // der Text, nicht das Zeichen an der Ecke
+  return t.width>0&&(t.right>k.right-parseFloat(s.borderRightWidth)-2||t.left<k.left+parseFloat(s.borderLeftWidth)+2);};
+W.passe=function(r){r=r||$('.wrechts');if(!r)return;
+  $$('.opts .opt',r).forEach(b=>{b.style.fontSize='';b.style.whiteSpace='';const zu=()=>W.ueberRand(b);if(!zu())return;
+    const f0=parseFloat(getComputedStyle(b).fontSize);let f=f0;
+    while(zu()&&f>f0*.76){f-=f0*.04;b.style.fontSize=f.toFixed(2)+'px';}
+    if(zu())b.style.whiteSpace='normal';});};
+window.addEventListener('resize',()=>{if(S.ansicht==='werk'&&!W.rb)W.passe();});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.ansicht==='werk'&&!W.rb)W.passe();});
+/* Neu anfangen (Lehrkraft 24.11.2026): In der roten Rückmeldung eines falschen Schritts steht hinter „Schritt 1 zählt in diesem Durchgang nicht.“ klein der
+   Link „Neu anfangen, neue Zahlen“. Er beginnt sofort einen neuen Durchgang derselben Anwendung, ohne Krone, im Einzel- wie im Gesamttraining; einen festen
+   Knopf dafür gibt es nicht. */
+W.zaehltNicht=n=>'Schritt '+n+' zählt in diesem Durchgang nicht. <button type="button" class="wneu" data-akt="wneu">Neu anfangen, neue Zahlen</button>';
+function werkNeu(){if(S.ansicht!=='werk'||!W.L)return;delete S.werk.lauf[S.modus];if(W.raf)cancelAnimationFrame(W.raf);W.rb=null;startWerk(S.modus);}
 W.vor=function(){clearTimeout(W.timer);const L=W.L;if(!L||S.ansicht!=='werk'||W.rb)return;W.merke();L.ph++;L.sub={};W.zeig();
   if(schmal()){const r=$('.wrechts');if(r)r.scrollIntoView({block:'start',behavior:RUHIG?'auto':'smooth'});}};
 /* ---------- Leiste über der Aufgabe: Tipp · 1 · 2 · 3 · Auflösung, mit Rückblick auf jede erledigte Station (Lehrkraft 24.11.2026) ----------
@@ -2529,7 +2563,7 @@ W.kopf=function(){const L=W.L,akt=W.station(L.ph),zeig=W.rb?W.rb.s:akt,still=!!L
 W.merke=function(){const L=W.L,r=$('.wrechts');if(!L||!r||W.rb||L.ph>5)return;
   $$('input',r).forEach(i=>i.setAttribute('value',i.value));              // Regler: die Kopie übernimmt nur das Attribut
   const k=r.cloneNode(true);$$('.wkopf,.tasten',k).forEach(x=>x.remove());$$('.aktiv',k).forEach(x=>x.classList.remove('aktiv'));
-  $$('[data-akt]',k).forEach(x=>x.removeAttribute('data-akt'));
+  $$('.wneu',k).forEach(x=>x.remove());$$('[data-akt]',k).forEach(x=>x.removeAttribute('data-akt'));
   (L.bilder||(L.bilder={}))[L.ph]={kl:r.className.replace(/\b(karte|wrechts)\b/g,'').trim(),html:k.innerHTML};};
 W.losSpiel=function(){W.merke();W.L.spielt=true;$$('.wrechts .wst').forEach(b=>b.disabled=true);};      // beim Abspielen ist die Leiste kurz still
 W.zeigeStation=function(s){const L=W.L,r=$('.wrechts'),h=$('.leiste .haupt');if(!L||!r||!h||S.ansicht!=='werk')return;const akt=W.station(L.ph);
@@ -2564,10 +2598,35 @@ function werkWeiter(nochmal){
   S.kronen++;zeigeKrone(WERKSTOR.titel+' geschafft!',nochmal?neu:()=>vEinzel({neu:true}));
 }
 
-function ebene(titel,marke,innen){
-  const e=el('<div class="ebene"><div class="innen"><header class="kopf"><button class="kn" data-zu>‹ '+(S.ansicht==='aufgabe'?'Aufgabe':'Erklärungen')+'</button><h1>'+titel+'</h1><span class="mk dg">'+marke+'</span><span class="luft"></span>'+tonKnopf()+'</header>'+innen+'</div></div>');
-  e._zu=()=>{e.remove();if(e._ende)e._ende();};$('[data-zu]',e).addEventListener('click',e._zu);document.body.appendChild(e);return e;
+/* Ebene über der Seite: Kopf mit Zurück, Titel, Marke (Watch, Try, Talk) und Ton (aus dem QF3-Training).
+   Ebenen stapeln sich (Lehrkraft 24.11.2026: „halte bitte fest, dass der Schüler in die ursprüngliche Aufgabe aus Gesamt- oder Einzeltraining zurückkommen
+   kann“): Die untere bleibt unverändert stehen (inert), die obere deckt sie zu; schließt die obere, ist die untere wieder da, an derselben Stelle und mit
+   ihrer Adresse. Der Zurück-Knopf nennt, was darunter liegt: „‹ Aufgabe“ über einer Aufgabe oder der Anwendung, „‹ Erklärungen“ über der Übersicht der
+   Erklärungen (auch der in einer Ebene), „‹ Tafel-Runde“ über der Tafel-Runde.
+   „Alle Erklärungen“ (grün, wie die Kopfknöpfe) steht in jeder Ebene, die aus einer Aufgabe, der Anwendung oder dem Einzeltraining geöffnet wurde, und in der
+   Tafel-Runde. Er öffnet die Übersicht der Erklärungen als Ebene: Eine Erklärung macht ihr Platz (zurück geht es dann in die Aufgabe), die Tafel-Runde bleibt
+   darunter stehen (zurück geht es zur selben Karte). o.bleibt: die Ebene bleibt unter der Übersicht stehen (Tafel-Runde); o.name: so heißt sie im Zurück-Knopf
+   der Ebene darüber; o.alle: false ohne „Alle Erklärungen“. */
+function ebene(titel,marke,innen,o){o=o||{};
+  const unten=$$('.ebene').pop()||null,ausAufgabe=S.ansicht==='aufgabe'||S.ansicht==='werk';
+  const zur=unten?unten._name:ausAufgabe?'Aufgabe':'Erklärungen',alle=o.alle!==false&&!unten&&(ausAufgabe||o.bleibt);
+  const e=el('<div class="ebene"><div class="innen"><header class="kopf"><button class="kn" data-zu>‹ '+zur+'</button>'+(alle?'<button class="kn ealle" data-alle>Alle Erklärungen</button>':'')+
+    '<h1>'+titel+'</h1>'+(marke?'<span class="mk dg">'+marke+'</span>':'')+'<span class="luft"></span>'+tonKnopf()+'</header>'+innen+'</div></div>');
+  e._name=o.name||'Erklärungen';e._bleibt=!!o.bleibt;e._adr=(location.hash||'').replace('#','');      // die eigene Adresse: Der Aufruf setzt sie vorher
+  if(unten){unten.inert=true;unten.setAttribute('aria-hidden','true');}
+  e._zu=()=>{e.remove();if(e._ende)e._ende();
+    if(unten&&unten.isConnected){unten.inert=false;unten.removeAttribute('aria-hidden');adresse(unten._adr);}};
+  $('[data-zu]',e).addEventListener('click',()=>e._zu());
+  const ab=$('[data-alle]',e);if(ab)ab.addEventListener('click',()=>{Sound.init();
+    if(e._bleibt)return erklEbene();
+    const adr=(location.hash||'').replace('#','');e._zu();adresse(adr);erklEbene();});
+  document.body.appendChild(e);return e;
 }
+/* Die Übersicht der Erklärungen als Ebene (aus „Alle Erklärungen“): dieselben Kacheln wie die Ansicht „Erklärungen“; ihre Adresse bleibt die der Aufgabe
+   bzw. der Tafel-Runde darunter. Was eine Kachel öffnet, legt sich darüber und führt mit „‹ Erklärungen“ hierher zurück. */
+function erklEbene(){const adr=(location.hash||'').replace('#','');
+  const e=ebene('Erklärungen','','<main class="seite eueb">'+erklKachelnHTML()+'</main>',{alle:false});e.classList.add('eueb-ebene');e._adr=adr;
+  return e;}
 
 /* =====================================================================
    Erklärungen: Info 1 und Info 2 (Watch), Erkunder (Try)
@@ -2589,7 +2648,7 @@ const INFO2=[
   {stufen:1,a:-0.5,u:-3,v:2,titel:'Alles zusammen: Beispiel 3',term:fx(termSPF(-0.5,-3,2)),text:V('a')+' = −0,5: '+PH('sp','gespiegelt')+' und '+PH('a','mit dem Faktor 0,5 gestaucht')+'. '+PH('u',V('u')+' = −3: um 3 nach links.')+' '+PH('v',V('v')+' = 2: um 2 nach oben.')+' Also Hochpunkt '+punkt('H',-3,2)+'.'}
 ];
 function zeigeInfo2(){
-  const e=ebene('Info 2 · Transformationen','Watch','<main class="exm"><div class="bild">'+graph([{a:1,u:0,v:0,kl:'norm'},{a:1,u:0,v:0}])+'</div><div class="ext"><h2 class="ex-titel"></h2><p class="ex-term"></p><p class="ex-text"></p></div></main>'+
+  const e=ebene('Transformationen','Watch','<main class="exm"><div class="bild">'+graph([{a:1,u:0,v:0,kl:'norm'},{a:1,u:0,v:0}])+'</div><div class="ext"><h2 class="ex-titel"></h2><p class="ex-term"></p><p class="ex-text"></p></div></main>'+
     '<footer class="leiste ex"><button class="hk" data-s="-1">Zurück</button><div class="punkte">'+INFO2.map((x,j)=>'<button type="button" data-j="'+j+'"'+(x.neu&&j?' class="neu"':'')+' aria-label="Schritt '+(j+1)+': '+x.titel+'"><i></i></button>').join('')+'</div><button class="haupt" data-s="1">Weiter</button></footer>');
   e.classList.add('info2');
   const k=$$('.gk',e)[1],mk=$('.marken',e),N={a:1,u:0,v:0};let i=0,jetzt={a:1,u:0,v:0},tw=null,lauf=0;
@@ -2656,7 +2715,7 @@ const INFO1=[
 function zeigeInfo1(){
   const r=raster([-4,6],[-9,4],24),f=x=>2*x*x-4*x-6;
   const svg=r.kopf+'<g class="kurven" clip-path="url(#'+r.id+')"><path class="gk norm" d="'+r.pfad(x=>x*x)+'"/><path class="gk weg" d="'+r.pfad(f)+'"/></g><g class="marken"></g></svg>';
-  const e=ebene('Info 1 · Drei verschiedene Formen','Watch','<main class="exm"><div class="bild hoch">'+svg+'</div><div class="ext"><h2 class="ex-titel"></h2><p class="ex-form nur"></p><p class="ex-term"></p><p class="ex-text"></p></div></main>'+
+  const e=ebene('Drei verschiedene Formen','Watch','<main class="exm"><div class="bild hoch">'+svg+'</div><div class="ext"><h2 class="ex-titel"></h2><p class="ex-form nur"></p><p class="ex-term"></p><p class="ex-text"></p></div></main>'+
     '<footer class="leiste ex"><button class="hk" data-s="-1">Zurück</button><div class="punkte">'+INFO1.map((x,j)=>'<button type="button" data-j="'+j+'" aria-label="Schritt '+(j+1)+': '+x.titel+'"><i></i></button>').join('')+'</div><button class="haupt" data-s="1">Weiter</button></footer>');
   e.classList.add('info1');
   const norm=$$('.gk',e)[0],k=$$('.gk',e)[1],mk=$('.marken',e);let i=0;
@@ -2888,7 +2947,7 @@ function zeigeTafel(){
   const N=TAFEL.length;
   const e=ebene('Tafel-Runde','Talk','<main class="exm tafel"><div class="ext"><p class="tf-was"></p><h2 class="tf-frage"></h2><p class="tf-term"></p><p class="tf-notiz"></p><div class="zeilen tf-zeilen"></div></div><div class="bild tf-bild"></div></main>'+
     '<footer class="leiste ex"><button class="hk" data-k="-1">Zurück</button><button class="hk" data-neu>Neue Aufgabe</button><div class="punkte">'+TAFEL.map((x,j)=>'<button type="button" data-j="'+j+'" aria-label="Karte '+(j+1)+': '+x.typ+'"><i></i></button>').join('')+'</div>'+
-    '<button class="hk tf-auf" data-auf>Auflösen</button><button class="haupt" data-k="1">Weiter</button></footer>');
+    '<button class="hk tf-auf" data-auf>Auflösen</button><button class="haupt" data-k="1">Weiter</button></footer>',{bleibt:true,name:'Tafel-Runde'});      // bleibt unter „Alle Erklärungen“ stehen, an derselben Karte (Lehrkraft 24.11.2026)
   e.classList.add('tafelr');
   const beutel=TAFEL.map(()=>[]),arten=TAFEL.map(()=>null);
   const naechste=j=>{const t=TAFEL[j];if(!beutel[j].length){let b=shuffle(t.arten);if(b.length>1&&b[0]===arten[j])b.push(b.shift());beutel[j]=b;}      // erst wenn alle Arten dran waren, kommt eine wieder
@@ -2929,7 +2988,7 @@ const AKT={
   einzeltyp:b=>zeigeEinzelFrage(b.dataset.typ),
   ort:()=>{if(S.modus==='gesamt')return zeigeGesamtHinweis();clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;vEinzel();},
   zurueck:()=>{clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;if(S.modus==='gesamt')vStart();else if(S.ansicht==='aufgabe'&&S.einzel&&S.einzel.vonGesamt)startGesamt();else vEinzel();},
-  werk:()=>startWerk('einzel'),wst:b=>W.zeigeStation(+b.dataset.s),wnoch:()=>werkWeiter(true),wdenk:()=>W.denk(),wschritt:()=>W.schritt(false),wloesung:()=>W.schritt(true),
+  werk:()=>startWerk('einzel'),wst:b=>W.zeigeStation(+b.dataset.s),wnoch:()=>werkWeiter(true),wneu:()=>werkNeu(),wdenk:()=>W.denk(),wschritt:()=>W.schritt(false),wloesung:()=>W.schritt(true),
   menue:zeigeMenue,stand:zeigeStand,letzte:zeigeLetzte,
   ton:()=>{S.ton=!S.ton;$$('.kn.ton').forEach(b=>b.innerHTML=S.ton?TON_AN:TON_AUS);if(!S.ton)return;      // der Ton ist am Anfang aus; das Antippen schaltet ihn ein und lässt ihn sofort hören
     Sound.init();const c=Sound.ctx,los=()=>Sound.richtig();if(c&&c.state!=='running'&&c.resume)c.resume().then(los).catch(()=>{});else los();},
@@ -2949,21 +3008,21 @@ const AKT={
   allelevel:()=>{S.filter={q:true,b:true,w:true};const f=$('.kn.auto .fn');if(f)f.textContent=filterName();neueAufgabe();}
 };
 document.addEventListener('pointerdown',()=>Sound.init(),{passive:true});
-/* Antippen sieht man: Der große Knopf fällt in sich zusammen („los geht’s“), Kacheln geben kurz nach; erst dann wechselt die Ansicht */
+/* Antippen sieht man: Knöpfe und Kacheln färben sich kurz (Start dunkelblau, die übrigen weiß), nach 140 ms wechselt die Ansicht. Das Zusammenfallen des großen
+   Knopfs (0,3 s, Wechsel nach 270 ms) entfiel am 24.11.2026 (Lehrkraft: „verstößt so ein bisschen gegen diese Einfachheit“) */
 const RUHIG=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-const TIPP={gesamt:['los',270],einzel:['los',270],erkl:['los',270],einzelstart:['tipp',140],werk:['tipp',140],
+const TIPP={gesamt:['tipp',140],einzel:['tipp',140],erkl:['tipp',140],einzelstart:['tipp',140],werk:['tipp',140],
 info1:['tipp',140],tafel:['tipp',140],info2:['tipp',140],erkunder:['tipp',140]
 };
 document.addEventListener('click',e=>{Sound.init();const b=e.target.closest('[data-akt]');if(!b||b.disabled)return;const f=AKT[b.dataset.akt];if(!f)return;
   const t=TIPP[b.dataset.akt];if(!t||RUHIG)return f(b,e);
   if(b.classList.contains(t[0]))return;b.classList.add(t[0]);
-  if(t[0]==='los'){const m=b.closest('main');if(m)m.classList.add('geht');}
-  setTimeout(()=>{f(b,e);b.classList.remove(t[0]);const m=b.closest('main');if(m)m.classList.remove('geht');},t[1]);});     // die Marke wieder wegnehmen: Unter Info und Erkunder bleibt die Seite stehen
+  setTimeout(()=>{f(b,e);b.classList.remove(t[0]);},t[1]);});     // die Marke wieder wegnehmen: Unter Info und Erkunder bleibt die Seite stehen
 document.addEventListener('keydown',e=>{
   if(e.metaKey||e.ctrlKey||e.altKey)return;
   const oben=$('.ov')||$('.menue');
   if(oben){if(e.key==='Escape'||((e.key==='Enter'||e.key===' ')&&(oben.classList.contains('krone-ov')||oben.classList.contains('finale')))){e.preventDefault();schliesse();}return;}
-  const eb=$('.ebene');
+  const eb=$$('.ebene').pop();      // die oberste Ebene (Ebenen stapeln sich, seit 24.11.2026)
   if(eb){if(e.key==='Escape')eb._zu();else if(eb._schritt&&(e.key==='ArrowRight'||e.key==='Enter'||e.key===' ')){e.preventDefault();eb._schritt(1);}else if(eb._schritt&&e.key==='ArrowLeft')eb._schritt(-1);return;}
   if(S.ansicht==='werk'){
     if(W.rb){if(e.key==='Escape'||e.key==='Enter'||e.key==='ArrowRight'||e.key===' '){e.preventDefault();W.rbEnde();}return;}      // Rückblick auf eine Station: zurück
