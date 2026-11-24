@@ -97,6 +97,19 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .mittel small{color:#444;font-size:1rem;margin-top:.45rem}
 .mittel.gr{border-top-color:var(--gruen);color:var(--gruen);background:#E3EFDF}
 .link{background:none;border:0;color:#9AA4AF;font-size:.85rem;text-decoration:underline;padding:.3rem}
+/* Lernstand auf diesem Gerät merken (Lehrkraft 24.11.2026): ruhig, unter den Knöpfen, grau wie die Zeilen der Startseite; der Schalter wie im Level-Menü */
+.lern{flex:none;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.2rem 1.1rem;margin-top:-.3rem;color:var(--grau);font-size:.95rem}
+.lsw{background:none;border:0;border-radius:.5rem;display:inline-flex;align-items:center;gap:.6rem;padding:.25rem .4rem;min-height:2.9rem;color:var(--grau);text-align:left}
+.lsw .sw{display:inline-block;width:2.8rem;height:1.6rem}
+.lsw .sw::after{width:1.2rem;height:1.2rem}
+.lsw .sw.an::after{left:1.4rem}
+.lweg{background:none;border:0;padding:.25rem .4rem;min-height:2.9rem;color:var(--blau);text-decoration:none}
+.lweg:hover,.lweg:focus-visible{text-decoration:underline}
+.lern.frage{gap:.4rem .9rem}
+.lfr{text-align:center}
+.lkn{display:inline-flex;gap:.6rem}
+.lkn .kn{min-height:2.9rem;padding:.25rem 1rem}
+.lkn .lja{color:var(--rot);border-color:var(--rot)}
 
 /* ---------- Zwischenstand, Einzeltraining, Erklärungen ---------- */
 .seite{flex:1;display:flex;flex-direction:column;gap:.7rem;padding:.3rem .9rem 1rem}
@@ -1518,7 +1531,8 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
    Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung.
    Gebaut wird mit build.py auf dem Trainingsrahmen (trainingsrahmen/ im Wurzelordner des Backups).
    ===================================================================== */
-const VERSION='v9.2';
+const VERSION='v9.3';
+const EINHEIT='die-pq-formel';      // Ordner der Themeneinheit auf happymatty.de: Schlüssel des Lernstands (happymatty:die-pq-formel:lernstand)
 const TITEL='Die <i>p</i>,<i>q</i>-Formel',KURZ='QF3';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Gleichungen lösen'; // Kopfzeile der Startseite, wie _einheit.json
 const PQ=V('p')+','+V('q');
@@ -2113,7 +2127,7 @@ function vStart(){
   setApp(startKopf()+
     '<main class="startm"><button class="gross" data-akt="gesamt"><b>'+(S.geuebt?'Weiter':'Start')+'</b><small>'+(S.geuebt?etappeText():'Gesamttraining. Alles gemischt.')+'</small></button>'+
     '<div class="zwei"><button class="mittel" data-akt="einzel"><b>Einzeltraining</b><small>Aufgaben gezielt üben.</small></button>'+
-    '<button class="mittel gr" data-akt="erkl"><b>Erklärungen</b><small>Watch &amp; Try.</small></button></div></main>'+startFuss());
+    '<button class="mittel gr" data-akt="erkl"><b>Erklärungen</b><small>Watch &amp; Try.</small></button></div>'+lernHTML()+'</main>'+startFuss());      // darunter der Schalter „Lernstand auf diesem Gerät merken“ (lernstand.js)
 }
 /* happymatty: Kopfzeile der Startseite (Variante A, Lehrkraft 19.11.2026): oben links das Logo als Zurück-Link,
    rechts die Knöpfe; darunter Fach · Thema · Teilthema (Fach und Thema als Links), Überschrift und Titel.
@@ -3651,9 +3665,81 @@ window.QF3={S,A,W,TYPEN,GEN,FEHLER,TAFEL,RAK,RAKA,zeigeTafel,Sound,FORM,weiter,z
 
 
 /* =====================================================================
-   Trainingsrahmen: Start
-   Die Seite öffnet die Ansicht zur Adresse (nachAdresse() im Training).
+   Trainingsrahmen: Lernstand auf diesem Gerät merken (Lehrkraft 24.11.2026: „ja“)
+   Auf der Startseite ein Schalter, anfangs aus. Ist er an, steht der Stand des Trainings in localStorage unter happymatty:<EINHEIT>:lernstand:
+   Bänder, Kronen, Etappen, Level-Wahl, Ton. Keine Antworten, keine Eingaben, keine Zeiten, nichts Persönliches. An = es gibt den Eintrag,
+   aus = es gibt ihn nicht; beim Ausschalten wird er sofort gelöscht. „Lernstand löschen“ (nur wenn an) löscht ihn nach einer Rückfrage, schaltet aus
+   und setzt den Stand der offenen Seite auf den Anfang. Unter file:// oder ohne Speicher verschwindet der Schalter still; jeder Zugriff in try/catch,
+   ein kaputter oder veralteter Eintrag wird verworfen. Was hier steht, sagt auch die Datenschutzerklärung von happymatty.de.
    ===================================================================== */
+const LS={v:1,key:'happymatty:'+(typeof EINHEIT!=='undefined'?EINHEIT:KURZ)+':lernstand',sp:null,ok:false,an:false,zuletzt:'',t:0,frage:false};
+/* Speicher holen, ohne etwas hineinzuschreiben: Ist der Schalter aus, bleibt der Speicher unberührt */
+function lsSpeicher(){try{if(location.protocol==='file:')return null;const s=window.localStorage;if(!s||typeof s.getItem!=='function')return null;s.getItem(LS.key);return s;}catch(e){return null;}}
+/* Was gemerkt wird: nur Zähler und Einstellungen, keine Aufgaben, keine Eingaben, keine Zeiten (S.zeiten, S.offen, S.letzte, S.werk.lauf bleiben weg) */
+function lsDaten(){const typ={};
+  TYPEN.forEach(t=>{const s=S.typ[t.id];typ[t.id]={top:s.top,streak:s.streak,sl:s.sl,halb:s.halb,falsch:s.falsch,zuletzt:s.zuletzt,faellig:s.faellig};});
+  return {v:LS.v,merken:true,etappe:S.etappe,pkt:S.pkt,pos:S.pos,letzter:S.letzter,kronen:S.kronen,filter:{q:!!S.filter.q,b:!!S.filter.b,w:!!S.filter.w},ton:!!S.ton,
+    geuebt:!!S.geuebt,finale:!!S.finale,typ,werk:{ok:S.werk.ok.slice(),faellig:S.werk.faellig,n:S.werk.n}};}
+/* Einen Eintrag prüfen und übernehmen: alles oder nichts. Fehlt ein Aufgabentyp (neue Fassung), fängt er vorn an; unbekannte bleiben weg */
+function lsUebernimm(d){
+  const ganz=(x,a,b)=>Number.isInteger(x)&&x>=a&&x<=b,ja=x=>typeof x==='boolean',obj=x=>!!x&&typeof x==='object'&&!Array.isArray(x);
+  if(!obj(d)||d.v!==LS.v||d.merken!==true)return false;
+  if(!ganz(d.etappe,1,9999)||!ganz(d.pkt,0,999)||!ganz(d.pos,0,1e7)||!ganz(d.kronen,0,9999)||!ja(d.ton)||!ja(d.geuebt)||!ja(d.finale))return false;
+  if(!(d.letzter===null||typeof d.letzter==='string'))return false;
+  const f=d.filter;if(!obj(f)||!ja(f.q)||!ja(f.b)||!ja(f.w)||!(f.q||f.b||f.w))return false;
+  const w=d.werk;if(!obj(w)||!Array.isArray(w.ok)||w.ok.length!==3||!w.ok.every(ja)||!ganz(w.faellig,0,9999)||!ganz(w.n,0,1e7))return false;
+  if(!obj(d.typ))return false;
+  const typ={};
+  for(const t of TYPEN){const s=d.typ[t.id],n=t.level.length;
+    if(s===undefined){typ[t.id]=null;continue;}
+    if(!obj(s)||!ganz(s.top,0,n)||!ganz(s.streak,0,999)||!ganz(s.sl,-1,n-1)||!ja(s.halb)||!ganz(s.falsch,0,999)||!ganz(s.zuletzt,-1,1e7)||!(s.faellig===null||ganz(s.faellig,0,1e7)))return false;
+    typ[t.id]={top:s.top,streak:s.streak,sl:s.sl,halb:s.halb,falsch:s.falsch,zuletzt:s.zuletzt,faellig:s.faellig};}
+  neuerStand();
+  TYPEN.forEach(t=>{if(typ[t.id])S.typ[t.id]=typ[t.id];});
+  Object.assign(S,{etappe:d.etappe,pkt:d.pkt,pos:d.pos,letzter:TYP[d.letzter]?d.letzter:null,kronen:d.kronen,filter:{q:f.q,b:f.b,w:f.w},ton:d.ton,geuebt:d.geuebt,finale:d.finale});
+  S.werk.ok=w.ok.slice();S.werk.faellig=w.faellig;S.werk.n=w.n;
+  return true;}
+/* Beim Öffnen: still laden; ein kaputter oder veralteter Eintrag wird gelöscht */
+function lsLaden(){LS.sp=lsSpeicher();LS.ok=!!LS.sp;if(!LS.ok)return;
+  let roh=null;try{roh=LS.sp.getItem(LS.key);}catch(e){LS.ok=false;return;}
+  if(roh===null)return;
+  let d=null;try{d=JSON.parse(roh);}catch(e){}
+  let gut=false;try{gut=lsUebernimm(d);}catch(e){gut=false;}
+  if(!gut){neuerStand();try{LS.sp.removeItem(LS.key);}catch(e){}return;}
+  LS.an=true;LS.zuletzt='';lsMerken();}
+function lsMerken(){if(!LS.ok||!LS.an)return;let s;try{s=JSON.stringify(lsDaten());}catch(e){return;}if(s===LS.zuletzt)return;
+  try{LS.sp.setItem(LS.key,s);LS.zuletzt=s;}catch(e){}}          // voller Speicher oder gesperrt: still weiter wie ohne Merken
+function lsBald(){if(!LS.an)return;clearTimeout(LS.t);LS.t=setTimeout(lsMerken,350);}
+function lsWeg(){LS.an=false;LS.zuletzt='';clearTimeout(LS.t);try{if(LS.sp)LS.sp.removeItem(LS.key);}catch(e){}}
+/* Die Zeile auf der Startseite: Schalter, daneben „Lernstand löschen“, wenn etwas gespeichert ist; die Rückfrage steht an derselben Stelle */
+function lernHTML(){if(!LS.ok)return '';
+  if(LS.frage)return '<div class="lern frage" id="lern"><span class="lfr">Lernstand löschen? Balken, Kronen und Etappen fangen dann von vorn an.</span>'+
+    '<span class="lkn"><button class="kn lja" data-akt="lja">Löschen</button><button class="kn" data-akt="lnein">Abbrechen</button></span></div>';
+  return '<div class="lern" id="lern"><button class="lsw" data-akt="lmerken" role="switch" aria-checked="'+LS.an+'"><span class="sw'+(LS.an?' an':'')+'" aria-hidden="true"></span><span>Lernstand auf diesem Gerät merken</span></button>'+
+    (LS.an?'<button class="lweg" data-akt="lfrage">Lernstand löschen</button>':'')+'</div>';}
+function lernZeile(fokus){const z=$('#lern');if(!z)return;if(!LS.ok){z.remove();return;}z.outerHTML=lernHTML();const b=fokus&&$('#lern [data-akt="'+fokus+'"]');if(b)b.focus();}
+AKT.lmerken=()=>{LS.frage=false;
+  if(LS.an){lsWeg();return lernZeile('lmerken');}
+  LS.an=true;
+  try{const s=JSON.stringify(lsDaten());LS.sp.setItem(LS.key,s);LS.zuletzt=s;}catch(e){LS.an=false;LS.ok=false;LS.zuletzt='';}      // lässt sich nichts speichern: Der Schalter verschwindet still
+  lernZeile('lmerken');};
+AKT.lfrage=()=>{LS.frage=true;lernZeile('lnein');};
+AKT.lnein=()=>{LS.frage=false;lernZeile('lmerken');};
+AKT.lja=()=>{LS.frage=false;lsWeg();
+  const ton=S.ton;neuerStand();
+  Object.assign(S,{modus:null,etappe:1,pkt:0,pos:0,letzter:null,kronen:0,filter:{q:true,b:true,w:true},ton,geuebt:false,finale:false,einzel:null,zeiten:[],offen:{},letzte:null});
+  vStart();const b=$('#lern [data-akt="lmerken"]');if(b)b.focus();};
+document.addEventListener('keydown',e=>{if(LS.frage&&e.key==='Escape'&&$('#lern.frage')){e.preventDefault();AKT.lnein();}});
+['click','keyup','pointerup'].forEach(n=>document.addEventListener(n,lsBald,{passive:true}));
+setInterval(()=>{if(LS.an)lsMerken();},2000);       // auch, was ohne Antippen geschieht (das automatische Weiter nach einer richtigen Antwort)
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')lsMerken();});
+window.addEventListener('pagehide',lsMerken);
+
+/* =====================================================================
+   Trainingsrahmen: Start
+   Die Seite lädt still den gemerkten Lernstand, falls der Schalter an ist (lernstand.js), und öffnet die Ansicht zur Adresse (nachAdresse() im Training).
+   ===================================================================== */
+lsLaden();
 (function(){const h=(location.hash||'').replace('#','');if(h==='gesamttraining'){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}}nachAdresse();})();
 
 /* happymatty: Zurück-Knopf (Logo): zurück dorthin, wo man herkam (innerhalb von happymatty.de); bei Direktlink zur Startseite */
