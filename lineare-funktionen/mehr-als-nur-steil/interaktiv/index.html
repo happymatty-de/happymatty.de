@@ -287,6 +287,14 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .reglerfeld{display:flex;flex-direction:column;gap:.5rem}
 .regler{display:grid;grid-template-columns:2rem 3rem 1fr 3rem;align-items:center;gap:.5rem;font-size:1.5rem}
 .regler output{text-align:center;font-size:1.6rem;background:#FAFCFE;border:1.5px solid var(--rand);border-radius:.5rem;padding:.15rem 0}
+/* Zielparabel: nach „Prüfen“ trägt jeder Wert das Urteil wie ein Feld (Lehrkraft 23.11.2026) */
+.regler output.ok,.regler output.falsch{position:relative;border-width:.13rem;border-style:solid}
+.regler output.ok{border-color:var(--gruen);background:#EAF4E6}
+.regler output.falsch{border-color:var(--rot);background:#F8E9E8}
+.regler output.ok::before,.regler output.falsch::before{position:absolute;top:-.55rem;right:-.5rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
+  color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.regler output.ok::before{content:'✓';background:var(--gruen)}
+.regler output.falsch::before{content:'✗';background:var(--rot)}
 .st{height:3rem;border-radius:.7rem;border:.13rem solid var(--blau);background:#fff;font-size:1.7rem;font-weight:700;color:var(--blau);box-shadow:0 .16rem 0 #C9D6E2;line-height:1}
 .st:active{transform:translateY(.1rem);box-shadow:none}
 .st:disabled{opacity:.35;box-shadow:none}
@@ -1265,6 +1273,7 @@ svg.zieh{touch-action:none}
 .gesperrt .umsch.ok,.gesperrt .umsch.falsch{opacity:1}
 .keine.ok,.keine.an.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
 .keine.an.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
+.keine.fehlt{border:2px dashed var(--gruen);background:#fff;color:var(--text)}      /* „keine Lösung“ wäre richtig gewesen: wie die nicht gewählte richtige Antwort der Wahl (Lehrkraft 23.11.2026) */
 .feld.ok::before,.feld.falsch::before,.umsch.wegw.ok button.an::before,.umsch.wegw.falsch button.an::before,.keine.ok::before,.keine.falsch::before{
   position:absolute;top:-.55rem;right:-.5rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
   color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
@@ -1430,7 +1439,7 @@ svg.zieh{touch-action:none}
    „Mir gefällt die Standardschrift für die Rechnungen in den Lösungen besser als Indie Flower … mathematisches: Terme, Rechnungen etc. setzen wir ab sofort in Standardschrift.“ */
 .zeilen,.ezeilen,.kzeil,.wnot,.ffl,.ffl .op,.tf-rech,.tf-hand,.gh-fl{font-family:var(--satz)}
 .zeilen i,.ezeilen i,.kzeil i,.wnot i,.ffl i,.tf-rech i,.tf-hand i{font-style:italic}
-.zeilen,.ezeilen{font-size:1.45rem;line-height:1.6}
+.zeilen,.ezeilen{--mg:1.305rem;font-size:var(--mg);line-height:1.6}      /* 90 % der bisherigen 1,45 rem, so groß wie Indie Flower daneben (1,3 rem), unten */
 .kzeil{font-size:1.55rem}
 .wnot{font-size:1rem;line-height:1.35}
 .ffl{font-size:1.3rem}
@@ -1440,6 +1449,28 @@ svg.zieh{touch-action:none}
 .zl.text,.ffl.text,.ffl.text .op{font-family:var(--hand)}
 .zl.text i,.ffl.text i{font-style:normal}
 .zl.zul,.zl.zul.text{font-family:var(--satz)}
+
+/* ---------- 23.11.2026 (Lehrkraft): Mathematik in Sätzen ----------
+   In Zeilen mit Wörtern bleiben die Wörter in Indie Flower; Zahlen, Variablen und Terme darin stehen in der Textschrift, Variablen kursiv,
+   in ihren Farben (mtext() setzt sie in .mtx). Alle Mathematik einer Lösung ist gleich groß, im Satz wie in einer reinen Rechenzeile:
+   --mg ist die Größe der Rechenzeilen im jeweiligen Zusammenhang, die Rechenzeilen stehen auf 90 % ihrer bisherigen Größe (Lösung bisher 1,45 rem
+   neben Indie Flower 1,3 rem, jetzt gleich groß). Brüche, Hochzahlen und Wurzeln rechnen in em und skalieren mit.
+   „Also mathematische Zeichen innerhalb vom Text soll genauso groß sein wie komplette mathematische Zeilen.“ – „Ja C ist gut. So machen wir es jetzt überall.“ */
+.mtx{font-family:var(--satz);font-size:var(--mg,1em);white-space:nowrap}      /* ein Punkt, ein Term bricht nicht um; ohne --mg so groß wie die Wörter daneben */
+.zl.text .mtx i,.ffl.text .mtx i,.zl.zul .lre .mtx i{font-style:italic}
+.zl.zul .lre{font-family:var(--hand);font-size:1.3rem}      /* die Zuordnen-Lösung: was man abliest, als Satz in Indie Flower, die Mathematik darin in der Textschrift */
+/* Maßgeblich ist die Regel: Mathematik so groß wie Indie Flower daneben (Lösung: 1,3 rem neben 1,305 rem, also 90 % der bisherigen Rechenzeilen).
+   Tafel-Runde: Rechenzeilen und Mathematik in Sätzen so groß wie ihre Indie-Flower-Zeilen (1,55 rem, schmal 1,25 rem, im Bild einer Anwendung 1,3 rem), nicht kleiner:
+   An der Tafel wird aus der Ferne gelesen. Die fremde Rechnung der Tafel-Runde (.tf-rech) behält 1,5 rem, ihre Sätze ebenso.
+   Erklärungen: Die kleinen grauen Notizen (.watch .zl.text, 1,15 rem) sind eine Einheit für sich, die Mathematik darin so groß wie ihre Wörter; die Rechenzeilen
+   der Erklärung bleiben bei 1,45 rem. Fehler finden: Mathematik in einer Satzzeile so groß wie deren Wörter. */
+.zeilen.tf-zeilen{--mg:1.55rem;font-size:var(--mg)}
+.tafelr .werkbild .zeilen.tf-zeilen{--mg:1.3rem}
+.tf-rech{--mg:1.5rem}
+.tf-rech .zl.text{font-size:var(--mg)}
+.watch .wz{--mg:1.15rem}
+@media (max-width:760px){
+.zeilen.tf-zeilen{--mg:1.25rem}}
 @media (max-width:760px){
 .tf-hand{font-size:1.7rem}}
 
@@ -1496,6 +1527,66 @@ const punkt=(k,x,y)=>V(k)+'('+zahl(x)+' | '+zahl(y)+')';
 function poly(a,b,c){            // ax² + bx + c ohne Klammern; Glieder mit 0 entfallen, eine 1 vor x steht nicht da
   const t=[];if(a!==0)t.push([a,V('x')+Q]);if(b!==0)t.push([b,V('x')]);if(c!==0)t.push([c,'']);if(!t.length)return '0';
   return t.map(([k,x],i)=>{const n=Math.abs(k);return (i?(k<0?' − ':' + '):(k<0?'−':''))+(x&&n===1?'':zahl(n))+x;}).join('');}
+
+/* ---------- Mathematik in Sätzen (Lehrkraft 23.11.2026) ----------
+   In Zeilen mit Wörtern (.zl.text und Verwandte) bleiben die Wörter in Indie Flower; Zahlen, Variablen und Terme stehen in der Textschrift,
+   Variablen kursiv, in ihren Farben, so groß wie die Rechenzeilen daneben („Mitte: x = −2“, „Hochpunkt H(−2 | 8)“). mtext() setzt die
+   Mathematik eines Satzes in <span class="mtx">; die Größe kommt aus --mg des Zusammenhangs (rahmen.css). Mathematik ist: Zahlen, Variablen
+   (<i>, ein einzelner Kleinbuchstabe als Wort), Hochzahlen, Brüche, Wurzeln und die Rechenzeichen zwischen ihnen, Einheiten direkt hinter
+   einer Zahl („15 m“, „50 %“). Satzzeichen am Ende („bei 1.“, „b = 1:“) bleiben in Indie Flower. Farbspannen und andere Spannen sind
+   durchlässig: Läuft eine Rechnung über ihre Grenze, wird die Textschrift dort geschlossen und dahinter wieder geöffnet.
+   Ein Bindestrich hinter einer Variablen („y‑Achse“, „p,q‑Formel“) wird geschützt (U+2011), damit dort nicht getrennt wird. */
+const MTX_EINHEIT=/^(km\/h|m²|m³|cm²|cm|mm|km|min|ml|GB|MB|kg|g|m|s|h|l|%|°C|°|€)(?![A-Za-zÄÖÜäöüß0-9])/;
+const MTX_ATOM=/^(i|sup|sub|svg)$/,MTX_ATOMKL=/\b(br|wurzel|mtx|wblitz)\b/,MTX_FREMD=/\b(lgl|op)\b/,MTX_OPENT=/^&(lt|gt|le|ge|ne|minus|middot|plusmn|times);$/;
+function mtext(h){
+  h=h==null?'':String(h);if(/class="[^"]*\bmtx\b/.test(h))return h;
+  // 1. zerlegen: T Spanne (durchlässig), X fremd, M Variable, Hochzahl, Bruch, Wurzel (ganz), N Zahl, U Einheit, O Rechenzeichen, K Komma, S Leerraum, W Wort, Satzzeichen
+  const it=[];let r=h,m;
+  const ende=(name,s)=>{let n=1;const re=new RegExp('<(/?)'+name+'\\b[^>]*>','gi');let q;
+    while((q=re.exec(s))){if(q[1])n--;else if(!/\/>$/.test(q[0]))n++;if(n===0)return re.lastIndex;}return s.length;};
+  while(r.length){
+    if((m=r.match(/^<([a-zA-Z0-9]+)([^>]*)>/))){const name=m[1].toLowerCase(),kl=(m[2].match(/class="([^"]*)"/)||[])[1]||'';
+      const fremd=name==='span'&&MTX_FREMD.test(kl);      // fremd: schon gesetzt (die Gleichung der Zuordnen-Lösung, der Umformungsstrich), bleibt, wie sie ist
+      if(fremd||MTX_ATOM.test(name)||name==='span'&&MTX_ATOMKL.test(kl)){const e=m[0].length+ende(name,r.slice(m[0].length));it.push({t:fremd?'X':'M',s:r.slice(0,e)});r=r.slice(e);}
+      else{it.push({t:'T',s:m[0]});r=r.slice(m[0].length);}continue;}
+    if((m=r.match(/^<\/[^>]+>/))){it.push({t:'T',s:m[0]});r=r.slice(m[0].length);continue;}
+    if((m=r.match(/^(&nbsp;|&#160;|&#8239;|[\s  ])+/))){it.push({t:'S',s:m[0]});r=r.slice(m[0].length);continue;}
+    if((m=r.match(/^&[#a-zA-Z0-9]+;/))){it.push({t:MTX_OPENT.test(m[0])?'O':'W',s:m[0]});r=r.slice(m[0].length);continue;}
+    if((m=r.match(/^\d+(,\d+)?/))){it.push({t:'N',s:m[0]});r=r.slice(m[0].length);continue;}
+    if((m=r.match(/^[A-Za-zÄÖÜäöüß]+/))){it.push({t:'W',s:m[0],wort:true});r=r.slice(m[0].length);continue;}
+    const c=r[0],v=it.length?it[it.length-1]:null;r=r.slice(1);
+    it.push({t:c===':'?(v&&v.t==='S'?'O':'W'):'=+−·|≠<>≤≥≈±()²³√×⋅⇒⇔/'.indexOf(c)>=0?'O':c===','?'K':'W',s:c,zeichen:true});}
+  const echt=[];it.forEach((x,k)=>{if(x.t!=='T')echt.push(k);});
+  const nb=(k,d)=>{const p=echt.indexOf(k)+d;return p>=0&&p<echt.length?it[echt[p]]:null;};
+  // 2. Einheiten hinter Zahlen, einzelne Kleinbuchstaben als Variablen, geschützte Bindestriche hinter Variablen
+  for(let k=0;k<it.length;k++){const x=it[k];if(x.t==='T')continue;
+    if(x.t==='W'&&(x.wort||x.s==='%')){
+      const v1=nb(k,-1),v2=nb(k,-2),p=echt.indexOf(k),rest=echt.slice(p).map(j=>it[j].s).join(''),em=rest.match(MTX_EINHEIT);
+      if(em&&(v1&&v1.t==='N'||v1&&v1.t==='S'&&v2&&v2.t==='N')){let s=em[0];for(let q=p;s.length&&q<echt.length;q++){const y=it[echt[q]];if(s.indexOf(y.s)!==0)break;y.t='U';s=s.slice(y.s.length);}continue;}
+      const n1=nb(k,1);
+      if(x.wort&&/^[a-z]$/.test(x.s)&&!(n1&&(n1.s==='.'||n1.wort))&&!(v1&&v1.wort)){x.t='M';x.s='<i>'+x.s+'</i>';}continue;}
+    if(x.s==='-'&&x.zeichen){const v=nb(k,-1),n=nb(k,1);if(v&&v.t==='M'&&n&&n.wort)x.s='&#8209;';}}
+  // 3. Läufe: Kerne (Zahl, Variable, Einheit …) mit Rechenzeichen und Leerraum dazwischen; vorn und hinten gekürzt
+  const drin=new Array(it.length).fill(false),istKern=y=>y.t==='N'||y.t==='M'||y.t==='U';
+  for(let p=0;p<echt.length;){const x=it[echt[p]];
+    if(!['N','M','U','O','K'].includes(x.t)){p++;continue;}
+    let q=p;while(q<echt.length&&['N','M','U','O','K','S'].includes(it[echt[q]].t)&&!(it[echt[q]].t==='K'&&(!nb(echt[q],1)||nb(echt[q],1).t==='S')))q++;
+    let a=p,b=q-1;
+    for(let g=true;g;){g=false;
+      while(a<=b&&it[echt[a]].t==='S')a++;
+      if(a<=b&&'OK'.includes(it[echt[a]].t)){const c=it[echt[a]].s,n1=a+1<=b?it[echt[a+1]]:null,n2=n1&&n1.t==='S'&&a+2<=b?it[echt[a+2]]:n1;
+        if(!('−+±'.includes(c)&&n2&&(istKern(n2)||n2.s==='(')||'(√|'.includes(c)&&n1&&n1.t!=='S')){a++;g=true;}}      // ein Minus vorn gehört dazu („steht − q“), ein Doppelpunkt nicht
+      while(b>=a&&it[echt[b]].t==='S')b--;
+      if(b>=a&&'OK'.includes(it[echt[b]].t)){let s='';for(let z=a;z<b;z++)s+=it[echt[z]].s;
+        const auf=(s.match(/\(/g)||[]).length-(s.match(/\)/g)||[]).length,st=(s.match(/\|/g)||[]).length,y=it[echt[b]].s;
+        if(!(y===')'&&auf>0||y==='|'&&st%2===1||'²³'.includes(y)&&b>a)){b--;g=true;}}}
+    let kern=false;for(let z=a;z<=b;z++)if(istKern(it[echt[z]]))kern=true;
+    if(kern)for(let z=echt[a];z<=echt[b];z++)drin[z]=true;
+    p=q>p?q:p+1;}
+  // 4. ausgeben; an einer Spanne mitten in einer Rechnung wird die Textschrift geschlossen und dahinter wieder geöffnet
+  let out='',offen=false;
+  it.forEach((x,k)=>{if(drin[k]&&x.t!=='T'){if(!offen){out+='<span class="mtx">';offen=true;}}else if(offen){out+='</span>';offen=false;}out+=x.s;});
+  return out+(offen?'</span>':'');}
 
 /* ---------- Klang: leise, abschaltbar, mit Web Audio ---------- */
 /*FEUER-A*/
@@ -1567,7 +1658,7 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
    Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung.
    Gebaut wird mit build.py auf dem Trainingsrahmen (trainingsrahmen/ im Wurzelordner des Backups).
    ===================================================================== */
-const VERSION='v7.1';
+const VERSION='v8';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const PQ=V('p')+','+V('q');
@@ -2180,7 +2271,7 @@ const wasZeile=()=>'<p class="was"><span>'+ortHTML()+'<button class="wasl" data-
 const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
 const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3 class="lt">'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
 function zeigeSchritte(){const z=$('.zeilen');if(!z)return;const s=A.auf.schritte||[];
-  for(let i=z.children.length;i<A.gezeigt&&i<s.length;i++)z.appendChild(el('<div class="zl'+(s[i].text?' text':'')+(s[i].kl?' '+s[i].kl:'')+'"><span>'+s[i].h+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</div>'));
+  for(let i=z.children.length;i<A.gezeigt&&i<s.length;i++)z.appendChild(el('<div class="zl'+(s[i].text?' text':'')+(s[i].kl?' '+s[i].kl:'')+'"><span>'+(s[i].text||/\bzul\b/.test(s[i].kl||'')?mtext(s[i].h):s[i].h)+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</div>'));      // in Sätzen stehen Zahlen und Terme in der Textschrift (mtext, Lehrkraft 23.11.2026)
   const l=$('.rechnung .leer');if(l&&A.gezeigt>0)l.hidden=true;if(A.nachZeilen)A.nachZeilen();}
 function zeigeRueck(kl,txt,klein,regel){const r=$('.rueck');if(!r)return;r.hidden=false;r.className='rueck '+kl;
   r.innerHTML='<span class="z">'+(kl==='gut'?'✓':kl==='schlecht'?'✗':'i')+'</span><span>'+txt+(regel?'<small class="regel">'+regel+'</small>':'')+(klein?'<small>'+klein+'</small>':'')+'</span>';
@@ -2210,17 +2301,24 @@ function setzeGl(e){const spec=e._gl,bild=e.parentNode,svg=bild&&$('svg',bild),M
   const B=bild.getBoundingClientRect(),r=e.getBoundingClientRect(),w=r.width,h=r.height;if(!B.width||!w)return;
   const [x0,y0]=S([spec.rahmen[0],spec.rahmen[1]]),[x1,y1]=S([spec.rahmen[2],spec.rahmen[3]]),P=spec.pkt.map(S),H=(spec.hind||[]).map(S),HH=(spec.hart||[]).map(S),g=Math.max(5,h*.24);      /* hart: ein zweiter Graph, auf dem das Schild nicht liegen darf (QF1 Zielparabel: gegebener und eigener Graph tragen je ein Schild) */
   const ab=(bx,by,p)=>Math.hypot(Math.max(bx-p[0],0,p[0]-bx-w),Math.max(by-p[1],0,p[1]-by-h));
-  const R=[];for(let v=e.previousElementSibling;v;v=v.previousElementSibling)if(v.classList.contains('glg'))R.push(v.getBoundingClientRect());      // Schilder, die schon stehen
+  /* Schilder, die schon stehen: aus ihrem gemerkten Platz (_rel), nicht aus dem Bild der Seite: Mit „Bewegung reduzieren“ gleiten left und top kurz (.01 s),
+     und das Schild davor stünde beim Messen noch an seinem alten Platz (24.11.2026, gefunden an der Zielparabel) */
+  const R=[];for(let v=e.previousElementSibling;v;v=v.previousElementSibling)if(v.classList.contains('glg'))R.push(v._rel?{left:B.left+v._rel[0],top:B.top+v._rel[1],right:B.left+v._rel[0]+v._rel[2],bottom:B.top+v._rel[1]+v._rel[3]}:v.getBoundingClientRect());
   /* alle Plätze im Raster durchgehen: senkrecht in der Zeichenfläche, waagerecht bis an den Bildrand. Am besten ist, wer den Graphen nicht berührt, dicht an ihm
      liegt (Abstand g) und von Achsen und anderem frei ist; passt das Schild nirgends frei hin, gewinnt der Platz, der am wenigsten vom Graphen verdeckt */
-  let best=null;const st=Math.max(4,h*.2);
+  let best=null,bestS=null;const st=Math.max(4,h*.2);
+  /* streng (QF1 Zielparabel, Lehrkraft 23.11.2026): Das Schild bleibt ganz in der Zeichenfläche und liegt weder auf einem anderen Schild noch auf den Zahlen an den Achsen;
+     unter den Plätzen, die das erfüllen, gewinnt der beste. Gibt es keinen, gilt die Note wie sonst. */
+  const ZA=spec.streng?$$('text.gt',svg).map(t=>t.getBoundingClientRect()):[];
   for(let by=y0+2;by+h<=y1-2;by+=st)for(let bx=B.left+1;bx+w<=B.right-1;bx+=st){
     let dk=1e9,n=0,dh=1e9;for(const p of P){const d=ab(bx,by,p);if(d<dk)dk=d;if(d===0)n++;}for(const p of H)dh=Math.min(dh,ab(bx,by,p));
     const auf=R.some(q=>bx<q.right+4&&bx+w>q.left-4&&by<q.bottom+4&&by+h>q.top-4);let nh=0;for(const p of HH)if(ab(bx,by,p)<g*.5)nh++;
     const note=(dk<g*.5?-1000-n*10:0)-(nh?700+nh*10:0)-(auf?600:0)-Math.abs(dk-g)*2-(HH.length?Math.min(250,Math.max(0,dk-1.2*h)*10):0)+Math.min(dh,2*h)-(by-y0)*.06-(Math.max(0,x0-bx)+Math.max(0,bx+w-x1))*4;      /* über den Rand der Zeichenfläche nur, wenn es sonst nicht passt. Mit einem zweiten Graphen im Bild (hart): nicht auf ihm; weiter als gut eine Schildhöhe vom eigenen Graphen weg ist dann teurer als Rand oder Achse, sonst stünde das Schild neben dem anderen Graphen */
-    if(!best||note>best[0])best=[note,bx,by];}
+    if(!best||note>best[0])best=[note,bx,by];
+    if(spec.streng&&!auf&&bx>=x0+1&&bx+w<=x1-1&&!ZA.some(q=>bx<q.right+2&&bx+w>q.left-2&&by<q.bottom+2&&by+h>q.top-2)&&(!bestS||note>bestS[0]))bestS=[note,bx,by];}
+  if(bestS)best=bestS;
   if(!best)best=[0,x0+6,y0+6];
-  e.style.left=((best[1]-B.left)/B.width*100).toFixed(2)+'%';e.style.top=((best[2]-B.top)/B.height*100).toFixed(2)+'%';}
+  e.style.left=((best[1]-B.left)/B.width*100).toFixed(2)+'%';e.style.top=((best[2]-B.top)/B.height*100).toFixed(2)+'%';e._rel=[best[1]-B.left,best[2]-B.top,w,h];}
 window.addEventListener('resize',()=>$$('.glg').forEach(e=>{if(e._gl)setzeGl(e);}));
 /* Angaben für das Schild an einer Kurve in einem Koordinatensystem k (koord: x, y, X, Y). f: Funktion oder {senk:c}; o.von, o.bis: Abschnitt der Kurve;
    o.andere: weitere Funktionen im Bild; o.frei: Punkte, die frei bleiben; o.sel: Kurve, deren Farbe das Schild nimmt; o.namen: Namen am Graphen, die dem Schild weichen */
@@ -2249,7 +2347,8 @@ const FORM={
       abgeben(!!o.ok,o.hinweis||null);}));
     setHaupt('weiter',false);
   },
-  /* Write: Zahl mit dem eigenen Ziffernfeld */
+  /* Write: Zahl mit dem eigenen Ziffernfeld. Einstellungen der Aufgabe: bruch (Taste a/b), bild (links Frage und Bild, rechts Eingabe und Rechnung), keineText (Knopf
+     wie „keine Lösung“), buchst (Buchstabentasten am Laptop für Umschalter, etwa {h:'H',t:'T'} für Hochpunkt und Tiefpunkt), notiz (zur Bedienung; verschwindet nach „Prüfen“) */
   eingabe(auf,m){
     m.className='buehne';
     const keys=['7','8','9','del','4','5','6','−','1','2','3',',','0'].concat(auf.bruch?['/']:[]);
@@ -2266,7 +2365,7 @@ const FORM={
     const felder=$$('.feld[data-f]',m),spiegel=$$('.feld.spiegel',m),ums=$$('.umsch',m),kb=$('.keine',m),w={};let aktiv=0;
     /* Nach „Prüfen“ trägt jede Eingabe ihr Urteil: grün mit ✓ oder rot mit ✗ (Lehrkraft 22.11.2026). pruefe() nennt in falsch alle falschen Eingaben;
        was nicht darin steht, ist richtig. Nennt es nichts, gibt es kein Urteil. Danach ist die Aufgabe zu Ende: Wer falsch prüft, sieht gleich die Lösung (abgeben, zeigt). */
-    const ohneUrteil=()=>felder.concat(ums,kb?[kb]:[]).forEach(x=>x.classList.remove('ok','falsch','folge'));
+    const ohneUrteil=()=>felder.concat(ums,kb?[kb]:[]).forEach(x=>x.classList.remove('ok','falsch','folge','fehlt','uebrig'));
     if(felder.length<2){const p=$('[data-k="weiter"]',m);p.remove();}
     const gueltig=s=>!!s&&/\d$/.test(s);
     const zeig=()=>{felder.forEach((f,i)=>{f.classList.toggle('aktiv',i===aktiv&&!A.fertig&&!w.keine);f.classList.toggle('matt',!!w.keine);f.innerHTML=feldHTML(w.keine?'':(w[f.dataset.f]||''));});
@@ -2289,10 +2388,12 @@ const FORM={
     A.pruefe=()=>{const r=auf.pruefe(w),F=r.falsch||[];ohneUrteil();if(!r.ok&&!F.length)return r;
       /* offene Aufgabe, eigene Antwort richtig: Die Lösung zeigt die eigene Antwort statt des Beispiels (Lehrkraft 22.11.2026). auf.eigen(w) liefert Schritte und Überschrift */
       if(r.ok&&auf.eigen&&!w.keine){const e=auf.eigen(w);if(e){auf.schritte=e.schritte;const z=$('.rechnung .zeilen',m),h=$('.rechnung h3.lt',m);if(z)z.innerHTML='';if(h&&e.rtitel)h.textContent=e.rtitel;}}
+      /* „keine Lösung“ nach „Prüfen“ wie die Wahl (Lehrkraft 23.11.2026): gewählt grün ✓ oder rot ✗; nicht gewählt blass, oder grün gestrichelt, wenn es richtig gewesen wäre */
       if(w.keine){if(kb)kb.classList.add(F.includes('keine')?'falsch':'ok');return r;}
+      if(kb)kb.classList.add(auf.loes&&auf.loes.keine||auf.pruefe({keine:true}).ok?'fehlt':'uebrig');
       /* Folgefehler (Lehrkraft 22.11.2026): Was pruefe() in „folge“ nennt, folgt richtig aus einer eigenen falschen Eingabe und bekommt den Haken in Klammern, wie in den Klassenarbeiten */
       const G=r.folge||[],urt=id=>F.includes(id)?'falsch':G.includes(id)?'folge':'ok';felder.forEach(f=>f.classList.add(urt(f.dataset.f)));ums.forEach(u=>u.classList.add(urt(u.dataset.w)));return r;};
-    A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));if(kb)kb.disabled=true;};
+    A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));if(kb)kb.disabled=true;const n=$('.notiz',m);if(n)n.hidden=true;};      // die Notiz zur Bedienung („Brüche mit der Taste a/b.“) verschwindet mit dem Ziffernfeld
     zeig();
   },
   /* Build: Rechnung ordnen mit Andocken (Lehrkraft 23.11.2026: „ja dein Vorschlag ist gut. Bau es so um.“). Ein Tipp legt eine Zeile auf den nächsten freien Platz der eigenen
@@ -2400,7 +2501,7 @@ const FORM={
   fehler(auf,m){
     m.className='buehne eins';const F=auf.F;
     m.innerHTML='<section class="karte">'+wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>'+
-      '<p class="ffwer"><b>'+auf.wer+'</b> rechnet:</p><div class="ffz">'+F.zeilen.map((z,i)=>'<button class="ffl'+(z.text?' text':'')+'" data-i="'+i+'"><span class="ffh">'+z.h+'</span>'+(z.op?'<span class="op">'+z.op+'</span>':'')+'</button>').join('')+'</div><div class="rueck" hidden></div></section>';
+      '<p class="ffwer"><b>'+auf.wer+'</b> rechnet:</p><div class="ffz">'+F.zeilen.map((z,i)=>'<button class="ffl'+(z.text?' text':'')+'" data-i="'+i+'"><span class="ffh">'+(z.text?mtext(z.h):z.h)+'</span>'+(z.op?'<span class="op">'+z.op+'</span>':'')+'</button>').join('')+'</div><div class="rueck" hidden></div></section>';
     const bs=$$('.ffl',m);
     A.tippe=i=>{if(A.gewertet||i<0||i>=bs.length)return;const ok=i===F.i||(F.auch||[]).includes(i);
       /* Zeichen wie bei der Wahl (Lehrkraft 23.11.2026: „ja.“): Die angetippte Zeile trägt das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der Ecke; danebengetippt
@@ -2412,7 +2513,7 @@ const FORM={
     bs.forEach(b=>b.addEventListener('click',()=>A.tippe(+b.dataset.i)));
     setHaupt('weiter',false);
   },
-  /* Quick: Nullstellen auf der x-Achse antippen; nach „Prüfen“ erscheint der Graph (QF2, neu) */
+  /* Quick: Nullstellen auf der x-Achse antippen; nach „Prüfen“ erscheint der Graph (QF2, neu). „Gewählt: …“ nennt die Zahlen aufsteigend (Lehrkraft 23.11.2026) */
   achse(auf,m){
     m.className='buehne eins';const L=auf.L,X0=-8,X1=8,E=25,R=20,W=R*2+(X1-X0)*E,H=196,Y0=104,sx=v=>R+(v-X0)*E,NS='http://www.w3.org/2000/svg';let pts=[];
     let s='<svg class="achse" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="x-Achse zum Antippen"><defs><clipPath id="akclip'+(++gid)+'"><rect x="0" y="0" width="'+W+'" height="'+H+'"/></clipPath></defs><rect x="0" y="0" width="'+W+'" height="'+H+'" fill="#fff" rx="8"/><g class="ak"></g>';
@@ -2423,7 +2524,7 @@ const FORM={
       '<div class="bild achsbild">'+s+'</div><p class="notiz azaehl"></p><div class="rueck" hidden></div></section>';
     const svg=$('svg.achse',m),gp=$('.ap',svg);
     const zeig=(aus)=>{gp.innerHTML=pts.map(p=>'<circle class="apt'+(p.k?' '+p.k:'')+'" cx="'+sx(p.v)+'" cy="'+Y0+'" r="8"/>'+(aus?'<text class="apl '+(p.k||'')+'" x="'+sx(p.v)+'" y="'+(Y0-14)+'" text-anchor="middle">'+zahl(p.v)+'</text>':'')).join('');
-      const z=$('.azaehl',m);if(!A.gewertet){z.textContent=pts.length?'Gewählt: '+pts.map(p=>zahl(p.v)).sort().join(' und ')+'. Ein zweiter Tipp nimmt einen Punkt wieder weg.':'Tippe auf die Achse. Am Laptop geht es auch mit der Maus.';setHaupt('pruefen',pts.length>0);}else z.textContent='';};
+      const z=$('.azaehl',m);if(!A.gewertet){z.textContent=pts.length?'Gewählt: '+pts.map(p=>p.v).sort((x,y)=>x-y).map(zahl).join(' und ')+'. Ein zweiter Tipp nimmt einen Punkt wieder weg.':'Tippe auf die Achse. Am Laptop geht es auch mit der Maus.';setHaupt('pruefen',pts.length>0);}else z.textContent='';};
     svg.addEventListener('click',ev=>{if(A.gewertet)return;const pt=svg.createSVGPoint();pt.x=ev.clientX;pt.y=ev.clientY;const q=pt.matrixTransform(svg.getScreenCTM().inverse());
       const v=Math.round(X0+(q.x-R)/E);if(v<=X0||v>=X1)return;const j=pts.findIndex(p=>p.v===v);if(j>=0)pts.splice(j,1);else if(pts.length<4)pts.push({v});zeig();});
     A.pruefe=()=>{const E2=pts.map(p=>p.v);let ok=E2.length===L.length&&L.every(z=>E2.includes(z));
@@ -2431,23 +2532,29 @@ const FORM={
     A.sperre=()=>{pts.forEach(p=>{p.k=L.includes(p.v)?'ok':'falsch';});L.forEach(z=>{if(!pts.some(p=>p.v===z))pts.push({v:z,k:'fehlt'});});zeig(true);
       const w=auf.w,f=x=>w.a*(x-w.p)*(x-w.q),mid=(w.p+w.q)/2,k=Math.min((f(mid)<0?78:88)/Math.max(.5,Math.abs(f(mid))),40),pf=[];
       for(let i=0;i<=240;i++){const x=X0+i*(X1-X0)/240,y=Math.max(-400,Math.min(H+400,Y0-k*f(x)));pf.push((i?'L':'M')+sx(x).toFixed(1)+' '+y.toFixed(1));}
-      const p=document.createElementNS(NS,'path');p.setAttribute('class','gk ak2');p.setAttribute('pathLength','1');p.setAttribute('d',pf.join(''));p.setAttribute('clip-path','url(#akclip'+gid+')');$('.ak',svg).appendChild(p);};
+      const p=document.createElementNS(NS,'path');p.setAttribute('class','gk ak2');p.setAttribute('pathLength','1');p.setAttribute('d',pf.join(''));p.setAttribute('clip-path','url(#akclip'+gid+')');$('.ak',svg).appendChild(p);
+      const GP=[],GH=[];for(let i=0;i<=240;i++){const x=X0+i*(X1-X0)/240,y=Y0-k*f(x);if(y>=0&&y<=H)GP.push([sx(x),y]);}      // die Gleichung an der Parabel (zeigeGl)
+      for(let v=X0;v<=X1;v+=.5)GH.push([sx(v),Y0],[sx(v),Y0+20],[sx(v),Y0-16]);for(let y=0;y<=H;y+=12)GH.push([sx(0),y]);
+      A.gl={html:auf.term,kl:'lb',pkt:GP,rahmen:[0,0,W,H],hind:GH,spaet:true};};
     zeig();
   },
-  /* Write: Lösungen eintippen, zwei Felder oder „keine Lösung“ (QF2, neu) */
+  /* Write: Lösungen eintippen, zwei Felder oder „keine Lösung“. Eine Schreibweise überall (Lehrkraft 23.11.2026): „𝕃 = { ☐ ; ☐ }“ wie die letzte Zeile jeder Lösung
+     und das Ergebnisfeld „𝕃 =“ der Blätter, statt „x = ☐ oder x = ☐“ und „x₁ = ☐ , x₂ = ☐“; bei nur einer Lösung bleibt das zweite Feld leer.
+     Nach „Prüfen“ trägt „keine Lösung“ die Zeichen der Wahl: gewählt grün mit ✓ oder rot mit ✗ an der Ecke, nicht gewählt blass; wäre es die richtige Antwort
+     gewesen, weiß mit grün gestricheltem Rand (.fehlt). Die Notiz zur Bedienung verschwindet dann. Eine Aufgabe nennt L (die Lösungsmenge), wege (Weg wählen,
+     QF3), tastenRechts (Ziffernfeld in der rechten Karte), mnotiz (eigene Notiz) und bruch (Taste a/b). */
   menge(auf,m){
     m.className='buehne';
     const T='<div class="tasten">'+['7','8','9','del','4','5','6','−','1','2','3',',','0'].map(k=>'<button type="button" data-k="'+k+'" class="'+(k==='0'?'breit':'')+(k==='del'?' fn':'')+'"'+(k==='del'?' aria-label="Löschen"':'')+'>'+(k==='del'?'⌫':k)+'</button>').join('')+
       '<button type="button" data-k="weiter" class="breit fn" aria-label="Nächstes Feld">→</button></div>';
-    const lab=auf.lab||[V('x')+' =','oder '+V('x')+' ='];
-    m.innerHTML='<section class="karte">'+kopfTeil(auf)+(auf.wege?'<div class="wegzeile"><span class="wegl">Weg:</span>'+auf.wege+'</div>':'')+'<div class="ein menge"><span>'+lab[0]+'</span>'+FELD('a')+'<span>'+lab[1]+'</span>'+FELD('b')+(lab[2]?'<span>'+lab[2]+'</span>':'')+'</div>'+
-      '<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">keine Lösung</button></p><p class="notiz">'+(auf.mnotiz||'Tippe die Lösungen ein, negative mit Minus. Gibt es keine, tippe auf „keine Lösung“.')+'</p><div class="rueck" hidden></div>'+(auf.tastenRechts?'':T)+'</section>'+
+    m.innerHTML='<section class="karte">'+kopfTeil(auf)+(auf.wege?'<div class="wegzeile"><span class="wegl">Weg:</span>'+auf.wege+'</div>':'')+'<div class="ein menge"><span>𝕃 = {</span>'+FELD('a')+'<span>;</span>'+FELD('b')+'<span>}</span></div>'+
+      '<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">keine Lösung</button></p><p class="notiz">'+(auf.mnotiz||'Tippe die Lösungen ein, negative mit Minus; bei nur einer bleibt das zweite Feld leer. Gibt es keine, tippe auf „keine Lösung“.')+'</p><div class="rueck" hidden></div>'+(auf.tastenRechts?'':T)+'</section>'+
       (auf.tastenRechts?'<section class="karte rechnung">'+T+'<h3 class="lt">Rechnung</h3><div class="zeilen"></div><p class="leer">Rechne mit dem Stift.</p></section>'
         :rechnungKarte('Rechnung','Rechne mit dem Stift.'));
     const felder=$$('.feld',m),kb=$('.keine',m),ums=$$('.umsch',m),w={};let aktiv=0,keine=false;const gueltig=s=>!!s&&/\d$/.test(s);
     /* Urteil an jeder Eingabe wie in der Form „Eingabe“ (Lehrkraft 22.11.2026). Bei einer Lösungsmenge zählt die Reihenfolge nicht: treffer nennt die eingegebenen
        Zahlen, die Lösungen sind; ihre Felder bekommen ✓, auch wenn die Menge nicht stimmt. Ein leeres Feld bekommt kein Urteil. */
-    const ohneUrteil=()=>felder.concat(ums,[kb]).forEach(x=>x.classList.remove('ok','falsch','folge'));
+    const ohneUrteil=()=>felder.concat(ums,[kb]).forEach(x=>x.classList.remove('ok','falsch','folge','fehlt','uebrig'));
     const zeig=()=>{felder.forEach((f,i)=>{f.classList.toggle('aktiv',i===aktiv&&!A.fertig&&!keine);f.classList.toggle('matt',keine);f.textContent=keine?'':(w[f.dataset.f]||'');});
       kb.classList.toggle('an',keine);kb.setAttribute('aria-pressed',keine);setHaupt('pruefen',(keine||felder.some(f=>gueltig(w[f.dataset.f])))&&ums.every(u=>!!w[u.dataset.w]));};
     ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;um.classList.remove('ok','falsch','folge');$$('button',um).forEach(x=>x.classList.toggle('an',x===b));zeig();})));
@@ -2463,11 +2570,13 @@ const FORM={
     kb.addEventListener('click',()=>{if(A.fertig)return;keine=!keine;ohneUrteil();zeig();});
     A.keine=()=>kb.click();
     A.pruefe=()=>{const E=felder.map(f=>w[f.dataset.f]).filter(gueltig).map(num),r=auf.pruefe(keine?[]:E,keine,w.weg),F=r.falsch||[],T=(r.treffer||[]).slice();ohneUrteil();if(!r.ok&&!F.length)return r;
+      /* „keine Lösung“ wie die Wahl: gewählt grün ✓ oder rot ✗; nicht gewählt blass, oder grün gestrichelt, wenn es die richtige Antwort gewesen wäre */
+      const leer=Array.isArray(auf.L)?!auf.L.length:!!auf.pruefe([],true,w.weg).ok;
       if(keine)kb.classList.add(F.includes('keine')?'falsch':'ok');
-      else felder.forEach(f=>{const s=w[f.dataset.f];if(!gueltig(s))return;let u='ok';if(F.includes(f.dataset.f)){const i=T.findIndex(t=>gleich(t,num(s)));if(i>=0)T.splice(i,1);else u='falsch';}f.classList.add(u);});
+      else{kb.classList.add(leer?'fehlt':'uebrig');felder.forEach(f=>{const s=w[f.dataset.f];if(!gueltig(s))return;let u='ok';if(F.includes(f.dataset.f)){const i=T.findIndex(t=>gleich(t,num(s)));if(i>=0)T.splice(i,1);else u='falsch';}f.classList.add(u);});}
       ums.forEach(u=>{if(w[u.dataset.w])u.classList.add(F.includes(u.dataset.w)?'falsch':'ok');});
       $$('.umsch.wegw button:not(.an)',m).forEach(b=>b.classList.add('uebrig'));return r;};      // Weg wählen: Die nicht gewählten Wege verblassen; der richtige steht in der Lösung (Lehrkraft 23.11.2026, Verblassen)
-    A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));kb.disabled=true;};
+    A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));kb.disabled=true;const n=$('.notiz',m);if(n)n.hidden=true;};      // die Notiz zur Bedienung verschwindet mit dem Ziffernfeld
     zeig();
   },
   /* Build: Umformung wählen (QF3, neu). Die Rechnung wächst Zeile für Zeile; beim Normieren wird jedes Glied sichtbar geteilt.
@@ -2561,7 +2670,7 @@ const FORM={
     const chip=j=>$('.echips .chip[data-j="'+j+'"]',m);
     const zeig=()=>{const r=R.find(x=>zu[x]===null);$$('.es',m).forEach(e=>e.classList.toggle('dran',!A.fertig&&!!r&&e.dataset.r===r));if(!A.fertig)setHaupt('pruefen',!r);};
     const rech=anim=>{const z=$('.ezeilen',m),l=$('.rechnung .leer',m);if(l)l.hidden=true;if(z.children.length)return;
-      auf.rech.forEach((r,j)=>{const e=el('<div class="zl'+(r.text?' text':'')+'"><span>'+r.h+'</span>'+(r.op?'<span class="op">'+r.op+'</span>':'')+'</div>');
+      auf.rech.forEach((r,j)=>{const e=el('<div class="zl'+(r.text?' text':'')+'"><span>'+(r.text?mtext(r.h):r.h)+'</span>'+(r.op?'<span class="op">'+r.op+'</span>':'')+'</div>');
         if(anim&&!RUHIG){e.style.visibility='hidden';setTimeout(()=>{e.style.visibility='';e.classList.add('neu');},300+j*500);}z.appendChild(e);});};
     const lege=(j,r)=>{const w=auf.chips[j].wert;$$('.es'+r,m).forEach(e=>{e.innerHTML=(r==='p'?CP:CQ)(kl(w));e.classList.add('gel');});zu[r]=j;chip(j).classList.add('weg');zeig();};
     const loese=r=>{const j=zu[r];if(j===null||fest[r])return;zu[r]=null;$$('.es'+r,m).forEach(e=>{e.innerHTML='<small>'+V(r)+'</small>';e.classList.remove('gel');});chip(j).classList.remove('weg');zeig();};
@@ -3843,7 +3952,7 @@ function zeigeTafel(){
     $('[data-k="-1"]',e).disabled=i===0;$('.haupt',e).textContent=i===N-1?'Von vorn':'Weiter';
     $$('.punkte button',e).forEach((p,j)=>{p.classList.toggle('an',j<=i);p.classList.toggle('jetzt',j===i);});};
   const nw=h=>String(h).replace(/(<i>[A-Z]<\/i>)?\((−?[\d,]+) \| (−?[\d,]+)\)/g,'<span class="nw">$1($2 | $3)</span>');      // Punkte brechen nicht um
-  const zeile=s=>'<div class="zl'+(s.text?' text':'')+'"><span>'+nw(s.h)+'</span>'+(s.op?'<span class="op">'+s.op+'</span>':'')+'</div>';
+  const zeile=s=>'<div class="zl'+(s.text?' text':'')+'"><span>'+(s.text?mtext(nw(s.h)):nw(s.h))+'</span>'+(s.op?'<span class="op">'+s.op+'</span>':'')+'</div>';
   const zeig=()=>{const d=K[i],t=TAFEL[i];
     $('.tf-was',e).innerHTML='<b>'+(i+1)+' von '+N+'</b> · '+t.typ+'<span class="mk tf-form">'+t.form+'</span>';
     $('.tf-frage',e).innerHTML=d.frage;$('.tf-term',e).innerHTML=d.term||'';$('.tf-term',e).hidden=!d.term;$('.tf-notiz',e).innerHTML=d.notiz||'';$('.tf-notiz',e).hidden=!d.notiz;
@@ -3932,6 +4041,7 @@ document.addEventListener('keydown',e=>{
   if(A.form==='eingabe'&&A.taste&&!A.fertig){
     const k=/^\d$/.test(e.key)?e.key:e.key==='-'?'−':e.key==='/'?'/':(e.key===','||e.key==='.')?',':e.key==='Backspace'?'del':(e.key==='Tab'||e.key==='ArrowRight')?'weiter':null;
     if(e.key.toLowerCase()==='k'&&A.keine){A.keine();return;}
+    const bu=A.auf.buchst&&A.auf.buchst[e.key.toLowerCase()];if(bu){const b=$('.umsch [data-v="'+bu+'"]');if(b)b.click();return;}      // Buchstabentasten der Aufgabe (QF1, QF2: H und T)
     if(k){e.preventDefault();A.taste(k);return;}}
   if(e.key==='Enter'){const h=$('.leiste .haupt');if(h&&!h.hidden&&!h.disabled){e.preventDefault();h.click();}}
 });
