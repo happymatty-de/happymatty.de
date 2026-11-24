@@ -173,7 +173,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .opt{background:#fff;border:.14rem solid var(--blau);border-radius:.8rem;min-height:3.7rem;font-size:1.4rem;padding:.4rem 2.2rem;box-shadow:0 .2rem 0 #C9D6E2;position:relative;color:var(--text);min-width:0;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
 .opt:disabled{box-shadow:none;cursor:default;border-color:#C9D0D8;color:#6B7580}
 .opt.gew{background:#EAF3F9;box-shadow:0 0 0 .2rem #CFE3F1}
-.opt.fehlt{border:2px dashed var(--gruen);color:var(--text);background:#fff}      /* die richtige, nicht gewählte Antwort: weiß, grün gestrichelt 2 px, ohne Zeichen (Lehrkraft 23.11.2026) */
+.opt.fehlt{border:.14rem dashed var(--gruen);color:var(--text);background:#fff}      /* die richtige, nicht gewählte Antwort: weiß, grün gestrichelt, ohne Zeichen (Lehrkraft 23.11.2026); Strich so dick wie der Rahmen des Urteils (.14rem), wächst mit (Lehrkraft 24.11.2026) */
 .opt.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
 .opt.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
 .opt.ok::after,.opt.falsch::after{position:absolute;right:.7rem;top:50%;transform:translateY(-50%);font-weight:700;font-size:1.3rem}
@@ -714,7 +714,7 @@ html{font-size:clamp(15px,4.3vw,19px)}
 .gesperrt .umsch.ok,.gesperrt .umsch.falsch{opacity:1}
 .keine.ok,.keine.an.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
 .keine.an.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
-.keine.fehlt{border:2px dashed var(--gruen);background:#fff;color:var(--text)}      /* „keine Lösung“ wäre richtig gewesen: wie die nicht gewählte richtige Antwort der Wahl (Lehrkraft 23.11.2026) */
+.keine.fehlt{border:.13rem dashed var(--gruen);background:#fff;color:var(--text)}      /* „keine Lösung“ wäre richtig gewesen: wie die nicht gewählte richtige Antwort der Wahl (Lehrkraft 23.11.2026), so dick wie der Rand des Urteils (.13rem), wächst mit (Lehrkraft 24.11.2026) */
 .feld.ok::before,.feld.falsch::before,.umsch.wegw.ok button.an::before,.umsch.wegw.falsch button.an::before,.keine.ok::before,.keine.falsch::before{
   position:absolute;top:-.55rem;right:-.5rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
   color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
@@ -724,9 +724,12 @@ html{font-size:clamp(15px,4.3vw,19px)}
 /* Punkte setzen: nach „Prüfen“ die eigenen Punkte grün oder rot, fehlende Punkte der Lösung grün gestrichelt, in der Liste ebenso (Lehrkraft 23.11.2026; vorher verblasste das Falsche) */
 .sp.ok{fill:var(--gruen)}
 .sp.fehlt{fill:#fff;stroke:var(--gruen);stroke-width:3;stroke-dasharray:4 3}      /* fehlender Punkt der Lösung, wie bei Nullstellen antippen (Lehrkraft 23.11.2026) */
+/* Liste „Deine Punkte“: Rand des Urteils und gestrichelter Rand gleich dick, .14rem wie bei der Wahl, wachsen mit (Lehrkraft 24.11.2026; vorher 1,5 px und 2 px);
+   der Innenabstand gleicht den dickeren Rand aus, damit die Liste nicht springt */
+.pko.ok,.pko.falsch,.pko.fehlt{border-width:.14rem;padding:calc(.1rem + 1.5px - .14rem) calc(.5rem + 1.5px - .14rem)}
 .pko.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
 .pko.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
-.pko.fehlt{border:2px dashed var(--gruen);background:#fff;color:var(--text)}
+.pko.fehlt{border-style:dashed;border-color:var(--gruen);background:#fff;color:var(--text)}
 
 /* ---------- Gleichung am Graphen (Lehrkraft 22.11.2026) ----------
    Steht die Lösung da, steht die Gleichung im Bild neben ihrem Graphen, in seiner Farbe; der bloße Name am Graphen entfällt dann */
@@ -1146,7 +1149,7 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
    Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung.
    Gebaut wird mit build.py auf dem Trainingsrahmen (trainingsrahmen/ im Wurzelordner des Backups).
    ===================================================================== */
-const VERSION='v12';
+const VERSION='v13';
 const TITEL='Vom Term zur Parabel',KURZ='QF1';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Strecken &amp; Verschieben'; // Kopfzeile der Startseite, wie _einheit.json
 const TYPEN=[

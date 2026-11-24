@@ -173,7 +173,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .opt{background:#fff;border:.14rem solid var(--blau);border-radius:.8rem;min-height:3.7rem;font-size:1.4rem;padding:.4rem 2.2rem;box-shadow:0 .2rem 0 #C9D6E2;position:relative;color:var(--text);min-width:0;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
 .opt:disabled{box-shadow:none;cursor:default;border-color:#C9D0D8;color:#6B7580}
 .opt.gew{background:#EAF3F9;box-shadow:0 0 0 .2rem #CFE3F1}
-.opt.fehlt{border:2px dashed var(--gruen);color:var(--text);background:#fff}      /* die richtige, nicht gewählte Antwort: weiß, grün gestrichelt 2 px, ohne Zeichen (Lehrkraft 23.11.2026) */
+.opt.fehlt{border:.14rem dashed var(--gruen);color:var(--text);background:#fff}      /* die richtige, nicht gewählte Antwort: weiß, grün gestrichelt, ohne Zeichen (Lehrkraft 23.11.2026); Strich so dick wie der Rahmen des Urteils (.14rem), wächst mit (Lehrkraft 24.11.2026) */
 .opt.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
 .opt.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
 .opt.ok::after,.opt.falsch::after{position:absolute;right:.7rem;top:50%;transform:translateY(-50%);font-weight:700;font-size:1.3rem}
@@ -712,9 +712,12 @@ html{font-size:clamp(15px,4.3vw,19px)}
 .stp .stn{display:inline-block;min-width:1.3rem;padding:0 .3rem;margin-top:.15rem;font-size:.72rem;line-height:1.2rem;color:#7C8792;background:#fff;border:1px solid #B9C3CE;border-bottom-width:2px;border-radius:.28rem}}
 .stp.ziel{background:#EAF3F9;border-color:var(--blau)}
 .stp:disabled{cursor:default}
-.stp.ok{background:#EAF4E6;border:2px solid var(--gruen)}
-.stp.falsch{background:#F8E9E8;border:2px solid var(--rot)}
-.stp.fehlt{background:#fff;border:2px dashed var(--gruen)}
+/* Urteil: Rand .14rem wie bei der Wahl, die richtige, nicht gewählte Antwort ebenso dick, gestrichelt (Lehrkraft 24.11.2026; vorher 2 px); der Innenabstand gleicht
+   den dickeren Rand aus, damit Größe und Inhalt des Stapels nicht springen */
+.stp.ok,.stp.falsch,.stp.fehlt{padding:calc(.5rem + 1px - .14rem) calc(.4rem + 1px - .14rem) calc(.45rem + 1px - .14rem)}
+.stp.ok{background:#EAF4E6;border:.14rem solid var(--gruen)}
+.stp.falsch{background:#F8E9E8;border:.14rem solid var(--rot)}
+.stp.fehlt{background:#fff;border:.14rem dashed var(--gruen)}
 @media (max-width:760px){
 .stp b{font-size:1rem}}
 
@@ -729,11 +732,12 @@ html{font-size:clamp(15px,4.3vw,19px)}
 .ffl .op{color:var(--grau);white-space:nowrap;font-family:var(--hand)}
 .ffl:not(:disabled):hover{border-color:var(--blau)}
 /* Zeichen wie bei der Wahl (Lehrkraft 23.11.2026): die angetippte Zeile ganz grün mit ✓ oder ganz rot mit ✗ an der Ecke; danebengetippt die gesuchte Zeile weiß,
-   grün gestrichelt 2 px, ohne Zeichen. Die Korrektur darunter im Lösungsorange, Balken und Text, ohne Schildchen; p und q behalten ihre Farbe. */
+   grün gestrichelt, ohne Zeichen. Die Korrektur darunter im Lösungsorange, Balken und Text, ohne Schildchen; p und q behalten ihre Farbe.
+   Der Rand des Urteils und der gestrichelte sind gleich dick, so dick wie der Rand der Zeile (.13rem), und wachsen mit (Lehrkraft 24.11.2026; vorher 2 px). */
 .ffl{position:relative}
-.ffl.ok{border:2px solid var(--gruen);background:#EAF4E6}
-.ffl.falsch{border:2px solid var(--rot);background:#F8E9E8}
-.ffl.fehlt{border:2px dashed var(--gruen);background:#fff}
+.ffl.ok{border:.13rem solid var(--gruen);background:#EAF4E6}
+.ffl.falsch{border:.13rem solid var(--rot);background:#F8E9E8}
+.ffl.fehlt{border:.13rem dashed var(--gruen);background:#fff}
 .ffl.ok::after,.ffl.falsch::after{position:absolute;top:-.6rem;right:-.5rem;z-index:1;width:1.35rem;height:1.35rem;border-radius:50%;border:.12rem solid #fff;box-sizing:content-box;color:#fff;font-family:var(--satz);font-size:.9rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
 .ffl.ok::after{content:'✓';background:var(--gruen)}
 .ffl.falsch::after{content:'✗';background:var(--rot)}
@@ -896,7 +900,7 @@ svg.zieh{touch-action:none}
 .gesperrt .umsch.ok,.gesperrt .umsch.falsch{opacity:1}
 .keine.ok,.keine.an.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
 .keine.an.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
-.keine.fehlt{border:2px dashed var(--gruen);background:#fff;color:var(--text)}      /* „keine Lösung“ wäre richtig gewesen: wie die nicht gewählte richtige Antwort der Wahl (Lehrkraft 23.11.2026) */
+.keine.fehlt{border:.13rem dashed var(--gruen);background:#fff;color:var(--text)}      /* „keine Lösung“ wäre richtig gewesen: wie die nicht gewählte richtige Antwort der Wahl (Lehrkraft 23.11.2026), so dick wie der Rand des Urteils (.13rem), wächst mit (Lehrkraft 24.11.2026) */
 .feld.ok::before,.feld.falsch::before,.umsch.wegw.ok button.an::before,.umsch.wegw.falsch button.an::before,.keine.ok::before,.keine.falsch::before{
   position:absolute;top:-.55rem;right:-.5rem;z-index:1;width:1.1rem;height:1.1rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;
   color:#fff;font-family:var(--satz);font-size:.76rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
@@ -1258,7 +1262,7 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
    Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung.
    Gebaut wird mit build.py auf dem Trainingsrahmen (trainingsrahmen/ im Wurzelordner des Backups).
    ===================================================================== */
-const VERSION='v10';
+const VERSION='v11';
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
 const TYPEN=[
