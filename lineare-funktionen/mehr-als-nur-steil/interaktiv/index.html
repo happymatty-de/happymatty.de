@@ -173,8 +173,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .opt{background:#fff;border:.14rem solid var(--blau);border-radius:.8rem;min-height:3.7rem;font-size:1.4rem;padding:.4rem 2.2rem;box-shadow:0 .2rem 0 #C9D6E2;position:relative;color:var(--text);min-width:0;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
 .opt:disabled{box-shadow:none;cursor:default;border-color:#C9D0D8;color:#6B7580}
 .opt.gew{background:#EAF3F9;box-shadow:0 0 0 .2rem #CFE3F1}
-.opt.fehlt{border-color:var(--gruen);border-style:dashed;color:var(--text);background:#fff}
-.opt.fehlt::after{content:'✓';color:var(--gruen);position:absolute;right:.7rem;top:50%;transform:translateY(-50%);font-weight:700;font-size:1.3rem;opacity:.55}
+.opt.fehlt{border:2px dashed var(--gruen);color:var(--text);background:#fff}      /* die richtige, nicht gewählte Antwort: weiß, grün gestrichelt 2 px, ohne Zeichen (Lehrkraft 23.11.2026) */
 .opt.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
 .opt.falsch{border-color:var(--rot);background:#F8E9E8;color:var(--text)}
 .opt.ok::after,.opt.falsch::after{position:absolute;right:.7rem;top:50%;transform:translateY(-50%);font-weight:700;font-size:1.3rem}
@@ -198,7 +197,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .zeilen{font-family:var(--hand);color:var(--orange);font-size:1.6rem;line-height:1.5;display:flex;flex-direction:column}
 .zeilen i{font-style:normal}
 .zl{display:flex;justify-content:space-between;gap:1rem;animation:rein .35s}
-.zl .op{color:#E0A07A;white-space:nowrap}
+.zl .op{color:var(--grau);white-space:nowrap}
 .zl.text{font-size:1.3rem;line-height:1.35;margin-bottom:.25rem}
 .leer{color:#9AA4AF;font-size:.95rem;margin:0}
 .soll{position:relative;display:inline-block;padding:0 .12em}
@@ -223,19 +222,22 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .gesperrt .tasten{display:none}
 .gesperrt .umsch{opacity:.45;pointer-events:none}
 
-/* Wischkarte (Lehrkraft 22.11.2026): Die Karte bleibt weiß. Term und was zu prüfen ist stehen nebeneinander, mittig, mit viel Luft;
-   schmal rutscht das Zweite darunter. Nach der Antwort ist nur die gewählte Seite gefärbt, ganz grün oder ganz rot, das Zeichen an der Ecke. */
+/* Wischkarte (Lehrkraft 22.11.2026): Die Karte bekommt kein Urteil. Term und was zu prüfen ist stehen nebeneinander, mittig, mit viel Luft;
+   schmal rutscht das Zweite darunter. Nach der Antwort ist nur die gewählte Seite gefärbt, ganz grün oder ganz rot, das Zeichen an der Ecke.
+   Die Karte wie die Karte zum Schieben bei Drei Stapel (M1, Lehrkraft 23.11.2026): hellblau wie das Situationsband der Blätter, Rand 1 px #89B1CB, ohne Streifen. */
 .wischfeld{padding:.9rem 1.2rem 1.2rem;display:flex;justify-content:center;overflow:hidden}
-.wk{position:relative;width:min(100%,31rem);background:#fff;border:1px solid var(--rand);border-top:4px solid var(--blau);border-radius:6px;padding:1.9rem 1.6rem;box-shadow:0 .25rem .9rem rgba(31,41,51,.10);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.6rem 3.2rem}
+.wk{position:relative;width:min(100%,31rem);background:#EDF4FA;border:1px solid #89B1CB;border-radius:.8rem;padding:1.9rem 1.6rem;box-shadow:0 .3rem 1rem rgba(31,41,51,.12);touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:grab;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.6rem 3.2rem}
 .wk .term{font-size:1.9rem;margin:0;line-height:1.2;white-space:nowrap}
 .wknoepfe{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
 .wknoepfe .opt{padding:.4rem .8rem;font-size:1.25rem}
 .pfl{font-weight:700}
 .wknoepfe .opt.ziel{background:#EAF3F9;box-shadow:0 0 0 .2rem #CFE3F1}
-.wknoepfe .opt.ok::after,.wknoepfe .opt.falsch::after{content:none}
-.wknoepfe .opt.ok::before,.wknoepfe .opt.falsch::before{position:absolute;top:-.6rem;right:-.5rem;z-index:1;width:1.35rem;height:1.35rem;border-radius:50%;border:.12rem solid #fff;box-sizing:content-box;color:#fff;font-family:var(--satz);font-size:.9rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
-.wknoepfe .opt.ok::before{content:'✓';background:var(--gruen)}
-.wknoepfe .opt.falsch::before{content:'✗';background:var(--rot)}
+/* Urteil an der rechten oberen Ecke der gewählten Antwort, wie bei der Wischkarte, auch bei Wahl, Mehrere stimmen, Umformung wählen (.opts.eck) und Drei Stapel
+   (Lehrkraft 23.11.2026). Ohne .eck (Anwendung) bleibt das Zeichen wie bisher am rechten Rand. */
+.wknoepfe .opt.ok::after,.wknoepfe .opt.falsch::after,.opts.eck .opt.ok::after,.opts.eck .opt.falsch::after{content:none}
+.wknoepfe .opt.ok::before,.wknoepfe .opt.falsch::before,.opts.eck .opt.ok::before,.opts.eck .opt.falsch::before,.stapel .stp.ok::before,.stapel .stp.falsch::before{position:absolute;top:-.6rem;right:-.5rem;z-index:1;width:1.35rem;height:1.35rem;border-radius:50%;border:.12rem solid #fff;box-sizing:content-box;color:#fff;font-family:var(--satz);font-size:.9rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
+.wknoepfe .opt.ok::before,.opts.eck .opt.ok::before,.stapel .stp.ok::before{content:'✓';background:var(--gruen)}
+.wknoepfe .opt.falsch::before,.opts.eck .opt.falsch::before,.stapel .stp.falsch::before{content:'✗';background:var(--rot)}
 
 /* Satz mit Lücken, Notiz, falsche Felder */
 .ein>span{white-space:nowrap}
@@ -301,6 +303,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .ebene .gk{transition:opacity .35s}
 .ebene .gk.weg{opacity:0}
 .gk.eigen{stroke:var(--pink);stroke-dasharray:1;stroke-dashoffset:1;animation:zeichne 1s ease-out forwards}
+.gk.gg{stroke:var(--gruen)}      /* der gegebene Graph in Akzentgrün wie bei der Zielparabel (QF1 „Term und Graph“, Level 1; Lehrkraft 23.11.2026) */
 @keyframes zeichne{to{stroke-dashoffset:0}}
 .gpkt{fill:var(--blau);stroke:#fff;stroke-width:2}
 .gbs{font-family:var(--satz);font-size:14px;fill:var(--blau);font-weight:700;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
@@ -504,7 +507,7 @@ input[type=range]::-moz-range-thumb{width:1.8rem;height:1.8rem;border-radius:50%
 .wnot p{margin:0}
 .wnot p.neu{animation:rein .35s}
 .wnot p.d{font-size:1rem;line-height:1.22;display:flex;justify-content:space-between;gap:1rem;padding-left:.7rem;border-left:.18rem solid #F1D3BE}
-.wnot .op{color:#E0A07A;white-space:nowrap}
+.wnot .op{color:var(--grau);white-space:nowrap}
 .wtext{margin:0;font-size:1.02rem;line-height:1.35;color:#39424C}
 .frage.wgr{font-size:1.55rem}
 .wkopf{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap}
@@ -683,29 +686,31 @@ html{font-size:clamp(15px,4.3vw,19px)}
 
 
 /* ===================== QF2: neue Formen und Bilder ===================== */
-/* Drei Stapel */
+/* Drei Stapel. Die Karte zum Schieben (M1, Lehrkraft 23.11.2026): hellblau wie das Situationsband der Blätter, Rand 1 px #89B1CB, Ecken .8rem, ohne den blauen
+   Streifen der Kacheln; sie bekommt kein Urteil. Die Stapel (S1): weiß, Rand wie die Karte, Schatten etwas deutlicher („Schatten ist jetzt gut bei den Stapeln.“);
+   beim Ziehen darüber hellblau mit blauem Rand; nach dem Urteil der gewählte Stapel mit Rand 2 px, ganz grün mit ✓ oder ganz rot mit ✗ an der Ecke, nach einem
+   Fehler der richtige weiß und grün gestrichelt 2 px, der übrige blass (.uebrig). Vorher Kacheln wie auf happymatty.de, nie entschieden. */
 .stfeld{display:flex;justify-content:center;padding:.4rem .5rem .2rem}
-.stk{position:relative;width:min(100%,26rem);background:#fff;border:1px solid var(--rand);border-top:4px solid var(--blau);border-radius:6px;padding:.9rem 1.1rem .6rem;box-shadow:0 .25rem .9rem rgba(31,41,51,.10);touch-action:none;cursor:grab;text-align:center;z-index:2}
+.stk{position:relative;width:min(100%,26rem);background:#EDF4FA;border:1px solid #89B1CB;border-radius:.8rem;padding:.9rem 1.1rem .6rem;box-shadow:0 .3rem 1rem rgba(31,41,51,.12);touch-action:none;cursor:grab;text-align:center;z-index:2}
 .stk .term{margin:0 0 .3rem}
 .stk.zieht{cursor:grabbing;box-shadow:0 .5rem 1.4rem rgba(31,41,51,.18)}
-.stk.ok{border-top-color:var(--gruen);background:#F3F9F1}
-.stk.falsch{border-top-color:var(--rot);background:#FBF1F0}
 .sthand{display:block;color:#9AA4AF;font-size:.85rem}
-.stk.ok .sthand,.stk.falsch .sthand{visibility:hidden}
+.stk.fertig .sthand{visibility:hidden}
 .stapel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.6rem;margin-top:.4rem}
-.stp{position:relative;background:#E0EDF8;border:0;border-top:4px solid var(--blau);border-radius:6px;min-height:5.2rem;padding:.5rem .4rem .45rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;color:var(--text);box-shadow:0 .28rem 0 -.08rem #C9D6E2,0 .56rem 0 -.16rem #DDE6EF}
+.stp{position:relative;background:#fff;border:1px solid #89B1CB;border-radius:.8rem;min-height:4.6rem;padding:.5rem .4rem .45rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;color:var(--text);box-shadow:0 .25rem .8rem rgba(31,41,51,.18)}
 .stp b{font-size:1.15rem;line-height:1.2}
-/* Ziffern auf den Stapeln: Tastenhinweis, nur wo mit Maus oder Trackpad gearbeitet wird (Laptop); am Tablet und Handy fehlen sie. Die Tasten 1 bis 3 gelten überall. */
+/* Ziffern auf den Stapeln: Tastenhinweis, nur wo mit Maus oder Trackpad gearbeitet wird (Laptop); am Tablet und Handy fehlen sie. Die Tasten 1 bis 3 gelten überall.
+   Sie stehen unter dem Text des Stapels (Lehrkraft 23.11.2026). */
 .stp .stn{display:none}
 @media (hover:hover) and (pointer:fine){
-.stp .stn{display:inline-block;min-width:1.3rem;padding:0 .3rem;font-size:.72rem;line-height:1.2rem;color:#7C8792;background:#fff;border:1px solid #B9C3CE;border-bottom-width:2px;border-radius:.28rem}}
-.stp.ziel{background:#fff;outline:.18rem dashed var(--blau);outline-offset:.12rem}
+.stp .stn{display:inline-block;min-width:1.3rem;padding:0 .3rem;margin-top:.15rem;font-size:.72rem;line-height:1.2rem;color:#7C8792;background:#fff;border:1px solid #B9C3CE;border-bottom-width:2px;border-radius:.28rem}}
+.stp.ziel{background:#EAF3F9;border-color:var(--blau)}
 .stp:disabled{cursor:default}
-.stp.ok{background:#EAF4E6;border-top-color:var(--gruen)}
-.stp.falsch{background:#F8E9E8;border-top-color:var(--rot)}
+.stp.ok{background:#EAF4E6;border:2px solid var(--gruen)}
+.stp.falsch{background:#F8E9E8;border:2px solid var(--rot)}
+.stp.fehlt{background:#fff;border:2px dashed var(--gruen)}
 @media (max-width:760px){
-.stp b{font-size:1rem}
-.stp{min-height:4.6rem}}
+.stp b{font-size:1rem}}
 
 
 /* Fehler finden */
@@ -715,13 +720,18 @@ html{font-size:clamp(15px,4.3vw,19px)}
 .ffl{display:flex;justify-content:space-between;align-items:center;gap:1rem;background:#fff;border:.13rem solid #C9D6E2;border-radius:.6rem;min-height:2.9rem;padding:.25rem .9rem;font-size:1.45rem;text-align:left;font-family:var(--hand);color:#39424C}
 .ffl i{font-style:normal}
 .ffl.text .ffh{font-size:1.15rem}
-.ffl .op{color:#E0A07A;white-space:nowrap;font-family:var(--hand)}
+.ffl .op{color:var(--grau);white-space:nowrap;font-family:var(--hand)}
 .ffl:not(:disabled):hover{border-color:var(--blau)}
-.ffl.fz{border-color:var(--rot);background:#F8E9E8}
-.ffl.folge{opacity:.55}
-.ffl.daneben{border-style:dashed;border-color:var(--rot)}
-.ffr{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin:-.1rem 0 .2rem 1.2rem;padding:.2rem .8rem;border-left:.25rem solid var(--gruen);font-size:1.35rem;animation:rein .35s}
-.ffk{font-size:.85rem;color:#fff;background:var(--gruen);border-radius:.3rem;padding:.05rem .4rem}
+/* Zeichen wie bei der Wahl (Lehrkraft 23.11.2026): die angetippte Zeile ganz grün mit ✓ oder ganz rot mit ✗ an der Ecke; danebengetippt die gesuchte Zeile weiß,
+   grün gestrichelt 2 px, ohne Zeichen. Die Korrektur darunter im Lösungsorange, Balken und Text, ohne Schildchen; p und q behalten ihre Farbe. */
+.ffl{position:relative}
+.ffl.ok{border:2px solid var(--gruen);background:#EAF4E6}
+.ffl.falsch{border:2px solid var(--rot);background:#F8E9E8}
+.ffl.fehlt{border:2px dashed var(--gruen);background:#fff}
+.ffl.ok::after,.ffl.falsch::after{position:absolute;top:-.6rem;right:-.5rem;z-index:1;width:1.35rem;height:1.35rem;border-radius:50%;border:.12rem solid #fff;box-sizing:content-box;color:#fff;font-family:var(--satz);font-size:.9rem;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center}
+.ffl.ok::after{content:'✓';background:var(--gruen)}
+.ffl.falsch::after{content:'✗';background:var(--rot)}
+.ffr{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin:-.1rem 0 .2rem 1.2rem;padding:.2rem .8rem;border-left:.25rem solid var(--orange);font-size:1.35rem;color:var(--orange);animation:rein .35s}
 
 /* Nullstellen auf der Achse */
 .achsbild{max-width:44rem;width:100%;margin:0 auto}
@@ -810,7 +820,7 @@ svg.zieh{touch-action:none}
 @media (max-width:760px){
 .gross-r{font-size:1.5rem}}
 .watch .wz{font-family:var(--satz);color:var(--text)}
-.watch .wz .zl .op{color:#C98A5E}
+.watch .wz .zl .op{color:var(--grau)}
 
 @media (max-width:760px){
 .stk .term{font-size:1.45rem}}
@@ -846,7 +856,8 @@ svg.zieh{touch-action:none}
 /* Umformung wählen */
 .kzeil{font-family:var(--hand);color:var(--orange);font-size:1.75rem;line-height:1.45;display:flex;flex-direction:column;padding:.25rem .6rem;background:#FCFCFD;border:1px solid #E4E9EF;border-radius:.6rem}
 .kzeil .zl{justify-content:flex-start;gap:1.6rem;flex-wrap:wrap}
-.kzeil .op{color:#E0A07A}
+.kzeil .op{color:var(--grau)}
+.kzeil .zl:first-child .zh{color:var(--text)}      /* die gegebene Gleichung schwarz, erst die neuen Zeilen im Lösungsorange (Lehrkraft 23.11.2026) */
 .tg{transition:opacity .35s,background-color .4s;border-radius:.3rem}
 .tg.wart{opacity:0}
 .tg.hl{background:#F7DFC4}
@@ -865,9 +876,22 @@ svg.zieh{touch-action:none}
 .es.dran{border-style:solid}
 .esp.dran{border-color:var(--blau);background:#EAF3F9;box-shadow:0 0 0 .16rem #CFE3F1}
 .esq.dran{border-color:var(--gruen);background:#EDF6EA;box-shadow:0 0 0 .16rem #D3E8CC}
-.ps.voll,.es.voll{border:0;background:transparent;box-shadow:none;min-width:0;padding:0;animation:rein .3s}
+/* Formel-Puzzle und Einsetzen docken an (Lehrkraft 23.11.2026): gelegt blau, ohne Urteil; nach „Prüfen“ grün mit ✓ oder rot mit ✗ an der Ecke; von der Hilfe gelegt
+   hellgrün, ohne Zeichen. Eine falsche Zahl beim Einsetzen steht schwarz statt in der Farbe von p oder q. Der Platz eines gelegten Kärtchens im Vorrat bleibt frei. */
+.ps,.es{position:relative;cursor:pointer}
+.ps.gel,.es.gel{border:.14rem solid var(--blau);background:#EAF3F9;box-shadow:none;padding:0 .35rem;animation:rein .3s}
+.es.gel{min-width:0;padding:0 .12rem}      /* beim Einsetzen schmal: Die Formel steht in der linken Karte und muss mit den Zahlen hineinpassen */
+.ps.ok,.es.ok{border-color:var(--gruen);background:#EAF4E6}
+.ps.falsch,.es.falsch{border-color:var(--rot);background:#F8E9E8}
+.ps.gegeben,.es.gegeben{border-color:#9CC98F;background:#F3F9F1}
+.es.falsch .cp,.es.falsch .cq{color:var(--text)}
+.ps.ok::after,.ps.falsch::after,.es.ok::after,.es.falsch::after{position:absolute;top:-.55rem;right:-.55rem;z-index:1;width:1.2rem;height:1.2rem;border-radius:50%;border:.1rem solid #fff;box-sizing:content-box;color:#fff;font-family:var(--satz);font-size:.82rem;font-weight:700;font-style:normal;line-height:1;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.ps.ok::after,.es.ok::after{content:'✓';background:var(--gruen)}
+.ps.falsch::after,.es.falsch::after{content:'✗';background:var(--rot)}
+.pchips .chip.weg,.echips .chip.weg{visibility:hidden}
 .pchips,.echips{justify-content:center}
 .pchips .chip,.echips .chip{font-size:1.5rem;min-width:4.6rem}
+.eform{font-size:1.6rem}
 .ezeilen{font-family:var(--hand);color:var(--orange);font-size:1.6rem;line-height:1.5;display:flex;flex-direction:column}
 
 /* Weg wählen in der Write-Aufgabe */
@@ -909,7 +933,7 @@ svg.zieh{touch-action:none}
 .gr-z{display:flex;flex-direction:column;gap:.5rem}
 .gr-z p{display:flex;gap:1.2rem;align-items:baseline;flex-wrap:wrap;animation:none}
 .gr-z p.neu{animation:rein .45s}
-.gr-z .op{color:#C98A5E;font-size:.85em;white-space:nowrap}
+.gr-z .op{color:var(--grau);font-size:.85em;white-space:nowrap}
 .gross-r p.neu .tgd{display:inline-block;animation:rein .45s both;animation-delay:calc(var(--d)*.45s + .15s)}
 .gross-r.klein{font-size:1.5rem;padding:.4rem .5rem}
 .mark{background:#EDE4F3;border-radius:.3rem;padding:0 .12em;box-shadow:0 0 0 .1rem #D9C8E6}
@@ -949,7 +973,8 @@ svg.zieh{touch-action:none}
 .gbs.dr{fill:var(--orange)}
 /* QF3: Wurzelzeichen, das mitwächst; große Klammern um Brüche */
 .klg{font-size:1.5em;line-height:.6;font-weight:300;display:inline-block;transform:translateY(-.02em)}
-.pform,.eform{line-height:1.5;white-space:nowrap;overflow-x:auto;padding:.3rem 0}
+.pform,.eform{line-height:1.5;white-space:nowrap;overflow:visible;padding:.75rem 0 .3rem}      /* Platz für ✓ und ✗ an den Ecken der Plätze; sie dürfen über den Rand der Formel ragen */
+.pform.plsg{color:var(--orange);padding-top:0;margin-top:-.2rem}      /* bei einem Fehler darunter die richtige Formel im Lösungsorange */
 .br .es{min-width:2.1rem;min-height:1.6rem}
 .ein.binb{display:block;font-size:1.6rem;line-height:2.5}
 .ein.binb .sz{display:inline}
@@ -965,7 +990,8 @@ svg.zieh{touch-action:none}
 .br .es{min-width:1.7rem;min-height:1.35rem}}
 
 @media (max-width:760px){
-.es{min-width:2rem}}
+.es{min-width:2rem}
+.eform{font-size:1.2rem}}
 
 @media (max-width:760px){
 .ein.binb{font-size:1.3rem}}
@@ -1318,7 +1344,6 @@ svg.zieh{touch-action:none}
 .zreihe.ok::after{content:'✓';background:var(--gruen)}
 .zreihe.falsch::after{content:'✗';background:var(--rot)}
 .zk.zu:disabled{color:var(--text);transform:none;cursor:default}
-.zdock.fertig .zvorrat .zu{opacity:.45;box-shadow:none}
 .zdock~.zeilen .zl.text{font-size:1.15rem;line-height:1.3;margin-bottom:.1rem}
 
 @media (max-width:760px){
@@ -1418,6 +1443,13 @@ svg.zieh{touch-action:none}
 @media (max-width:760px){
 .tf-hand{font-size:1.7rem}}
 
+
+/* ---------- 23.11.2026 (Lehrkraft): Verblassen ----------
+   Ist eine Aufgabe gewertet, verblasst, was weder gewählt noch Lösung ist, in allen Formen mit Antworten oder Kärtchen zur Auswahl, mit derselben Deckkraft
+   („Das Verblassen ist eine gute Idee!! Das sollten wir bei anderen Aufgaben auch umsetzen!“): Wahl, Mehrere stimmen, Wischkarte, Drei Stapel, Fehler finden
+   (Zeilen nach dem Fehler), Umformung wählen, Formel-Puzzle, Einsetzen, Zuordnen, Kärtchen legen, Weg wählen. Nicht: Zeilen einer Rechnung, Teile eines Satzes
+   mit Umschaltern, Graphen. */
+.uebrig{opacity:.4;box-shadow:none}
 
 </style></head>
 <body><div id="app"></div>
@@ -1535,7 +1567,7 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
    Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung.
    Gebaut wird mit build.py auf dem Trainingsrahmen (trainingsrahmen/ im Wurzelordner des Backups).
    ===================================================================== */
-const VERSION='v7';
+const VERSION='v7.1';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const PQ=V('p')+','+V('q');
@@ -2204,14 +2236,16 @@ function glKurve(k,html,f,kl,o){o=o||{};const P=[],H=[],X=k.X,Y=k.Y,dx=(X[1]-X[0
 /* Feldinhalt: „2/3“ als Bruch mit Strich, auch halb fertig („2/“) */
 const feldHTML=v=>{if(!v||!v.includes('/'))return v||'';const t=v.split('/'),n=t[0].startsWith('−');return (n?'−':'')+'<span class="br fbr"><span>'+(t[0].replace('−','')||'&nbsp;')+'</span><span>'+(t[1]||'&nbsp;')+'</span></span>';};
 const FORM={
-  /* Quick: Antippen ist die Antwort */
+  /* Quick: Antippen ist die Antwort. Nur die gewählte Antwort trägt das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der rechten oberen Ecke wie bei der Wischkarte;
+     nach einem Fehler ist die richtige, nicht gewählte Antwort weiß mit grün gestricheltem Rand, ohne Zeichen; die übrigen verblassen
+     (Lehrkraft 23.11.2026: „Ansonsten folge ich deinem Vorschlag für die Mechanik.“, „Ja gestrichelt mit 2 px ist gut.“). Vorher wurde die richtige grün mit ✓. */
   wahl(auf,m){
     m.className='buehne eins';
     m.innerHTML='<section class="karte'+(auf.bild?' mitbild':'')+'">'+wasZeile()+'<div class="inhalt">'+(auf.bild?'<div class="bild">'+auf.bild+'</div>':'')+
       '<div class="rechts"><p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>'+
-      '<div class="opts n'+auf.opts.length+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+weich(o.html)+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
+      '<div class="opts eck n'+auf.opts.length+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+weich(o.html)+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
     $$('.opt',m).forEach(b=>b.addEventListener('click',()=>{if(A.gewertet)return;const o=auf.opts[+b.dataset.i];
-      $$('.opt',m).forEach((x,i)=>{x.disabled=true;if(auf.opts[i].ok)x.classList.add('ok');});if(!o.ok)b.classList.add('falsch');
+      $$('.opt',m).forEach((x,i)=>{x.disabled=true;x.classList.add(x===b?(o.ok?'ok':'falsch'):auf.opts[i].ok&&!o.ok?'fehlt':'uebrig');});
       abgeben(!!o.ok,o.hinweis||null);}));
     setHaupt('weiter',false);
   },
@@ -2297,16 +2331,17 @@ const FORM={
     A.sperre=()=>{if(!A.geprueft)s.forEach((z,p)=>{if(!fest[p])gib(p);});$$('.ozk',m).forEach(b=>b.disabled=true);$('.odock',m).classList.add('fertig');zeig();};      // nach „Prüfen“ bleiben die eigenen Zeilen mit ihrem Urteil stehen, nach „Lösung“ stehen die richtigen da
     zeig();
   },
-  /* Quick: Mehrere Aussagen können stimmen. Antippen wählt aus, „Prüfen“ wertet einmal aus */
+  /* Quick: Mehrere Aussagen können stimmen. Antippen wählt aus, „Prüfen“ wertet einmal aus. Zeichen wie bei der Wahl (Lehrkraft 23.11.2026: „ja“): Gewählte Antworten
+     tragen das Urteil an der Ecke, ganz grün mit ✓ oder ganz rot mit ✗; vergessene richtige sind grün gestrichelt, ohne ✓; nicht gewählte falsche verblassen. */
   mehr(auf,m){
     m.className='buehne eins';
     m.innerHTML='<section class="karte">'+wasZeile()+'<div class="inhalt"><div class="rechts"><p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>'+
-      '<div class="opts n'+auf.opts.length+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'" aria-pressed="false">'+weich(o.html)+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
+      '<div class="opts eck n'+auf.opts.length+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'" aria-pressed="false">'+weich(o.html)+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
     const bs=$$('.opt',m);
     bs.forEach(b=>b.addEventListener('click',()=>{if(A.gewertet)return;const an=b.classList.toggle('gew');b.setAttribute('aria-pressed',an);setHaupt('pruefen',bs.some(x=>x.classList.contains('gew')));}));
     A.pruefe=()=>{let zuviel=null,fehlt=null;
       bs.forEach((b,i)=>{const o=auf.opts[i],gew=b.classList.contains('gew');b.disabled=true;b.classList.remove('gew');
-        if(gew&&o.ok)b.classList.add('ok');else if(gew){b.classList.add('falsch');zuviel=zuviel||o;}else if(o.ok){b.classList.add('fehlt');fehlt=fehlt||o;}});
+        if(gew&&o.ok)b.classList.add('ok');else if(gew){b.classList.add('falsch');zuviel=zuviel||o;}else if(o.ok){b.classList.add('fehlt');fehlt=fehlt||o;}else b.classList.add('uebrig');});
       return zuviel?{ok:false,hinweis:zuviel.hinweis}:fehlt?{ok:false,hinweis:'Da stimmt noch mehr. '+fehlt.grund}:{ok:true};};
     setHaupt('pruefen',false);
   },
@@ -2314,7 +2349,8 @@ const FORM={
      bejahende („liegt drauf“), nie „stimmt“, „richtig“, „ja“ oder „wahr“: Grün und Rot sind das Urteil, und die Wörter sollen ihm nicht
      widersprechen (Lehrkraft 22.11.2026). Die Aufgabe nennt nein, ja und stimmt (true: die rechte Antwort ist richtig); auf der Karte
      steht der Term, daneben, was zu prüfen ist (neben). Wischen, Knöpfe und Pfeiltasten tun dasselbe. Nach der Antwort trägt nur die
-     gewählte Seite das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der rechten oberen Ecke; die andere bleibt blass, die Karte weiß. */
+     gewählte Seite das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der rechten oberen Ecke; die andere verblasst (.uebrig), die Karte bleibt, wie sie ist.
+     Die Karte sieht aus wie die Karte zum Schieben bei Drei Stapel (M1, Lehrkraft 23.11.2026). */
   wisch(auf,m){
     m.className='buehne eins';
     m.innerHTML='<section class="karte">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div>'+
@@ -2323,7 +2359,7 @@ const FORM={
     const k=$('.wk',m),kn=$$('.wknoepfe .opt',m);let x0=null,dx=0;
     A.wisch=ja=>{if(A.gewertet)return;const ok=ja===auf.stimmt;
       k.style.transition='transform .25s ease-out';k.style.transform='translateX('+(ja?7:-7)+'%) rotate('+(ja?3:-3)+'deg)';
-      kn.forEach(b=>{const bj=b.dataset.w==='1';b.disabled=true;b.classList.remove('ziel');if(bj===ja)b.classList.add(ok?'ok':'falsch');});
+      kn.forEach(b=>{const bj=b.dataset.w==='1';b.disabled=true;b.classList.remove('ziel');b.classList.add(bj===ja?(ok?'ok':'falsch'):'uebrig');});
       abgeben(ok,ok?null:auf.hinweis);};
     kn.forEach(b=>b.addEventListener('click',()=>A.wisch(b.dataset.w==='1')));
     k.addEventListener('pointerdown',e=>{if(A.gewertet)return;x0=e.clientX;dx=0;k.style.transition='none';try{k.setPointerCapture(e.pointerId);}catch(_){}});
@@ -2334,19 +2370,22 @@ const FORM={
     k.addEventListener('pointerup',ende);k.addEventListener('pointercancel',ende);
     setHaupt('weiter',false);
   },
-  /* Quick: Drei Stapel. Die Karte mit der Gleichung auf den passenden Stapel schieben oder den Stapel antippen (QF2, neu) */
+  /* Quick: Drei Stapel. Die Karte mit der Gleichung auf den passenden Stapel schieben oder den Stapel antippen (QF2, neu). Nach der Antwort wie bei der Wahl
+     (Lehrkraft 23.11.2026): Nur der gewählte Stapel trägt das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der Ecke; nach einem Fehler ist der richtige weiß
+     mit grün gestricheltem Rand, ohne Zeichen; der übrige verblasst. Die Karte bekommt keine rote oder grüne Fläche. Satz auf der Karte: „Schieb mich auf eine
+     Antwort.“; die Ziffern 1, 2, 3 (nur am Laptop) stehen unter dem Text des Stapels. */
   stapel(auf,m){
     m.className='buehne eins';
     m.innerHTML='<section class="karte">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div>'+
-      '<div class="stfeld"><div class="stk"><p class="term">'+auf.term+'</p><span class="sthand">Schieb mich auf einen Stapel.</span></div></div>'+
-      '<div class="stapel">'+auf.stapel.map((s,i)=>'<button class="stp" data-id="'+s.id+'"><span class="stn">'+(i+1)+'</span><b>'+s.html+'</b></button>').join('')+'</div><div class="rueck" hidden></div></section>';
+      '<div class="stfeld"><div class="stk"><p class="term">'+auf.term+'</p><span class="sthand">Schieb mich auf eine Antwort.</span></div></div>'+
+      '<div class="stapel">'+auf.stapel.map((s,i)=>'<button class="stp" data-id="'+s.id+'"><b>'+s.html+'</b><span class="stn">'+(i+1)+'</span></button>').join('')+'</div><div class="rueck" hidden></div></section>';
     const k=$('.stk',m),bs=$$('.stp',m);let x0=null,y0=0,dx=0,dy=0,ziel=null;
     const unter=(cx,cy)=>bs.find(b=>{const r=b.getBoundingClientRect();return cx>=r.left&&cx<=r.right&&cy>=r.top-14&&cy<=r.bottom+14;})||null;
     A.stapel=id=>{if(A.gewertet)return;const ok=id===auf.ok,b=bs.find(x=>x.dataset.id===id);
       const kr=k.getBoundingClientRect(),br=b.getBoundingClientRect(),tx=br.left+br.width/2-kr.left-kr.width/2,ty=br.top+br.height/2-kr.top-kr.height/2;
       k.style.transition=RUHIG?'none':'transform .32s ease-in, opacity .32s ease-in';k.style.transform='translate('+tx+'px,'+ty+'px) scale(.4)';k.style.opacity='0';
-      bs.forEach(x=>{x.disabled=true;x.classList.remove('ziel');if(x.dataset.id===auf.ok)x.classList.add('ok');});if(!ok)b.classList.add('falsch');
-      setTimeout(()=>{if(!k.isConnected)return;k.style.transition='opacity .25s';k.style.transform='';k.classList.add(ok?'ok':'falsch');k.style.opacity='1';},RUHIG?0:360);
+      bs.forEach(x=>{x.disabled=true;x.classList.remove('ziel');x.classList.add(x===b?(ok?'ok':'falsch'):x.dataset.id===auf.ok?'fehlt':'uebrig');});
+      setTimeout(()=>{if(!k.isConnected)return;k.style.transition='opacity .25s';k.style.transform='';k.classList.add('fertig');k.style.opacity='1';},RUHIG?0:360);
       abgeben(ok,ok?null:auf.hinweis[id]);};
     bs.forEach(b=>b.addEventListener('click',()=>A.stapel(b.dataset.id)));
     k.addEventListener('pointerdown',e=>{if(A.gewertet)return;x0=e.clientX;y0=e.clientY;dx=dy=0;k.style.transition='none';k.classList.add('zieht');try{k.setPointerCapture(e.pointerId);}catch(_){}});
@@ -2364,8 +2403,10 @@ const FORM={
       '<p class="ffwer"><b>'+auf.wer+'</b> rechnet:</p><div class="ffz">'+F.zeilen.map((z,i)=>'<button class="ffl'+(z.text?' text':'')+'" data-i="'+i+'"><span class="ffh">'+z.h+'</span>'+(z.op?'<span class="op">'+z.op+'</span>':'')+'</button>').join('')+'</div><div class="rueck" hidden></div></section>';
     const bs=$$('.ffl',m);
     A.tippe=i=>{if(A.gewertet||i<0||i>=bs.length)return;const ok=i===F.i||(F.auch||[]).includes(i);
-      bs.forEach((b,j)=>{b.disabled=true;if(j===F.i)b.classList.add('fz');else if(j>F.i)b.classList.add('folge');});if(!ok)bs[i].classList.add('daneben');
-      const r=F.richtig[F.rz];if(r)bs[F.i].insertAdjacentHTML('afterend','<div class="ffr"><span class="ffh">'+r.h+'</span><span class="ffk">'+(F.weg?'besser':'richtig')+'</span></div>');
+      /* Zeichen wie bei der Wahl (Lehrkraft 23.11.2026: „ja.“): Die angetippte Zeile trägt das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der Ecke; danebengetippt
+         ist die gesuchte Zeile weiß mit grün gestricheltem Rand, ohne Zeichen. Die Zeilen nach dem Fehler verblassen, die angetippte nie. */
+      bs.forEach((b,j)=>{b.disabled=true;if(j===i)b.classList.add(ok?'ok':'falsch');else if(j===F.i&&!ok)b.classList.add('fehlt');else if(j>F.i)b.classList.add('uebrig');});
+      const r=F.richtig[F.rz];if(r)bs[F.i].insertAdjacentHTML('afterend','<div class="ffr"><span class="ffh">'+r.h+'</span></div>');
       abgeben(ok,ok?null:(i<F.i&&!(F.auch||[]).includes(i)?'Diese Zeile stimmt noch. ':'')+F.hinweis);};
     auf.nachher=F.hinweis;
     bs.forEach(b=>b.addEventListener('click',()=>A.tippe(+b.dataset.i)));
@@ -2424,22 +2465,28 @@ const FORM={
     A.pruefe=()=>{const E=felder.map(f=>w[f.dataset.f]).filter(gueltig).map(num),r=auf.pruefe(keine?[]:E,keine,w.weg),F=r.falsch||[],T=(r.treffer||[]).slice();ohneUrteil();if(!r.ok&&!F.length)return r;
       if(keine)kb.classList.add(F.includes('keine')?'falsch':'ok');
       else felder.forEach(f=>{const s=w[f.dataset.f];if(!gueltig(s))return;let u='ok';if(F.includes(f.dataset.f)){const i=T.findIndex(t=>gleich(t,num(s)));if(i>=0)T.splice(i,1);else u='falsch';}f.classList.add(u);});
-      ums.forEach(u=>{if(w[u.dataset.w])u.classList.add(F.includes(u.dataset.w)?'falsch':'ok');});return r;};
+      ums.forEach(u=>{if(w[u.dataset.w])u.classList.add(F.includes(u.dataset.w)?'falsch':'ok');});
+      $$('.umsch.wegw button:not(.an)',m).forEach(b=>b.classList.add('uebrig'));return r;};      // Weg wählen: Die nicht gewählten Wege verblassen; der richtige steht in der Lösung (Lehrkraft 23.11.2026, Verblassen)
     A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));kb.disabled=true;};
     zeig();
   },
-  /* Build: Umformung wählen (QF3, neu). Die Rechnung wächst Zeile für Zeile; beim Normieren wird jedes Glied sichtbar geteilt */
+  /* Build: Umformung wählen (QF3, neu). Die Rechnung wächst Zeile für Zeile; beim Normieren wird jedes Glied sichtbar geteilt.
+     Jeder Schritt ist eine Wahl mit genau einem Versuch (Lehrkraft 23.11.2026: „Die Umformung wählen: so bauen wie du vorgeschlagen hast.“): Eine richtige Wahl
+     lässt die nächste Zeile erscheinen; eine falsche beendet die Aufgabe. Dann wird nur die gewählte Umformung rot, mit ✗ an der rechten oberen Ecke, die übrigen
+     Knöpfe verblassen, die restlichen Zeilen stehen als Lösung da, darunter nur der Hinweis (keine Regel: Die Lösung steht schon da). Alles richtig: „Richtig.“
+     Vorher ging es nach einem Fehler an einer Aufgabe weiter, die schon als falsch zählte, mit „Jetzt stimmt es.“ am Schluss, und Raten lohnte sich.
+     Ein „Prüfen“ am Ende geht hier nicht: Jeder Schritt hängt am richtigen Ergebnis des vorigen. Die gegebene Gleichung steht schwarz, die neuen Zeilen orange. */
   kette(auf,m){
-    m.className='buehne eins';const K=auf.kette;let k=0;
+    m.className='buehne eins';const K=auf.kette;let k=0,vorbei=false;      // vorbei: nach einer falschen Wahl ist die Aufgabe zu Ende
     const teileHTML=z=>z.koef?polyTeile(z.koef[0],z.koef[1],z.koef[2]).map(t=>'<span class="tg t'+t.r+'">'+t.h+'</span>').join('')+'<span class="tg te"> = 0</span>':z.h;
     const zeile=(z,neu)=>'<div class="zl'+(neu?' neu':'')+'"><span class="zh">'+teileHTML(z)+'</span><span class="op"></span></div>';
     m.innerHTML='<section class="karte kette">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div>'+
       '<div class="kzeil">'+zeile(auf.start)+'</div><div class="kfrage"><p class="kf"></p><div class="opts kopts"></div></div><div class="rueck" hidden></div></section>';
     const kz=$('.kzeil',m),kf=$('.kfrage',m);
     const frage=()=>{if(k>=K.length){kf.hidden=true;return;}const s=K[k];$('.kf',kf).innerHTML='<b>Schritt '+(k+1)+'</b> · '+s.frage;
-      const o=$('.kopts',kf);o.className='opts kopts n'+s.opts.length;o.innerHTML=s.opts.map((x,i)=>'<button class="opt" data-i="'+i+'">'+x.html+'</button>').join('');
+      const o=$('.kopts',kf);o.className='opts kopts eck n'+s.opts.length;o.innerHTML=s.opts.map((x,i)=>'<button class="opt" data-i="'+i+'">'+x.html+'</button>').join('');
       $$('.opt',o).forEach(b=>b.addEventListener('click',()=>waehle(+b.dataset.i,b)));};
-    const schritt=(anim,hilfe)=>{const s=K[k],zs=$$('.zl',kz),alt=zs[zs.length-1];
+    const dazu=anim=>{const s=K[k],zs=$$('.zl',kz),alt=zs[zs.length-1];      // die nächste Zeile der Rechnung
       if(s.op)$('.op',alt).innerHTML=s.op;
       const n=el(zeile(s.neu,true));kz.appendChild(n);
       if(s.teil&&anim&&!RUHIG){const tt=['ta','tb','tc'];$$('.tg',n).forEach(t=>t.classList.add('wart'));
@@ -2447,54 +2494,93 @@ const FORM={
         setTimeout(()=>{const u=$('.te',n);if(u)u.classList.remove('wart');},200+3*450);
         setTimeout(()=>$$('.hl',alt).forEach(o=>o.classList.remove('hl')),200+3*450+900);}
       if(s.pq){const tb=$('.tb',alt),tc=$('.tc',alt);if(tb)tb.classList.add('cp');if(tc)tc.classList.add('cq');}
-      k++;if(!hilfe){A.gezeigt=k;const r=$('.rueck',m);if(r&&!A.fertig)r.hidden=true;}frage();zeigeHilfen();
+      k++;};
+    const schritt=(anim,hilfe)=>{dazu(anim);if(!hilfe)A.gezeigt=k;frage();zeigeHilfen();
       if(k>=K.length&&!hilfe)abgeben(true);};
     const waehle=(i,b)=>{if(A.fertig||k>=K.length)return;const o=K[k].opts[i];
       if(o.ok)return schritt(true,false);
-      b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert','falsch');b.disabled=true;abgeben(false,o.hinweis);};
+      b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert','falsch');
+      $$('.opt',kf).forEach(x=>{x.disabled=true;if(x!==b)x.classList.add('uebrig');});vorbei=true;
+      while(k<K.length)dazu(false);      // die restlichen Zeilen als Lösung; die Frage mit der roten Wahl bleibt stehen
+      abgeben(false,o.hinweis);};
     A.gezeigt=0;
     A.hilfeSchritt=n=>{while(k<n&&k<K.length)schritt(true,true);};
-    A.sperre=()=>{while(k<K.length)schritt(false,true);kf.hidden=true;};
+    A.sperre=()=>{if(vorbei)return;while(k<K.length)schritt(false,true);kf.hidden=true;};
     frage();setHaupt('weiter',false);
   },
-  /* Quick: Formel-Puzzle (QF3, neu). Die Teile von links nach rechts in die Formel tippen */
+  /* Quick: Formel-Puzzle (QF3, neu), mit Buchstaben oder mit Zahlen. Dockt an wie Kärtchen legen in QF1 (Lehrkraft 23.11.2026: „ja“ auf „Soll das Formel-Puzzle
+     so andocken?“): Der nächste freie Platz ist blau umrandet; ein Tipp legt das Teil dorthin, blau und ohne Urteil; ein Tipp auf ein gelegtes Teil legt es zurück,
+     sein Platz im Vorrat bleibt frei. Liegen alle, „Prüfen“: ✓ oder ✗ an jedem Teil in der Ecke, die übrigen Kärtchen verblassen, bei einem Fehler darunter die
+     richtige Formel im Lösungsorange. Die Rückmeldung nennt den Hinweis des ersten falschen Teils, bei mehreren mit „Vorne:“, „Unter der Wurzel zuerst:“ oder
+     „Unter der Wurzel danach:“ davor; ein richtiges Teil an falscher Stelle: „‹Teil› gehört an eine andere Stelle der Formel.“ Keine Regel unter dem Fehler.
+     „Nächster Schritt“ legt das nächste Teil hellgrün und fest, „Lösung“ alle. Vorher landete ein falsches Teil nie im Platz, jeder Tipp verriet das Urteil,
+     und nach einem Fehler ging es an einer Aufgabe weiter, die schon als falsch zählte. */
   puzzle(auf,m){
-    m.className='buehne eins';const T=auf.schritte;let s=0;
+    m.className='buehne eins';const T=auf.schritte,N=T.length,zu=T.map(()=>null),fest=T.map(()=>false);      // zu[i]=j: Auf Platz i liegt das Teil j; fest[i]: von der Hilfe gelegt
     m.innerHTML='<section class="karte puzzle">'+wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>'+
       '<p class="pform">'+auf.vorlage+'</p><div class="chips pchips">'+auf.teile.map((t,j)=>'<button class="chip" data-j="'+j+'">'+t.html+'</button>').join('')+'</div><div class="rueck" hidden></div></section>';
-    const dran=()=>$$('.ps',m).forEach(p=>p.classList.toggle('dran',+p.dataset.s===s&&!A.fertig));
-    const lege=(i,b)=>{const ps=$('.ps[data-s="'+i+'"]',m);ps.innerHTML=T[i].html;ps.classList.add('voll');
-      if(!b)b=$$('.pchips .chip',m).find(x=>auf.teile[+x.dataset.j].html===T[i].html);if(b)b.remove();s=i+1;dran();};
-    $$('.pchips .chip',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||s>=T.length)return;const t=auf.teile[+b.dataset.j];
-      if(t.html===T[s].html){lege(s,b);if(s>=T.length){A.gezeigt=T.length;abgeben(true);}else{A.gezeigt=s;zeigeHilfen();}return;}
-      b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert');
-      const spaeter=T.some((z,i)=>i>s&&z.html===t.html);
-      abgeben(false,spaeter?'Dieses Teil kommt später. Was steht '+(s===0?'vorne':'als Nächstes')+'?':(t.hinweis||'Dieses Teil gehört nicht in die Formel.'));}));
-    A.gezeigt=0;A.hilfeSchritt=n=>{while(s<n&&s<T.length)lege(s);};
-    A.sperre=()=>{while(s<T.length)lege(s);$$('.pchips .chip',m).forEach(b=>b.disabled=true);dran();};
-    dran();setHaupt('weiter',false);
+    const platz=i=>$('.ps[data-s="'+i+'"]',m),chip=j=>$('.pchips .chip[data-j="'+j+'"]',m),passt=(j,i)=>auf.teile[j].html===T[i].html;
+    const zeig=()=>{const f=zu.indexOf(null);$$('.ps',m).forEach(p=>p.classList.toggle('dran',!A.fertig&&+p.dataset.s===f));if(!A.fertig)setHaupt('pruefen',f<0);};
+    const lege=(j,i)=>{const p=platz(i);p.innerHTML=auf.teile[j].html;p.classList.add('gel');zu[i]=j;chip(j).classList.add('weg');zeig();};
+    const loese=i=>{const j=zu[i];if(j===null||fest[i])return;zu[i]=null;const p=platz(i);p.innerHTML='';p.classList.remove('gel');chip(j).classList.remove('weg');zeig();};
+    $$('.pchips .chip',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||b.classList.contains('weg'))return;const f=zu.indexOf(null);if(f>=0)lege(+b.dataset.j,f);}));
+    $$('.ps',m).forEach(p=>p.addEventListener('click',()=>{if(!A.fertig)loese(+p.dataset.s);}));
+    /* Hilfe: das richtige Teil auf Platz i, hellgrün und fest; ein falsches dort geht zurück, ein passendes von einer anderen Stelle wird geholt */
+    const gib=i=>{if(fest[i])return;if(zu[i]!==null&&!passt(zu[i],i))loese(i);
+      if(zu[i]===null){let j=auf.teile.findIndex((t,k)=>t.html===T[i].html&&!zu.includes(k));
+        if(j<0){const q=zu.findIndex((z,k)=>z!==null&&k!==i&&!fest[k]&&passt(z,i));j=zu[q];loese(q);}
+        lege(j,i);}
+      fest[i]=true;platz(i).classList.add('gegeben');};
+    A.gezeigt=0;
+    A.hilfeSchritt=n=>{for(let i=0;i<n&&i<N;i++)gib(i);zeig();};
+    A.pruefe=()=>{A.geprueft=true;const F=[];
+      T.forEach((t,i)=>{if(fest[i])return;const ok=passt(zu[i],i);platz(i).classList.add(ok?'ok':'falsch');if(!ok)F.push(i);});
+      if(!F.length)return {ok:true};
+      const i=F[0],t=auf.teile[zu[i]],anders=T.some((z,k)=>k!==i&&z.html===t.html);
+      const h=anders?t.html+' gehört an eine andere Stelle der Formel.':(t.hinweis||'Dieses Teil gehört nicht in die Formel.');
+      return {ok:false,hinweis:(F.length>1?['Vorne','Unter der Wurzel zuerst','Unter der Wurzel danach'][i]+': ':'')+h};};      // stimmen mehrere nicht, sagt die Rückmeldung, von welcher Stelle sie spricht
+    A.sperre=()=>{if(!A.geprueft)T.forEach((t,i)=>gib(i));
+      $$('.pchips .chip',m).forEach(b=>{b.disabled=true;if(!b.classList.contains('weg'))b.classList.add('uebrig');});
+      if(A.geprueft&&T.some((t,i)=>!fest[i]&&!passt(zu[i],i))){let v=auf.vorlage;T.forEach((t,i)=>{v=v.replace('<span class="ps" data-s="'+i+'"></span>',t.html);});      // bei einem Fehler darunter die richtige Formel
+        $('.pform',m).insertAdjacentHTML('afterend','<p class="pform plsg">'+v+'</p>');}
+      zeig();};
+    zeig();
   },
-  /* Build: p und q in die Formel setzen (QF3, neu). p steht zweimal in der Formel, beide Stellen füllen sich zugleich; danach läuft die Rechnung */
+  /* Build: p und q in die Formel setzen (QF3, neu). p steht zweimal in der Formel, beide Stellen füllen sich zugleich. Dockt an wie das Formel-Puzzle
+     (Lehrkraft 23.11.2026: „ja“ auf „Soll Einsetzen so andocken?“): Ein Tipp legt die Zahl auf den nächsten freien Buchstaben, erst p, dann q, blau und ohne Urteil;
+     ein Tipp auf eine gelegte Zahl legt sie zurück. Liegen p und q, „Prüfen“: ✓ oder ✗ an jeder Stelle, eine falsche Zahl schwarz statt in der Farbe von p oder q,
+     die übrigen Kärtchen verblassen, rechts die Rechnung mit den richtigen Zahlen. Die Rückmeldung nennt den Hinweis der falschen Zahl, bei zwei falschen mit
+     „Bei p: …“ davor; sind p und q vertauscht: „Das ist q. Für p kommt die Zahl vor x.“ Keine Regel unter dem Fehler. „Nächster Schritt“ legt p, dann q fest.
+     Vorher landete eine falsche Zahl nie, nach einem Fehler ging es an einer Aufgabe weiter, die schon als falsch zählte, und „Weiter“ war mittendrin aktiv. */
   einsetzen(auf,m){
-    m.className='buehne';let dran='p';
-    const slot=r=>'<span class="es es'+r+'"><small>'+V(r)+'</small></span>';
+    m.className='buehne';const R=['p','q'],zu={p:null,q:null},fest={p:false,q:false};      // zu[r]=j: Auf dem Buchstaben r liegt die Zahl j; fest[r]: von der Hilfe gelegt
+    const slot=r=>'<span class="es es'+r+'" data-r="'+r+'"><small>'+V(r)+'</small></span>';
     const formel=idx(X,'1,2')+' = −'+bruch(slot('p'),'2')+' ± '+wurzel(klg(bruch(slot('p'),'2'))+Q+' − '+slot('q'));
     m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<p class="eform">'+formel+'</p><div class="chips echips">'+auf.chips.map((c,j)=>'<button class="chip" data-j="'+j+'">'+zahl(c.wert)+'</button>').join('')+'</div><div class="rueck" hidden></div></section>'+
       '<section class="karte rechnung"><h3 class="lt">Rechnung</h3><div class="ezeilen"></div><p class="leer"></p></section>';
-    const mark=()=>$$('.es',m).forEach(e=>e.classList.toggle('dran',!A.fertig&&!!dran&&e.classList.contains('es'+dran)));
-    const rech=anim=>{const z=$('.ezeilen',m),l=$('.rechnung .leer',m);if(l)l.hidden=true;
+    const chip=j=>$('.echips .chip[data-j="'+j+'"]',m);
+    const zeig=()=>{const r=R.find(x=>zu[x]===null);$$('.es',m).forEach(e=>e.classList.toggle('dran',!A.fertig&&!!r&&e.dataset.r===r));if(!A.fertig)setHaupt('pruefen',!r);};
+    const rech=anim=>{const z=$('.ezeilen',m),l=$('.rechnung .leer',m);if(l)l.hidden=true;if(z.children.length)return;
       auf.rech.forEach((r,j)=>{const e=el('<div class="zl'+(r.text?' text':'')+'"><span>'+r.h+'</span>'+(r.op?'<span class="op">'+r.op+'</span>':'')+'</div>');
         if(anim&&!RUHIG){e.style.visibility='hidden';setTimeout(()=>{e.style.visibility='';e.classList.add('neu');},300+j*500);}z.appendChild(e);});};
-    const setze=(r,anim)=>{const w=r==='p'?auf.p:auf.q;$$('.es'+r,m).forEach(e=>{e.innerHTML=(r==='p'?CP:CQ)(kl(w));e.classList.add('voll');});
-      const c=auf.chips.findIndex(x=>x.rolle===r),b=$('.echips .chip[data-j="'+c+'"]',m);if(b)b.remove();
-      dran=r==='p'?'q':null;mark();if(!dran)rech(anim);};
-    $$('.echips .chip',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||!dran)return;const c=auf.chips[+b.dataset.j];
-      if(c.rolle===dran){setze(dran,true);if(!dran){A.gezeigt=2;abgeben(true);}else{A.gezeigt=1;zeigeHilfen();}return;}
-      b.classList.remove('zittert');void b.offsetWidth;b.classList.add('zittert');
-      abgeben(false,c.rolle==='q'?'Erst '+V('p')+': die Zahl vor '+X+'. Danach '+V('q')+'.':(c.hinweis||'Diese Zahl passt nicht.'));}));
-    A.gezeigt=0;A.hilfeSchritt=n=>{if(n>=1&&dran==='p')setze('p',true);if(n>=2&&dran==='q')setze('q',true);};
-    A.sperre=()=>{if(dran==='p')setze('p',false);if(dran==='q')setze('q',false);$$('.echips .chip',m).forEach(b=>b.disabled=true);mark();};
-    mark();setHaupt('weiter',false);
+    const lege=(j,r)=>{const w=auf.chips[j].wert;$$('.es'+r,m).forEach(e=>{e.innerHTML=(r==='p'?CP:CQ)(kl(w));e.classList.add('gel');});zu[r]=j;chip(j).classList.add('weg');zeig();};
+    const loese=r=>{const j=zu[r];if(j===null||fest[r])return;zu[r]=null;$$('.es'+r,m).forEach(e=>{e.innerHTML='<small>'+V(r)+'</small>';e.classList.remove('gel');});chip(j).classList.remove('weg');zeig();};
+    $$('.echips .chip',m).forEach(b=>b.addEventListener('click',()=>{if(A.fertig||b.classList.contains('weg'))return;const r=R.find(x=>zu[x]===null);if(r)lege(+b.dataset.j,r);}));
+    $$('.es',m).forEach(e=>e.addEventListener('click',()=>{if(!A.fertig)loese(e.dataset.r);}));
+    /* Hilfe: die richtige Zahl auf r, hellgrün und fest; liegt sie auf dem anderen Buchstaben, kommt sie von dort */
+    const gib=r=>{if(fest[r])return;const j=auf.chips.findIndex(x=>x.rolle===r);R.forEach(x=>{if(x!==r&&zu[x]===j)loese(x);});if(zu[r]!==j){loese(r);lege(j,r);}
+      fest[r]=true;$$('.es'+r,m).forEach(e=>e.classList.add('gegeben'));};
+    A.gezeigt=0;
+    A.hilfeSchritt=n=>{if(n>=1)gib('p');if(n>=2)gib('q');zeig();};
+    A.pruefe=()=>{A.geprueft=true;const F=[];
+      R.forEach(r=>{if(fest[r])return;const ok=auf.chips[zu[r]].rolle===r;$$('.es'+r,m).forEach(e=>e.classList.add(ok?'ok':'falsch'));if(!ok)F.push(r);});
+      if(!F.length)return {ok:true};
+      const r=F[0],c=auf.chips[zu[r]],anders=r==='p'?'q':'p';
+      const h=c.rolle===anders?'Das ist '+V(anders)+'. Für '+V(r)+' kommt die Zahl '+(r==='p'?'vor':'ohne')+' '+X+'.':(c.hinweis||'Diese Zahl passt nicht.');
+      return {ok:false,hinweis:(F.length>1?'Bei '+V(r)+': ':'')+h};};
+    A.sperre=()=>{if(!A.geprueft)R.forEach(gib);
+      $$('.echips .chip',m).forEach(b=>{b.disabled=true;if(!b.classList.contains('weg'))b.classList.add('uebrig');});rech(true);zeig();};
+    zeig();
   },
   /* Build: Gerade zeichnen (LF2). Erst den Punkt (0 | b) antippen, dann den Endpunkt des Steigungsdreiecks. Mit dem zweiten Punkt stehen das Dreieck
      (nur die beiden Seiten am rechten Winkel orange) und die eigene Gerade da, grau. „Prüfen“ färbt sie grün oder rot. Ist sie falsch, verblasst das Eigene,
@@ -2577,7 +2663,7 @@ const FORM={
     A.gezeigt=0;
     A.nachZeilen=()=>{const z=$('.zeilen',m).lastElementChild;if(z)z.scrollIntoView({block:'nearest',behavior:RUHIG?'auto':'smooth'});};
     A.hilfeSchritt=n=>gib(L.findIndex(l=>l.id===auf.folge[n-1]));
-    A.sperre=()=>{if(!A.geprueft)L.forEach((l,j)=>{if(!fest[j])gib(j);});wahl=null;zeig();$$('.zu',m).forEach(b=>b.disabled=true);$('.zdock',m).classList.add('fertig');};      // nach „Prüfen“ bleiben die eigenen Paare mit ihrem Urteil stehen, nach „Lösung“ stehen die richtigen da
+    A.sperre=()=>{if(!A.geprueft)L.forEach((l,j)=>{if(!fest[j])gib(j);});wahl=null;zeig();$$('.zu',m).forEach(b=>b.disabled=true);$$('.zvorrat .zu',m).forEach(b=>b.classList.add('uebrig'));$('.zdock',m).classList.add('fertig');};      // nach „Prüfen“ bleiben die eigenen Paare mit ihrem Urteil stehen, nach „Lösung“ stehen die richtigen da
     zeig();
   },
 };
@@ -2603,7 +2689,7 @@ function loesung(){const n=A.auf.schritte.length;if(A.fertig)return;hilfeGenutzt
 
 /* ---------- Auswertung ---------- */
 function abgeben(ok,hinweis,art){
-  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse'].includes(A.form),zeigt=['eingabe','menge','zeichnen','zuordnen','ordnen','legen2','legen','punkte','ziel'].includes(A.form),still=einmal||zeigt||['ordnen','legen2','kette','puzzle','einsetzen'].includes(A.form);let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
+  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse','kette'].includes(A.form),zeigt=['eingabe','menge','zeichnen','zuordnen','ordnen','legen2','legen','punkte','ziel','puzzle','einsetzen'].includes(A.form),still=einmal||zeigt||['ordnen','legen2','kette','puzzle','einsetzen'].includes(A.form);let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
   if(erst){
     A.gewertet=true;const zaehlt=!A.hilfe&&art!=='loesung',alt=band(A.t);
     S.zeiten.push({typ:A.t.titel,key:A.key,s:Math.round((performance.now()-A.start)/100)/10,ok:ok&&art!=='loesung',hilfe:!zaehlt});
@@ -2616,10 +2702,11 @@ function abgeben(ok,hinweis,art){
     if(ereignis==='sitzt'){toast(A.t,alt,1,'✓ sitzt');Sound.sitzt();}
   }
   const emp=!ok&&art!=='loesung'&&erst&&A.auf.erkl&&S.typ[A.t.id].falsch>=2?'Tipp: Die Erklärung zeigt es Schritt für Schritt.':'';
-  if(art==='loesung')zeigeRueck('neutral','Lösung angesehen. Diese Aufgabe zählt nicht und kommt mit neuen Zahlen wieder.');
-  else if(ok&&erst&&A.hilfe)zeigeRueck('neutral','Mit Hilfe gelöst. Diese Aufgabe zählt nicht und kommt mit neuen Zahlen wieder.');
-  else if(ok)zeigeRueck('gut',erst?'Richtig.':'Jetzt stimmt es.',A.auf.nachher||'');
-  else zeigeRueck('schlecht',hinweis||'Nicht richtig.',emp,A.auf.denk&&!A.denk&&!(zeigt&&A.auf.schritte)?A.auf.denk:'');     // die Regel der Aufgabe gleich dazu, wenn der Denkanstoß nicht schon offen ist; nicht, wo ohnehin gleich die Schritte der Lösung stehen („zu viel Text“, Lehrkraft 22.11.2026)
+  /* nach „Lösung“ und „Nächster Schritt“ nur „Lösung angesehen.“ bzw. „Mit Hilfe gelöst.“ (Lehrkraft 23.11.2026: „das die Aufgabe dann wieder kommt wird er auch merken.“) */
+  if(art==='loesung')zeigeRueck('neutral','Lösung angesehen.');
+  else if(ok&&erst&&A.hilfe)zeigeRueck('neutral','Mit Hilfe gelöst.');
+  else if(ok)zeigeRueck('gut','Richtig.',A.auf.nachher||'');      // „Jetzt stimmt es.“ gibt es nicht mehr: Keine Form arbeitet nach einem Fehler weiter (Umformung wählen, Formel-Puzzle, Einsetzen seit 23.11.2026)
+  else zeigeRueck('schlecht',hinweis||'Nicht richtig.',emp,A.auf.denk&&!A.denk&&!((zeigt||A.form==='kette')&&A.auf.schritte)?A.auf.denk:'');     // die Regel der Aufgabe gleich dazu, wenn der Denkanstoß nicht schon offen ist; nicht, wo ohnehin gleich die Schritte der Lösung stehen („zu viel Text“, Lehrkraft 22.11.2026; Umformung wählen legt nach einer falschen Wahl die übrigen Zeilen hin)
   if(ok||art==='loesung'||einmal||zeigt){A.fertig=true;if(A.sperre)A.sperre();
     if(A.auf.schritte&&!einmal){A.gezeigt=A.auf.schritte.length;zeigeSchritte();}}
   setHaupt('weiter',true);zeigeHilfen();
@@ -2943,10 +3030,10 @@ W.zeig=function(){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;clearTimeout(W.
       const fertig=(kl,txt,klein)=>{sub.fertig=true;sub.w.y=zahl(d.loes.y);F.zeig();
         r.classList.add('gesperrt','steht');zeigeRueck(kl,txt,klein);W.setH('Weiter',true,W.vor);W.bild();W.rech();W.hilfen();W.balken();};
       const pruefen=()=>{const res=d.pruefe(sub.w),erst=!sub.gewertet;if(erst){sub.gewertet=true;W.wert(res.ok,sub.hilfe);}
-        if(res.ok)fertig(erst&&sub.hilfe?'neutral':'gut',erst?(sub.hilfe?'Mit Hilfe gelöst. Schritt '+n+' zählt in diesem Durchgang nicht.':'Richtig.'):'Jetzt stimmt es.');
+        if(res.ok)fertig(erst&&sub.hilfe?'neutral':'gut',erst?(sub.hilfe?'Mit Hilfe gelöst.':'Richtig.'):'Jetzt stimmt es.');
         else fertig('schlecht',res.hinweis,'Deine Eingabe: '+(sub.w.y||'')+'. Im Feld und in der Rechnung steht jetzt die Lösung. Schritt '+n+' zählt in diesem Durchgang nicht.');};   // falsch: gleich die Lösung (Skill interaktiv, Training 9)
       F=W.felder(r,sub,d.ids,eins=>{if(!sub.fertig)W.setH('Prüfen',eins,pruefen);});
-      W.ab=()=>{if(!sub.gewertet){sub.gewertet=true;W.wert(false,true);}fertig('neutral','Lösung angesehen. Schritt '+n+' zählt in diesem Durchgang nicht.');};
+      W.ab=()=>{if(!sub.gewertet){sub.gewertet=true;W.wert(false,true);}fertig('neutral','Lösung angesehen.');};
       if(sub.fertig){r.classList.add('gesperrt','steht');W.setH('Weiter',true,W.vor);}
     }
   }

@@ -28,11 +28,13 @@ In dieses Repository schreiben zwei Arten von Chats (Entscheidung 14.11.2026):
 
 - **Projektchats aus claude.ai** (Patricks Claude-Projekte, in denen das Material entsteht; in
   Erprobung: erster Lauf am 14.11.2026 mit neuen Versionen von LF1 und LF2, ohne Fehler; eine ganz
-  neue Themeneinheit hat noch kein Projektchat angelegt). Sie halten sich an diese CLAUDE.md und
-  schreiben **nur in den Ordner ihrer Themeneinheit**: die PDFs, `interaktiv/` und die
-  Beschreibungsdatei `_einheit.json`. Dann lassen sie `python3 _werkzeuge/bauen.py` laufen und
-  laden hoch; die Seiten, die das Skript dabei außerhalb ihres Ordners neu baut (Themenseite,
-  Startseite …), gehören mit dazu. Von Hand ändern sie außerhalb ihres Ordners nichts.
+  neue Themeneinheit hat noch kein Projektchat angelegt). Sie halten sich an diese CLAUDE.md. Ein
+  Projektchat zu einer Reihe schreibt in der Regel **nur in den Ordner seiner Themeneinheit**: die
+  PDFs, `interaktiv/` und die Beschreibungsdatei `_einheit.json`. Dann lässt er
+  `python3 _werkzeuge/bauen.py` laufen und lädt hoch; die Seiten, die das Skript dabei außerhalb
+  seines Ordners neu baut (Themenseite, Startseite …), gehören mit dazu. Von Hand ändert er
+  außerhalb seines Ordners in der Regel nichts; die Website als Ganzes pflegt die HappyMatty
+  Werkstatt (unten).
   Quelldateien und alle PDFs sichern sie selbst im privaten Backup
   `happymatty-de/unterrichtsmaterial` (Regeln dort in der `CLAUDE.md`).
 - Bevor ein Projektchat Material oder eine Seite ändert, die hier liegt, holt er den aktuellen
@@ -43,12 +45,18 @@ In dieses Repository schreiben zwei Arten von Chats (Entscheidung 14.11.2026):
   danach werden sie vernichtet. Sie gehen nur in den Chat und in die iCloud-Ablage, von der aus
   Patrick in der Schule druckt, weder in dieses Repository noch ins Backup `unterrichtsmaterial`,
   auch wenn sonst alles gesichert wird (Entscheidung 18.11.2026).
-- **Claude Code** (lokal bei Patrick) darf alles. Nur Claude Code ändert: das Skript und alles in
-  `_werkzeuge/`, `stil/`, die Seitentypen (Aufbau der gebauten Seiten), neue Bereiche, neue
-  Themen und Bildungsgänge, die Beschreibungsdateien der Themen (`_thema.json`, also auch
+- **Projektchats dürfen alles, was bisher nur Claude Code durfte** (Entscheidung 23.11.2026,
+  Patrick: „Ja ich will möglichst viel im ‚normalen‘ Claude arbeiten. Ich erlaube hiermit
+  ausdrücklich, dass auch Claude die gesamte Webseite bearbeiten und umändern kann und alle dafür
+  notwendigen Dateien also auch die Claude.md.“). Die Website als Ganzes pflegt in der Regel die
+  **HappyMatty Werkstatt** (Patricks Claude-Projekt für die Website): das Skript und alles in
+  `_werkzeuge/`, `stil/`, die Seitentypen (Aufbau der gebauten Seiten), neue Bereiche, neue Themen
+  und Bildungsgänge, die Beschreibungsdateien der Themen (`_thema.json`, also auch
   Probeklassenarbeit und Klassenarbeit), Datenschutzerklärung, Impressum und diese CLAUDE.md.
-- Braucht ein Projektchat etwas davon (ein neues Thema, einen neuen Bildungsgang oder Bereich,
-  eine andere Gestaltung), hält er an und sagt Patrick, dass Claude Code das übernimmt.
+- Braucht ein Projektchat zu einer Reihe etwas davon (ein neues Thema, einen neuen Bildungsgang oder
+  Bereich, eine andere Gestaltung), sagt er es Patrick; in der Regel übernimmt es die HappyMatty
+  Werkstatt (vorher: Claude Code).
+- **Claude Code** (lokal bei Patrick) darf weiter alles und bleibt daneben möglich.
 - Der Weg über den Eingang bleibt daneben gültig: Patrick legt eine ZIP-Datei oder Dateien in den
   Ordner `Eingang` neben diesem Repository (`Schreibtisch/Claude/Eingang`) oder hängt sie in einer
   Sitzung an, und Claude Code übernimmt alles (Ablauf in der `CLAUDE.md` von
@@ -104,8 +112,9 @@ auch über mehrere Schuljahre und für mehrere Klassen.
   einzeln gingen sie durch).
 - Vor dem Hochladen läuft `python3 _werkzeuge/bauen.py` ohne Fehler. Das Skript prüft, dass kein
   `.tex` und kein PDF im Repository liegt, das nicht als freigegeben eingetragen ist (Abschnitt
-  „Beschreibungsdateien und Bauskript“). Claude Code sieht sich zusätzlich geänderte Seitentypen
-  und Gestaltung im Browser an (Handy-Ansicht, Links, Schriften).
+  „Beschreibungsdateien und Bauskript“). Wer Seitentypen oder Gestaltung ändert, sieht sie sich
+  zusätzlich im Browser an (Handy-Ansicht, Links, Schriften; Entscheidung 23.11.2026, vorher nur
+  Claude Code).
 - Nach dem Hochladen wartet Claude mit `python3 _werkzeuge/warten_bis_online.py`, bis GitHub
   Pages fertig ist, und meldet erst dann „online“ (braucht `gh`; ohne `gh` meldet Claude
   „hochgeladen, in wenigen Minuten online“). Die Veröffentlichung dauert mal unter einer
@@ -256,8 +265,8 @@ Punktzahlen oder etwas über einzelne Schüler.
 
 ### `_thema.json`
 
-Liegt im Ordner des Themas, z. B. `quadratische-funktionen/_thema.json`; nur Claude Code legt
-sie an und ändert sie.
+Liegt im Ordner des Themas, z. B. `quadratische-funktionen/_thema.json`; in der Regel legt die
+HappyMatty Werkstatt sie an und ändert sie (Entscheidung 23.11.2026: „möglichst viel im ‚normalen‘ Claude“).
 
 ```json
 {
@@ -298,7 +307,7 @@ sie vorhanden ist, bis zur Freigabe mit grauen Karten (siehe „Tests“).
 ### Neue Themeneinheit anlegen
 
 1. `git pull`. Das Thema muss es schon geben (`<thema>/_thema.json`); ein neues Thema legt
-   Claude Code an.
+   in der Regel die HappyMatty Werkstatt an (Entscheidung 23.11.2026: „möglichst viel im ‚normalen‘ Claude“).
 2. Ordner `<thema>/<titel-der-einheit>/` anlegen; Schreibweise wie unter „Aufbau der Links“
    (z. B. „Mal, geteilt – und das Minus?“ → `mal-geteilt-und-das-minus`).
 3. Die freigegebenen PDFs hineinlegen, jeweils unter dem Namen aus `quelle` ohne `_v…`:
@@ -323,8 +332,8 @@ und `stand` anpassen, Skript laufen lassen. Ist die Lösung freigegeben, kommt s
 reicht“), Skript laufen lassen. Die PDF-Adressen entfallen ohne Weiterleitung; sie kommen unter
 „Frühere Adressen und Namen“ (Abschnitt „Was veröffentlicht ist“).
 **Weiterer Bildungsgang:** in `bildungsgaenge` ergänzen, Skript laufen lassen. Den ersten
-zweiten Bildungsgang überhaupt trägt Claude Code ein (siehe „Startseite, Themenseiten und
-Bildungsgänge“).
+zweiten Bildungsgang überhaupt trägt die HappyMatty Werkstatt ein (siehe „Startseite, Themenseiten
+und Bildungsgänge“; Entscheidung 23.11.2026, vorher Claude Code).
 
 ## Aufbau der Links
 
@@ -439,7 +448,7 @@ Keine eigene Seite, keine Nummer: „Kurztest 1“ verwechselt man mit Fassung 1
     (Entscheidung 12.11.2026).
   - Freigabe: Patrick schreibt nur „Klassenarbeit freigeben“. Die Dateien liegen schon im Backup
     (`unterrichtsmaterial/mathematik/<thema>/QF_Klassenarbeit_…_v….pdf`, neueste Version); Claude
-    Code kopiert die drei PDFs ohne `_v…` nach `<thema>/klassenarbeit/`, setzt in `_thema.json`
+    (Projektchat oder Claude Code, Entscheidung 23.11.2026) kopiert die drei PDFs ohne `_v…` nach `<thema>/klassenarbeit/`, setzt in `_thema.json`
     bei allen dreien `"freigegeben": true` und `stand` und lässt das Skript laufen. Die `.tex`
     bleibt im Backup. Vor der Freigabe liegt keines dieser PDFs in diesem Repository.
   - Eigene Seite wie die Übersicht einer Themeneinheit (Entscheidung 10.11.2026, geändert am
@@ -541,9 +550,9 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
   Bildungsgangs steht das Thema mit der Zahl der Einheiten dieses Bildungsgangs. Die Themenseite
   führt zurück zum `bildungsgang` des Themas (Entscheidung 14.11.2026). Zwei Kennzeichen
   hintereinander stehen auf der Themenseite noch mit dem großen Abstand hinter dem Titel; beim
-  ersten Fall ergänzt Claude Code in `basis.css` den Abstand zwischen zwei Kennzeichen und prüft
-  im Browser (Entscheidung 14.11.2026). Bis dahin trägt nur Claude Code einen zweiten
-  Bildungsgang ein.
+  ersten Fall ergänzt die HappyMatty Werkstatt in `basis.css` den Abstand zwischen zwei Kennzeichen
+  und prüft im Browser (Entscheidung 14.11.2026). Bis dahin trägt nur die HappyMatty Werkstatt einen
+  zweiten Bildungsgang ein (Entscheidung 23.11.2026, vorher Claude Code).
 - Welcher Bildungsgang ein Blatt bearbeitet, steht im Namen des Reihenplans
   (`BF2_Reihenplan_…`); im Zweifel fragt Claude.
 
@@ -554,12 +563,12 @@ Bildungsgänge (maßgeblich ist `BILDUNGSGAENGE` in `_werkzeuge/bauen.py`):
 | BF1 | `/bf1` | Berufsfachschule I | aktiv |
 | BF2 | `/bf2` | Berufsfachschule II | aktiv |
 | BGY | `/bgy` | Berufliches Gymnasium | aktiv, ein Jahrgang |
-| FSTM | `/fstm` | Techniker-Abendschule (BWL) | ab Januar 2027; dann trägt Claude Code ihn im Skript ein |
-| DBOS | `/dbos` | Duale Berufsoberschule | ab Schuljahr 2027/28; dann trägt Claude Code ihn im Skript ein |
+| FSTM | `/fstm` | Techniker-Abendschule (BWL) | ab Januar 2027; dann trägt die HappyMatty Werkstatt ihn im Skript ein |
+| DBOS | `/dbos` | Duale Berufsoberschule | ab Schuljahr 2027/28; dann trägt die HappyMatty Werkstatt ihn im Skript ein |
 
 Bereiche: vorgesehen „Grundlagen“ (`BEREICHE` im Skript), noch ohne Seite. Bekommt ein Bereich
-eine Seite, baut Claude Code den Seitentyp ins Skript ein und fragt vorher nach Adresse und
-Aufbau.
+eine Seite, baut die HappyMatty Werkstatt den Seitentyp ins Skript ein und fragt vorher nach
+Adresse und Aufbau (Entscheidung 23.11.2026, vorher Claude Code).
 
 Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`, `datenschutz`,
 `impressum`. Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
@@ -579,7 +588,8 @@ Ordner und Dateien, die mit `_` beginnen, veröffentlicht GitHub Pages nicht.
 
 Startseite, Themenseiten und Übersichten sehen aus wie die Arbeitsblätter
 (Skill `mathe`, Gestaltung: Schriften, Farben, Kopf- und Fußzeile, Überschrift). Ihr HTML steht im
-Skript; eine Änderung daran macht nur Claude Code und prüft sie im Browser:
+Skript; eine Änderung daran macht in der Regel die HappyMatty Werkstatt und prüft sie im Browser
+(Entscheidung 23.11.2026, vorher nur Claude Code):
 
 - Kopfzeile mittig in Indie Flower: immer erst das Fach, dann das Thema, getrennt durch
   einen Mittelpunkt: „Mathematik · Lineare Funktionen“. Fach grau, Thema grün `#26870C`.
@@ -733,9 +743,9 @@ Die interaktiven Seiten entstehen meist als Artifact in einem Claude-Projekt auf
 Jede Seite muss ohne Claude laufen: kein `window.claude`, keine Artifact-Datenbank.
 Möglichst keine Inhalte von fremden Servern laden (Datenschutz der Schüler).
 Lädt eine Seite etwas von fremden Servern, setzt sie Cookies, speichert sie weitere Daten im
-Browser oder kommt eine Statistik hinzu, passt Claude Code die Datenschutzerklärung im selben
-Schritt an oder fragt vorher; ein Projektchat legt eine solche Seite nicht selbst ab, sondern
-übergibt an Claude Code.
+Browser oder kommt eine Statistik hinzu, legt der Chat sie selbst ab und passt die
+Datenschutzerklärung im selben Schritt an oder fragt vorher (Entscheidung 23.11.2026: „möglichst
+viel im ‚normalen‘ Claude“; vorher übergab ein Projektchat eine solche Seite an Claude Code).
 
 Die PDFs entstehen in Patricks Claude-Projekten. Von dort kommen sie auf zwei Wegen:
 
