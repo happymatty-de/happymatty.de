@@ -518,7 +518,7 @@ input[type=range]::-moz-range-thumb{width:1.8rem;height:1.8rem;border-radius:50%
 .wnot .op{color:var(--grau);white-space:nowrap}
 .wtext{margin:0;font-size:1.02rem;line-height:1.35;color:#39424C}
 .frage.wgr{font-size:1.55rem}
-.wkopf{display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap}
+.wkopf{display:flex;justify-content:flex-start;align-items:center;gap:.35rem .55rem;flex-wrap:wrap}
 .werk .opts.n2 .opt{padding:.3rem .5rem;white-space:nowrap;min-height:3.1rem}
 .werk .ein{margin:0}
 .wtipp{display:inline-block;background:#EEF1F4;color:var(--dgrau);border-radius:.25rem;font-size:.8rem;font-weight:700;padding:.04rem .45rem .1rem;white-space:nowrap}
@@ -540,6 +540,25 @@ input[type=range]::-moz-range-thumb{width:1.8rem;height:1.8rem;border-radius:50%
 .wdrei span{border:1.5px solid var(--rand);border-radius:.45rem;padding:.15rem .6rem;font-size:.95rem;color:var(--grau);background:#fff}
 .wdrei span.ok{border-color:#9CC98F;background:#F3F9F1;color:var(--gruen);font-weight:700}
 .wfuss:empty{display:none}
+/* Leiste über der Aufgabe der Anwendung: Tipp · 1 · 2 · 3 · Auflösung; erledigte Stationen blau und antippbar (Rückblick), die aktuelle
+   dunkel, kommende grau; die angetippte blau gefüllt (Lehrkraft 24.11.2026) */
+.wsts{display:flex;gap:.3rem;flex:none}
+.wst{box-sizing:border-box;min-width:1.95rem;min-height:1.95rem;padding:0 .5rem;border:.12rem solid #D9DFE6;border-radius:.5rem;background:#fff;color:#A3ACB5;font-family:inherit;font-size:.85rem;font-weight:700;line-height:1;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.wst.fertig{border-color:var(--blau);color:var(--blau);cursor:pointer}
+.wst.fertig:hover:not(:disabled){background:#EAF3F9}
+.wst.fertig.an,.wst.fertig.an:hover:not(:disabled){background:var(--blau);color:#fff}
+.wst.akt{border-color:var(--text);color:var(--text);cursor:default}
+.wrb .wst.akt{cursor:pointer}
+.wst:disabled{cursor:default}
+.wsn{color:var(--grau)}
+.wkopf .wtipp,.wkopf .wasm{margin-left:auto}
+.wrbteil{display:flex;flex-direction:column;gap:.5rem;pointer-events:none}
+.wrbteil+.wrbteil{border-top:1.5px dashed var(--rand);padding-top:.6rem}
+.wrbteil *{animation:none!important;transition:none!important}
+/* Ende der Anwendung im Einzeltraining: „Noch einmal, neue Zahlen“ weiß mit blauem Rand neben „Fertig“ (Lehrkraft 24.11.2026) */
+.wnoch{background:#fff;color:var(--blau);border:.14rem solid var(--blau);border-radius:.75rem;min-height:3rem;font-size:1.1rem;font-weight:700;padding:.3rem 1rem;box-shadow:0 .2rem 0 #C9D6E2;line-height:1.15}
+.wnoch:hover{background:#EAF3F9}
+.wnoch:active{transform:translateY(.14rem);box-shadow:none}
 
 /* ---------- Tafel-Runde (Talk) ---------- */
 .tafelr .exm{grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);align-items:start;padding-top:.6rem}
@@ -687,7 +706,12 @@ html{font-size:clamp(15px,4.3vw,19px)}
 .ekacheln{grid-template-columns:1fr}
 .wlage{font-size:.95rem}
 .frage.wgr{font-size:1.35rem}
-.wurteil{font-size:2.2rem}}
+.wurteil{font-size:2.2rem}
+.wst{min-width:2.45rem;min-height:2.45rem;font-size:.9rem}
+.leiste.wende{flex-direction:row;align-items:stretch}
+.leiste.wende .hilfen{display:none}
+.leiste.wende .wnoch,.leiste.wende .haupt{flex:1 1 0;min-width:0}
+.wnoch{font-size:1rem}}
 
 @media (prefers-reduced-motion:reduce){
 *{animation-duration:.01s!important;transition-duration:.01s!important}}
@@ -847,9 +871,9 @@ svg.zieh{touch-action:none}
 .ghgraph svg{display:block;width:100%;height:auto}
 .gk.ghk{stroke:var(--gruen)}
 .ghlauf{fill:var(--orange);stroke:#fff;stroke-width:2.5}
-.gpkt.tipp{fill:#9AA4AF}
-.gbs.tipp{fill:#6E6E6E;font-weight:400}
-.tipplin{stroke:#9AA4AF;stroke-width:1.5;stroke-dasharray:4 4}
+.gpkt.tipp{fill:var(--lila)}      /* der eigene Tipp in Akzentlila: Punkt, Beschriftung, Linie (Lehrkraft 24.11.2026; vorher grau) */
+.gbs.tipp{fill:var(--lila);font-weight:400}
+.tipplin{stroke:var(--lila);stroke-width:1.5;stroke-dasharray:4 4}
 .ghtipp{margin:.4rem 0}
 .ghtipp .sl{display:flex;align-items:center;gap:.8rem;font-size:1.4rem}
 .ghtipp input{flex:1}
@@ -1233,14 +1257,18 @@ svg.zieh{touch-action:none}
 .ak-pol{fill:#39424C}
 .ak-fuell{fill:#4CAF50}
 .ak-fuell.tief{fill:#D9534F}
-.ak-80{stroke:var(--orange);stroke-width:1.6;stroke-dasharray:4 3}
-.ak-80t{font-family:var(--satz);font-size:11px;fill:var(--orange)}
+.ak-80{stroke:var(--grau);stroke-width:1.6;stroke-dasharray:4 3}      /* die 80-%-Grenze dunkelgrau gestrichelt, nicht im Lösungsorange (Lehrkraft 24.11.2026) */
+.ak-80t{font-family:var(--satz);font-size:11px;fill:var(--grau)}
 .ak-blitz{fill:#F2B705;stroke:#8a6500;stroke-width:1.2;opacity:0;transition:opacity .3s}
 .aksvg.laedt .ak-blitz{opacity:1;animation:akblitz 1s ease-in-out infinite}
 @keyframes akblitz{50%{opacity:.45}}
 .ak-proz{font-family:var(--satz);font-size:26px;font-weight:700;fill:var(--text)}
-.ak80l{stroke:var(--orange);stroke-width:1.4;stroke-dasharray:5 4}
+.ak80l{stroke:var(--grau);stroke-width:1.4;stroke-dasharray:5 4}
 .gpkt.akb{fill:var(--blau)}
+/* Die Gerade grün wie der Akku im Handy, mit dem Ergebnispunkt und seinen Koordinaten; der Startpunkt bleibt blau (Lehrkraft 24.11.2026) */
+.akku .gk.rkk{stroke:var(--gruen)}
+.akku .rklauf{fill:var(--gruen)}
+.akku .gpkt.rkf,.akku .gbs.rkf{fill:var(--gruen)}
 .akku .wlage b{color:var(--text)}
 .akku .rkszene{flex-basis:10.5rem;max-width:11.5rem}
 
@@ -1662,7 +1690,7 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
    Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung.
    Gebaut wird mit build.py auf dem Trainingsrahmen (trainingsrahmen/ im Wurzelordner des Backups).
    ===================================================================== */
-const VERSION='v9';
+const VERSION='v9.1';
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
 const PQ=V('p')+','+V('q');
@@ -2996,7 +3024,7 @@ const AKKA={
       {html:CB(V('b')+' = '+g.m)+': '+g.m+' % pro Minute',hinweis:g.m+' % pro Minute ist die Änderung pro Minute, also '+ML+'. '+BL+' ist der Startwert: '+g.b+' % beim Einstecken.'},
       {html:CB(V('b')+' = 0')+': Der Akku startet leer.',hinweis:'Der Akku ist beim Einstecken nicht leer: Er zeigt schon '+g.b+' %. Das ist '+BL+'.'},
       {html:CB(V('b')+' = 80')+': bis dahin lädt es gleichmäßig',hinweis:'80 % ist die Grenze, bis zu der das Handy gleichmäßig lädt. '+BL+' ist der Startwert: '+g.b+' %.'}];
-    return {frage:'Was ist '+BL+'?',text:'Gesucht ist die Funktion '+AF+' = '+ML+AX+' + '+BL+': Akkustand in % nach '+AX+' Minuten.',denk:BL+' ist der Wert am Anfang, bei '+AX+' = 0.',opts:shuffle(o),notiz:CB(V('b')+' = '+g.b)+' (Start in %)'};},
+    return {frage:'Was ist '+BL+'?',text:'Gesucht ist die Funktion '+AF+' = '+ML+AX+' + '+BL+': Akkustand in % nach '+AX+' Minuten.',denk:BL+' ist der Wert am Anfang, bei '+AX+' = 0.',opts:shuffle(o),notiz:CB(V('b')+' = '+g.b+' (Start in %)')};},
   s1b(g){const o=[{html:CM(V('m')+' = '+g.m)+': '+g.m+' % mehr pro Minute',ok:true},
       {html:CM(V('m')+' = '+g.b)+': der Stand beim Einstecken',hinweis:g.b+' % ist der Startwert, also '+BL+'. '+ML+' ist die Änderung pro Minute: '+g.m+' %.'},
       g.m!==1?{html:CM(V('m')+' = '+zahl(1/g.m))+': eine halbe Minute pro Prozent',hinweis:'Steigung heißt: Änderung des Akkustands pro Minute, also '+g.m+' % pro Minute. Nicht Minuten pro Prozent.'}
@@ -3055,7 +3083,7 @@ function akkuSVG(g){
     '<text class="ak-proz" x="85" y="226" text-anchor="middle">'+g.b+' %</text></svg>';}
 function akkuGraph(g){return koord([0,g.T],[0,100],{ex:300/g.T,ey:2.1,sx:5,sy:10,lx:10,ly:20,xn:svgI('x')+' [min]',yn:svgI('A')+'('+svgI('x')+') [%]',label:'Akkustand'});}
 function werkRahmen(){
-  S.ansicht='werk';adresse(S.modus==='gesamt'?'gesamttraining':WERKSTOR.id);Object.keys(A).forEach(k=>delete A[k]);const g=W.L.g;
+  S.ansicht='werk';W.rb=null;adresse(S.modus==='gesamt'?'gesamttraining':WERKSTOR.id);Object.keys(A).forEach(k=>delete A[k]);const g=W.L.g;
   const frage=g.art==='w'?'Wie voll ist der Akku nach '+g.t+' Minuten?':'Nach wie vielen Minuten zeigt der Akku '+g.Z+' %?';
   setApp('<header class="kopf trk"><button class="kn" data-akt="zurueck">‹ '+(S.modus==='gesamt'?'Start':'Einzeltraining')+'</button>'+
     '<div class="etappe"><span class="el">'+(S.modus==='gesamt'?'Etappe '+S.etappe+' · ':'')+WERKSTOR.titel+'</span><span class="eb"><i style="width:0%"></i></span></div>'+tonKnopf()+
@@ -3070,14 +3098,8 @@ function startWerk(modus){
   if(!S.werk.lauf[modus]){const g=AKKU.zahlen();S.werk.lauf[modus]={g,ph:0,tipp:null,x:g.art==='w'?50:20,ok:[true,true,true],sub:{},dat:{},erg:{},nr:++S.werk.n};}
   W.L=S.werk.lauf[modus];werkRahmen();W.zeig();
 }
-function werkWeiter(){
-  const modus=S.modus;delete S.werk.lauf[modus];clearTimeout(W.timer);cancelAnimationFrame(W.raf);
-  if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(()=>vEinzel({titel:'Alles sitzt!'}));}
-  if(modus==='gesamt'){const n=S.etappe;S.etappe++;S.pkt=0;S.kronen++;S.geuebt=true;S.werk.faellig=n+2;
-    return zeigeKrone('Etappe '+n+' geschafft!',()=>vEinzel({geschafft:n,neu:true}));}
-  S.kronen++;zeigeKrone(WERKSTOR.titel+' geschafft!',()=>vEinzel({neu:true}));
-}
 W.dat=n=>W.L.dat[n]||(W.L.dat[n]=AKKA[n](W.L.g));
+W.tippText=()=>{const L=W.L;return L.tipp===null?'':L.g.art==='w'?proz(L.tipp):minT(L.tipp);};
 /* Akkustand und Uhr im Handy; der Graph wächst mit */
 W.setzeZeit=function(x){const L=W.L,g=L.g,sv=$('.aksvg');if(!sv)return;const p=Math.min(100,g.A(x)),H=120,y0=77+H;
   const f=$('.ak-fuell',sv),h=H*p/100;f.setAttribute('y',(y0-h).toFixed(1));f.setAttribute('height',h.toFixed(1));f.classList.toggle('tief',p<20);
@@ -3119,8 +3141,7 @@ W.felder=function(r,sub,ids,wechsel){const gueltig=id=>/\d$/.test(sub.w[id]||'')
 W.zeig=function(){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;clearTimeout(W.timer);W.taste=null;W.keine=null;W.ab=null;W.t0=performance.now();W.balken();
   if(L.ph>=6)return W.aufl(true);
   W.bild();W.rech();r.className='karte wrechts';const sub=L.sub;
-  const tippText=()=>g.art==='w'?proz(L.tipp):minT(L.tipp);
-  const kopf=n=>'<p class="was wkopf"><span>'+(n?'<b>Schritt '+n+' von 3</b> · '+WSCHRITT[n-1]:'<b>'+WERKSTOR.titel+'</b> · Dein Tipp')+'</span>'+(!n?'':'<span class="wtipp">Tipp: '+tippText()+'</span>')+'</p>';
+  const kopf=()=>W.kopf();
   if(L.ph===0){const w=g.art==='w',mx=w?100:g.T,st=5;
     r.innerHTML=kopf(0)+'<p class="frage wgr">'+(w?'Wie voll ist der Akku nach '+g.t+' Minuten?':'Nach wie vielen Minuten zeigt der Akku '+g.Z+' %?')+'</p><p class="wtext">Schieb den Regler auf deinen Tipp. Am Ende siehst du, wie der Akku lädt.</p>'+
       '<div class="sr ghtipp rktipp"><label class="sl">'+(w?'':'nach')+'<input type="range" min="0" max="'+mx+'" step="'+st+'" value="'+L.x+'" aria-label="'+(w?'Akkustand in Prozent':'Zeit in Minuten')+'"><output>'+(w?proz(L.x):minT(L.x))+'</output></label></div>';
@@ -3156,7 +3177,7 @@ W.zeig=function(){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;clearTimeout(W.
 W.schritt=function(alle){const L=W.L,sub=L.sub;if(L.ph<1||L.ph>5||sub.fertig)return;const d=W.dat(WDAT[L.ph-1]);if(!d.ein)return;const N=d.schritte.length;sub.hilfe=true;
   sub.gezeigt=alle?N:Math.min(N,(sub.gezeigt||0)+1);if(sub.gezeigt>=N){if(W.ab)W.ab();}else{W.rech();W.hilfen();}};
 /* Abspielen: Die Uhr läuft (eine Minute in 0,08 s), der Akku füllt sich, der Graph wächst mit; Halt beim Ergebnis */
-W.spiel=function(){const L=W.L,g=L.g;L.ph=6;L.sub={};W.setH('Weiter',false);W.taste=null;W.balken();const h=$('.hilfen');if(h)h.innerHTML='';
+W.spiel=function(){W.losSpiel();const L=W.L,g=L.g;L.ph=6;L.sub={};W.setH('Weiter',false);W.taste=null;W.balken();const h=$('.hilfen');if(h)h.innerHTML='';
   const r=$('.wrechts');if(r){r.classList.add('gesperrt');$$('.feld',r).forEach(f=>f.classList.remove('aktiv'));}
   W.bild();const nr=++W.lauf,lebt=()=>nr===W.lauf&&W.L===L&&S.ansicht==='werk'&&$('.aksvg');
   if(schmal()){const b=$('.wbild');if(b)b.scrollIntoView({block:'start',behavior:RUHIG?'auto':'smooth'});}
@@ -3168,7 +3189,7 @@ W.spiel=function(){const L=W.L,g=L.g;L.ph=6;L.sub={};W.setH('Weiter',false);W.ta
     if(x>=ziel){if(sv)sv.classList.remove('laedt');Sound.richtig();W.timer=setTimeout(()=>{if(lebt())W.aufl(false);},700);return;}
     W.raf=requestAnimationFrame(schritt);};
   W.timer=setTimeout(()=>{if(lebt())W.raf=requestAnimationFrame(schritt);},350);};
-W.aufl=function(sofort){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;cancelAnimationFrame(W.raf);W.bild();
+W.aufl=function(sofort){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;L.spielt=false;cancelAnimationFrame(W.raf);W.bild();
   const host=$('.rkgraph'),k=W.K;
   if(host&&k){const kv=$('.rkk',host);if(kv)kv.setAttribute('d',k.pfad(g.A,0,g.t));const pk=$('.rklauf',host);if(pk)pk.style.opacity='0';
     const mk=$('.marken',host);if(!mk.dataset.s){mk.dataset.s='1';
@@ -3180,14 +3201,14 @@ W.aufl=function(sofort){const L=W.L,g=L.g,r=$('.wrechts');if(!r)return;cancelAni
   const d3=AKKA.s3(g),z=ok=>'<span class="z">'+(ok?'✓':'✗')+'</span>';
   const tippGut=g.art==='w'?Math.abs(L.tipp-g.Z)<=5:Math.abs(L.tipp-g.t)<=5;
   r.className='karte wrechts';
-  r.innerHTML='<p class="was wkopf"><span><b>'+WERKSTOR.titel+'</b> · Auflösung</span></p><h2 class="wurteil ja">'+d3.kurz+'</h2><p class="frage">'+d3.satz+'</p>'+
+  r.innerHTML=W.kopf()+'<h2 class="wurteil ja">'+d3.kurz+'</h2><p class="frage">'+d3.satz+'</p>'+
     '<div class="wzeilen"><p class="'+(L.erg.rech?'gut':'schlecht')+'">'+z(L.erg.rech)+'<span>Deine Rechnung</span></p><p class="'+(L.erg.deut?'gut':'schlecht')+'">'+z(L.erg.deut)+'<span>Deine Deutung</span></p>'+
     '<p class="'+(tippGut?'gut':'schlecht')+'">'+z(tippGut)+'<span>Dein Tipp: '+(g.art==='w'?proz(L.tipp):minT(L.tipp))+'</span></p></div>'+
     '<div class="wdrei">'+WSCHRITT.map((t,i)=>'<span class="'+(L.ok[i]?'ok':'')+'">'+(L.ok[i]?'✓ ':'')+t+'</span>').join('')+'</div><p class="klein wfuss"></p>';
   if(!L.gebucht){L.gebucht=true;const alt=werkBand();L.ok.forEach((o,i)=>{if(o)S.werk.ok[i]=true;});const neu=werkBand(),v=werkVoll();
     if(neu>alt){toast(WERKSTOR,alt,neu,v?'✓ sitzt':S.werk.ok.filter(Boolean).length+' von 3 Schritten');if(v)Sound.sitzt();else Sound.level();}}
   $('.wfuss',r).textContent=L.ok.every(Boolean)?'':'Haken gibt es beim ersten Versuch ohne Lösung.'+(werkVoll()||S.modus!=='gesamt'?'':' Der Akku kommt noch einmal, mit neuen Zahlen.');
-  W.setH('Weiter',true,werkWeiter);
+  W.ende();
 };
 
 /* =====================================================================
@@ -3198,8 +3219,62 @@ const schmal=()=>window.innerWidth<=760;
 W.setH=function(text,an,fn){const h=$('.leiste .haupt');if(!h)return;h.hidden=text===null;if(text!==null)h.textContent=text;h.disabled=!an;W.fn=an&&fn?fn:null;};
 W.balken=function(){const L=W.L,b=$('.eb i');if(b)b.style.width=Math.round(Math.min(6,L.ph+(L.sub.fertig?1:0))/6*100)+'%';};
 W.denk=function(){const L=W.L,d=L.ph>=1&&L.ph<=5?W.dat(WDAT[L.ph-1]):null,e=$('.wrechts .denk');if(!d||!e)return;L.sub.denk=!L.sub.denk;e.hidden=!L.sub.denk;e.innerHTML=d.denk;W.hilfen();};
-W.vor=function(){clearTimeout(W.timer);const L=W.L;if(!L||S.ansicht!=='werk')return;L.ph++;L.sub={};W.zeig();
+W.vor=function(){clearTimeout(W.timer);const L=W.L;if(!L||S.ansicht!=='werk'||W.rb)return;W.merke();L.ph++;L.sub={};W.zeig();
   if(schmal()){const r=$('.wrechts');if(r)r.scrollIntoView({block:'start',behavior:RUHIG?'auto':'smooth'});}};
+/* ---------- Leiste über der Aufgabe: Tipp · 1 · 2 · 3 · Auflösung, mit Rückblick auf jede erledigte Station (Lehrkraft 24.11.2026) ----------
+   Erledigte Stationen sind blau umrandet und antippbar, die aktuelle dunkel umrandet, kommende grau und nicht antippbar; dahinter der Name
+   des Schritts, rechts die Marke „Tipp: …“ (W.tippText im Training). Beim Verlassen einer Phase bleibt ein Bild der rechten Karte stehen
+   (W.merke). Ein Tipp auf eine erledigte Station zeigt ihre Phasen eingefroren untereinander, nichts antippbar, nichts zählt; die laufende
+   Station wird solange aus der Seite genommen und danach unverändert wieder eingehängt (wie der Rückblick einer Aufgabe). Zurück über den
+   Hauptknopf, die aktuelle Station oder Escape. Die linke Seite (Bild, Graph, Rechnung) bleibt, wie sie ist. */
+const WSTAT=['Tipp','1','2','3','Auflösung'],WTEILE=[[0],[1,2],[3,4],[5]];
+W.rb=null;
+W.station=ph=>ph<=0?0:ph<=2?1:ph<=4?2:ph===5?3:4;
+W.kopf=function(){const L=W.L,akt=W.station(L.ph),zeig=W.rb?W.rb.s:akt,still=!!L.spielt;
+  const st=WSTAT.map((t,i)=>{const was=i===0?'Dein Tipp':i===4?'Auflösung':'Schritt '+i+', '+WSCHRITT[i-1];
+    if(i<akt)return '<button type="button" class="wst fertig'+(W.rb&&i===zeig?' an':'')+'" data-akt="wst" data-s="'+i+'" aria-label="'+was+' ansehen"'+(still?' disabled':'')+'>'+t+'</button>';
+    if(i===akt)return '<button type="button" class="wst akt" data-akt="wst" data-s="'+i+'" aria-current="step" aria-label="'+was+(W.rb?', zurück dorthin':'')+'"'+(W.rb?'':' tabindex="-1"')+'>'+t+'</button>';
+    return '<span class="wst kommt">'+t+'</span>';}).join('');
+  const tt=!W.rb&&zeig>=1&&zeig<=3&&W.tippText?W.tippText():'';
+  return '<div class="was wkopf"><span class="wsts">'+st+'</span>'+(zeig>=1&&zeig<=3?'<span class="wsn">· '+WSCHRITT[zeig-1]+'</span>':'')+
+    (W.rb?'<span class="wasm">Rückblick</span>':tt?'<span class="wtipp">Tipp: '+tt+'</span>':'')+'</div>';};
+W.merke=function(){const L=W.L,r=$('.wrechts');if(!L||!r||W.rb||L.ph>5)return;
+  $$('input',r).forEach(i=>i.setAttribute('value',i.value));              // Regler: die Kopie übernimmt nur das Attribut
+  const k=r.cloneNode(true);$$('.wkopf,.tasten',k).forEach(x=>x.remove());$$('.aktiv',k).forEach(x=>x.classList.remove('aktiv'));
+  $$('[data-akt]',k).forEach(x=>x.removeAttribute('data-akt'));
+  (L.bilder||(L.bilder={}))[L.ph]={kl:r.className.replace(/\b(karte|wrechts)\b/g,'').trim(),html:k.innerHTML};};
+W.losSpiel=function(){W.merke();W.L.spielt=true;$$('.wrechts .wst').forEach(b=>b.disabled=true);};      // beim Abspielen ist die Leiste kurz still
+W.zeigeStation=function(s){const L=W.L,r=$('.wrechts'),h=$('.leiste .haupt');if(!L||!r||!h||S.ansicht!=='werk')return;const akt=W.station(L.ph);
+  if(s===akt)return W.rbEnde();
+  if(!(s<akt)||L.spielt||!L.bilder)return;
+  if(!W.rb){clearTimeout(W.timer);const hi=$('.hilfen'),nb=$('.leiste .wnoch');
+    W.rb={frag:document.createDocumentFragment(),kl:r.className,scroll:r.scrollTop,ht:h.textContent,hdis:h.disabled,hhid:h.hidden,fn:W.fn,taste:W.taste,keine:W.keine,hilfen:hi?hi.innerHTML:'',noch:nb?nb.hidden:null};
+    while(r.firstChild)W.rb.frag.appendChild(r.firstChild);
+    W.taste=null;W.keine=null;if(hi)hi.innerHTML='';if(nb)nb.hidden=true;
+    W.setH(akt===4?'Weiter zur Auflösung':'Weiter zu Schritt '+akt,true,W.rbEnde);}
+  W.rb.s=s;r.className='karte wrechts wrb';
+  r.innerHTML=W.kopf()+WTEILE[s].filter(p=>L.bilder[p]).map(p=>'<div class="wrbteil '+L.bilder[p].kl+'" inert>'+L.bilder[p].html+'</div>').join('');};
+W.rbEnde=function(){const R=W.rb,r=$('.wrechts');if(!R)return;W.rb=null;
+  if(r){r.textContent='';r.className=R.kl;r.appendChild(R.frag);r.scrollTop=R.scroll;}
+  W.taste=R.taste;W.keine=R.keine;const hi=$('.hilfen');if(hi)hi.innerHTML=R.hilfen;const nb=$('.leiste .wnoch');if(nb&&R.noch!==null)nb.hidden=R.noch;
+  const h=$('.leiste .haupt');if(h){h.textContent=R.ht;h.disabled=R.hdis;h.hidden=R.hhid;}W.fn=R.fn;};
+/* ---------- Ende der Anwendung (Lehrkraft 24.11.2026) ----------
+   Einzeltraining: „Noch einmal, neue Zahlen“ (sofort ein neuer Durchgang) und „Fertig“ (zurück zur Übersicht). Gesamttraining: „Akku beenden“
+   (der Name ohne Artikel), danach wie bisher Etappen-Krone und Übersicht. Die Krone „… geschafft!“ im Einzeltraining nur, wenn in diesem
+   Durchgang alle drei Schritte ohne Lösung gelungen sind; Etappen-Krone und Finale bleiben, wie sie sind. */
+W.ende=function(){const f=$('.leiste');
+  if(S.modus==='gesamt')return W.setH(WERKSTOR.titel.replace(/^(Der|Die|Das) /,'')+' beenden',true,()=>werkWeiter(false));
+  if(f&&!$('.wnoch',f)){f.classList.add('wende');const h=$('.haupt',f);if(h)h.insertAdjacentHTML('beforebegin','<button type="button" class="wnoch" data-akt="wnoch">Noch einmal, neue Zahlen</button>');}
+  W.setH('Fertig',true,()=>werkWeiter(false));};
+function werkWeiter(nochmal){
+  const modus=S.modus,L=W.L,verdient=!!L&&L.ok.every(Boolean);delete S.werk.lauf[modus];clearTimeout(W.timer);if(W.raf)cancelAnimationFrame(W.raf);W.rb=null;
+  const neu=()=>startWerk('einzel');
+  if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(nochmal?neu:()=>vEinzel({titel:'Alles sitzt!'}));}
+  if(modus==='gesamt'){const n=S.etappe;S.etappe++;S.pkt=0;S.kronen++;S.geuebt=true;S.werk.faellig=n+2;       // noch nicht alles geschafft: zwei Etappen später noch einmal, mit neuen Zahlen
+    return zeigeKrone('Etappe '+n+' geschafft!',()=>vEinzel({geschafft:n,neu:true}));}
+  if(!verdient)return nochmal?neu():vEinzel();
+  S.kronen++;zeigeKrone(WERKSTOR.titel+' geschafft!',nochmal?neu:()=>vEinzel({neu:true}));
+}
 
 /* Ebene über der Seite: Kopf mit Zurück, Titel, Marke (Watch, Try, Talk) und Ton (aus dem QF3-Training) */
 function ebene(titel,marke,innen){
@@ -3986,7 +4061,7 @@ const AKT={
   einzeltyp:b=>zeigeEinzelFrage(b.dataset.typ),
   ort:()=>{if(S.modus==='gesamt')return zeigeGesamtHinweis();clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;vEinzel();},
   zurueck:()=>{clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;if(S.modus==='gesamt')vStart();else if(S.ansicht==='aufgabe'&&S.einzel&&S.einzel.vonGesamt)startGesamt();else vEinzel();},
-  werk:()=>startWerk('einzel'),wdenk:()=>W.denk(),wschritt:()=>W.schritt(false),wloesung:()=>W.schritt(true),
+  werk:()=>startWerk('einzel'),wst:b=>W.zeigeStation(+b.dataset.s),wnoch:()=>werkWeiter(true),wdenk:()=>W.denk(),wschritt:()=>W.schritt(false),wloesung:()=>W.schritt(true),
   menue:zeigeMenue,stand:zeigeStand,letzte:zeigeLetzte,
   ton:()=>{S.ton=!S.ton;$$('.kn.ton').forEach(b=>b.innerHTML=S.ton?TON_AN:TON_AUS);if(!S.ton)return;      // der Ton ist am Anfang aus; das Antippen schaltet ihn ein und lässt ihn sofort hören
     Sound.init();const c=Sound.ctx,los=()=>Sound.richtig();if(c&&c.state!=='running'&&c.resume)c.resume().then(los).catch(()=>{});else los();},
@@ -4028,6 +4103,7 @@ document.addEventListener('keydown',e=>{
   const eb=$('.ebene');
   if(eb){if(e.key==='Escape')eb._zu();else if(eb._schritt&&(e.key==='ArrowRight'||e.key==='Enter'||e.key===' ')){e.preventDefault();eb._schritt(1);}else if(eb._schritt&&e.key==='ArrowLeft')eb._schritt(-1);return;}
   if(S.ansicht==='werk'){
+    if(W.rb){if(e.key==='Escape'||e.key==='Enter'||e.key==='ArrowRight'||e.key===' '){e.preventDefault();W.rbEnde();}return;}      // Rückblick auf eine Station: zurück
     if(W.taste){if(e.key.toLowerCase()==='k'&&W.keine){W.keine();return;}const k=/^\d$/.test(e.key)?e.key:e.key==='-'?'−':(e.key===','||e.key==='.')?',':e.key==='Backspace'?'del':(e.key==='Tab'||e.key==='ArrowRight')?'weiter':null;if(k){e.preventDefault();W.taste(k);return;}}
     else if(/^[1-4]$/.test(e.key)){const o=$$('.wrechts .opt')[+e.key-1];if(o&&!o.disabled)o.click();return;}
     if(e.key==='Enter'){const h=$('.leiste .haupt');if(h&&!h.hidden&&!h.disabled){e.preventDefault();h.click();}}
