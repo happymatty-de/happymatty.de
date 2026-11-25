@@ -516,9 +516,10 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
   `/themen`, **Interaktive Trainings** grün (Klasse `interaktiv`, „5 Trainings“) auf `/trainings`.
   Die Zahlen zählt das Skript. Keine Titel einzelner Arbeitsblätter auf der Startseite.
 - **Themenbereiche** `themen/index.html` (`happymatty.de/themen`, Überschrift „Themenbereiche“):
-  alle **Themen** als grüne Karten (Klasse `thema-karte`) mit Kennzeichen der Bildungsgänge und Zahl
-  der Themeneinheiten („2 Themeneinheiten“); grün bleiben sie wie auf den Einstiegsseiten, weil Grün
-  das Thema nennt (das Blau der Karte auf der Startseite gilt nur dort). Auch ältere Themen bleiben
+  alle **Themen** als blaue Karten (Klasse `thema-karte`) mit Kennzeichen der Bildungsgänge und Zahl
+  der Themeneinheiten („2 Themeneinheiten“); blau wie die Karte „Themenbereiche“ auf der Startseite
+  (Entscheidung 25.11.2026, Patrick; bis dahin grün wie das Thema in der Kopfzeile; Grün tragen auf
+  diesen Seiten jetzt nur noch die interaktiven Seiten). Auch ältere Themen bleiben
   stehen, damit jedes Material auffindbar bleibt.
   **Reihenfolge** (Entscheidung 10.11.2026): erst alle Themen der BF1, dann der BF2, dann des BGY
   (danach FSTM, DBOS); innerhalb eines Bildungsgangs in der Reihenfolge, in der die Reihen
@@ -549,7 +550,7 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
 - **Einstiegsseite je Bildungsgang** `<kürzel>/index.html` (z. B. `happymatty.de/bf2`): nur die
   **Themen**, die dieser Bildungsgang bearbeitet, keine einzelnen Themeneinheiten (Entscheidung
   10.11.2026: sonst wird es zu viel). Je Fach eine Überschrift (`themenkopf`, „Mathematik“), darunter
-  die Themen als grüne Karten wie auf `/themen` (mit Unterzeile und Zahl der Themeneinheiten,
+  die Themen als blaue Karten wie auf `/themen` (mit Unterzeile und Zahl der Themeneinheiten,
   ohne Kennzeichen), in der Reihenfolge, in der sie unterrichtet werden. Ohne Material eine graue
   Karte „Noch kein Material“ mit „Hier erscheinen die Themen, sobald Material online ist.“
   (Entscheidung 14.11.2026). Die Schüler speichern sich diesen einen Link.

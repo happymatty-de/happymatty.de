@@ -162,10 +162,11 @@ h1.thema{color:var(--gruen)} /* Themenseite: das Thema als Haupttitel */
 .klassen .kuerzel{display:block;font-weight:700;font-size:1.35rem;color:var(--lila)}
 .klassen .name{display:block;font-size:.85rem;line-height:1.2;color:var(--grau)}
 
-/* Themen (/themen, Einstiegsseiten der Bildungsgänge): Karten in Grün wie das Thema in der Kopfzeile */
-.liste a.thema-karte{border-left-color:var(--gruen)}
-.liste a.thema-karte{background:var(--gruenhell)}
-.liste a.thema-karte .titel{color:var(--gruen)}
+/* Themen (/themen, Einstiegsseiten der Bildungsgänge): Karten in Blau wie die Karte „Themenbereiche“
+   auf der Startseite (Entscheidung 25.11.2026; bis dahin grün wie das Thema in der Kopfzeile) */
+.liste a.thema-karte{border-left-color:var(--blau)}
+.liste a.thema-karte{background:#E0EDF8}
+.liste a.thema-karte .titel{color:var(--blau)}
 /* Unterzeile der Themenkarte: die Teile des Themas, grau wie der Text darunter */
 .liste a.thema-karte .unterzeile{display:block;margin:.15rem 0 0;text-align:left;font-size:1rem;color:var(--grau)}
 
