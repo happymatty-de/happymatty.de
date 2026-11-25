@@ -150,6 +150,8 @@ Es bricht ab, ohne etwas zu schreiben, wenn
 - ein PDF im Repository liegt, das in keiner Beschreibungsdatei als freigegeben steht,
 - ein als freigegeben eingetragenes PDF oder eine freigegebene interaktive Seite fehlt, oder ein
   Ordner `interaktiv/` liegt, der nicht freigegeben ist,
+- eine Beilage einer interaktiven Seite fehlt oder in `interaktiv/` ein PDF liegt, das nicht als
+  Beilage eingetragen ist (unten, `beilagen`),
 - eine Beschreibungsdatei kein gültiges JSON ist, ein Pflichteintrag fehlt oder ein Eintrag
   unbekannt ist (Tippfehler), ein Datum nicht wie `14.11.2026` aussieht, die Quelle eines PDFs
   keine Versionsnummer trägt oder die Quelle einer freigegebenen interaktiven Seite keine Version,
@@ -255,6 +257,7 @@ Jedes **Dokument** hat diese Einträge:
 | `stand` | Datum `TT.MM.JJJJ`; Pflicht, wenn freigegeben: der Tag, an dem diese Version online ging. Sonst, wenn bekannt, der Tag der Sicherung |
 | `hinweis` | freiwillig: kurze Notiz, die nirgends auf der Website erscheint, z. B. „im Einsatz ab 11.11.2026, nicht veröffentlichen“. Stimmt ein Hinweis nicht mehr („folgt“, obwohl die Datei da ist; „im Einsatz“, obwohl geschrieben), passt ihn der Chat beim Nachführen an; was er verbietet („nicht veröffentlichen“), bleibt |
 | `text` | nur bei `interaktiv`, Pflicht, wenn freigegeben: die Zeile unter dem Kartentitel. Bei einer Erklär-App „Verstehen“, bei allen anderen interaktiven Seiten (Training, PowerCheck) „Trainieren“ |
+| `beilagen` | nur bei `interaktiv`, freiwillig: Liste der PDFs, die zur interaktiven Seite gehören und die nur sie selbst verlinkt (erste: die acht Aufgaben zu Level 4 im QF5-Training, 25.11.2026). Je Beilage `titel` (für den PDF-Titel `happymatty/<Titel der Einheit>/<titel>`, z. B. „Level 4 Feuerwehr 1“), `quelle` (Dateiname mit Versionsnummer wie im Backup) und `stand`. Die PDFs liegen unter dem Namen ohne `_v…` im Ordner `interaktiv/`, sind mit der Seite freigegeben, bekommen keine Karte und stehen in `--bestand`. Eine Beilage enthält nie eine Lösung |
 
 Was es nicht gibt, steht als `{ "vorhanden": false, "freigegeben": false }`.
 
@@ -373,6 +376,7 @@ Jedes Arbeitsblatt (jede Themeneinheit) hat einen Ordner. Darin liegt alles, was
 | `_einheit.json` | – (wird nicht ausgeliefert) | Beschreibungsdatei |
 | `index.html` | `…/<titel>` | Übersicht des Arbeitsblatts, vom Skript gebaut: listet alles auf, was es dazu gibt |
 | `interaktiv/index.html` | `…/<titel>/interaktiv` | interaktive Seite |
+| `interaktiv/<Name>.pdf` | `…/<titel>/interaktiv/<Name>.pdf` | Beilage der interaktiven Seite, nur von ihr verlinkt (`beilagen` in `_einheit.json`) |
 | `<Kürzel>_<Titel>_Aufgabenblatt.pdf` | `…/<titel>/<Kürzel>_<Titel>_Aufgabenblatt.pdf` | Arbeitsblatt |
 | `<Kürzel>_<Titel>_Loesung.pdf` | `…/<titel>/<Kürzel>_<Titel>_Loesung.pdf` | Musterlösung, nur nach Freigabe (siehe unten) |
 
@@ -515,7 +519,7 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
   (`themenkopf`, grau, Indie Flower; Patrick 25.11.2026): unter „Themen“ die Karte
   **Themenbereiche** blau (Klasse `bereich`, „3 Themenbereiche · 10 Themeneinheiten“) auf
   `/themen`, unter „Training“ die Karte **Interaktive Trainings** grün (Klasse `interaktiv`,
-  „5 Trainings“) auf `/trainings`.
+  „6 Trainings“) auf `/trainings`.
   Die Zahlen zählt das Skript. Keine Titel einzelner Arbeitsblätter auf der Startseite.
 - **Themenbereiche** `themen/index.html` (`happymatty.de/themen`, Überschrift „Themenbereiche“):
   alle **Themen** als blaue Karten (Klasse `thema-karte`) mit Kennzeichen der Bildungsgänge und Zahl

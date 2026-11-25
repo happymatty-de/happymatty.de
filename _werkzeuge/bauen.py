@@ -25,6 +25,8 @@ Das Skript bricht ab, ohne etwas zu schreiben, wenn
   - ein PDF im Repository liegt, das in keiner Beschreibungsdatei als freigegeben steht,
   - ein als freigegeben eingetragenes PDF oder eine interaktive Seite fehlt
     oder eine interaktive Seite liegt, die nicht freigegeben ist,
+  - eine Beilage einer interaktiven Seite (PDF in interaktiv/) fehlt oder dort ein PDF liegt,
+    das nicht als Beilage eingetragen ist,
   - eine Beschreibungsdatei fehlt, unvollständig ist oder unbekannte Einträge hat,
   - ein Test ohne seine Lösung oder Notentabelle freigegeben ist,
   - ein Ordner oder eine Datei auftaucht, die das Skript nicht kennt.
@@ -179,7 +181,8 @@ class Dok:
         self.ort, self.ordner, self.interaktiv = ort, ordner, interaktiv
         self.vorhanden = self.freigegeben = False
         self.quelle = self.stand = self.hinweis = self.text = None
-        frei = ('quelle', 'stand', 'hinweis') + (('text',) if interaktiv else ())
+        self.beilagen = []
+        frei = ('quelle', 'stand', 'hinweis') + (('text', 'beilagen') if interaktiv else ())
         if d is None or not schluessel(ort, d, ('vorhanden', 'freigegeben'), frei):
             return
         self.vorhanden = bool(wert(ort, d, 'vorhanden', 'janein'))
@@ -189,6 +192,11 @@ class Dok:
         self.hinweis = wert(ort, d, 'hinweis', 'text', leer=True)
         if interaktiv:
             self.text = wert(ort, d, 'text', 'text', leer=True)
+            b = d.get('beilagen', [])
+            if not isinstance(b, list):
+                melde(ort, '„beilagen“ muss eine Liste [ … ] sein')
+            else:
+                self.beilagen = b
         if self.freigegeben and not self.vorhanden:
             melde(ort, 'freigegeben, aber nicht vorhanden')
         if self.vorhanden and not self.quelle:
@@ -285,6 +293,17 @@ class Einheit:
                     f'happymatty/{t}/Lösung', bg),
             Eintrag(self.interaktiv, 'interaktiv', 'Interaktiv', None, 'interaktiv', None, bg),
         ]
+        # Beilagen der interaktiven Seite: PDFs, die in interaktiv/ liegen und die nur die Seite
+        # selbst verlinkt (erste: die Aufgaben zu Level 4 im QF5-Training, 25.11.2026). Ohne Karte.
+        for nr, b in enumerate(self.interaktiv.beilagen, 1):
+            bo = f'{ort} › interaktiv › beilagen › {nr}'
+            if not schluessel(bo, b, ('titel', 'quelle', 'stand')):
+                continue
+            bt = wert(bo, b, 'titel', 'text') or f'Beilage {nr}'
+            dok = Dok(bo, {'vorhanden': True, 'freigegeben': self.interaktiv.freigegeben,
+                           'quelle': b.get('quelle'), 'stand': b.get('stand')}, ordner / 'interaktiv')
+            self.eintraege.append(Eintrag(dok, f'interaktiv, Beilage „{bt}“', None, None, None,
+                                          f'happymatty/{t}/{bt}', bg))
 
         self.probetest = None
         if 'probetest' in d:
