@@ -755,8 +755,9 @@ def trainings_von(t):
 
 
 def baue_startseite(themen):
-    """Startseite (Entscheidung 25.11.2026): direkt anklickbar sind nur die Klassen; Themenbereiche
-    (blau) und Interaktive Trainings (grün) führen eine Ebene tiefer."""
+    """Startseite (Entscheidung 25.11.2026): direkt anklickbar sind nur die Klassen; unter „Themen“
+    die Karte Themenbereiche (blau), unter „Training“ die Karte Interaktive Trainings (grün), beide
+    führen eine Ebene tiefer."""
     kopf = (f'  <div class="logo">{LOGO}</div>\n'
             '  <p class="kopf"></p>\n'
             '  <h1>Unterrichtsmaterial</h1>\n'
@@ -774,7 +775,8 @@ def baue_startseite(themen):
     return seite('happymatty', [
         kopf,
         '  <h2 class="themenkopf">Klassen</h2>\n' + liste(kacheln, 'klassen'),
-        liste([bereiche, trainings], 'liste kategorien'),
+        '  <h2 class="themenkopf">Themen</h2>\n' + liste([bereiche]),
+        '  <h2 class="themenkopf">Training</h2>\n' + liste([trainings]),
     ])
 
 

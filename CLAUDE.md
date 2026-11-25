@@ -511,9 +511,11 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
   Startseite nur die Klassen (Entscheidung 25.11.2026, Patrick: „auf der Startseite stehen nur noch
   die Klassen, die Sie direkt anklicken können, und die Themenbereiche sind nicht mehr direkt
   anklickbar, sondern sind auf einer zweiten Ebene“; bis dahin standen die Themen selbst dort).
-  Darunter, ohne Überschrift, zwei Karten (`<ul class="liste kategorien">`), die eine Ebene tiefer
-  führen: **Themenbereiche** blau (Klasse `bereich`, „3 Themenbereiche · 10 Themeneinheiten“) auf
-  `/themen`, **Interaktive Trainings** grün (Klasse `interaktiv`, „5 Trainings“) auf `/trainings`.
+  Darunter zwei Karten, die eine Ebene tiefer führen, je unter einer Überschrift wie „Klassen“
+  (`themenkopf`, grau, Indie Flower; Patrick 25.11.2026): unter „Themen“ die Karte
+  **Themenbereiche** blau (Klasse `bereich`, „3 Themenbereiche · 10 Themeneinheiten“) auf
+  `/themen`, unter „Training“ die Karte **Interaktive Trainings** grün (Klasse `interaktiv`,
+  „5 Trainings“) auf `/trainings`.
   Die Zahlen zählt das Skript. Keine Titel einzelner Arbeitsblätter auf der Startseite.
 - **Themenbereiche** `themen/index.html` (`happymatty.de/themen`, Überschrift „Themenbereiche“):
   alle **Themen** als blaue Karten (Klasse `thema-karte`) mit Kennzeichen der Bildungsgänge und Zahl

@@ -170,9 +170,8 @@ h1.thema{color:var(--gruen)} /* Themenseite: das Thema als Haupttitel */
 /* Unterzeile der Themenkarte: die Teile des Themas, grau wie der Text darunter */
 .liste a.thema-karte .unterzeile{display:block;margin:.15rem 0 0;text-align:left;font-size:1rem;color:var(--grau)}
 
-/* Startseite unter den Klassen (Entscheidung 25.11.2026): Themenbereiche blau, Interaktive Trainings
-   grün (Klasse interaktiv); beide führen eine Ebene tiefer */
-.liste.kategorien{margin-top:2.4rem}
+/* Startseite unter den Klassen (Entscheidung 25.11.2026): unter „Themen“ die Karte Themenbereiche blau,
+   unter „Training“ die Karte Interaktive Trainings grün (Klasse interaktiv); beide führen eine Ebene tiefer */
 .liste a.bereich{border-left-color:var(--blau);background:#E0EDF8}
 .liste a.bereich .titel{color:var(--blau)}
 
