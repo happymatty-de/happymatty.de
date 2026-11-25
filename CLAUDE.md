@@ -4,7 +4,7 @@ Dieses Repository ist die Website `happymatty.de`. Sie wird über GitHub Pages a
 Hier liegen Arbeitsblätter (PDF) und interaktive Seiten für den Unterricht.
 Sie sind ohne Login per Link erreichbar und hängen nicht an Claude.
 
-Die Übersichten (Startseite, Einstiegsseiten der Bildungsgänge, Themenseiten, Übersicht jeder
+Die Übersichten (Startseite, Themenbereiche, Interaktive Trainings, Einstiegsseiten der Bildungsgänge, Themenseiten, Übersicht jeder
 Themeneinheit, Probeklassenarbeit, Klassenarbeit) schreibt niemand von Hand: Das Skript
 `_werkzeuge/bauen.py` baut sie aus den Beschreibungsdateien (Entscheidung 14.11.2026).
 Wie das geht: Abschnitt „Beschreibungsdateien und Bauskript“.
@@ -67,7 +67,7 @@ In dieses Repository schreiben zwei Arten von Chats (Entscheidung 14.11.2026):
 - **Thema**: das Gebiet einer Lernreihe, z. B. Lineare Funktionen (`/lineare-funktionen`).
 - **Themeneinheit**: ein Abschnitt der Reihe mit genau einem Aufgabenblatt, z. B. LF1
   „Wie steil ist das?“ (`/lineare-funktionen/wie-steil-ist-das`). Zu ihr gehören Aufgabenblatt,
-  Lösung, interaktive Seite, Probetest mit Lösung und Notentabelle. Auf Startseite und
+  Lösung, interaktive Seite, Probetest mit Lösung und Notentabelle. Auf Startseite, Themenbereichen und
   Themenseite werden Themeneinheiten gezählt und aufgelistet (Entscheidung 10.11.2026).
 - **Teilthema**: der Fachbegriff des Abschnitts, um den es in einer Themeneinheit geht, wie in der
   Kopfzeile des Blatts (Skill `mathe`, Gestaltung, Kopf- und Fußzeile), z. B. „Addition und
@@ -166,7 +166,7 @@ Es bricht ab, ohne etwas zu schreiben, wenn
 
 ### Was das Skript baut und was nicht
 
-- Es baut: Startseite, Einstiegsseiten der Bildungsgänge, Themenseiten, die Übersicht jeder
+- Es baut: Startseite, Themenbereiche (`/themen`), Interaktive Trainings (`/trainings`), Einstiegsseiten der Bildungsgänge, Themenseiten, die Übersicht jeder
   Themeneinheit und die Seiten `/<thema>/probeklassenarbeit` und `/<thema>/klassenarbeit`,
   genau so, wie die Abschnitte unten sie beschreiben. Kennzeichen, Zahl der Themeneinheiten,
   Reihenfolge, Seitenzahlen der PDFs („PDF, 5 Seiten“, aus der Datei gelesen) und der Zusatz
@@ -223,7 +223,7 @@ Vollständiges Beispiel:
 Übersicht `/rechnen-mit-zahlen/zahlenjagd` mit Aufgabenblatt, Musterlösung, grauer Karte
 „Interaktiv“ und dem Abschnitt „Probetest“, auf der Themenseite der Eintrag „Zahlenjagd“ mit
 Kennzeichen BF1 und „Addition und Subtraktion – Zahlenkarten, Wege und Zahlenmauern · mit
-Test“, und die Zählung auf Startseite und `/bf1`. Der Kurztest erscheint nirgends, weil
+Test“, und die Zählung auf Startseite, `/themen` und `/bf1`. Der Kurztest erscheint nirgends, weil
 keine Fassung freigegeben ist.
 
 **Dateinamen der Kurztests:** Die Reihe Rechnen mit Zahlen (BF1) heißt noch nach altem Muster,
@@ -297,7 +297,7 @@ HappyMatty Werkstatt sie an und ändert sie (Entscheidung 23.11.2026: „möglic
 | `kennung` | Kürzel der Reihe (`LF`, `QF`) oder `null` |
 | `fach` | `Mathematik` (später `BWL`): Kopfzeile, Überschrift auf den Einstiegsseiten |
 | `unterzeile` | die Teile des Themas, so wie Patrick sie vorgibt, oder `null` |
-| `bildungsgang` | der Bildungsgang, zu dem das Thema gehört: Zurück-Link der Themenseite, Gruppe auf der Startseite |
+| `bildungsgang` | der Bildungsgang, zu dem das Thema gehört: Zurück-Link der Themenseite, Gruppe auf der Seite Themenbereiche |
 | `reihenfolge` | Platz unter den Themen dieses Bildungsgangs, in der Reihenfolge des Unterrichts |
 | `probeklassenarbeit`, `klassenarbeit` | freiwillig: `bildungsgaenge` (Kennzeichen) und `test`, `loesung`, `notentabelle`; die PDFs liegen in `<thema>/probeklassenarbeit/` bzw. `<thema>/klassenarbeit/` |
 
@@ -507,10 +507,19 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
 
 - **Startseite** `index.html` (`happymatty.de`): unter der Überschrift „Unterrichtsmaterial“ die Zeile
   „von Patrick Saul“ in Indie Flower grün (Klasse `unterzeile autor`, Entscheidung 11.11.2026). Darunter „Klassen“ mit einer Kachel je
-  Bildungsgang (Entscheidung 11.11.2026: knapp wie „Themen“, vorher „Meine Klasse“; „Themenbereiche“ hieß der Abschnitt bis 14.11.2026), darunter unter „Themen“ die **Themen** als grüne Karten (Klasse `thema-karte`) mit
-  Kennzeichen der Bildungsgänge und Zahl der Themeneinheiten („2 Themeneinheiten“). Keine Titel
-  einzelner Arbeitsblätter auf der Startseite. Auch ältere Themen bleiben stehen, damit jedes
-  Material auffindbar bleibt.
+  Bildungsgang (Entscheidung 11.11.2026, vorher „Meine Klasse“). Direkt anklickbar sind auf der
+  Startseite nur die Klassen (Entscheidung 25.11.2026, Patrick: „auf der Startseite stehen nur noch
+  die Klassen, die Sie direkt anklicken können, und die Themenbereiche sind nicht mehr direkt
+  anklickbar, sondern sind auf einer zweiten Ebene“; bis dahin standen die Themen selbst dort).
+  Darunter, ohne Überschrift, zwei Karten (`<ul class="liste kategorien">`), die eine Ebene tiefer
+  führen: **Themenbereiche** blau (Klasse `bereich`, „3 Themenbereiche · 10 Themeneinheiten“) auf
+  `/themen`, **Interaktive Trainings** grün (Klasse `interaktiv`, „5 Trainings“) auf `/trainings`.
+  Die Zahlen zählt das Skript. Keine Titel einzelner Arbeitsblätter auf der Startseite.
+- **Themenbereiche** `themen/index.html` (`happymatty.de/themen`, Überschrift „Themenbereiche“):
+  alle **Themen** als grüne Karten (Klasse `thema-karte`) mit Kennzeichen der Bildungsgänge und Zahl
+  der Themeneinheiten („2 Themeneinheiten“); grün bleiben sie wie auf den Einstiegsseiten, weil Grün
+  das Thema nennt (das Blau der Karte auf der Startseite gilt nur dort). Auch ältere Themen bleiben
+  stehen, damit jedes Material auffindbar bleibt.
   **Reihenfolge** (Entscheidung 10.11.2026): erst alle Themen der BF1, dann der BF2, dann des BGY
   (danach FSTM, DBOS); innerhalb eines Bildungsgangs in der Reihenfolge, in der die Reihen
   unterrichtet werden (`reihenfolge` in `_thema.json`), nicht alphabetisch. Zwischen den
@@ -519,6 +528,14 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
   Zwischen Titel und Kennzeichen kann eine **Unterzeile** (Klasse `unterzeile`, im Standardgrau
   wie der Text darunter) stehen: die Teile des Themas, mit Mittelpunkt getrennt, so wie Patrick sie vorgibt
   (Rechnen mit Zahlen: „Rationale Zahlen · Rechenregeln · Überschlagen und Schätzen“).
+- **Interaktive Trainings** `trainings/index.html` (`happymatty.de/trainings`, Überschrift
+  „Interaktive Trainings“; Entscheidung 25.11.2026): alle freigegebenen interaktiven Seiten, sortiert
+  nach Themenbereich. Je Thema mit Trainings eine Überschrift (`themenkopf`, der Name des Themas in
+  Grün), Themen in derselben Reihenfolge wie auf `/themen`; darunter je Themeneinheit eine grüne
+  Karte (Klasse `interaktiv`) in der Reihenfolge der Reihe (`platz`): Titel des Blatts mit
+  Kennzeichen, darunter das Teilthema. Die Karte führt direkt auf `…/<titel>/interaktiv`. Themen
+  ohne Training erscheinen dort nicht. Eine interaktive Seite erscheint, sobald sie in
+  `_einheit.json` freigegeben ist; der Projektchat muss dafür nichts tun.
 - **Themenseite** `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`): Kopfzeile nur
   „Mathematik“, Überschrift das Thema groß in Grün (`<h1 class="thema">`, Entscheidung 10.11.2026:
   der Haupttitel soll sofort ins Auge fallen). Darunter der Abschnitt „Themeneinheiten“
@@ -532,7 +549,7 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
 - **Einstiegsseite je Bildungsgang** `<kürzel>/index.html` (z. B. `happymatty.de/bf2`): nur die
   **Themen**, die dieser Bildungsgang bearbeitet, keine einzelnen Themeneinheiten (Entscheidung
   10.11.2026: sonst wird es zu viel). Je Fach eine Überschrift (`themenkopf`, „Mathematik“), darunter
-  die Themen als grüne Karten wie auf der Startseite (mit Unterzeile und Zahl der Themeneinheiten,
+  die Themen als grüne Karten wie auf `/themen` (mit Unterzeile und Zahl der Themeneinheiten,
   ohne Kennzeichen), in der Reihenfolge, in der sie unterrichtet werden. Ohne Material eine graue
   Karte „Noch kein Material“ mit „Hier erscheinen die Themen, sobald Material online ist.“
   (Entscheidung 14.11.2026). Die Schüler speichern sich diesen einen Link.
@@ -544,8 +561,8 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
   beim Darüberfahren und Antippen wie die Kacheln (Entscheidung 19.11.2026). In Karten bleibt es
   ohne eigenen Link, weil die Karte schon einer ist.
 - **Eine Themeneinheit in mehreren Bildungsgängen** (Eintrag in `bildungsgaenge`): Sie trägt alle
-  Kennzeichen (Übersicht, Themenseite), und ihr Thema trägt auf der Startseite alle Kennzeichen
-  seiner Einheiten. Auf der Startseite steht das Thema nur einmal, in der Gruppe seines
+  Kennzeichen (Übersicht, Themenseite, Interaktive Trainings), und ihr Thema trägt auf `/themen` alle Kennzeichen
+  seiner Einheiten. Auf `/themen` steht das Thema nur einmal, in der Gruppe seines
   `bildungsgang`; die Zahl dort zählt alle Einheiten. Auf der Einstiegsseite jedes beteiligten
   Bildungsgangs steht das Thema mit der Zahl der Einheiten dieses Bildungsgangs. Die Themenseite
   führt zurück zum `bildungsgang` des Themas (Entscheidung 14.11.2026). Zwei Kennzeichen
@@ -571,7 +588,7 @@ eine Seite, baut die HappyMatty Werkstatt den Seitentyp ins Skript ein und fragt
 Adresse und Aufbau (Entscheidung 23.11.2026, vorher Claude Code).
 
 Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`, `datenschutz`,
-`impressum`. Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
+`impressum`, `themen`, `trainings`. Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
 
 **Kennungen im Kopf:** Das Skript hängt an jeden Verweis auf `/stil/basis.css` eine Kennung aus dem
 Inhalt der Datei an (`?v=…`) und ergänzt fehlende Verweise auf das Symbol der Website. Sonst
@@ -623,6 +640,9 @@ Skript; eine Änderung daran macht in der Regel die HappyMatty Werkstatt und pr�
     11.11.2026: Das Logo gehört auch auf die Startseite; vorher stand dort nur „happymatty.de“
     mittig in der Kopfzeile).
   - Einstiegsseite eines Bildungsgangs (`/bf1` …): nur das Logo, kein Zurück-Link.
+  - Themenbereiche und Interaktive Trainings (`/themen`, `/trainings`): nur das Logo, kein
+    Zurück-Link (eine Ebene höher ist die Startseite); die Kopfzeile bleibt leer (nur die blaue
+    Linie) wie auf der Startseite.
   - Themenseite: zurück zu ihrem Bildungsgang („← BF1“ auf `/bf1/`, `bildungsgang` in
     `_thema.json`), nicht zur Startseite (Entscheidung 11.11.2026).
   - Übersicht einer Themeneinheit, Probeklassenarbeit, Klassenarbeit: zurück zum Thema („← Lineare Funktionen“).
@@ -638,6 +658,8 @@ Skript; eine Änderung daran macht in der Regel die HappyMatty Werkstatt und pr�
   | Seite | Seitentitel |
   |---|---|
   | Startseite | `happymatty` |
+  | Themenbereiche | `happymatty/Themenbereiche` |
+  | Interaktive Trainings | `happymatty/Interaktive Trainings` |
   | Datenschutzerklärung | `happymatty/Datenschutzerklärung` |
   | Bildungsgang | `happymatty/bf2` |
   | Thema | `happymatty/Lineare Funktionen` |

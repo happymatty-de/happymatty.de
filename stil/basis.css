@@ -95,7 +95,7 @@ h1.thema{color:var(--gruen)} /* Themenseite: das Thema als Haupttitel */
 .themenkopf + .liste{margin-top:0}
 .liste li{margin:0 0 .7rem}
 
-/* Startseite: Trennlinie zwischen den Themen verschiedener Bildungsgänge (BF1, BF2, BGY); oben .4rem + .7rem Abstand der letzten Karte = 1.1rem wie unten */
+/* Themenbereiche (/themen): Trennlinie zwischen den Themen verschiedener Bildungsgänge (BF1, BF2, BGY); oben .4rem + .7rem Abstand der letzten Karte = 1.1rem wie unten */
 .trenner{margin:.4rem 0 1.1rem;border:0;border-top:2px dashed var(--lila)}
 .trenner + .liste{margin-top:0}
 .liste a{
@@ -162,12 +162,18 @@ h1.thema{color:var(--gruen)} /* Themenseite: das Thema als Haupttitel */
 .klassen .kuerzel{display:block;font-weight:700;font-size:1.35rem;color:var(--lila)}
 .klassen .name{display:block;font-size:.85rem;line-height:1.2;color:var(--grau)}
 
-/* Themen auf der Startseite: Karten in Grün wie das Thema in der Kopfzeile */
+/* Themen (/themen, Einstiegsseiten der Bildungsgänge): Karten in Grün wie das Thema in der Kopfzeile */
 .liste a.thema-karte{border-left-color:var(--gruen)}
 .liste a.thema-karte{background:var(--gruenhell)}
 .liste a.thema-karte .titel{color:var(--gruen)}
 /* Unterzeile der Themenkarte: die Teile des Themas, grau wie der Text darunter */
 .liste a.thema-karte .unterzeile{display:block;margin:.15rem 0 0;text-align:left;font-size:1rem;color:var(--grau)}
+
+/* Startseite unter den Klassen (Entscheidung 25.11.2026): Themenbereiche blau, Interaktive Trainings
+   grün (Klasse interaktiv); beide führen eine Ebene tiefer */
+.liste.kategorien{margin-top:2.4rem}
+.liste a.bereich{border-left-color:var(--blau);background:#E0EDF8}
+.liste a.bereich .titel{color:var(--blau)}
 
 /* Kacheln tragen ihre Füllung immer (auch auf iPad und Handy, wo es kein Hover gibt).
    Beim Darüberfahren mit der Maus und beim Antippen werden sie weiß (Entscheidung 11.11.2026). */

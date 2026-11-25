@@ -13,8 +13,9 @@ Beschreibungsdateien (Format: CLAUDE.md, Abschnitt „Beschreibungsdateien“):
     <thema>/<einheit>/_einheit.json  alles über eine Themeneinheit und ihre Dokumente
 Dateien und Ordner mit _ am Anfang liefert GitHub Pages nicht aus.
 
-Gebaut werden: Startseite, Einstiegsseiten der Bildungsgänge, Themenseiten, die Übersicht jeder
-Themeneinheit, die Seiten /<thema>/probeklassenarbeit und /<thema>/klassenarbeit.
+Gebaut werden: Startseite, die Seiten /themen (Themenbereiche) und /trainings (Interaktive
+Trainings), Einstiegsseiten der Bildungsgänge, Themenseiten, die Übersicht jeder Themeneinheit,
+die Seiten /<thema>/probeklassenarbeit und /<thema>/klassenarbeit.
 Nicht gebaut und nicht angefasst werden interaktive Seiten, Datenschutzerklärung, Impressum und
 Weiterleitungen; bei ihnen erneuert das Skript nur die Kennungen ?v=… im Kopf (siehe unten).
 PDFs werden nie neu erzeugt; fehlt einem freigegebenen PDF der Titel, trägt das Skript ihn ein.
@@ -55,7 +56,7 @@ BILDUNGSGAENGE = {
 }
 BEREICHE = ['Grundlagen']        # vorgesehen, noch ohne eigene Seite
 FAECHER = ['Mathematik', 'BWL']  # Reihenfolge der Überschriften auf den Einstiegsseiten
-RESERVIERT = {'stil', 'bf1', 'bf2', 'bgy', 'fstm', 'dbos', 'datenschutz', 'impressum'}
+RESERVIERT = {'stil', 'bf1', 'bf2', 'bgy', 'fstm', 'dbos', 'datenschutz', 'impressum', 'themen', 'trainings'}
 
 KOPF = '''<!DOCTYPE html>
 <html lang="de">
@@ -744,7 +745,18 @@ def baue_bildungsgang(bg, themen):
     return seite(f'happymatty/{bg.lower()}', bloecke)
 
 
+def nach_bildungsgang(themen):
+    """Themen in der Reihenfolge der Startseite: erst BF1, dann BF2, BGY …, darin nach „reihenfolge“."""
+    return [sortiert(t for t in themen if t.bildungsgang == bg) for bg in BILDUNGSGAENGE]
+
+
+def trainings_von(t):
+    return [e for e in t.einheiten if e.interaktiv.freigegeben]
+
+
 def baue_startseite(themen):
+    """Startseite (Entscheidung 25.11.2026): direkt anklickbar sind nur die Klassen; Themenbereiche
+    (blau) und Interaktive Trainings (grün) führen eine Ebene tiefer."""
     kopf = (f'  <div class="logo">{LOGO}</div>\n'
             '  <p class="kopf"></p>\n'
             '  <h1>Unterrichtsmaterial</h1>\n'
@@ -752,21 +764,57 @@ def baue_startseite(themen):
     kacheln = [f'    <li><a href="/{bg.lower()}/"><span class="kuerzel">{bg}</span>'
                f'<span class="name">{d["kachel"]}</span></a></li>\n'
                for bg, d in BILDUNGSGAENGE.items() if d['seite']]
-    gruppen = []
-    for bg in BILDUNGSGAENGE:
-        hier = sortiert(t for t in themen if t.bildungsgang == bg)
-        if hier:
-            gruppen.append(liste([thema_karte(t, f'{badges(t.bildungsgaenge)} {anzahl(len(t.einheiten))}')
-                                  for t in hier]))
+    mit_einheiten = [t for t in themen if t.einheiten]
+    n_einheiten = sum(len(t.einheiten) for t in mit_einheiten)
+    n_trainings = sum(len(trainings_von(t)) for t in themen)
+    bereiche = karte('bereich', '/themen/', 'Themenbereiche',
+                     f'{len(mit_einheiten)} Themenbereiche · {anzahl(n_einheiten)}')
+    trainings = karte('interaktiv', '/trainings/', 'Interaktive Trainings',
+                      f'{n_trainings} Training' + ('' if n_trainings == 1 else 's'))
     return seite('happymatty', [
         kopf,
         '  <h2 class="themenkopf">Klassen</h2>\n' + liste(kacheln, 'klassen'),
-        '  <h2 class="themenkopf">Themen</h2>\n' + '  <hr class="trenner">\n'.join(gruppen),
+        liste([bereiche, trainings], 'liste kategorien'),
     ])
 
 
+def baue_themenbereiche(themen):
+    """/themen: alle Themen als grüne Karten, je Bildungsgang eine Gruppe (bis 25.11.2026 auf der
+    Startseite)."""
+    kopf = (f'  <a class="logo" href="/">{LOGO}</a>\n'
+            '  <p class="kopf"></p>\n'
+            '  <h1>Themenbereiche</h1>\n')
+    gruppen = [liste([thema_karte(t, f'{badges(t.bildungsgaenge)} {anzahl(len(t.einheiten))}') for t in hier])
+               for hier in nach_bildungsgang(themen) if hier]
+    return seite('happymatty/Themenbereiche', [kopf, '  <hr class="trenner">\n'.join(gruppen)])
+
+
+def baue_trainings(themen):
+    """/trainings: alle freigegebenen interaktiven Seiten, je Thema unter dessen Namen, in der
+    Reihenfolge der Reihe; die Karte führt direkt auf die Seite."""
+    kopf = (f'  <a class="logo" href="/">{LOGO}</a>\n'
+            '  <p class="kopf"></p>\n'
+            '  <h1>Interaktive Trainings</h1>\n')
+    bloecke = [kopf]
+    for hier in nach_bildungsgang(themen):
+        for t in hier:
+            es = trainings_von(t)
+            if es:
+                bloecke.append(f'  <h2 class="themenkopf"><span class="thema">{esc(t.titel)}</span></h2>\n'
+                               + liste([karte('interaktiv', url(e.interaktiv.pfad),
+                                              f'{esc(e.titel)}{badges(e.bildungsgaenge)}',
+                                              esc(e.teilthema or e.interaktiv.text))
+                                        for e in es]))
+    if len(bloecke) == 1:
+        bloecke.append(liste([graue_karte('Noch keine Trainings',
+                                          'Hier erscheinen die Trainings, sobald sie online sind.')]))
+    return seite('happymatty/Interaktive Trainings', bloecke)
+
+
 def alle_seiten(themen):
-    seiten = {WURZEL / 'index.html': baue_startseite(themen)}
+    seiten = {WURZEL / 'index.html': baue_startseite(themen),
+              WURZEL / 'themen' / 'index.html': baue_themenbereiche(themen),
+              WURZEL / 'trainings' / 'index.html': baue_trainings(themen)}
     for bg, d in BILDUNGSGAENGE.items():
         if d['seite']:
             seiten[WURZEL / bg.lower() / 'index.html'] = baue_bildungsgang(bg, themen)
