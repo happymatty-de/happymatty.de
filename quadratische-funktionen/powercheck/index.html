@@ -2068,15 +2068,15 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
    Die ganze Reihe im Mix: alle 29 Aufgabentypen der Trainings QF1 bis QF5, eingebunden aus ihren Quellenordnern (build.py, quellen), dazu „Einmal alles“.
    Ablauf, Stand und Startseite kommen aus dem Baustein powercheck, der Hinweis beim ersten Start aus dem Baustein hinweis.
    ===================================================================== */
-const VERSION='v2';
+const VERSION='v3';
 const EINHEIT='quadratische-funktionen/powercheck';      // Ordner auf happymatty.de; Schlüssel des Lernstands (happymatty:<EINHEIT>:lernstand)
 const TITEL='PowerCheck',KURZ='QFPC';
 /* Kopfzeile der Startseite: Fach · Thema, ohne Teilthema (der PowerCheck gehört zur ganzen Reihe) */
-const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='',UNTERTITEL='Die ganze Reihe';
+const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='',UNTERTITEL='Training für die gesamte Lernreihe.';
 const TYPEN=[];      // b_gen.js füllt die Liste aus den Trainings der Reihe
 const WERKSTOR={id:'einmal-alles',titel:'Einmal alles'};
 const ANW=false;      // „Einmal alles“ läuft über den Baustein powercheck, nicht als Anwendung zum Anfassen
-const POWERCHECK={blaetter:[],unterzeile:'Alle Themeneinheiten. Alles gemischt. Los geht’s.',stueck:null};
+const POWERCHECK={blaetter:[],unterzeile:'Alle Themeneinheiten. Alles gemischt.',stueck:null};
 /* Hinweis beim ersten Start (Lehrkraft 26.11.2026; Wortlaut Vorschlag Claude); das Zeichen zeigt auf den Knopf des Level-Menüs */
 const HINWEIS={zeilen:['Los geht’s mit Level 1. Danach wird es schwerer.','Zu leicht? Stell die Level um.'],ziel:'.kn.auto'};
 
@@ -2335,7 +2335,7 @@ const pcEtappeText=()=>'PowerCheck. Etappe '+S.etappe+(pcWerkDran()?': '+pcSt().
 /* ---------- Ansichten ---------- */
 function pcStart(){S.ansicht='start';adresse('');
   setApp(startKopf()+
-    '<main class="startm"><button class="gross" data-akt="gesamt"><b>'+(S.geuebt?'Weiter':'PowerCheck')+'</b><small>'+(S.geuebt?pcEtappeText():PCF.unterzeile)+'</small></button>'+
+    '<main class="startm"><button class="gross" data-akt="gesamt"><b>'+(S.geuebt?'Weiter':'Start')+'</b><small>'+(S.geuebt?pcEtappeText():PCF.unterzeile)+'</small></button>'+
     '<div class="zwei pceins"><button class="mittel" data-akt="einzel"><b>Mein Stand</b><small>Wie gut bin ich in jeder Themeneinheit?</small></button></div>'+lernHTML()+'</main>'+startFuss());}
 /* Über der Aufgabe: „PowerCheck · ‹Aufgabentyp› · Level 1“. Der Ort ist antippbar (ein Fenster sagt, wie der PowerCheck läuft), der Aufgabentyp nicht:
    Ein Einzeltraining gibt es im PowerCheck nicht, das sind die Trainings. */
