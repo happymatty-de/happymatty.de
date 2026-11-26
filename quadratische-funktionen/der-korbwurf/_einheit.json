@@ -9,7 +9,7 @@
   "aufgabenblatt": { "vorhanden": true, "freigegeben": true, "quelle": "QF5_Der_Korbwurf_Aufgabenblatt_v48.5.pdf", "stand": "12.11.2026" },
   "musterloesung": { "vorhanden": true, "freigegeben": true, "quelle": "QF5_Der_Korbwurf_Loesung_v48.5.pdf", "stand": "12.11.2026" },
   "interaktiv": {
-    "vorhanden": true, "freigegeben": true, "quelle": "QF5-Training v1 (Backup: QF5_Der_Korbwurf_Training_v1.html)", "stand": "25.11.2026", "text": "Trainieren",
+    "vorhanden": true, "freigegeben": true, "quelle": "QF5-Training v2 (Backup: QF5_Der_Korbwurf_Training_v2.html)", "stand": "27.11.2026", "text": "Trainieren",
     "beilagen": [
       { "titel": "Level 4 Feuerwehr 1", "quelle": "QF5_Der_Korbwurf_Level_4_Feuerwehr_1_v1.pdf", "stand": "25.11.2026" },
       { "titel": "Level 4 Feuerwehr 2", "quelle": "QF5_Der_Korbwurf_Level_4_Feuerwehr_2_v1.pdf", "stand": "25.11.2026" },
