@@ -5,7 +5,7 @@
   "unterzeile": null,
   "bildungsgang": "BGY",
   "reihenfolge": 1,
-  "powercheck": { "bildungsgaenge": ["BGY"], "vorhanden": true, "freigegeben": true, "quelle": "QF-PowerCheck v1 (Backup: QF_PowerCheck_v1.html)", "stand": "26.11.2026", "text": "Alle Themeneinheiten. Alles gemischt." },
+  "powercheck": { "bildungsgaenge": ["BGY"], "vorhanden": true, "freigegeben": true, "quelle": "QF-PowerCheck v2 (Backup: QF_PowerCheck_v2.html)", "stand": "26.11.2026", "text": "Alle Themeneinheiten. Alles gemischt." },
   "probeklassenarbeit": {
     "bildungsgaenge": ["BGY"],
     "test": { "vorhanden": true, "freigegeben": true, "quelle": "QF_Probeklassenarbeit_v6.pdf", "stand": "10.11.2026" },

@@ -1186,13 +1186,14 @@ svg.zieh{touch-action:none}
 @media (max-width:760px){
 .pcaformen .pcfn{min-width:0;width:100%}}
 /* Hinweis beim ersten Start (Baustein hinweis, 26.11.2026): ein graues, diffuses Feld in der Mitte, das zu den Rändern hin verschwimmt; die erste Aufgabe
-   bleibt dahinter zu sehen. Die Schrift ist dasselbe Grau in satt und wirkt eingestanzt (hell abgesetzte Unterkante). Lesbarkeit geht vor Effekt. */
+   bleibt dahinter zu sehen. Die Schrift ist dasselbe Grau in satt und wirkt eingestanzt (hell abgesetzte Unterkante). Lesbarkeit geht vor Effekt.
+   Das Feld ist so groß, dass der ganze Text im dichten Grau liegt (Lehrkraft 26.11.2026). */
 .hwov{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;cursor:pointer;animation:hwein .45s ease-out}
 .hwov.geht{opacity:0;transition:opacity .35s ease-in}
-.hwfeld{width:min(40rem,96vw);padding:3.4rem 4.6rem;box-sizing:border-box;text-align:center;
+.hwfeld{width:min(54rem,100vw);padding:7rem 8rem;box-sizing:border-box;text-align:center;
   background:radial-gradient(closest-side,rgba(196,202,209,.9) 0%,rgba(204,209,215,.86) 52%,rgba(214,218,223,.6) 74%,rgba(225,228,232,0) 100%);
   -webkit-backdrop-filter:blur(4px) saturate(.35);backdrop-filter:blur(4px) saturate(.35);
-  -webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 100%);mask-image:radial-gradient(closest-side,#000 62%,transparent 100%)}
+  -webkit-mask-image:radial-gradient(closest-side,#000 70%,transparent 100%);mask-image:radial-gradient(closest-side,#000 70%,transparent 100%)}
 .hwtext p{margin:.15rem 0;font-family:var(--hand);font-size:2rem;line-height:1.25;color:#2F3740;text-shadow:0 1px 0 rgba(255,255,255,.75),0 -1px 0 rgba(0,0,0,.08)}
 .hwtext p+p{font-size:1.7rem}
 .hwzeichen{position:fixed;width:2.5rem;height:2.9rem;pointer-events:none;animation:hwzeig 1.6s ease-in-out .5s infinite}
@@ -1201,7 +1202,7 @@ svg.zieh{touch-action:none}
 @keyframes hwein{from{opacity:0}to{opacity:1}}
 @keyframes hwzeig{0%,100%{transform:translateY(0)}50%{transform:translateY(-.35rem)}}
 @media (max-width:760px){
-.hwfeld{padding:2.6rem 2.2rem}
+.hwfeld{padding:6rem 3.4rem}
 .hwtext p{font-size:1.6rem}
 .hwtext p+p{font-size:1.4rem}}
 @media (prefers-reduced-motion:reduce){.hwov,.hwzeichen{animation:none}}
@@ -2067,7 +2068,7 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
    Die ganze Reihe im Mix: alle 29 Aufgabentypen der Trainings QF1 bis QF5, eingebunden aus ihren Quellenordnern (build.py, quellen), dazu „Einmal alles“.
    Ablauf, Stand und Startseite kommen aus dem Baustein powercheck, der Hinweis beim ersten Start aus dem Baustein hinweis.
    ===================================================================== */
-const VERSION='v1';
+const VERSION='v2';
 const EINHEIT='quadratische-funktionen/powercheck';      // Ordner auf happymatty.de; Schlüssel des Lernstands (happymatty:<EINHEIT>:lernstand)
 const TITEL='PowerCheck',KURZ='QFPC';
 /* Kopfzeile der Startseite: Fach · Thema, ohne Teilthema (der PowerCheck gehört zur ganzen Reihe) */
@@ -2075,7 +2076,7 @@ const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische
 const TYPEN=[];      // b_gen.js füllt die Liste aus den Trainings der Reihe
 const WERKSTOR={id:'einmal-alles',titel:'Einmal alles'};
 const ANW=false;      // „Einmal alles“ läuft über den Baustein powercheck, nicht als Anwendung zum Anfassen
-const POWERCHECK={blaetter:[],unterzeile:'Alle Blätter. Alles gemischt. Los geht’s.',stueck:null};
+const POWERCHECK={blaetter:[],unterzeile:'Alle Themeneinheiten. Alles gemischt. Los geht’s.',stueck:null};
 /* Hinweis beim ersten Start (Lehrkraft 26.11.2026; Wortlaut Vorschlag Claude); das Zeichen zeigt auf den Knopf des Level-Menüs */
 const HINWEIS={zeilen:['Los geht’s mit Level 1. Danach wird es schwerer.','Zu leicht? Stell die Level um.'],ziel:'.kn.auto'};
 
@@ -2335,24 +2336,25 @@ const pcEtappeText=()=>'PowerCheck. Etappe '+S.etappe+(pcWerkDran()?': '+pcSt().
 function pcStart(){S.ansicht='start';adresse('');
   setApp(startKopf()+
     '<main class="startm"><button class="gross" data-akt="gesamt"><b>'+(S.geuebt?'Weiter':'PowerCheck')+'</b><small>'+(S.geuebt?pcEtappeText():PCF.unterzeile)+'</small></button>'+
-    '<div class="zwei pceins"><button class="mittel" data-akt="einzel"><b>Stand</b><small>Blatt für Blatt.</small></button></div>'+lernHTML()+'</main>'+startFuss());}
+    '<div class="zwei pceins"><button class="mittel" data-akt="einzel"><b>Mein Stand</b><small>Wie gut bin ich in jeder Themeneinheit?</small></button></div>'+lernHTML()+'</main>'+startFuss());}
 /* Über der Aufgabe: „PowerCheck · ‹Aufgabentyp› · Level 1“. Der Ort ist antippbar (ein Fenster sagt, wie der PowerCheck läuft), der Aufgabentyp nicht:
    Ein Einzeltraining gibt es im PowerCheck nicht, das sind die Trainings. */
 const pcWas=()=>'<p class="was"><span><span class="waso"><button class="wasol" data-akt="pcort">PowerCheck</button> · </span><b class="pcwt">'+A.t.titel+'</b> · Level '+LEVELNR[A.key]+'</span>'+
   (S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
 function pcOrt(){if($('.efrage'))return;clearTimeout(A.auto);const auto=filterName()==='Automatik';
   const ov=el('<div class="ov dunkel"><div class="panel efrage" role="dialog" aria-label="PowerCheck"><div class="pkopf"><h2>PowerCheck</h2></div>'+
-    '<p class="ehier">Alle Blätter der Reihe, gemischt.</p><p class="klein">Jeder Aufgabentyp kommt je Level einmal: '+(auto?'erst Level 1, dann 2, dann 3.':'gerade ist nur '+filterName()+' eingeschaltet.')+
-    ' Was noch offen ist, zeigt der Stand.</p><div class="eknoepfe"><button class="haupt" data-zu>OK</button></div></div></div>');
+    '<p class="ehier">Alle Themeneinheiten der Reihe, gemischt.</p><p class="klein">Jede Aufgabe kommt je Level einmal: '+(auto?'erst Level 1, dann 2, dann 3.':'gerade ist nur '+filterName()+' eingeschaltet.')+
+    ' Was noch offen ist, zeigt „Mein Stand“.</p><div class="eknoepfe"><button class="haupt" data-zu>OK</button></div></div></div>');
   ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))ov.remove();});document.body.appendChild(ov);$('.haupt',ov).focus();}
 /* Der Stand (Lehrkraft 26.11.2026): statt 29 Erfolgsbändern fünf, eins je Blatt, benannt nach dem Titel des Blatts; dazu die Kachel des verbindenden Stücks.
    Dieselbe Seite ist der Zwischenstand nach einer Etappe und nach Block 3, dann mit dem großen Knopf „Weiter“. */
 function pcStand(o){o=o||{};S.ansicht='einzel';S.modus=S.modus==='stueck'?null:S.modus;adresse('stand');
   if(o.geschafft||o.titel)S.pc.zeig=false;
   const offen=TYPEN.filter(pcTypOffen).length,nachB3=S.pc.d>=3||o.offen;
-  const titel=o.geschafft?'Etappe '+o.geschafft+' geschafft!':o.titel||(o.offen?'Zwischenstand':'Stand');
+  const titel=o.geschafft?'Etappe '+o.geschafft+' geschafft!':o.titel||(o.offen?'Zwischenstand':'Mein Stand');
   const knopf=o.geschafft||o.titel||o.offen?'<button class="gross flach" data-akt="gesamt"><b>Weiter</b><small>'+pcEtappeText()+'</small></button>':'';
-  const zeile=nachB3&&offen&&!o.finale?'Noch offen: '+offen+(offen===1?' Aufgabentyp':' Aufgabentypen')+'. Tippe ein Blatt an.':'Blatt für Blatt. Tippe ein Blatt an.';
+  /* Wortlaut (Lehrkraft 26.11.2026): „Themeneinheit“ statt „Blatt“, „Aufgaben“ statt „Aufgabentypen“; der Satz zu „Weiter“ nur, wo der Knopf steht */
+  const zeile=nachB3&&offen&&!o.finale?'Noch nicht sicher: '+offen+(offen===1?' Aufgabe':' Aufgaben')+'. '+(knopf?'„Weiter“ übt nur diese. Welche es sind, zeigt dir die Themeneinheit.':'Tippe eine Themeneinheit an. Damit kommst du zu ihrem Training.'):'Tippe eine Themeneinheit an. Damit kommst du zu ihrem Training.';
   setApp('<header class="kopf"><button class="kn" data-akt="start">‹ Start</button><h1>'+titel+'</h1><span class="luft"></span>'+kronenHTML(o.neu)+tonKnopf()+'</header>'+
     '<main class="seite">'+knopf+'<div class="zs"><span>'+zeile+'</span></div><div class="kacheln">'+PCF.blaetter.map(pcKachel).join('')+(pcSt()?pcEaKachel():'')+'</div></main>');}
 const pcKachel=b=>'<button class="ka" data-akt="pcblatt" data-blatt="'+b.id+'"><b>'+b.titel+'</b><div class="kz">'+bandHTML(b,pcBlattBand(b))+'<span class="ms">'+pcMarke(b)+'</span></div></button>';
@@ -2366,10 +2368,10 @@ function pcBlattFenster(id){const b=pcBlatt(id);if(!b)return;schliesse();
   ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))ov.remove();});document.body.appendChild(ov);}
 /* Das Fenster „Stand“ aus der Aufgabe: die fünf Blätter und das Stück; ein Tipp auf ein Blatt zeigt seine Aufgabentypen, auf das Stück öffnet es */
 function pcStandFenster(){
-  const ov=el('<div class="ov dunkel"><div class="panel" role="dialog" aria-label="Stand"><div class="pkopf"><h2>Stand</h2><span class="luft"></span>'+kronenHTML()+'<button class="kn" data-zu>Schließen</button></div>'+
+  const ov=el('<div class="ov dunkel"><div class="panel" role="dialog" aria-label="Mein Stand"><div class="pkopf"><h2>Mein Stand</h2><span class="luft"></span>'+kronenHTML()+'<button class="kn" data-zu>Schließen</button></div>'+
     PCF.blaetter.map(b=>'<button class="reihe" data-blatt="'+b.id+'"><b>'+b.titel+'</b>'+bandHTML(b,pcBlattBand(b))+'<span>'+pcMarke(b)+'</span></button>').join('')+
     (pcSt()?'<button class="reihe" data-pcst="1"><b>'+pcSt().titel+'</b>'+bandHTML(pcSt(),pcEaBand())+'<span>'+(pcEaVoll()?PC_SITZT:'')+'</span></button>':'')+
-    '<p class="klein">Tippe ein Blatt an für seine Aufgabentypen.</p></div></div>');
+    '<p class="klein">Tippe eine Themeneinheit an für ihre Aufgaben.</p></div></div>');
   ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();const r=e.target.closest('.reihe[data-blatt]');if(r){ov.remove();return pcBlattFenster(r.dataset.blatt);}
     if(e.target.closest('.reihe[data-pcst]')){ov.remove();startWerk('einzel');}});
   document.body.appendChild(ov);}
@@ -7607,7 +7609,7 @@ function eaAufl(F,E,erg,m){const x=V('x'),y=V('y'),fe=fenster([[F.x1,0],[F.x2,0]
     '<p class="pcafazit">'+(n===5?'Alles stimmt!':n+' von 5 Schritten stimmen.')+'</p>';
   if(n===5)Sound.level();}
 
-POWERCHECK.stueck={id:'einmal-alles',titel:'Einmal alles',marke:'Alle Blätter',adresse:'einmal-alles',schritte:EA_SCHRITTE,fall:eaFall,aufgabe:eaAufgabe,aufloesung:eaAufl};
+POWERCHECK.stueck={id:'einmal-alles',titel:'Einmal alles',marke:'Alle Themeneinheiten',adresse:'einmal-alles',schritte:EA_SCHRITTE,fall:eaFall,aufgabe:eaAufgabe,aufloesung:eaAufl};
 
 /* =====================================================================
    Trainingsrahmen: Anwendung zum Anfassen, gemeinsame Teile
