@@ -53,6 +53,9 @@ In dieses Repository schreiben zwei Arten von Chats (Entscheidung 14.11.2026):
   `_werkzeuge/`, `stil/`, die Seitentypen (Aufbau der gebauten Seiten), neue Bereiche, neue Themen
   und Bildungsgänge, die Beschreibungsdateien der Themen (`_thema.json`, also auch
   Probeklassenarbeit und Klassenarbeit), Datenschutzerklärung, Impressum und diese CLAUDE.md.
+  Ausnahme: Den PowerCheck einer Reihe legt der Projektchat der Reihe selbst ab, Ordner `<thema>/powercheck/` und Eintrag
+  `powercheck` in `_thema.json`, und führt dabei die Datenschutzerklärung nach, wenn sich ändert, was er speichert (erster:
+  Quadratische Funktionen, 26.11.2026).
 - Braucht ein Projektchat zu einer Reihe etwas davon (ein neues Thema, einen neuen Bildungsgang oder
   Bereich, eine andere Gestaltung), sagt er es Patrick; in der Regel übernimmt es die HappyMatty
   Werkstatt (vorher: Claude Code).
@@ -164,7 +167,8 @@ Es bricht ab, ohne etwas zu schreiben, wenn
 - zwei Einheiten eines Themas denselben `platz` haben oder zwei Themen eines Bildungsgangs dieselbe
   `reihenfolge`,
 - ein Ordner ohne Beschreibungsdatei auftaucht (außer den reservierten und Weiterleitungen, also
-  Seiten mit `rel="canonical"`) oder im Ordner einer Einheit eine unbekannte Datei liegt.
+  Seiten mit `rel="canonical"`, und `powercheck` eines Themas, dessen `_thema.json` ihn nennt) oder im Ordner einer Einheit
+  eine unbekannte Datei liegt.
 
 ### Was das Skript baut und was nicht
 
@@ -303,6 +307,7 @@ HappyMatty Werkstatt sie an und ändert sie (Entscheidung 23.11.2026: „möglic
 | `bildungsgang` | der Bildungsgang, zu dem das Thema gehört: Zurück-Link der Themenseite, Gruppe auf der Seite Themenbereiche |
 | `reihenfolge` | Platz unter den Themen dieses Bildungsgangs, in der Reihenfolge des Unterrichts |
 | `probeklassenarbeit`, `klassenarbeit` | freiwillig: `bildungsgaenge` (Kennzeichen) und `test`, `loesung`, `notentabelle`; die PDFs liegen in `<thema>/probeklassenarbeit/` bzw. `<thema>/klassenarbeit/` |
+| `powercheck` | freiwillig: der PowerCheck der Reihe, eine interaktive Seite zur ganzen Reihe (erster: Quadratische Funktionen, 26.11.2026). Ein Dokument wie `interaktiv` (`vorhanden`, `freigegeben`, `quelle` mit Version, `stand`, `text`), dazu `bildungsgaenge` (Kennzeichen). Die Seite liegt als `<thema>/powercheck/index.html`, Adresse `/<thema>/powercheck` |
 
 Die Probeklassenarbeit erscheint, sobald sie freigegeben ist. Die Klassenarbeit erscheint, sobald
 sie vorhanden ist, bis zur Freigabe mit grauen Karten (siehe „Tests“).
@@ -541,7 +546,8 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
   Grün), Themen in derselben Reihenfolge wie auf `/themen`; darunter je Themeneinheit eine grüne
   Karte (Klasse `interaktiv`) in der Reihenfolge der Reihe (`platz`): Titel des Blatts mit
   Kennzeichen, darunter das Teilthema. Die Karte führt direkt auf `…/<titel>/interaktiv`. Themen
-  ohne Training erscheinen dort nicht. Eine interaktive Seite erscheint, sobald sie in
+  ohne Training erscheinen dort nicht. Hat ein Thema einen freigegebenen PowerCheck, steht seine Karte
+  (grün, „PowerCheck“, darunter der `text`) nach den Trainings des Themas (seit 26.11.2026). Eine interaktive Seite erscheint, sobald sie in
   `_einheit.json` freigegeben ist; der Projektchat muss dafür nichts tun.
 - **Themenseite** `<thema>/index.html` (z. B. `happymatty.de/lineare-funktionen`): Kopfzeile nur
   „Mathematik“, Überschrift das Thema groß in Grün (`<h1 class="thema">`, Entscheidung 10.11.2026:
@@ -552,7 +558,8 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
   Bildungsgänge mit eigenen Blättern (etwa BGY als Wiederholung auf höherem Niveau), stehen sie
   hier nebeneinander. Die Beschreibung beginnt mit dem Teilthema, danach ein Gedankenstrich:
   „Addition und Subtraktion – Zahlenkarten, Wege und Zahlenmauern“. Danach gegebenenfalls die
-  Abschnitte „Probeklassenarbeit“ und „Klassenarbeit“ (siehe Tests).
+  Abschnitte „PowerCheck“ (`themenkopf` mit `id="powercheck"`, eine grüne Karte `interaktiv` „PowerCheck“ mit Kennzeichen und dem `text`
+  aus `_thema.json`, „Alles gemischt“, auf `/<thema>/powercheck/`; Entscheidung 26.11.2026), „Probeklassenarbeit“ und „Klassenarbeit“ (siehe Tests).
 - **Einstiegsseite je Bildungsgang** `<kürzel>/index.html` (z. B. `happymatty.de/bf2`): nur die
   **Themen**, die dieser Bildungsgang bearbeitet, keine einzelnen Themeneinheiten (Entscheidung
   10.11.2026: sonst wird es zu viel). Je Fach eine Überschrift (`themenkopf`, „Mathematik“), darunter
@@ -672,6 +679,7 @@ Skript; eine Änderung daran macht in der Regel die HappyMatty Werkstatt und pr�
   | Thema | `happymatty/Lineare Funktionen` |
   | Probeklassenarbeit | `happymatty/Quadratische Funktionen/Probeklassenarbeit` |
   | Klassenarbeit | `happymatty/Quadratische Funktionen/Klassenarbeit` |
+  | PowerCheck | `happymatty/Quadratische Funktionen/PowerCheck` |
   | Übersicht des Arbeitsblatts | `happymatty/Mehr als nur steil` |
   | interaktive Seite | `happymatty/Mehr als nur steil/interaktiv` |
   | `…_Aufgabenblatt.pdf` | `happymatty/Mehr als nur steil/Aufgabenblatt` |

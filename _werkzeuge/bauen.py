@@ -177,12 +177,12 @@ def bildungsgaenge(ort, obj, k='bildungsgaenge'):
 class Dok:
     """Ein Dokument: vorhanden, freigegeben, Quelle (mit Versionsnummer), Stand, Hinweis."""
 
-    def __init__(self, ort, d, ordner, interaktiv=False):
-        self.ort, self.ordner, self.interaktiv = ort, ordner, interaktiv
+    def __init__(self, ort, d, ordner, interaktiv=False, unter='interaktiv', frei_dazu=()):
+        self.ort, self.ordner, self.interaktiv, self.unter = ort, ordner, interaktiv, unter      # unter: Ordner der interaktiven Seite (PowerCheck: powercheck)
         self.vorhanden = self.freigegeben = False
         self.quelle = self.stand = self.hinweis = self.text = None
         self.beilagen = []
-        frei = ('quelle', 'stand', 'hinweis') + (('text', 'beilagen') if interaktiv else ())
+        frei = ('quelle', 'stand', 'hinweis') + (('text', 'beilagen') if interaktiv else ()) + tuple(frei_dazu)
         if d is None or not schluessel(ort, d, ('vorhanden', 'freigegeben'), frei):
             return
         self.vorhanden = bool(wert(ort, d, 'vorhanden', 'janein'))
@@ -223,7 +223,7 @@ class Dok:
     def pfad(self):
         """Ort auf der Website: PDF unter dem Namen aus „quelle“ ohne _v…, interaktiv/ als Ordner."""
         if self.interaktiv:
-            return self.ordner / 'interaktiv'
+            return self.ordner / self.unter
         if self.quelle and QUELLE_PDF.match(self.quelle):
             return self.ordner / re.sub(r'_v\d+(?:\.\d+)*\.pdf$', '.pdf', self.quelle)
         return None
@@ -379,10 +379,10 @@ class Thema:
         ort = rel(datei)
         d = lies_json(datei)
         self.eintraege, self.einheiten = [], []
-        self.probeklassenarbeit = self.klassenarbeit = None
+        self.probeklassenarbeit = self.klassenarbeit = self.powercheck = None
         self.ok = d is not None and schluessel(ort, d, (
             'titel', 'kennung', 'fach', 'unterzeile', 'bildungsgang', 'reihenfolge'),
-            ('probeklassenarbeit', 'klassenarbeit'))
+            ('probeklassenarbeit', 'klassenarbeit', 'powercheck'))
         if not self.ok:
             unlesbar.add(ordner)
             return
@@ -399,6 +399,12 @@ class Thema:
             melde(ort, f'unbekannter Bildungsgang „{self.bildungsgang}“')
         self.reihenfolge = wert(ort, d, 'reihenfolge', 'zahl') or 0
         t = self.titel
+        # PowerCheck der Reihe (26.11.2026): eine interaktive Seite zur ganzen Reihe unter /<thema>/powercheck, mit eigener Karte auf der Themenseite
+        if 'powercheck' in d:
+            o = f'{ort} › powercheck'
+            self.powercheck = Dok(o, d['powercheck'], ordner, interaktiv=True, unter='powercheck', frei_dazu=('bildungsgaenge',))
+            self.powercheck_bg = bildungsgaenge(o, d['powercheck']) if 'bildungsgaenge' in d['powercheck'] else []
+            self.eintraege.append(Eintrag(self.powercheck, 'powercheck', 'PowerCheck', None, 'interaktiv', None, self.powercheck_bg))
         for art, name in (('probeklassenarbeit', 'Probeklassenarbeit'), ('klassenarbeit', 'Klassenarbeit')):
             if art not in d:
                 continue
@@ -427,6 +433,10 @@ class Thema:
 
     def einheiten_in(self, bg):
         return [e for e in self.einheiten if bg in e.bildungsgaenge]
+
+    @property
+    def powercheck_online(self):
+        return bool(self.powercheck and self.powercheck.freigegeben)
 
     @property
     def probeklassenarbeit_online(self):
@@ -466,6 +476,8 @@ def einlesen():
                 if e.ok:
                     thema.einheiten.append(e)
             elif u == 'probeklassenarbeit' and thema.probeklassenarbeit_online:
+                pass
+            elif u == 'powercheck' and thema.powercheck:
                 pass
             elif u == 'klassenarbeit' and thema.klassenarbeit_angekuendigt:
                 pass
@@ -544,6 +556,8 @@ def pruefe_ordnerinhalt(themen):
             ordner.append((t.ordner / 'probeklassenarbeit', {'index.html'}))
         if t.klassenarbeit_angekuendigt:
             ordner.append((t.ordner / 'klassenarbeit', {'index.html'}))
+        if t.powercheck:
+            ordner.append((t.ordner / 'powercheck', {'index.html'}))
     for o, erlaubt in ordner:
         if not o.is_dir():
             continue
@@ -729,6 +743,10 @@ def baue_thema(t):
             text += ' · mit Test'
         karten.append(karte(None, url(e.ordner), f'{esc(e.titel)}{badges(e.bildungsgaenge)}', text))
     bloecke = [kopf, '  <h2 class="themenkopf">Themeneinheiten</h2>\n' + liste(karten)]
+    if t.powercheck_online:      # PowerCheck der Reihe (26.11.2026): grüne Karte wie die interaktiven Seiten, Text aus _thema.json
+        bloecke.append(
+            '  <h2 class="themenkopf" id="powercheck">PowerCheck</h2>\n'
+            + liste([karte('interaktiv', f'/{t.slug}/powercheck/', f'PowerCheck{badges(t.powercheck_bg)}', esc(t.powercheck.text))]))
     if t.probeklassenarbeit_online:
         bloecke.append(
             '  <h2 class="themenkopf" id="probeklassenarbeit">Probeklassenarbeit</h2>\n'
@@ -820,12 +838,14 @@ def baue_trainings(themen):
     for hier in nach_bildungsgang(themen):
         for t in hier:
             es = trainings_von(t)
-            if es:
+            if es or t.powercheck_online:
                 bloecke.append(f'  <h2 class="themenkopf"><span class="thema">{esc(t.titel)}</span></h2>\n'
                                + liste([karte('interaktiv', url(e.interaktiv.pfad),
                                               f'{esc(e.titel)}{badges(e.bildungsgaenge)}',
                                               esc(e.teilthema or e.interaktiv.text))
-                                        for e in es]))
+                                        for e in es]
+                                       + ([karte('interaktiv', f'/{t.slug}/powercheck/', f'PowerCheck{badges(t.powercheck_bg)}',
+                                                 esc(t.powercheck.text))] if t.powercheck_online else [])))      # der PowerCheck der Reihe nach ihren Trainings
     if len(bloecke) == 1:
         bloecke.append(liste([graue_karte('Noch keine Trainings',
                                           'Hier erscheinen die Trainings, sobald sie online sind.')]))
