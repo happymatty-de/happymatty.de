@@ -745,7 +745,7 @@ def baue_thema(t):
     bloecke = [kopf, '  <h2 class="themenkopf">Themeneinheiten</h2>\n' + liste(karten)]
     if t.powercheck_online:      # PowerCheck der Reihe (26.11.2026): grüne Karte wie die interaktiven Seiten, Text aus _thema.json
         bloecke.append(
-            '  <h2 class="themenkopf" id="powercheck">PowerCheck</h2>\n'
+            '  <h2 class="themenkopf" id="powercheck">Interaktives Gesamttraining</h2>\n'
             + liste([karte('interaktiv', f'/{t.slug}/powercheck/', f'PowerCheck{badges(t.powercheck_bg)}', esc(t.powercheck.text))]))
     if t.probeklassenarbeit_online:
         bloecke.append(

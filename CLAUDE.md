@@ -558,8 +558,8 @@ Schüler. Alle diese Seiten baut das Skript; was hier steht, ist der Aufbau, den
   Bildungsgänge mit eigenen Blättern (etwa BGY als Wiederholung auf höherem Niveau), stehen sie
   hier nebeneinander. Die Beschreibung beginnt mit dem Teilthema, danach ein Gedankenstrich:
   „Addition und Subtraktion – Zahlenkarten, Wege und Zahlenmauern“. Danach gegebenenfalls die
-  Abschnitte „PowerCheck“ (`themenkopf` mit `id="powercheck"`, eine grüne Karte `interaktiv` „PowerCheck“ mit Kennzeichen und dem `text`
-  aus `_thema.json`, „Alles gemischt“, auf `/<thema>/powercheck/`; Entscheidung 26.11.2026), „Probeklassenarbeit“ und „Klassenarbeit“ (siehe Tests).
+  Abschnitte „Interaktives Gesamttraining“ (`themenkopf` mit `id="powercheck"`, eine grüne Karte `interaktiv` „PowerCheck“ mit Kennzeichen und dem `text`
+  aus `_thema.json`, „Alle Themeneinheiten. Alles gemischt.“, auf `/<thema>/powercheck/`; Entscheidung 26.11.2026, Überschrift und Text vom selben Tag, vorher „PowerCheck“ und „Alles gemischt“), „Probeklassenarbeit“ und „Klassenarbeit“ (siehe Tests).
 - **Einstiegsseite je Bildungsgang** `<kürzel>/index.html` (z. B. `happymatty.de/bf2`): nur die
   **Themen**, die dieser Bildungsgang bearbeitet, keine einzelnen Themeneinheiten (Entscheidung
   10.11.2026: sonst wird es zu viel). Je Fach eine Überschrift (`themenkopf`, „Mathematik“), darunter
