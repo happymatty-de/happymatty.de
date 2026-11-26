@@ -1160,6 +1160,11 @@ svg.zieh{touch-action:none}
 /* PowerCheck (Baustein powercheck, 26.11.2026): Startseite mit zwei Knöpfen; über der Aufgabe ist der Aufgabentyp nicht antippbar, also nicht blau;
    Fenster eines Blatts mit seinen Aufgabentypen und Marken; Auflösung des verbindenden Stücks */
 .zwei.pceins{grid-template-columns:1fr}
+/* „Weiter“ auf dem Zwischenstand höher und größer, damit er neben den Kacheln auffällt (Lehrkraft 26.11.2026, erst im PowerCheck; danach entscheidet sie über die Trainings) */
+.gross.flach.pcweiter{min-height:9.5rem;margin-bottom:.6rem}
+.gross.flach.pcweiter b{font-size:3.6rem}
+.gross.flach.pcweiter small{font-size:1.15rem;margin-top:.6rem}
+@media (max-width:760px){.gross.flach.pcweiter{min-height:8rem}.gross.flach.pcweiter b{font-size:3rem}}
 .was .pcwt{color:#39424C;font-weight:700}
 .reihe.pcz{grid-template-columns:minmax(0,1fr) auto;cursor:default}
 .reihe.pcz b{color:#1F2933}
@@ -2068,7 +2073,7 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
    Die ganze Reihe im Mix: alle 29 Aufgabentypen der Trainings QF1 bis QF5, eingebunden aus ihren Quellenordnern (build.py, quellen), dazu „Einmal alles“.
    Ablauf, Stand und Startseite kommen aus dem Baustein powercheck, der Hinweis beim ersten Start aus dem Baustein hinweis.
    ===================================================================== */
-const VERSION='v3';
+const VERSION='v4';
 const EINHEIT='quadratische-funktionen/powercheck';      // Ordner auf happymatty.de; Schlüssel des Lernstands (happymatty:<EINHEIT>:lernstand)
 const TITEL='PowerCheck',KURZ='QFPC';
 /* Kopfzeile der Startseite: Fach · Thema, ohne Teilthema (der PowerCheck gehört zur ganzen Reihe) */
@@ -2352,7 +2357,7 @@ function pcStand(o){o=o||{};S.ansicht='einzel';S.modus=S.modus==='stueck'?null:S
   if(o.geschafft||o.titel)S.pc.zeig=false;
   const offen=TYPEN.filter(pcTypOffen).length,nachB3=S.pc.d>=3||o.offen;
   const titel=o.geschafft?'Etappe '+o.geschafft+' geschafft!':o.titel||(o.offen?'Zwischenstand':'Mein Stand');
-  const knopf=o.geschafft||o.titel||o.offen?'<button class="gross flach" data-akt="gesamt"><b>Weiter</b><small>'+pcEtappeText()+'</small></button>':'';
+  const knopf=o.geschafft||o.titel||o.offen?'<button class="gross flach pcweiter" data-akt="gesamt"><b>Weiter</b><small>'+pcEtappeText()+'</small></button>':'';
   /* Wortlaut (Lehrkraft 26.11.2026): „Themeneinheit“ statt „Blatt“, „Aufgaben“ statt „Aufgabentypen“; der Satz zu „Weiter“ nur, wo der Knopf steht */
   const zeile=nachB3&&offen&&!o.finale?'Noch nicht sicher: '+offen+(offen===1?' Aufgabe':' Aufgaben')+'. '+(knopf?'„Weiter“ übt nur diese. Welche es sind, zeigt dir die Themeneinheit.':'Tippe eine Themeneinheit an. Damit kommst du zu ihrem Training.'):'Tippe eine Themeneinheit an. Damit kommst du zu ihrem Training.';
   setApp('<header class="kopf"><button class="kn" data-akt="start">‹ Start</button><h1>'+titel+'</h1><span class="luft"></span>'+kronenHTML(o.neu)+tonKnopf()+'</header>'+
