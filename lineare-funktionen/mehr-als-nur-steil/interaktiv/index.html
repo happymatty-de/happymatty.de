@@ -185,6 +185,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .opts.n2,.opts.n4{grid-template-columns:repeat(2,minmax(0,1fr))}
 .opt{background:#fff;border:.14rem solid var(--blau);border-radius:.8rem;min-height:3.7rem;font-size:1.4rem;padding:.4rem 2.2rem;box-shadow:0 .2rem 0 #C9D6E2;position:relative;color:var(--text);min-width:0;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
 .opt:disabled{box-shadow:none;cursor:default;border-color:#C9D0D8;color:#6B7580}
+.opts.ofest .opt{white-space:nowrap}      /* Antworten, die Terme sind (auf.optFest): Ein Term bricht nicht um (26.11.2026) */
 .opt.gew{background:#EAF3F9;box-shadow:0 0 0 .2rem #CFE3F1}
 .opt.fehlt{border:.14rem dashed var(--gruen);color:var(--text);background:#fff}      /* die richtige, nicht gewählte Antwort: weiß, grün gestrichelt, ohne Zeichen (Lehrkraft 23.11.2026); Strich so dick wie der Rahmen des Urteils (.14rem), wächst mit (Lehrkraft 24.11.2026) */
 .opt.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
@@ -664,6 +665,7 @@ html{font-size:clamp(15px,4.3vw,19px)}
 .mitbild .bild{max-width:17rem;margin:0 auto;width:100%}
 .opts.n4{grid-template-columns:repeat(2,minmax(0,1fr))}
 .opt{font-size:1.25rem;padding:.4rem 1.4rem;min-height:3.3rem}
+.opts.ofest .opt{padding-left:.3rem;padding-right:.3rem}      /* das Urteil steht an der Ecke: Der Term darf fast bis an den Rand */
 .leiste:not(.ex){padding:.45rem .6rem .6rem;flex-direction:column;align-items:stretch;gap:.45rem}
 .leiste:not(.ex) .hilfen{flex:none;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .hilfen::-webkit-scrollbar{display:none}
@@ -923,6 +925,8 @@ svg.zieh{touch-action:none}
 .kf b{color:var(--lila)}
 .opts.n3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .kopts .opt{font-size:1.3rem;padding:.4rem 1.7rem;min-height:3.3rem}
+.karte+.karte.kette .kopts{grid-template-columns:minmax(0,1fr)}      /* mit Bild (QF4): Die Karte der Rechnung ist halb so breit, die Antworten stehen untereinander */
+.karte+.karte.kette .kopts .opt{min-height:2.8rem}
 
 /* Formel-Puzzle und Einsetzen */
 .pform,.eform{font-size:1.95rem;margin:.35rem 0;text-align:center;line-height:2.3}
@@ -1119,6 +1123,47 @@ svg.zieh{touch-action:none}
 .ein.binb .feld{min-width:2.7rem;height:2.4rem;vertical-align:middle}
 .ein.binb .umsch button{font-size:1.45rem;padding:.05rem .65rem;min-height:2.3rem;line-height:1}
 .watch .wz i,.gr-z i{font-style:italic}
+/* Fordere mich heraus (Baustein heraus, LF2, 26.11.2026). Das Zeichen: ein Diamant in Akzentpink (Lehrkraft: „Gehen wir auf Pink.“). Leer: weiß, Rand #9AA5B1,
+   Facetten #C3CAD2; gefüllt: Füllung #CC79A7, Rand und Facetten #8A3F6B. Kachel in der Übersicht des Einzeltrainings: blau wie die der Anwendung, nur Titel und
+   Zeichen (1,75 rem). Kopfzeile der Aufgabe: am Platz des Balkens die Reihe der Zeichen, jedes in einem Knopf (2,45 rem, Zeichen 1,7 rem, Rand Akzentblau, Ecken
+   wie .wst); der aktuelle dunkel umrandet mit hellblauem Hof. Nach „Prüfen“ unten rechts „Fertig“ weiß mit blauem Rand neben dem blauen Knopf (wie .wnoch). */
+.dia{display:block;flex:none;width:1.75rem;height:1.75rem;overflow:visible}
+.dia .dgr{fill:#fff;stroke:none}
+.dia .da{fill:none;stroke:#9AA5B1;stroke-width:6;stroke-linejoin:round;stroke-linecap:round}
+.dia .df{fill:none;stroke:#C3CAD2;stroke-width:4;stroke-linejoin:round;stroke-linecap:round}
+.dia .dfuell{fill:#CC79A7;stroke:none}
+.dia.voll .dgr{fill:#CC79A7}
+.dia.voll .da,.dia.voll .df{stroke:#8A3F6B}
+.ka.fmhka{gap:.45rem}
+.fmhz{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.fmhz .mk{margin-left:.4rem}
+.gross.flach.fmhgr b{font-size:2.2rem}
+.fmhreihe .fmhz{grid-column:2/4;gap:.3rem;flex-wrap:nowrap}
+.fmhreihe .dia{width:1.4rem;height:1.4rem}
+.fmhr{flex:1;display:flex;align-items:center;gap:.35rem;min-width:0}
+.fmhk{box-sizing:border-box;flex:none;width:2.45rem;height:2.45rem;padding:0;border:.12rem solid var(--blau);border-radius:.5rem;background:#fff;display:inline-flex;align-items:center;justify-content:center;transition:background-color .15s,border-color .15s,box-shadow .15s}
+.fmhk .dia{width:1.7rem;height:1.7rem}
+.fmhk.akt{border-color:var(--text);box-shadow:0 0 0 .22rem #CFE3F1}
+.fmhk:active{background:#DCEAF5}
+.fmhfertig{background:#fff;color:var(--blau);border:.14rem solid var(--blau);border-radius:.75rem;min-height:3rem;min-width:6.5rem;font-size:1.1rem;font-weight:700;padding:.3rem 1rem;box-shadow:0 .2rem 0 #C9D6E2;line-height:1.15;transition:transform .12s ease-out,box-shadow .12s ease-out,background-color .15s}
+.fmhfertig:active{transform:translateY(.14rem);box-shadow:none}
+.leiste.fmhende .haupt{line-height:1.15}
+@media (hover:hover){
+.fmhk:hover{background:#EAF3F9}
+.fmhfertig:hover{background:#EAF3F9}}
+/* der Moment „Alle geknackt!“: wie die Krone nach der Etappe, mit einem großen gefüllten Diamanten */
+.fmhgross{width:min(38vw,11.5rem);animation:kronepop .7s cubic-bezier(.2,1.5,.4,1)}
+.fmhgross .dia{width:100%;height:auto}
+@media (max-width:760px){
+.kopf.trk .fmhr{order:5;flex-basis:100%}
+.gross.flach.fmhgr b{font-size:1.8rem}
+.reihe.fmhreihe{grid-template-columns:minmax(0,1fr) auto}
+.fmhreihe .fmhz{grid-column:2}
+.fmhreihe .dia{width:1.25rem;height:1.25rem}
+.leiste.fmhende{flex-direction:row;flex-wrap:wrap;align-items:stretch}
+.leiste.fmhende .hilfen{flex:1 1 100%}
+.leiste.fmhende .fmhfertig{flex:0 0 auto;min-width:5.6rem;font-size:1rem}
+.leiste.fmhende .haupt{flex:1 1 0;min-width:0;font-size:1.05rem;padding:.3rem .6rem}}
 /* Eigenes CSS des Trainings; das Bauskript setzt es in das gemeinsame CSS des Trainingsrahmens ein (trainingsrahmen/src/rahmen.css, Zeile „/*@@ EIGEN“). */
 
 /* =====================================================================
@@ -1293,6 +1338,40 @@ svg.zieh{touch-action:none}
 .akku .wlage b{color:var(--text)}
 .akku .rkszene{flex-basis:10.5rem;max-width:11.5rem}
 
+/* ---------- Fordere mich heraus (26.11.2026): Bilder der fünf Herausforderungen; der Bereich selbst steht im Rahmen (rahmen.css, Abschnitt heraus) ---------- */
+.hnb{white-space:nowrap}
+.hpaar{display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap}
+/* 1 Vorzeichen: kleine Skizze ohne Zahlen, Gerade grün, Schnitt mit der y-Achse blau, mit der x-Achse grau, der Punkt P dunkel */
+.hska{stroke:#39424C;stroke-width:1.4}
+.hskp{fill:#39424C}
+.hskg{stroke:var(--gruen);stroke-width:3;stroke-linecap:round}
+.hskb{fill:var(--blau);stroke:#fff;stroke-width:1.5}
+.hskx{fill:#8E99A5;stroke:#fff;stroke-width:1.5}
+.hskpp{fill:var(--text);stroke:#fff;stroke-width:1.2}
+.hskt{font-family:var(--satz);font-size:13px;fill:var(--text)}
+/* 2 Vorsicht, Maßstab!: Achsen mit Größe und Einheit wie beim Blutspende-Graphen des Blatts; die Seiten des Steigungsdreiecks tragen ihre Werte in Orange */
+.hach{font-family:var(--satz);font-size:13px;fill:#39424C}
+.hmt{font-family:var(--satz);font-size:13.5px;fill:var(--orange);paint-order:stroke;stroke:#fff;stroke-width:3.5px;stroke-linejoin:round}
+/* 3 Treffpunkt: die beiden Punkte im Lösungsorange, mit ihren Koordinaten als Schild; das Bild steht nach „Prüfen“ rechts neben den Feldern, am Handy darunter */
+.gpkt.hor{fill:var(--orange)}
+.glg.lor{color:var(--orange)}
+.bild.hnach{animation:rein .35s;width:100%;margin:0 auto}
+.bild.hnach svg{max-height:calc(100dvh - 17.6rem)}
+.karte.rechnung>.rueck:first-child{margin:0 0 .7rem}
+.bild.hnach .gt{font-size:15px}
+.bild.hnach .gt.k{font-size:16px}
+.bild.hnach .glg{font-size:.82rem;transition-property:none}      /* fünf Schilder in einem kleinen Bild: etwas kleiner. Ohne Übergang: Mit „Bewegung reduzieren“ glitten sie sonst kurz aus der Ecke an ihren Platz */
+@media (min-width:761px){
+.buehne>.karte>.bild:has(>.hmass){max-width:min(19.4rem,calc(100dvh - 21.4rem))!important}      /* über dem Graphen bleibt Platz für zwei Denkanstöße, ohne dass die Bühne rollt */
+.karte.hneben{display:grid;grid-template-columns:minmax(0,1fr) minmax(14rem,1.3fr);column-gap:.9rem;align-items:start;align-content:start}
+.karte.hneben>*{grid-column:1/-1}
+.karte.hneben>.ein{grid-column:1}
+.karte.hneben>.bild.hnach{grid-column:2}}
+@media (max-width:760px){
+.graph.hmass{max-height:16.5rem}
+.bild.hnach{max-width:17rem}
+.bild.hnach svg{max-height:none}
+.bild.hnach .glg{font-size:.95rem}}
 
 /* Gerade zeichnen: die eigene Gerade ist grau, bis „Prüfen“ sie grün oder rot färbt; kommt die Lösung, verblasst das Eigene, und die Lösung erscheint danach */
 .gk.lmein{stroke:#5B6672;stroke-width:2.6}
@@ -1304,6 +1383,18 @@ svg.zieh{touch-action:none}
 .sp.zw,.sp.loesg{fill:var(--gruen)}
 .zbild{max-width:min(22rem,calc(100dvh - 19.5rem))!important;margin:0 auto;width:100%}
 .zbild svg{touch-action:manipulation}
+/* Zeichnen und Eintippen in einer Aufgabe (Form zeichnein, LF2, Fordere mich heraus): der Punkt P dunkel mit seinem Namen; eigene Punkte neutral grau, nach
+   „Prüfen“ grün oder rot; die gegebene Gerade erscheint erst mit der Lösung, gestrichelt hellblau mit ihrem Namen. Über dem Bild stehen Term und Auftrag: Es ist
+   deshalb etwas kleiner als bei „Gerade zeichnen“. */
+.zpp{fill:var(--text);stroke:#fff;stroke-width:2;pointer-events:none}
+.zpn{font-family:var(--satz);font-size:16px;fill:var(--text);paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.sp.zfrei{fill:var(--dgrau)}
+.sp.zfrei.zok{fill:var(--gruen)}
+.sp.zfrei.falsch{fill:var(--rot)}
+.gk.zgeg{stroke:#8DB9D9;stroke-width:2.2;stroke-dasharray:7 5}
+.zgn{font-family:var(--satz);font-size:16px;fill:#5E9CC6;paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round}
+@media (min-width:761px){
+.buehne>.karte>.bild.zebild{max-width:min(22rem,calc(100dvh - 22.8rem))!important}}
 
 /* ---------- Urteil an jeder Eingabe nach „Prüfen“ (Lehrkraft 22.11.2026) ----------
    Grün mit ✓ oder rot mit ✗ an der Ecke, Rand durchgezogen, helle Füllung: Das Zeichen trägt die Aussage mit, nicht nur die Farbe.
@@ -1534,6 +1625,31 @@ svg.zieh{touch-action:none}
    (Zeilen nach dem Fehler), Umformung wählen, Formel-Puzzle, Einsetzen, Zuordnen, Kärtchen legen, Weg wählen. Nicht: Zeilen einer Rechnung, Teile eines Satzes
    mit Umschaltern, Graphen. */
 .uebrig{opacity:.4;box-shadow:none}
+/* Umschalter in Kästen (Form schalter, LF2, Fordere mich heraus „Vorzeichen“): je Kasten ein Text, daneben nach „Prüfen“ sein Bild, darunter die Umschalter mit
+   zwei oder drei Stellungen. Urteil wie an jedem Umschalter (Zeichen an der Ecke der gewählten Seite, Rand der Gruppe grün oder rot); die richtige, nicht gewählte
+   Seite grün gestrichelt, so dick wie der Rand des Urteils (.12rem), wächst mit (Lehrkraft 24.11.2026). */
+.schk{display:flex;flex-direction:column;gap:.6rem;margin-top:.1rem}
+.schka{border:1.5px solid var(--rand);border-radius:.7rem;background:#FAFCFE;padding:.45rem .8rem .6rem;display:flex;flex-direction:column;gap:.3rem}
+.schtx{display:flex;align-items:center;gap:.8rem;min-height:2.8rem}
+.schtx p{margin:0;flex:1;min-width:0;font-size:1.1rem;line-height:1.3}
+.schbild{flex:none;width:4.4rem;animation:rein .35s}
+.rechnung.schr>.rueck{margin:0 0 .7rem}
+.schbild svg{display:block;width:100%;height:auto}
+.schz{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.2rem;padding-top:.4rem}
+.schu{display:inline-flex;align-items:center;gap:.5rem;font-size:1.35rem}
+.schu>span:first-child{min-width:1.05em}
+.schu .umsch button{padding:.45rem .6rem;min-width:2.75rem;white-space:nowrap}
+.schu .umsch button+button{border-left:.06rem solid #C9D6E2}
+.schu .umsch button.fehlt,.schu .umsch:not(.wegw).falsch button.fehlt{border:.12rem dashed var(--gruen);border-radius:.34rem;padding:calc(.45rem - .12rem) calc(.6rem - .12rem);color:var(--text);background:#fff}
+@media (max-width:760px){
+.rechnung.schr:not(:has(.zeilen>*)){display:none}
+.schtx p{font-size:1.05rem}
+.schbild{width:4.6rem}
+.schz{gap:.75rem 1rem}
+.schu{flex:1 1 100%}
+.schu .umsch{flex:1;display:flex}
+.schu .umsch button{flex:1 1 0;padding:.45rem .3rem;min-width:0}
+.schu .umsch button.fehlt,.schu .umsch:not(.wegw).falsch button.fehlt{padding:calc(.45rem - .12rem) calc(.3rem - .12rem)}}
 
 </style></head>
 <body><div id="app"></div>
@@ -1586,7 +1702,7 @@ function poly(a,b,c){            // ax² + bx + c ohne Klammern; Glieder mit 0 e
    Variablen kursiv, in ihren Farben, so groß wie die Rechenzeilen daneben („Mitte: x = −2“, „Hochpunkt H(−2 | 8)“). mtext() setzt die
    Mathematik eines Satzes in <span class="mtx">; die Größe kommt aus --mg des Zusammenhangs (rahmen.css). Mathematik ist: Zahlen, Variablen
    (<i>, ein einzelner Kleinbuchstabe als Wort), Hochzahlen, Brüche, Wurzeln und die Rechenzeichen zwischen ihnen, Einheiten direkt hinter
-   einer Zahl („15 m“, „50 %“). Satzzeichen am Ende („bei 1.“, „b = 1:“) bleiben in Indie Flower. Farbspannen und andere Spannen sind
+   einer Zahl („15 m“, „50 %“, „400 €“). Satzzeichen am Ende („bei 1.“, „b = 1:“) bleiben in Indie Flower. Farbspannen und andere Spannen sind
    durchlässig: Läuft eine Rechnung über ihre Grenze, wird die Textschrift dort geschlossen und dahinter wieder geöffnet.
    Ein Bindestrich hinter einer Variablen („y‑Achse“, „p,q‑Formel“) wird geschützt (U+2011), damit dort nicht getrennt wird. */
 const MTX_EINHEIT=/^(km\/h|m²|m³|cm²|cm|mm|km|min|ml|GB|MB|kg|g|m|s|h|l|%|°C|°|€)(?![A-Za-zÄÖÜäöüß0-9])/;
@@ -1613,7 +1729,7 @@ function mtext(h){
   const nb=(k,d)=>{const p=echt.indexOf(k)+d;return p>=0&&p<echt.length?it[echt[p]]:null;};
   // 2. Einheiten hinter Zahlen, einzelne Kleinbuchstaben als Variablen, geschützte Bindestriche hinter Variablen
   for(let k=0;k<it.length;k++){const x=it[k];if(x.t==='T')continue;
-    if(x.t==='W'&&(x.wort||x.s==='%')){
+    if(x.t==='W'&&(x.wort||x.s==='%'||x.s==='€')){      /* € hinter einer Zahl ist eine Einheit wie m oder % („400 €“; Lehrkraft 26.11.2026) */
       const v1=nb(k,-1),v2=nb(k,-2),p=echt.indexOf(k),rest=echt.slice(p).map(j=>it[j].s).join(''),em=rest.match(MTX_EINHEIT);
       if(em&&(v1&&v1.t==='N'||v1&&v1.t==='S'&&v2&&v2.t==='N')){let s=em[0];for(let q=p;s.length&&q<echt.length;q++){const y=it[echt[q]];if(s.indexOf(y.s)!==0)break;y.t='U';s=s.slice(y.s.length);}continue;}
       const n1=nb(k,1);
@@ -1708,10 +1824,10 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
 
 /* =====================================================================
    LF2-Training „Mehr als nur steil“: Einstellung
-   Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung.
+   Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung, Fordere mich heraus.
    Gebaut wird mit build.py auf dem Trainingsrahmen (trainingsrahmen/ im Wurzelordner des Backups).
    ===================================================================== */
-const VERSION='v9.3';
+const VERSION='v10';
 const EINHEIT='mehr-als-nur-steil';      // Ordner der Themeneinheit auf happymatty.de: Schlüssel des Lernstands (happymatty:mehr-als-nur-steil:lernstand)
 const TITEL='Mehr als nur steil',KURZ='LF2';
 const FACH='Mathematik',THEMA='Lineare Funktionen',THEMA_URL='/lineare-funktionen/',TEILTHEMA='Steigung und y-Achsenabschnitt'; // Kopfzeile der Startseite, wie _einheit.json
@@ -1728,6 +1844,9 @@ const TYPEN=[
    zum ersten Mal nach Etappe 2; solange nicht alle drei Schritte sitzen, zwei Etappen später wieder, mit neuer Rakete (wie das Werkstor in QF1) */
 const WERKSTOR={id:'akku',titel:'Der Akku'};
 const ANW=true;
+/* Fordere mich heraus (Lehrkraft 26.11.2026): der Bereich für die Starken, eine Einstellung des Rahmens (Baustein heraus). Fünf Herausforderungen in dieser
+   Reihenfolge; ihre Aufgaben stehen in c_heraus.js (HGEN). */
+const HERAUS=[{id:'vz',titel:'Vorzeichen'},{id:'mass',titel:'Vorsicht, Maßstab!'},{id:'treff',titel:'Treffpunkt'},{id:'par',titel:'Parallele durch <i>P</i>'},{id:'doppelt',titel:'Doppelt so teuer?'}];
 
 /* =====================================================================
    Trainingsrahmen: Zustand, Ablauf, Wertung, Knöpfe, Koordinaten
@@ -1736,7 +1855,14 @@ const ANW=true;
 const TYP={};
 TYPEN.forEach(t=>TYP[t.id]=t);
 const S={ansicht:'start',modus:null,etappe:1,pkt:0,pos:0,letzter:null,kronen:0,filter:{q:true,b:true,w:true},ton:false,geuebt:false,finale:false,typ:{},einzel:null,zeiten:[],offen:{}};
-function neuerStand(){TYPEN.forEach(t=>S.typ[t.id]={top:0,streak:0,sl:-1,halb:false,falsch:0,zuletzt:-1,faellig:null});S.werk={ok:[false,false,false],faellig:3,lauf:{},n:0};}
+/* Mehrere Anwendungen (QF5, 25.11.2026): Nennt die Einstellung FAELLE (eine Liste {id,titel}), hat das Training mehrere Anwendungen, die „Fälle“, jede mit eigenem Stand
+   in S.werke; S.werk und WERKSTOR sind dann der Fall, der gerade läuft (fallWahl im Baustein faelle). Ohne FAELLE bleibt es bei der einen Anwendung WERKSTOR. */
+const FALLE=typeof FAELLE!=='undefined'?FAELLE:null;
+/* Fordere mich heraus (LF2, 26.11.2026): Nennt die Einstellung HERAUS (eine Liste {id,titel}, drei bis fünf), hat das Training den Bereich „Fordere mich heraus“
+   (Baustein heraus): eine Kachel in der Übersicht des Einzeltrainings, eigene Aufgaben, je geknackter Herausforderung ein gefülltes Zeichen. Sein Stand steht in
+   S.heraus; auf Bänder, Etappen, Punkte, Kronen und Finale wirkt er nicht. Ohne HERAUS bleibt alles, wie es ist. */
+const HERAUSF=typeof HERAUS!=='undefined'?HERAUS:null;
+function neuerStand(){TYPEN.forEach(t=>S.typ[t.id]={top:0,streak:0,sl:-1,halb:false,falsch:0,zuletzt:-1,faellig:null});S.werk={ok:[false,false,false],faellig:3,lauf:{},n:0};if(FALLE)fallStand();if(HERAUSF)herausStand();}
 neuerStand();
 const A={};                                        // die aktuelle Aufgabe
 let aufgabeNr=0;
@@ -1745,11 +1871,11 @@ const band=t=>{const st=S.typ[t.id],n=t.level.length;return st.top>=n?1:(st.top+
 const voll=t=>S.typ[t.id].top>=t.level.length;
 const sechsVoll=()=>TYPEN.filter(t=>t.aktiv).every(voll);
 const werkBand=()=>S.werk.ok.filter(Boolean).length/3, werkVoll=()=>S.werk.ok.every(Boolean);
-const alleVoll=()=>sechsVoll()&&(!ANW||werkVoll());
+const alleVoll=()=>sechsVoll()&&(!ANW||(FALLE?FALLE.every(fallVoll):werkVoll()));
 /* Ist im Gesamttraining als Nächstes die Anwendung dran? Am Anfang einer Etappe, wenn es fällig ist; sofort, wenn sonst alles sitzt; und solange ein Durchgang offen ist.
    Es braucht den Stift: Ist Level 3 abgeschaltet, wartet es */
-function werkDran(){return ANW&&!werkVoll()&&S.filter.w&&(!!S.werk.lauf.gesamt||sechsVoll()||(S.pkt===0&&S.etappe>=S.werk.faellig));}
-const etappeText=()=>'Gesamttraining. Etappe '+S.etappe+(werkDran()?': '+WERKSTOR.titel+'.':'.');
+function werkDran(){if(FALLE)return fallDran()!==null;return ANW&&!werkVoll()&&S.filter.w&&(!!S.werk.lauf.gesamt||sechsVoll()||(S.pkt===0&&S.etappe>=S.werk.faellig));}
+const etappeText=()=>FALLE&&werkDran()?'Gesamttraining. '+fallDran().titel+'.':'Gesamttraining. Etappe '+S.etappe+(werkDran()?': '+WERKSTOR.titel+'.':'.');
 /* Level, die es im Aufgabentyp nicht gibt, sind im Einzeltraining ausgegraut (Lehrkraft 22.11.2026). Kommt dort keins der eingeschalteten Level vor,
    gelten alle Level des Typs: Kein Einzeltraining bleibt ohne Aufgaben. Im Gesamttraining gilt die Einstellung, wie sie ist. */
 const lvFrei=t=>S.modus==='einzel'&&!t.level.some(k=>S.filter[k]);
@@ -1879,6 +2005,138 @@ function fenster(pts,o){o=o||{};let xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]).conc
   const ex=Math.min(34,(o.breite||330)/(x1-x0)),ey=Math.min(ex,(o.hoehe||330)/(y1-y0));
   return {X:[x0,x1],Y:[y0,y1],o:{ex,ey,sy,lx:(x1-x0)>12?4:2,ly:sy*2,sx:1}};}
 
+/* ---------- Fordere mich heraus (Lehrkraft 26.11.2026) ----------
+   Ein eigener Bereich für die Starken, freiwillig und von Anfang an offen: eine breite Kachel unten in der Übersicht des Einzeltrainings, darin je
+   Herausforderung ein Diamant (gefüllt = geknackt). Ein Tipp führt ohne eigene Übersicht in die erste offene Herausforderung. In der Kopfzeile steht am Platz des
+   Etappen-Balkens die Reihe der Zeichen, jedes ein Knopf: Ein Tipp wechselt jederzeit, auch zu einer geknackten; eine angefangene Aufgabe bleibt stehen, bis sie
+   geprüft ist (S.heraus.offen, wie S.offen im Rahmen).
+   Was zählt: ein Versuch wie überall, „Prüfen“ zeigt Urteil und Lösung. Geknackt ist eine Herausforderung, wenn beim Prüfen alles stimmt und vorher nicht „Lösung“
+   getippt wurde; ihr Zeichen füllt sich und bleibt gefüllt, auch wenn ein späterer Versuch misslingt. Hilfen: Denkanstoß (kostet nichts), Lösung, Erklärung
+   (öffnet die Übersicht aller Erklärungen als Ebene); kein „Nächster Schritt“. Der Bereich wirkt nicht auf Erfolgsbänder, Etappen, Punkte, Kronen, „empfohlen“
+   und Finale; es gibt keine Meldung unten rechts und kein „‹ Letzte Aufgabe“.
+   Stand in S.heraus: ok (Kennung → geknackt), offen (Kennung → angefangene Aufgabe), letzte (Kennung → sig der letzten Aufgabe), id (die laufende),
+   vonGesamt (aus einer Aufgabe des Gesamttrainings über „Stand“ geöffnet: Der Rückweg führt dann dorthin zurück). */
+const HERAUS_ADR='fordere-mich-heraus',HERAUS_ZAHL=['','Eine','Zwei','Drei','Vier','Fünf','Sechs'];
+function herausStand(){S.heraus={ok:{},offen:{},letzte:{},id:null,vonGesamt:false};}
+const herausOk=h=>!!S.heraus.ok[h.id];
+const herausAlle=()=>HERAUSF.every(herausOk);
+const herausName=h=>h.titel.replace(/<[^>]+>/g,'');
+const herausSig=a=>a.sig||[a.frage,a.term,a.ein].join('|');
+
+/* Das Zeichen: ein Diamant in Akzentpink (Lehrkraft 26.11.2026: „Gehen wir auf Pink.“). Leer: weiß, Rand #9AA5B1, Facetten #C3CAD2; gefüllt: Füllung #CC79A7,
+   Rand und Facetten #8A3F6B (rahmen.css, Abschnitt heraus). Drei Pfade: Grund (dgr), Rand (da), Facetten (df); beim Füllen steigt zwischen Grund und Rand die Farbe. */
+const DIA_A='M30 14 L70 14 L92 38 L50 92 L8 38 Z',DIA_F='M8 38 L92 38 M30 14 L38 38 L50 92 M70 14 L62 38 L50 92 M50 14 L38 38 M50 14 L62 38';
+const diamant=voll=>'<svg class="dia'+(voll?' voll':'')+'" viewBox="0 0 100 100" aria-hidden="true"><g><path class="dgr" d="'+DIA_A+'"/><path class="da" d="'+DIA_A+'"/><path class="df" d="'+DIA_F+'"/></g></svg>';
+const herausZeichen=()=>HERAUSF.map(h=>diamant(herausOk(h))).join('');
+
+/* Übersicht des Einzeltrainings: die Kachel ganz unten, blau wie die der Anwendung, ohne Erfolgsband: nur der Titel und die Zeichen; sie zeigen nur den Stand.
+   Sind alle gefüllt, steht „✓ alle geknackt“ dabei (wie „✓ sitzt“). Nach dem Finale heißt der große flache Knopf der Seite „Alles sitzt!“ so wie der Bereich
+   und führt hinein, solange nicht alle geknackt sind (herausKnopf). Im Fenster „Stand“ eine Zeile mit den Zeichen (herausReihe). */
+function herausKachel(){const n=HERAUSF.filter(herausOk).length;
+  return '<button class="ka breit fmhka" data-akt="heraus" aria-label="Fordere mich heraus: '+n+' von '+HERAUSF.length+' geknackt"><span class="kt"><b>Fordere mich heraus</b></span>'+
+    '<span class="fmhz">'+herausZeichen()+(herausAlle()?'<span class="mk ok">✓ alle geknackt</span>':'')+'</span></button>';}
+const herausKnopf=()=>'<button class="gross flach fmhgr" data-akt="heraus"><b>Fordere mich heraus</b><small>'+(HERAUS_ZAHL[HERAUSF.length]||HERAUSF.length)+' Herausforderungen.</small></button>';
+const herausReihe=()=>'<button class="reihe fmhreihe" data-heraus="1" aria-label="Fordere mich heraus: '+HERAUSF.filter(herausOk).length+' von '+HERAUSF.length+' geknackt"><b>Fordere mich heraus</b><span class="fmhz">'+herausZeichen()+'</span></button>';
+
+/* Aufgabenbildschirm: Kopfzeile ohne „Automatik ▼“, am Platz des Balkens die Reihe der Zeichen; der Rest wie trainingRahmen() */
+function herausRahmen(){S.ansicht='aufgabe';adresse(HERAUS_ADR);
+  setApp('<header class="kopf trk"><button class="kn" data-akt="zurueck">‹ '+(S.heraus.vonGesamt?'Gesamttraining':'Einzeltraining')+'</button>'+
+    '<div class="fmhr" role="group" aria-label="Herausforderungen"></div>'+tonKnopf()+
+    '<button class="kn stand" data-akt="stand"><span class="si"><i></i><i></i><i></i></span><span class="wort">Stand</span></button></header>'+
+    '<main class="buehne"></main><footer class="leiste"><div class="hilfen"></div><button class="haupt" data-akt="haupt" disabled>Prüfen</button></footer>','tr');}
+function herausKopf(){const r=$('.fmhr');if(!r)return;
+  r.innerHTML=HERAUSF.map(h=>{const ok=herausOk(h),akt=h.id===S.heraus.id;
+    return '<button type="button" class="fmhk'+(akt?' akt':'')+'" data-akt="herausnr" data-h="'+h.id+'" aria-label="'+herausName(h)+(ok?', geknackt':', offen')+'"'+(akt?' aria-current="true"':'')+'>'+diamant(ok)+'</button>';}).join('');}
+/* Über der Aufgabe: „Fordere mich heraus · ‹Name›“, der Bereich grau, der Name fett dunkelgrau; beides nicht antippbar, also nicht blau */
+const herausWas=()=>'<p class="was"><span>Fordere mich heraus · <b>'+A.heraus.titel+'</b></span></p>';
+const herausHilfen=()=>{const a=A.auf,n=(a.schritte||[]).length;
+  return (a.denk?'<button class="hk'+(A.denk?' an':'')+'" data-akt="denk"'+(A.fertig?' disabled':'')+'>Denkanstoß</button>':'')+(n?'<button class="hk" data-akt="loesung"'+(A.fertig?' disabled':'')+'>Lösung</button>':'')+
+    '<button class="hk erkl" data-akt="herauserkl">Erklärung</button>';};
+
+/* Hinein: von der Kachel, vom Knopf nach dem Finale und über die Adresse in die erste offene Herausforderung (sind alle geknackt: in die erste), aus dem Fenster
+   „Stand“ ebenso; von dort aus einer Aufgabe des Gesamttrainings heraus mit dem Rückweg „‹ Gesamttraining“ */
+function herausStart(id,vonGesamt){clearTimeout(A.auto);S.modus='heraus';S.heraus.vonGesamt=!!vonGesamt;
+  const h=HERAUSF.find(x=>x.id===id)||HERAUSF.find(x=>!herausOk(x))||HERAUSF[0];herausRahmen();herausAufgabe(h.id);}
+/* Eine Herausforderung zeigen: die angefangene Aufgabe, wenn es eine gibt, sonst eine neue mit neuen Zahlen, nie dieselbe wie beim letzten Mal */
+function herausAufgabe(id){const H=S.heraus,h=HERAUSF.find(x=>x.id===id)||HERAUSF[0];H.id=h.id;
+  let auf=H.offen[h.id];
+  if(!auf){let n=0;do{auf=HGEN[h.id]();}while(herausSig(auf)===H.letzte[h.id]&&++n<40);H.letzte[h.id]=herausSig(auf);H.offen[h.id]=auf;}
+  Object.keys(A).forEach(k=>delete A[k]);
+  Object.assign(A,{nr:++aufgabeNr,heraus:h,auf,form:auf.form,start:performance.now(),gewertet:false,fertig:false,hilfe:false,gezeigt:0,denk:false,versuche:0});
+  const f=$('.leiste');if(f){f.classList.remove('fmhende');$$('.fmhfertig',f).forEach(x=>x.remove());}
+  herausKopf();const m=$('.buehne');m.scrollTop=0;m.dataset.nr=A.nr;
+  FORM[auf.form](auf,m);zeigeHilfen();}
+/* Ein Tipp auf ein Zeichen: wechseln. Auf das laufende: nichts, solange die Aufgabe offen ist; ist sie geprüft, kommt sie mit neuen Zahlen */
+function herausWechsel(id){if(id===S.heraus.id&&!A.gewertet)return;if(herausWarte(()=>herausAufgabe(id)))return;herausAufgabe(id);}
+
+/* Wertung (statt abgeben()): Urteil und Lösung wie überall, aber ohne Band, Punkte und Meldung. Unten rechts stehen danach zwei Knöpfe: links weiß „Fertig“,
+   rechts blau der nächste Schritt: geknackt und noch andere offen: „Nächste Herausforderung“; nicht geknackt: „Noch einmal, neue Zahlen“; geknackt und keine
+   mehr offen: nur „Fertig“, blau. Enter drückt den blauen Knopf. */
+function herausAbgeben(ok,hinweis,art){if(A.gewertet)return;
+  const H=S.heraus,id=H.id,sah=art==='loesung',knackt=!!ok&&!sah&&!A.hilfe,neu=knackt&&!H.ok[id];
+  A.gewertet=true;A.fertig=true;A.versuche++;delete H.offen[id];if(knackt)H.ok[id]=true;
+  if(sah)zeigeRueck('neutral','Lösung angesehen.');else if(ok)zeigeRueck('gut','Richtig.',A.auf.nachher||'');else zeigeRueck('schlecht',hinweis||'Nicht richtig.');
+  /* Steht die Lösung da, klappt der Denkanstoß zu, und sein Knopf ist aus wie „Lösung“: Er hat seinen Dienst getan, und Hinweis, Lösung, Bild und zwei
+     Denkanstöße haben am iPad nicht zusammen Platz (die Bühne rollte) */
+  A.denk=0;{const d=$('.buehne .denk');if(d){d.hidden=true;d.innerHTML='';}}
+  if(A.sperre)A.sperre();
+  if(A.auf.schritte){A.gezeigt=A.auf.schritte.length;zeigeSchritte();}
+  const gl=A.gl||A.auf.gl;if(gl)zeigeGl(typeof gl==='function'?gl():gl);
+  const f=$('.leiste'),hb=$('.leiste .haupt');
+  A.hnach=!knackt?'nochmal':herausAlle()?'fertig':'naechste';A.haupt='weiter';
+  if(f&&hb){f.classList.add('fmhende');if(A.hnach!=='fertig'&&!$('.fmhfertig',f))hb.insertAdjacentHTML('beforebegin','<button type="button" class="fmhfertig" data-akt="herausfertig">Fertig</button>');
+    hb.hidden=false;hb.disabled=false;hb.textContent=A.hnach==='nochmal'?'Noch einmal, neue Zahlen':A.hnach==='naechste'?'Nächste Herausforderung':'Fertig';}
+  zeigeHilfen();
+  if(neu){herausFuell(id);herausKlang(false);if(herausAlle())herausBald();}
+  else if(ok&&!sah)Sound.richtig();}
+function herausWeiter(){const H=S.heraus,i=HERAUSF.findIndex(h=>h.id===H.id);
+  if(A.hnach==='nochmal')return herausAufgabe(H.id);
+  if(A.hnach==='naechste'){for(let k=1;k<=HERAUSF.length;k++){const h=HERAUSF[(i+k)%HERAUSF.length];if(!herausOk(h))return herausAufgabe(h.id);}}
+  herausFertig();}
+/* „Fertig“ und der Zurück-Knopf: zur Übersicht des Einzeltrainings, oder zurück zur Aufgabe, die im Gesamttraining stehen geblieben ist */
+function herausFertig(){if(herausWarte(herausFertig))return;if(S.heraus.vonGesamt)startGesamt();else vEinzel();}
+
+/* Belohnung. Beim Knacken füllt sich das Zeichen in der Kopfzeile: Die Farbe steigt in 0,45 s von der Spitze unten nach oben, dann pulst es einmal, klein, groß,
+   klein, als Transformation um die eigene Mitte (im SVG gerechnet, nicht über transform-origin: Safari). Dazu der eigene Klang, im selben Moment. Mit „Bewegung
+   reduzieren“ steht das Zeichen sofort gefüllt da. */
+function herausFuell(id){const b=$('.fmhk[data-h="'+id+'"]'),sv=b&&$('.dia',b);if(!sv)return;b.setAttribute('aria-label',b.getAttribute('aria-label').replace(/, offen$/,', geknackt'));
+  if(RUHIG){sv.classList.add('voll');return;}
+  const NS='http://www.w3.org/2000/svg',g=$('g',sv),cid='fmhclip'+(++gid),cp=document.createElementNS(NS,'clipPath'),r=document.createElementNS(NS,'rect'),fl=document.createElementNS(NS,'path');
+  cp.setAttribute('id',cid);r.setAttribute('x','0');r.setAttribute('width','100');r.setAttribute('y','96');r.setAttribute('height','0');cp.appendChild(r);
+  fl.setAttribute('class','dfuell');fl.setAttribute('d',DIA_A);fl.setAttribute('clip-path','url(#'+cid+')');
+  sv.insertBefore(cp,g);g.insertBefore(fl,$('.da',g));
+  tween(450,p=>{const y=96-86*p;r.setAttribute('y',y.toFixed(1));r.setAttribute('height',(96-y).toFixed(1));},easeInOut).onDone=()=>{
+    sv.classList.add('voll');cp.remove();fl.remove();
+    tween(550,p=>g.setAttribute('transform','translate(50 53) scale('+(1+.3*Math.sin(Math.PI*p)).toFixed(3)+') translate(-50 -53)'),p=>p).onDone=()=>g.removeAttribute('transform');};}
+/* Sind alle geknackt: ein kurzer Moment wie bei der Krone, über die ganze Seite, zwei Sekunden oder bis zum Tipp, Enter oder Leertaste; kein Feuerwerk. Er kommt,
+   wenn das letzte Zeichen gefüllt ist; wer vorher „Fertig“ oder ein Zeichen tippt, sieht ihn davor (herausWarte). Danach steht die Aufgabe mit ihrer Lösung wieder da. */
+let herausTimer=0;
+function herausBald(){clearTimeout(herausTimer);
+  const los=()=>{herausTimer=0;if(S.modus!=='heraus'||S.ansicht!=='aufgabe'||!$('.fmhr'))return;if($('.ov')||$('.ebene')||$('.menue')){herausTimer=setTimeout(los,500);return;}herausMoment();};
+  herausTimer=setTimeout(los,RUHIG?250:1150);}
+function herausWarte(danach){if(!herausTimer)return false;clearTimeout(herausTimer);herausTimer=0;herausMoment(danach);return true;}
+function herausMoment(danach){
+  const ov=el('<div class="ov krone-ov fmhmoment" role="dialog" aria-label="Alle geknackt"><div class="fmhgross">'+diamant(true)+'</div><h2>Alle geknackt!</h2></div>');
+  document.body.appendChild(ov);herausKlang(true);let zu=false;
+  const ende=()=>{if(zu)return;zu=true;clearTimeout(t);ov.remove();if(danach)danach();};
+  const t=setTimeout(ende,2000);ov.addEventListener('click',ende);ov._zu=ende;}
+
+/* Der eigene Klang des Bereichs, „Glas“ (Lehrkraft 26.11.2026, aus drei Fassungen gewählt: „A“; alle drei zum Anhören: planung/klang.js im Quellenordner des
+   LF2-Trainings): beim Knacken zwei gläserne Töne und ein Funkeln, beim Moment „Alle geknackt!“ fünf Töne aufwärts und ein Akkord, der ausklingt. Er nutzt nur
+   Sound.note(): Der Klang folgt dem Ton-Knopf (am Anfang aus). Abgrenzung: „richtig“ sind zwei kurze Sinustöne, „Etappe“ ein Arpeggio mit Akkord; der Diamant
+   klingt höher, gläsern und länger. */
+const HGLAS=[[1,1],[2.76,.3],[5.4,.12]];      /* unharmonische Teiltöne: klingt nach Glas, nicht nach Marimba */
+function herausKlang(alle){const t=Sound.now();
+  if(!alle){Sound.note(1568,t,0.9,0.05,HGLAS);Sound.note(2093,t+0.11,1.1,0.045,HGLAS);Sound.note(3136,t+0.24,0.5,0.018,[[1,1]]);return;}
+  [1047,1319,1568,2093,2637].forEach((f,i)=>Sound.note(f,t+i*0.13,0.9,0.045,HGLAS));
+  [1047,1568,2093,2637].forEach(f=>Sound.note(f,t+0.8,2.0,0.028,[[1,1],[2.76,.2]]));Sound.note(3136,t+1.05,0.8,0.016,[[1,1]]);}
+
+/* Lernstand: Ist der Schalter an, merkt sich das Training auch, welche Herausforderungen geknackt sind (ihre Kennungen), sonst nichts aus dem Bereich. Ein alter
+   Eintrag ohne dieses Feld bleibt gültig; unbekannte Kennungen fallen weg. */
+const herausDaten=()=>HERAUSF.filter(herausOk).map(h=>h.id);
+const herausGueltig=d=>Array.isArray(d)&&d.length<=40&&d.every(x=>typeof x==='string'&&x.length<=40);
+function herausUebernimm(d){HERAUSF.forEach(h=>{if(d.includes(h.id))S.heraus.ok[h.id]=true;});}
+
 /* =====================================================================
    Aufgaben LF2 „Mehr als nur steil“: m und b erkennen · Gerade zeichnen · Gleichung ablesen · Waagerecht und senkrecht · Punktprobe · Parallel
    Farbcode wie auf dem Blatt: m und das Steigungsdreieck orange, b und der Punkt (0 | b) blau, die Gerade grün, die senkrechte Gerade rot.
@@ -2005,7 +2263,7 @@ const GEN={
         if(art==='eins')add(stg(0,1),b,'Vor '+X+' steht '+(s.z<0?'−1':'1')+': '+(s.z<0?'−':'')+X+' = '+(s.z<0?'−1':'1')+' · '+X+'. Also '+CM(V('m')+' = '+zahl(s.z))+'.');
         add(stg(-s.z,s.n),-b,'Beide Vorzeichen prüfen: '+mbText(s,b,dz)+'.');}
       const opts=[K[0]].concat(shuffle(K.slice(1)).slice(0,3));
-      return {form:'wahl',frage:'Wie groß sind '+ML+' und '+BL+'?',term:T,erkl:'info1',denk:DENK.mb,opts:shuffle(opts)};},
+      return {form:'wahl',optFest:true,frage:'Wie groß sind '+ML+' und '+BL+'?',term:T,erkl:'info1',denk:DENK.mb,opts:shuffle(opts)};},
     stapel(){const art=pick(['s','f','f','w','rev']);let s,b,o={};
       if(art==='w'){s=stg(0,1);b=zufB(-5,5,true);}
       else if(art==='rev'){s=pick(STG_ALLE);b=zufB(1,6,false);o.rev=true;}
@@ -2056,7 +2314,7 @@ const GEN={
       add(s,-b,BL+' liest du an der y-Achse ab: Die Gerade schneidet sie bei '+zahl(b)+'.');
       if(s.n===1&&Math.abs(b)<=5)add(stg(b,1),s.z,'Vertauscht: '+BL+' ist der Schnittpunkt mit der y-Achse, '+ML+' die Steigung.');
       add(stg(-s.z,s.n),-b,'Erst '+BL+' an der y-Achse: '+zahl(b)+'. Dann '+ML+': Die Gerade '+(s.z>0?'steigt.':'fällt.'));
-      return {form:'wahl',bild,frage:'Welche Gleichung gehört zur Geraden?',erkl:'info2a',denk:DENK.ablesen,gl:()=>glGerade(fn(nm,term(s,b)),{m:s.w,b}),opts:shuffle([K[0]].concat(shuffle(K.slice(1)).slice(0,3)))};},
+      return {form:'wahl',bild,optFest:true,frage:'Welche Gleichung gehört zur Geraden?',erkl:'info2a',denk:DENK.ablesen,gl:()=>glGerade(fn(nm,term(s,b)),{m:s.w,b}),opts:shuffle([K[0]].concat(shuffle(K.slice(1)).slice(0,3)))};},
     w(){const {s,b}=this.fall(true),nm='f',bild=geradeSVG([{m:s.w,b,name:nm}]);
       const sch=s.z===0?[zl(CB(V('b')+' = '+zahl(b))+': Die Gerade schneidet die y-Achse bei '+zahl(b)+'.',null,true),zl('Waagerecht: weder hoch noch runter, '+CM(V('m')+' = 0')+'.',null,true),zl(fn(nm,zahl(b)))]
         :[zl(CB(V('b')+' = '+zahl(b))+': Die Gerade schneidet die y-Achse bei '+zahl(b)+'.',null,true),zl('Steigungsdreieck von '+P_(0,b)+' nach '+P_(s.n,b+s.z)+': '+dreieck(s)+'.',null,true),
@@ -2205,6 +2463,263 @@ function zeichenHinweis(s,b,pts){const [p,q]=pts,auf=t=>gleich(t.y,s.w*t.x+b);
   return 'Starte beim Punkt '+P_(0,b)+' auf der y-Achse.'+weiter;}
 
 /* =====================================================================
+   Fordere mich heraus (LF2, Lehrkraft 26.11.2026): fünf Herausforderungen für die Starken, jede verbindet zwei Aufgabentypen des Trainings
+   1 Vorzeichen · 2 Vorsicht, Maßstab! · 3 Treffpunkt · 4 Parallele durch P · 5 Doppelt so teuer?
+   Der Bereich selbst (Kachel, Zeichen, Wertung, Knöpfe) steht im Rahmen: trainingsrahmen/src/bausteine/heraus.js. Hier stehen nur die Aufgaben: HGEN nennt je
+   Kennung aus HERAUS (einstellung.js) eine Funktion, die eine Aufgabe erzeugt wie GEN. Jede Aufgabe kommt mit neuen Zahlen (sig: woran man sie wiedererkennt),
+   hat zwei Denkanstöße, und jeder Hinweis nennt den Fehler beim Namen. Der freigegebene Plan liegt in planung/ (Stationsplan, Auftrag).
+   ===================================================================== */
+const MX=t=>'<span class="mtx">'+t+'</span>';      // Mathematik in einem Satz von Hand in die Textschrift setzen („b = 300“ vor einer Klammer mit Wörtern)
+const NB=t=>'<span class="hnb">'+t+'</span>',YA=NB('y-Achse'),XA=NB('x-Achse');      // bricht nicht um: „y-Achse“, ein Punkt mit seinen Koordinaten
+const hsub=(v,i)=>V(v)+'<sub>'+i+'</sub>';
+const hsz=(...t)=>'<span class="sz">'+t.map(x=>/^<span class="(feld|hpaar)/.test(x)?x:'<span>'+x+'</span>').join('')+'</span>';
+const hpaar=(f,t)=>'<span class="hpaar">'+f+'<span>'+t+'</span></span>';      // ein Feld und das Wort dahinter bleiben in einer Zeile („☐ Monate.“)
+
+/* ---------- 1 Vorzeichen: zwei Geraden in Worten, je m und b mit einem Umschalter „< 0 | = 0 | > 0“ ----------
+   14 Lagen: A beide Achsenschnitte (4) · B Richtung und Schnitt mit der x-Achse (4) · C1 schneidet die x-Achse nicht (2) · C2 durch den Ursprung und einen
+   Punkt P (4 Lagen von P). Je Versuch eine Lage aus A und eine andere, in zufälliger Reihenfolge; die erste Gerade heißt f, die zweite g. Zählt nur, wenn alle
+   vier Vorzeichen stimmen (Raten: 1 von 81). Ein Bild gibt es erst nach „Prüfen“: Vorher nähme es die Antwort vorweg. */
+const VZ_OPTS=[['neg','&lt; 0'],['null','= 0'],['pos','&gt; 0']],VZ_T={neg:'&lt; 0',null:'= 0',pos:'&gt; 0'},VZ_W={neg:'fällt',null:'waagerecht',pos:'steigt'};
+const vzVon=z=>z>0?'pos':z<0?'neg':'null';
+const vzZahl=v=>'einer '+(v>0?'positiven':'negativen')+' Zahl';
+const vzM=v=>CM(V('m')+' '+VZ_T[v]),vzB=v=>CB(V('b')+' '+VZ_T[v]);
+/* Eine Lage: art, key (für sig und Prüflauf), text(Name), m und b (neg, null, pos), sk (Zahlen für die Skizze: m, b, bei C2 der Punkt p), hm(w) und hb(w): Hinweis zur falschen Wahl w */
+function vzLage(art,i){
+  if(art==='A'){const ys=i&2?1:-1,xs=i&1?1:-1,m=vzVon(-ys*xs),b=vzVon(ys);      // Gerade durch (0 | ys) und (xs | 0): Sie steigt, wenn die Vorzeichen verschieden sind
+    return {art,key:'A'+i,m,b,sk:{m:-1.5*ys/(1.9*xs),b:1.5*ys},text:n=>'Die Gerade von '+V(n)+' schneidet die '+YA+' bei '+vzZahl(ys)+' und die '+XA+' bei '+vzZahl(xs)+'.',
+      hm:()=>'Verbinde die beiden Schnittpunkte: Von links nach rechts geht es nach '+(m==='pos'?'oben':'unten')+', die Gerade '+VZ_W[m]+'. Also '+vzM(m)+'.',
+      hb:w=>w===vzVon(xs)?BL+' ist der Schnitt mit der '+YA+', nicht der mit der '+XA+': '+vzB(b)+'.':BL+' ist der Schnitt mit der '+YA+': bei '+vzZahl(ys)+', also '+vzB(b)+'.'};}
+  if(art==='B'){const st=i&2?1:-1,xs=i&1?1:-1,m=vzVon(st),b=vzVon(-st*xs);      // y = m · (x − x0): b = −m · x0
+    return {art,key:'B'+i,m,b,sk:{m:.8*st,b:-.8*st*1.7*xs},text:n=>'Die Gerade von '+V(n)+' '+(st>0?'steigt':'fällt')+' und schneidet die '+XA+' bei '+vzZahl(xs)+'.',
+      hm:()=>'Die Gerade '+(st>0?'steigt':'fällt')+': '+vzM(m)+'.',
+      hb:()=>'Der Schnitt mit der '+XA+' liegt '+(xs<0?'links':'rechts')+' von der '+YA+'. '+(xs<0?'Von dort '+(st>0?'steigt':'fällt')+' die Gerade weiter: Sie schneidet die '+YA+' '+(st>0?'über':'unter')+' dem Ursprung, also '
+        :'Davor liegt die '+(st>0?'steigende':'fallende')+' Gerade noch '+(st>0?'unter':'über')+' der '+XA+', also ')+vzB(b)+'.'};}
+  if(art==='C1'){const ys=i&1?1:-1,b=vzVon(ys);
+    return {art,key:'C1'+(i&1),m:'null',b,sk:{m:0,b:1.6*ys},text:n=>'Die Gerade von '+V(n)+' schneidet die '+XA+' nicht und die '+YA+' bei '+vzZahl(ys)+'.',
+      hm:()=>'Nur eine waagerechte Gerade schneidet die '+XA+' nicht: '+vzM('null')+'.',
+      hb:()=>BL+' ist der Schnitt mit der '+YA+': bei '+vzZahl(ys)+', also '+vzB(b)+'.'};}
+  const a=(i&2?1:-1)*zz(1,5),c=(i&1?1:-1)*zz(1,5),m=vzVon(a*c),g=2/Math.max(Math.abs(a),Math.abs(c));      // C2: durch den Ursprung und P(a | c)
+  return {art:'C2',key:'C2'+i+'/'+a+'/'+c,m,b:'null',p:[a,c],sk:{m:c/a,b:0,p:[a*g,c*g]},text:n=>'Die Gerade von '+V(n)+' geht durch den Ursprung und durch den Punkt '+NB(V('P')+P_(a,c))+'.',
+    hm:()=>'Vom Ursprung zu '+NB(V('P')+P_(a,c))+': '+NB(ML+' = '+zahl(c)+' : '+kl(a))+', also '+(m==='pos'?'positiv':'negativ')+'. Die Gerade '+VZ_W[m]+'.',
+    hb:()=>'Durch den Ursprung heißt: '+vzB('null')+'.'};}
+/* Kleine Skizze ohne Zahlen: Achsen, die Gerade grün, ihr Schnitt mit der y-Achse blau, mit der x-Achse grau, bei C2 der Punkt P */
+function vzSkizze(L){const w=92,c=46,e=14,gx=x=>(c+x*e).toFixed(1),gy=y=>(c-y*e).toFixed(1),s=L.sk,xa=-2.9,xb=2.7,yr=2.85;
+  let x1=xa,x2=xb;if(s.m!==0){const u=(-yr-s.b)/s.m,o=(yr-s.b)/s.m;x1=Math.max(xa,Math.min(u,o));x2=Math.min(xb,Math.max(u,o));}      // die Gerade bleibt im Bild
+  let h='<line class="hska" x1="6" y1="'+c+'" x2="'+(w-8)+'" y2="'+c+'"/><path class="hskp" d="M'+(w-3)+' '+c+'l-7 -3.5v7z"/><line class="hska" x1="'+c+'" y1="'+(w-6)+'" x2="'+c+'" y2="8"/><path class="hskp" d="M'+c+' 3l-3.5 7h7z"/>';
+  h+='<line class="hskg" x1="'+gx(x1)+'" y1="'+gy(s.m*x1+s.b)+'" x2="'+gx(x2)+'" y2="'+gy(s.m*x2+s.b)+'"/>';
+  if(s.m!==0&&s.b!==0)h+='<circle class="hskx" cx="'+gx(-s.b/s.m)+'" cy="'+gy(0)+'" r="4"/>';
+  h+='<circle class="hskb" cx="'+gx(0)+'" cy="'+gy(s.b)+'" r="4"/>';
+  if(s.p)h+='<circle class="hskpp" cx="'+gx(s.p[0])+'" cy="'+gy(s.p[1])+'" r="3.6"/><text class="hskt" x="'+(c+s.p[0]*e+(s.p[0]>0?6:-6)).toFixed(1)+'" y="'+(c-s.p[1]*e+(s.p[1]>0?-5:13)).toFixed(1)+'" text-anchor="'+(s.p[0]>0?'start':'end')+'">'+svgI('P')+'</text>';
+  return '<svg viewBox="0 0 '+w+' '+w+'" role="img" aria-label="Skizze der Geraden">'+h+'</svg>';}
+function vzAuf(LA,LB){const L=shuffle([LA,LB]),N=['f','g'],loes={},ids=[];
+  L.forEach((l,i)=>{loes[N[i]+'m']=l.m;loes[N[i]+'b']=l.b;ids.push(N[i]+'m',N[i]+'b');});
+  return {form:'schalter',frage:'Welches Vorzeichen haben '+ML+' und '+BL+'?',lagen:L,loes,sig:L.map(l=>l.key).join('|'),
+    denk:'Mach eine Skizze: Markiere, was du über die Gerade weißt.',denk2:BL+' siehst du an der '+YA+'. Für '+ML+': Geht es von links nach rechts nach oben oder nach unten?',
+    kaesten:L.map((l,i)=>({text:l.text(N[i]),um:[{id:N[i]+'m',vor:ML,opts:VZ_OPTS},{id:N[i]+'b',vor:BL,opts:VZ_OPTS}],bild:()=>vzSkizze(l)})),
+    schritte:L.map((l,i)=>zl(V(N[i])+': '+vzM(l.m)+' ('+VZ_W[l.m]+'), '+vzB(l.b),null,true)),
+    pruefe:w=>{const F=ids.filter(id=>w[id]!==loes[id]);if(!F.length)return {ok:true};
+      const id=F[0],i=N.indexOf(id[0]),l=L[i];return {ok:false,falsch:F,hinweis:'Bei '+V(N[i])+': '+(id[1]==='m'?l.hm(w[id]):l.hb(w[id]))};}};}
+
+/* ---------- 2 Vorsicht, Maßstab!: Gleichung ablesen an Achsen mit Maßstab (Aylins Fehler vom Blatt, Aufgabe 4 b) ----------
+   Ein Pool wird mit dem Gartenschlauch gefüllt: V(x) in Litern nach x Minuten. Sachprüfung: Gartenschlauch 15 bis 20 l pro Minute (REWE-Ratgeber Gartenschläuche),
+   16 bis 24 l je nach Druck (testundtipps.de, 29.10.2026); Aufstellpool Intex Easy Set 305 × 76 cm: 3853 l bei 80 % (Händlerangabe). Der Graph zeigt höchstens
+   die ersten 1000 l. 27 Fälle: m 15, 20 oder 25 l pro min · ein Kästchen 5 min und 100 l, 2 min und 50 l oder 10 min und 100 l · b 1 bis 3 Kästchen.
+   Die Gerade geht bei 0 und nach dx Kästchen wieder durch einen Gitterpunkt (dx, dy: der gekürzte Bruch m · sx / sy). */
+const MASS={M:[15,20,25],S:[[5,100],[2,50],[10,100]],NX:8,NY:9};
+function massFall(i){if(i===undefined)i=zz(0,26);const m=MASS.M[i%3],[sx,sy]=MASS.S[Math.floor(i/3)%3],bk=1+Math.floor(i/9),g=ggT(m*sx,sy);
+  return {i,m,sx,sy,bk,b:bk*sy,dx:sy/g,dy:m*sx/g};}
+const massGl=F=>V('V')+'('+X+') = '+zahl(F.m)+X+' + '+zahl(F.b);
+/* Der Graph im ersten Quadranten, Achsen beschriftet wie beim Blutspende-Graphen des Blatts, Zahlen an jedem zweiten Kästchen. loes: mit Steigungsdreieck vom Punkt
+   (0 | b) zum nächsten Gitterpunkt (zwei Seiten orange, Fläche hellorange, mit „10 min“ und „200 l“) und dem Punkt (0 | b) in Blau */
+function massBild(F,loes){const e=30,ml=46,mo=30,mr=24,mu=42,nx=MASS.NX,ny=MASS.NY,W=ml+nx*e+mr,H=mo+ny*e+mu,x=v=>+(ml+v/F.sx*e).toFixed(1),y=v=>+(mo+(ny-v/F.sy)*e).toFixed(1),f=v=>F.m*v+F.b;
+  let s='<svg class="graph hmass" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Graph: Inhalt des Pools in Litern nach x Minuten"><rect x="'+ml+'" y="'+mo+'" width="'+nx*e+'" height="'+ny*e+'" fill="#fff"/>';
+  for(let i=0;i<=nx;i++)s+='<line class="gl" x1="'+(ml+i*e)+'" y1="'+mo+'" x2="'+(ml+i*e)+'" y2="'+(mo+ny*e)+'"/>';
+  for(let j=0;j<=ny;j++)s+='<line class="gl" x1="'+ml+'" y1="'+(mo+j*e)+'" x2="'+(ml+nx*e)+'" y2="'+(mo+j*e)+'"/>';
+  s+='<line class="ga" x1="'+(ml-5)+'" y1="'+y(0)+'" x2="'+(ml+nx*e+7)+'" y2="'+y(0)+'"/><path class="gp" d="M'+(ml+nx*e+15)+' '+y(0)+'l-9 -4.5v9z"/>';
+  s+='<line class="ga" x1="'+ml+'" y1="'+(y(0)+5)+'" x2="'+ml+'" y2="'+(mo-7)+'"/><path class="gp" d="M'+ml+' '+(mo-15)+'l-4.5 9h9z"/>';
+  for(let i=2;i<=nx;i+=2)s+='<line class="ga" x1="'+(ml+i*e)+'" y1="'+(y(0)-4)+'" x2="'+(ml+i*e)+'" y2="'+(y(0)+4)+'"/><text class="gt" x="'+(ml+i*e)+'" y="'+(y(0)+17)+'" text-anchor="middle">'+zahl(i*F.sx)+'</text>';
+  for(let j=2;j<=ny;j+=2)s+='<line class="ga" x1="'+(ml-4)+'" y1="'+(mo+(ny-j)*e)+'" x2="'+(ml+4)+'" y2="'+(mo+(ny-j)*e)+'"/><text class="gt" x="'+(ml-8)+'" y="'+(mo+(ny-j)*e+4.5)+'" text-anchor="end">'+zahl(j*F.sy)+'</text>';
+  s+='<text class="hach" x="'+(ml+nx*e+15)+'" y="'+(y(0)+34)+'" text-anchor="end">Zeit '+svgI('x')+' [min]</text><text class="hach" x="'+(ml+9)+'" y="'+(mo-9)+'">Inhalt '+svgI('V')+'('+svgI('x')+') [l]</text>';
+  const xe=Math.min(nx*F.sx,(ny*F.sy-F.b)/F.m),x2=F.dx*F.sx,y2=f(x2);
+  if(loes)s+='<path class="drf loes" d="M'+x(0)+' '+y(F.b)+'L'+x(x2)+' '+y(F.b)+'L'+x(x2)+' '+y(y2)+'Z"/>';
+  s+='<line class="gk lg" x1="'+x(0)+'" y1="'+y(F.b)+'" x2="'+x(xe)+'" y2="'+y(f(xe))+'"/>';
+  if(loes)s+='<path class="dr loes" d="M'+x(0)+' '+y(F.b)+'L'+x(x2)+' '+y(F.b)+'L'+x(x2)+' '+y(y2)+'"/><circle class="gpkt" cx="'+x(0)+'" cy="'+y(F.b)+'" r="5.5"/>'+
+    '<text class="hmt" x="'+((x(0)+x(x2))/2+3)+'" y="'+(y(F.b)+16)+'" text-anchor="middle">'+zahl(x2)+' min</text><text class="hmt" x="'+(x(x2)+7)+'" y="'+((y(F.b)+y(y2))/2+4.5)+'">'+zahl(y2-F.b)+' l</text>';
+  return {svg:s+'</svg>',k:{x,y,X:[0,nx*F.sx],Y:[0,ny*F.sy]},f,x2,y2};}
+const massKae=n=>n===1?'Ein Kästchen':n+' Kästchen';
+function massAuf(F){const {m,b,sx,sy,bk,dx,dy}=F,lx=dx*sx,hy=dy*sy,B0=massBild(F,false);
+  return {form:'eingabe',fall:F,sig:String(F.i),bild:B0.svg,frageRechts:true,rtitel:'Lösung',rleer:'',
+    frage:'Ein Pool wird mit dem Gartenschlauch gefüllt. Etwas Wasser ist schon drin. Der Graph zeigt den Inhalt '+V('V')+'('+X+') in Litern nach '+X+' Minuten. <b>Gib die Funktionsgleichung an.</b>',
+    ein:'<span class="pkt"><span>'+V('V')+'('+X+') =</span>'+FELD('m')+'<span>· '+X+' +</span>'+FELD('b')+'</span>',
+    denk:'Schau zuerst auf die Achsen: Wie viel ist ein Kästchen nach rechts, wie viel eins nach oben?',denk2:ML+' = Höhe durch Länge, mit den Werten an den Achsen.',
+    schritte:[zl(CB(MX(V('b')+' = '+zahl(b))+' (Start in Litern)'),null,true),      /* ausgeschrieben: „(Start in l)“ las sich in Indie Flower wie „(Start in I)“ (Lehrkraft 26.11.2026) */
+      zl(CM(V('m'))+' = '+zahl(hy)+' l : '+zahl(lx)+' min = '+zahl(m)+' l pro min'),zl(massGl(F))],
+    /* typische Fehler bei m: Kästchen gezählt (Aylin) · nur die Höhe umgerechnet · nur die Länge umgerechnet · Länge durch Höhe; bei b: in Kästchen gezählt */
+    fehler:{kaestchen:dy/dx,nurHoehe:hy/dx,nurLaenge:dy/lx,kehrwert:lx/hy,bKaestchen:bk},
+    pruefe:w=>{const mm=num(w.m),bb=num(w.b),F_=[];if(!gleich(mm,m))F_.push('m');if(!gleich(bb,b))F_.push('b');if(!F_.length)return {ok:true};let h;
+      const hb=gleich(bb,bk)?BL+' ist der Wert an der y-Achse: '+zahl(b)+'.':BL+' liest du an der y-Achse ab: Die Gerade beginnt bei '+zahl(b)+'.';
+      if(F_.includes('m')){
+        if(gleich(mm,dy/dx))h='Du hast Kästchen gezählt. Lies die Werte ab: '+massKae(dx)+' nach rechts '+(dx===1?'ist':'sind')+' '+zahl(lx)+' min, '+(dy===1?'eins':dy)+' nach oben '+zahl(hy)+' l.';
+        else if(gleich(mm,hy/dx))h='Auch die x-Achse hat einen Maßstab: '+massKae(dx)+' '+(dx===1?'ist':'sind')+' '+zahl(lx)+' min.';
+        else if(gleich(mm,dy/lx))h='Auch die y-Achse hat einen Maßstab: '+massKae(dy)+' '+(dy===1?'ist':'sind')+' '+zahl(hy)+' l.';
+        else if(Math.abs(mm*m-1)<.12||(dx!==dy&&gleich(mm,dx/dy)))h='Du hast Länge durch Höhe gerechnet. '+ML+' = Höhe durch Länge, mit den Werten an den Achsen.';
+        else h='Nimm zwei Gitterpunkte der Geraden: '+ML+' = Höhe durch Länge, mit den Werten an den Achsen.';
+        if(F_.includes('b'))h+=' Und '+(gleich(bb,bk)?BL+' ist der Wert an der y-Achse: '+zahl(b)+'.':BL+' liest du an der y-Achse ab.');}
+      else h=hb;
+      return {ok:false,hinweis:h,falsch:F_};},
+    nach(w,m_){const B=massBild(F,true),bild=$('.bild',m_),fr=[[0,b],[lx/2,b-.6*sy],[lx,(b+B.y2)/2],[lx+1.2*sx,(b+B.y2)/2]];if(bild)bild.innerHTML=B.svg;
+      for(let i=0;i<=6;i++)fr.push([lx*i/6,b],[lx,b+hy*i/6],[lx*(.5+i/12),b+hy*i/12]);
+      A.gl=glKurve(B.k,massGl(F),B.f,'lg',{frei:fr});}};}
+
+/* ---------- 3 Treffpunkt: dieselbe Zahl c einmal waagerecht (g(x) = c) und einmal senkrecht (s: x = c), das Kontrastpaar aus Info 3 ----------
+   Punkte als Paare wie in QF4; zählt nur, wenn alle vier Felder stimmen. Zahlen: m −3, −2, −1, 2 oder 3 · c von −4 bis 4 ohne 0 · x1 von −4 bis 4 ohne 0 und
+   ohne c · b = c − m · x1 mit 0 < |b| ≤ 9 · |m · c + b| ≤ 9. Lösung: S1(x1 | c), S2(c | m · c + b). f(c) ≠ x1, damit jeder typische Fehler sein eigenes Paar hat.
+   Das Bild kommt erst nach „Prüfen“, in den Farben der Infobox: waagerecht blau, senkrecht rot. Das Wort „Schnittpunkt“ kommt nicht vor (es gehört zu LF5). */
+function treffFall(){for(let i=0;i<600;i++){const m=pick([-3,-2,-1,2,3]),c=zufB(-4,4,true),x1=zufB(-4,4,true),b=c-m*x1,y2=m*c+b;
+    if(x1===c||b===0||Math.abs(b)>9||Math.abs(y2)>9||y2===x1)continue;return {m,b,c,x1,y2};}
+  return {m:2,b:1,c:3,x1:1,y2:7};}
+function treffBild(T){const {m,b,c,x1,y2}=T,f=x=>m*x+b;
+  /* Ausschnitt: zehn Einheiten breit, mindestens zehn hoch; das Dreieck aus den beiden Punkten und der Ecke (c | c) liegt in der Mitte, damit ringsum Platz für die Schilder
+     bleibt; beide Achsen sind im Bild, über und unter der waagerechten Geraden bleiben zwei Einheiten für ihre Gleichung */
+  let X0=Math.max(-9,Math.min(-1,Math.round((x1+c)/2)-5)),lo=Math.min(-1,c-2,y2-1),hi=Math.max(1,c+2,y2+1);
+  while(hi-lo<10){if(Math.min(c,y2)-lo<hi-Math.max(c,y2))lo--;else hi++;}
+  const X1=X0+10,e=Math.min(30,Math.floor(336/(hi-lo)));
+  const k=koord([X0,X1],[lo,hi],{ex:e,ey:e,lx:2,ly:2,label:'Koordinatensystem mit den drei Geraden und ihren gemeinsamen Punkten'});
+  const svg=k.svg('<path class="gk lb" d="'+k.pfad(()=>c)+'"/><line class="gk lr" x1="'+k.x(c)+'" y1="'+k.y(hi)+'" x2="'+k.x(c)+'" y2="'+k.y(lo)+'"/><path class="gk lg" d="'+k.pfad(f)+'"/>',k.pkt(x1,c,'hor')+k.pkt(c,y2,'hor'));
+  /* fünf Schilder: die beiden Punkte und die drei Gleichungen in der Farbe ihres Graphen */
+  const schilder=[[hsub('S',1)+P_(x1,c),'lor'],[hsub('S',2)+P_(c,y2),'lor'],[fn('f',term(stg(m,1),b)),'lg'],[fn('g',zahl(c)),'lb'],[senk('s',c),'lr']];
+  return {svg,setz(bild){if(!$('.glg',bild)){bild.classList.add('mitgl');schilder.forEach(([html,kl])=>bild.appendChild(el('<div class="glg '+kl+'">'+html+'</div>')));}
+    treffSchilder(bild,k,T,[X0,X1],[lo,hi]);}};}
+/* Die fünf Schilder werden zusammen gesetzt, nicht eins nach dem anderen wie sonst (zeigeGl): Zwischen drei Geraden und zwei Punkten ist wenig Platz, und wer zuerst kommt,
+   verbaut den anderen den Platz (26.11.2026: Das Schild von g stand zwei Kästchen von seiner Geraden auf der x-Achse). Jedes Schild sammelt alle Plätze, an denen es
+   dicht an seinem Graphen oder Punkt steht und weder eine Gerade noch einen Punkt berührt, mit einer Note: dicht dran, frei von allem anderen, nicht auf einer
+   Achse und nicht auf einer ihrer Zahlen. Dann gewinnt die Auswahl mit der besten Summe, bei der sich keine zwei Schilder berühren. Gemessen wird am fertigen Bild,
+   in seinen Pixeln. */
+function treffSchilder(bild,k,T,X,Y){const {m,b,c,x1,y2}=T,lo=Y[0],hi=Y[1],svg=$('svg',bild),M=svg&&svg.getScreenCTM(),B=bild.getBoundingClientRect(),L=$$('.glg',bild);if(!M||!B.width||L.length!==5)return;
+  const pt=svg.createSVGPoint(),sc=(x,y)=>{pt.x=k.x(x);pt.y=k.y(y);const q=pt.matrixTransform(M);return [q.x-B.left,q.y-B.top];};
+  const fa=Math.max(X[0],Math.min((lo-b)/m,(hi-b)/m)),fb=Math.min(X[1],Math.max((lo-b)/m,(hi-b)/m));
+  const G=[sc(fa,m*fa+b).concat(sc(fb,m*fb+b)),sc(X[0],c).concat(sc(X[1],c)),sc(c,lo).concat(sc(c,hi))],AX=[sc(X[0],0).concat(sc(X[1],0)),sc(0,lo).concat(sc(0,hi))],PK=[sc(x1,c),sc(c,y2)];
+  const ZA=$$('text.gt',svg).map(t=>{const r=t.getBoundingClientRect();return [r.left-B.left,r.top-B.top,r.right-B.left,r.bottom-B.top];});
+  const [rx0,ry0]=sc(X[0],hi),[rx1,ry1]=sc(X[1],lo),pr=Math.abs(sc(0,0)[0]-sc(1,0)[0])/k.ex*5.5;      // pr: Halbmesser der Punkte
+  /* Abstand eines Rechtecks zu einem Punkt und zu einer Strecke (0: Die Strecke läuft durch das Rechteck) */
+  const dP=(x,y,w,h,p)=>Math.hypot(Math.max(x-p[0],0,p[0]-x-w),Math.max(y-p[1],0,p[1]-y-h));
+  const dS=(x,y,w,h,s)=>{const ax=s[0],ay=s[1],dx=s[2]-ax,dy=s[3]-ay;let t0=0,t1=1;
+    const cl=(p,q)=>{if(!p)return q>=0;const r=q/p;if(p<0){if(r>t1)return false;if(r>t0)t0=r;}else{if(r<t0)return false;if(r<t1)t1=r;}return true;};
+    if(cl(-dx,ax-x)&&cl(dx,x+w-ax)&&cl(-dy,ay-y)&&cl(dy,y+h-ay))return 0;
+    const q=dx*dx+dy*dy,e=(px,py)=>{const t=q?Math.max(0,Math.min(1,((px-ax)*dx+(py-ay)*dy)/q)):0;return Math.hypot(px-ax-t*dx,py-ay-t*dy);};
+    return Math.min(e(x,y),e(x+w,y),e(x,y+h),e(x+w,y+h),dP(x,y,w,h,[ax,ay]),dP(x,y,w,h,[s[2],s[3]]));};
+  const W=[],H=[];L.forEach((e,i)=>{const r=e.getBoundingClientRect();W[i]=r.width;H[i]=r.height;});if(!W[0])return;
+  /* Plätze eines Schilds: weit = wie weit es höchstens von seinem Graphen oder Punkt stehen darf */
+  const plaetze=(i,weit)=>{const w=W[i],h=H[i],K=[],punkt=i<2;
+    for(let y=ry0+1;y+h<=ry1-1;y+=3)for(let x=rx0+1;x+w<=rx1-1;x+=3){
+      const dl=G.map(s=>dS(x,y,w,h,s)),dp=PK.map(p=>dP(x,y,w,h,p)-pr);let de,frei;
+      if(punkt){de=dp[i];frei=Math.min(dl[0],dl[1],dl[2],dp[1-i]);}else{de=dl[i-2];frei=Math.min(dp[0],dp[1],...dl.filter((_,j)=>j!==i-2));}
+      if(de<2.5||de>weit||frei<2.5)continue;
+      K.push([-Math.abs(de-4.5)*2.5+Math.min(frei,14)-(AX.some(s=>dS(x,y,w,h,s)<1.5)?30:0)-(ZA.some(q=>x<q[2]+1&&x+w>q[0]-1&&y<q[3]+1&&y+h>q[1]-1)?60:0)+(punkt?0:Math.min(dp[0],dp[1],80)*.1),x,y]);}
+    K.sort((p,q)=>q[0]-p[0]);const D=[];      // ausdünnen: Von Plätzen dicht beieinander bleibt der beste
+    for(const q of K){if(!D.some(o=>Math.abs(o[1]-q[1])<7&&Math.abs(o[2]-q[2])<7))D.push(q);if(D.length>=90)break;}
+    return D;};
+  const suche=weit=>{const K=L.map((_,i)=>plaetze(i,weit));if(K.some(x=>!x.length))return null;
+    const ord=[0,1,2,3,4].sort((p,q)=>K[p].length-K[q].length),rest=ord.map((_,j)=>ord.slice(j).reduce((z,i)=>z+K[i][0][0],0)).concat(0),wahl=[];let best=null,bs=-1e9,n=0;
+    const geh=(j,sum)=>{if(j===5){if(sum>bs){bs=sum;best=wahl.slice();}return;}const i=ord[j];
+      for(const q of K[i]){if(++n>150000||sum+q[0]+rest[j+1]<=bs)return;
+        if(wahl.some(o=>q[1]<o[1]+W[o[0]]+4&&q[1]+W[i]>o[1]-4&&q[2]<o[2]+H[o[0]]+3&&q[2]+H[i]>o[2]-3))continue;
+        wahl.push([i,q[1],q[2]]);geh(j+1,sum+q[0]);wahl.pop();}};
+    geh(0,0);return best;};
+  const wahl=suche(11)||suche(17)||suche(28)||suche(70);if(!wahl)return;      // erst dicht am Graphen; nur wenn das nicht aufgeht, weiter weg
+  wahl.forEach(([i,x,y])=>{L[i].style.left=(x/B.width*100).toFixed(2)+'%';L[i].style.top=(y/B.height*100).toFixed(2)+'%';});}
+function treffAuf(T){const {m,b,c,x1,y2}=T,s=stg(m,1),S1=hsub('S',1),S2=hsub('S',2),gT=fn('g',zahl(c)),sT=senk('s',c),lhs=mx(s)+(b<0?' − ':' + ')+zahl(Math.abs(b));
+  return {form:'eingabe',einKl:'satz',fall:T,sig:[m,b,c].join('/'),termOben:true,term:fn('f',term(s,b)),frage:'In welchem Punkt trifft die Gerade '+NB('von '+V('f')+' …'),
+    ein:hsz('… die Gerade von '+V('g')+' mit '+NB(gT+'?'))+hsz(S1+'(',FELD('a'),'|',FELD('b'),')')+hsz('… die Gerade '+NB(sT+'?'))+hsz(S2+'(',FELD('c'),'|',FELD('d'),')'),
+    denk:'Waagerecht oder senkrecht? Eine Koordinate kennst du bei jedem Punkt schon.',denk2:'Bei '+V('s')+' setzt du ein. Bei '+V('g')+' suchst du die Stelle '+X+', an der '+V('f')+' den Wert '+zahl(c)+' hat.',
+    schritte:[zl('waagerecht, y-Wert '+zahl(c)+':',null,true),zl(lhs+' = '+zahl(c),'| '+(b<0?'+ ':'− ')+zahl(Math.abs(b))),zl(mx(s)+' = '+zahl(c-b),'| : '+kl(m)),zl(X+' = '+zahl(x1)),
+      zl('senkrecht, x-Wert '+zahl(c)+':',null,true),zl(einsetzen('f',s,b,c))],
+    /* typische Fehler: bei g eingesetzt (c | f(c)) · bei s rückwärts gerechnet (x1 | c) · Koordinaten vertauscht */
+    fehler:{gEin:[c,y2],sRueck:[x1,c],tausch1:[c,x1],tausch2:[y2,c]},
+    pruefe:w=>{const a=num(w.a),bq=num(w.b),cq=num(w.c),d=num(w.d),F=[];if(!gleich(a,x1))F.push('a');if(!gleich(bq,c))F.push('b');if(!gleich(cq,c))F.push('c');if(!gleich(d,y2))F.push('d');
+      if(!F.length)return {ok:true};let h;
+      const waag=gT+' ist waagerecht: Jeder Punkt hat den y-Wert '+zahl(c)+'.',senkr=sT+' ist senkrecht: Jeder Punkt hat den x-Wert '+zahl(c)+'.',tausch='Vertauscht: Die erste Zahl ist der x-Wert.';
+      if(F.includes('a')||F.includes('b'))h='Bei '+S1+': '+(gleich(a,c)&&gleich(bq,y2)?waag+' Gesucht ist die Stelle '+X+' mit '+V('f')+'('+X+') = '+zahl(c)+'.':gleich(a,c)&&gleich(bq,x1)?tausch:!gleich(bq,c)?waag:'Rechne nach: '+lhs+' = '+zahl(c)+'.');
+      else h='Bei '+S2+': '+(gleich(cq,x1)&&gleich(d,c)?senkr+' Berechne '+V('f')+'('+zahl(c)+').':gleich(cq,y2)&&gleich(d,c)?tausch:!gleich(cq,c)?senkr:'Rechne nach: '+V('f')+'('+zahl(c)+') = '+(m===1?'':zahl(m)+' · ')+kl(c)+(b<0?' − ':' + ')+zahl(Math.abs(b))+'.');
+      return {ok:false,hinweis:h,falsch:F};},
+    /* nach „Prüfen“ oder „Lösung“: das Bild rechts neben den Feldern (am Handy darunter), das Urteil mit dem Hinweis über der Rechnung */
+    nach(w,m_){const k1=$('.karte',m_),e=$('.ein',k1),B=treffBild(T),bild=el('<div class="bild hnach"></div>');bild.innerHTML=B.svg;e.insertAdjacentElement('afterend',bild);k1.classList.add('hneben');
+      {const r=$('.rueck',k1),rk=$('.karte.rechnung',m_);if(r&&rk)rk.insertBefore(r,rk.firstChild);}      // das Urteil rückt nach rechts über die Rechnung: Links braucht das Bild die Höhe
+      /* die Schilder gleich setzen und noch einmal, sobald das Bild seine Größe hat oder ändert (Gerät gedreht, Schrift nachgeladen) */
+      bild._setz=()=>B.setz(bild);bild._setz();requestAnimationFrame(()=>{if(bild.isConnected)bild._setz();});
+      if(window.ResizeObserver){const ro=new ResizeObserver(()=>{if(bild.isConnected)bild._setz();else ro.disconnect();});ro.observe(bild);}}};}
+
+/* ---------- 4 Parallele durch P: zeichnen und die Gleichung angeben (Form zeichnein) ----------
+   Im Gitter steht nur P, nicht die Gerade von f. Steigung aus der Liste zum Zeichnen (STG_LESEN), P = (k · Nenner | y) mit k = ±1 oder ±2, b der gesuchten Geraden
+   von −4 bis 4, b von f von −4 bis 4 ohne 0 und anders; P liegt mit Abstand zum Rand im Gitter, sein y-Wert ist weder das gesuchte b noch das b von f (jeder
+   typische Fehler hat seinen eigenen Wert). Zeichnung, m und b werden je für sich an der Lösung gemessen, ohne Folgefehler: Die Gleichung lässt sich auch ohne
+   Zeichnung finden. */
+function parFall(){for(let i=0;i<800;i++){const s=pick(STG_LESEN),k=pick([-2,-1,1,2]),px=k*s.n,b=zufB(-4,4,false),py=s.w*px+b,bf=zufB(-4,4,true);
+    if(Math.abs(px)>4||Math.abs(py)>4||!Number.isInteger(py)||bf===b||bf===py)continue;return {s,k,px,py,b,bf};}
+  return {s:stg(1,2),k:1,px:2,py:3,b:2,bf:-3};}
+/* Rückmeldung zur Zeichnung: Welcher Gedanke ging schief? pts: zwei Gitterpunkte {x,y} */
+function parHinweis(T,pts){const {s,px,py,b,bf}=T,[p,q]=pts,PN=V('P'),m_=CM(V('m')+' = '+mText(s));
+  if(!q)return 'Zeichne die Gerade: Tippe zwei Gitterpunkte an.';
+  if(p.x===q.x)return 'Die beiden Punkte liegen senkrecht übereinander. Starte bei '+PN+': von dort '+dreieck(s)+'.';
+  const sl=(q.y-p.y)/(q.x-p.x),bi=p.y-sl*p.x,durchP=gleich(sl*px+bi,py);
+  if(gleich(sl,s.w)&&gleich(bi,bf))return 'Du hast die Gerade von '+V('f')+' gezeichnet. Gesucht ist die Parallele durch '+PN+'.';
+  if(durchP){if(gleich(sl,s.n/s.z))return 'Deine Gerade geht durch '+PN+'. Das Steigungsdreieck ist vertauscht: '+m_+' heißt '+dreieck(s)+'.';
+    if(gleich(sl,-s.w))return 'Deine Gerade geht durch '+PN+'. '+m_+' ist '+(s.z>0?'positiv, also nach oben.':'negativ, also nach unten.');
+    return 'Deine Gerade geht durch '+PN+', ist aber nicht parallel: '+m_+' heißt '+dreieck(s)+'.';}
+  if(gleich(sl,s.w))return 'Deine Gerade ist parallel, geht aber nicht durch '+PN+'. Setz das Steigungsdreieck bei '+PN+' an.';
+  return 'Deine Gerade geht nicht durch '+PN+'. Starte dort: '+dreieck(s)+'.';}
+function parAuf(T){const {s,k,px,py,b,bf}=T,PN=V('P'),hin=px>0?'links':'rechts',hoch=(px>0)===(s.z>0)?'unten':'oben';      // von P zur y-Achse: nach links geht es bei positiver Steigung nach unten
+  return {form:'zeichnein',einKl:'pq',bruch:true,fall:T,sig:[s.z,s.n,px,py,bf].join('/'),termOben:true,term:fn('f',term(s,bf)),P:[px,py],s,b,g:{s,b:bf,name:'f'},gl:fn('g',term(s,b)),
+    frage:'Zeichne die Gerade, die parallel zur Geraden von '+V('f')+' ist und durch '+NB(PN+P_(px,py))+' geht. Gib ihre Gleichung an.',
+    ein:'<span class="pqf">'+ML+' = '+FELD('m')+'</span><span class="pqf">'+BL+' = '+FELD('b')+'</span>',notiz:'Brüche mit der Taste '+bruch('a','b')+'.',rtitel:'So geht’s',rleer:'',
+    denk:'Parallel heißt: gleiche Steigung '+ML+'. Starte bei '+PN+'.',denk2:'Setz das Steigungsdreieck bei '+PN+' an, auch rückwärts: So kommst du zur y-Achse.',
+    schritte:[zl('Parallel: '+CM(V('m')+' = '+mText(s)),null,true),zl('Von '+PN+P_(px,py)+' '+(Math.abs(k)===2?'zweimal ':'')+s.n+' nach '+hin+', '+Math.abs(s.z)+' nach '+hoch+': '+P_(0,b),null,true),zl(CB(V('b')+' = '+zahl(b)))],
+    /* typische Fehler bei b: der y-Wert von P · das b von f (gleiches b statt gleiches m) */
+    fehler:{bP:py,bF:bf},
+    pruefe:w=>{const mm=num(w.m),bb=num(w.b),pts=w.pts||[],F=[];
+      if(!(pts.length===2&&pts[0].x!==pts[1].x&&pts.every(t=>gleich(t.y,s.w*t.x+b))))F.push('z');if(!gleich(mm,s.w))F.push('m');if(!gleich(bb,b))F.push('b');
+      if(!F.length)return {ok:true};
+      const h=F[0]==='z'?parHinweis(T,pts):F[0]==='m'?'Parallel heißt: gleiche Steigung wie '+V('f')+', also '+CM(V('m')+' = '+mText(s))+'.'
+        :gleich(bb,py)?BL+' ist der Schnitt mit der y-Achse, nicht der y-Wert von '+PN+'. Geh von '+PN+' zurück bis zur y-Achse.'
+        :gleich(bb,bf)?'Parallel heißt: gleiche Steigung, nicht gleiches '+BL+'.':'Geh von '+PN+' mit dem Steigungsdreieck bis zur y-Achse: Dort liest du '+BL+' ab.';
+      return {ok:false,hinweis:h,falsch:F};}};}
+
+/* ---------- 5 Doppelt so teuer?: gegen Jonas’ Irrtum vom Blatt (Aufgabe 1 b), im Sachkontext Fitnessstudio ----------
+   Sachprüfung: McFit 24,90 € im Monat, einmalige Aktivierungsgebühr 39 € (fitbook.de); Studios ab etwa 20 € im Monat (test.de); „Die einmalige Aufnahmegebühr ist
+   etwa so hoch wie ein Monatsbeitrag“ (Verbraucherzentrale, 09.01.2026, dort für Vereine). 30 Fälle: Monatsbeitrag 20, 25 oder 30 € · Aufnahmegebühr ein oder zwei
+   Monatsbeiträge · 4, 6, 8, 10 oder 12 Monate. Heraus kommt das Doppelte und ein oder zwei Monate dazu. Folgefehler: Das zweite Feld wird am eigenen ersten
+   gemessen; es passt, wenn m · x + b = 2 · (eigene Kosten). */
+const DOPPELT={M:[20,25,30],X:[4,6,8,10,12]};
+function doppeltFall(i){if(i===undefined)i=zz(0,29);const m=DOPPELT.M[i%3],k=1+Math.floor(i/3)%2,x0=DOPPELT.X[Math.floor(i/6)],b=k*m,K0=m*x0+b;
+  return {i,m,k,b,x0,K0,x:2*x0+k};}
+function doppeltAuf(D){const {m,b,x0,K0,x}=D,KN=V('K');
+  return {form:'eingabe',einKl:'satz',fall:D,sig:String(D.i),frage:'Ein Fitnessstudio verlangt einmalig '+zahl(b)+' € Aufnahmegebühr und '+zahl(m)+' € pro Monat.',
+    ein:hsz(x0+' Monate kosten',hpaar(FELD('k'),'€.'))+hsz('Doppelt so viel Geld reicht für',hpaar(FELD('x'),'Monate.')),folgt:{x:['k']},
+    denk:'Schreib zuerst die Funktionsgleichung auf: '+KN+'('+X+') = …',denk2:'Vom doppelten Betrag geht die Aufnahmegebühr nur einmal ab. Was bleibt für die Monate?',
+    schritte:[zl(KN+'('+X+') = '+zahl(m)+X+' + '+zahl(b)),zl(KN+'('+x0+') = '+zahl(m)+' · '+x0+' + '+zahl(b)+' = '+zahl(K0)),zl('Doppelt so viel: '+zahl(2*K0)+' €',null,true),
+      zl(zahl(2*K0)+' − '+zahl(b)+' = '+zahl(2*K0-b)+' € bleiben für die Monate',null,true),zl(X+' = '+bruch(zahl(2*K0-b),zahl(m))+' = '+zahl(x))],
+    /* typische Fehler: doppelt so viele Monate · Gebühr nicht abgezogen · Kosten ohne Gebühr */
+    fehler:{doppelt:2*x0,ohneAbzug:2*K0/m,ohneGebuehr:m*x0},
+    pruefe:w=>{const K=num(w.k),xx=num(w.x),kOk=gleich(K,K0),passt=gleich(m*xx+b,2*K),F=[],G=[];if(!kOk)F.push('k');if(!passt)F.push('x');else if(!kOk)G.push('x');
+      if(!F.length)return {ok:true};let h;
+      if(!kOk){const hk=gleich(K,m*x0)?'Die Aufnahmegebühr von '+zahl(b)+' € kommt dazu.':'Die Kosten für '+x0+' Monate stimmen nicht: '+x0+' Monatsbeiträge und einmal die Aufnahmegebühr.',fo=r4((2*K-b)/m);
+        if(passt)h='Richtig gefolgert, aber '+(gleich(K,m*x0)?'die Kosten stimmen nicht. '+hk:'die Kosten für '+x0+' Monate stimmen nicht.');
+        else h=hk+' Deine Folgerung ist falsch: '+(fo>0&&Number.isInteger(r4(fo*100))?'Zu deinen Kosten von '+w.k+' € '+(fo===1?'passt 1 Monat.':'passen '+zahl(fo)+' Monate.'):'Sie passt nicht zu deinen Kosten.');}
+      else h=gleich(xx,2*x0)?'Doppelt so viel Geld heißt nicht doppelt so viele Monate: Die Aufnahmegebühr zahlst du nur einmal.'
+        :gleich(xx,2*K0/m)?'Zieh erst die Aufnahmegebühr ab: '+zahl(2*K0)+' − '+zahl(b)+' = '+zahl(2*K0-b)+' € bleiben für die Monate.'
+        :'Doppelt so viel sind '+zahl(2*K0)+' €. Zieh die Aufnahmegebühr ab und teile den Rest durch '+zahl(m)+'.';
+      return {ok:false,hinweis:h,falsch:F,folge:G};}};}
+
+/* Die Aufgaben des Bereichs: je Kennung aus HERAUS (einstellung.js) eine Funktion */
+const HGEN={
+  vz(){const B=pick(['B','B','B','B','C1','C1','C2','C2','C2','C2']);return vzAuf(vzLage('A',zz(0,3)),vzLage(B,zz(0,3)));},      // die zweite Lage aus den zehn übrigen, jede gleich oft
+  mass(){return massAuf(massFall());},
+  treff(){return treffAuf(treffFall());},
+  par(){return parAuf(parFall());},
+  doppelt(){return doppeltAuf(doppeltFall());}
+};
+
+/* =====================================================================
    Trainingsrahmen: Ansichten, Aufgabenrahmen, Formen (Objekt FORM, die Formen setzt das Bauskript ein), Hilfen, Wertung, Rückblick, Fenster, Finale
    ===================================================================== */
 function vStart(){
@@ -2232,9 +2747,9 @@ function vEinzel(o){
   o=o||{};S.ansicht='einzel';adresse('einzeltraining');const emp=empfohlen();
   const titel=o.geschafft?'Etappe '+o.geschafft+' geschafft!':o.titel||'Einzeltraining';
   setApp('<header class="kopf"><button class="kn" data-akt="start">‹ Start</button><h1>'+titel+'</h1><span class="luft"></span>'+kronenHTML(o.neu)+tonKnopf()+'</header>'+
-    '<main class="seite">'+(o.geschafft||o.titel?'<button class="gross flach" data-akt="gesamt"><b>Weiter</b><small>'+etappeText()+'</small></button>':'')+
+    '<main class="seite">'+(o.geschafft||o.titel?(o.finale&&HERAUSF&&!herausAlle()?herausKnopf():'<button class="gross flach" data-akt="gesamt"><b>Weiter</b><small>'+etappeText()+'</small></button>'):'')+      // nach dem Finale führt der große Knopf in den Bereich „Fordere mich heraus“, solange dort nicht alles geknackt ist (Baustein heraus)
     '<div class="zs"><span>Einzelne Aufgaben gezielt üben.</span></div>'+      // ohne das Wort „Zwischenstand“: Die Erfolgsbänder erklären sich selbst (Lehrkraft 21.11.2026)
-    '<div class="kacheln">'+TYPEN.map(t=>kachel(t,emp)).join('')+(ANW?werkKachel():'')+'</div></main>');
+    (FALLE?fallUebersicht(emp):'<div class="kacheln">'+TYPEN.map(t=>kachel(t,emp)).join('')+(ANW?werkKachel():'')+(HERAUSF?herausKachel():'')+'</div>')+'</main>');      // mit mehreren Anwendungen (FAELLE): zwei Gruppen mit Überschrift, je Fall eine Kachel (Baustein faelle). Mit HERAUS: ganz unten die Kachel „Fordere mich heraus“ (Baustein heraus); in einem Training mit Fällen käme der Bereich als dritte Gruppe unter die Fälle, das ist noch nicht gebaut
 }
 /* Übersicht der Erklärungen (Variante B, Lehrkraft 24.11.2026): je Kachel nur der Titel (das Thema), wo nötig eine graue Unterzeile, und die Marke Watch, Try
    oder Talk; keine Nummern („Info 1“, „Aufgabe 5“), nicht die Wörter „Erklärung“ und „Erkunder“, keine Zeile „Infoboxen · Watch: zusehen …“ mehr. Reihenfolge
@@ -2324,8 +2839,8 @@ const weich=h=>h.replace(/Normalparabel/g,'Normal\u00ADparabel').replace(/Scheit
 // Davor steht der Ort, „Gesamttraining ·“ oder „Einzeltraining ·“: Der Knopf oben links nennt nur den Rückweg, nicht den Ort. Auch der Ort ist blau und antippbar (AKT.ort):
 // „Einzeltraining“ führt zur Übersicht des Einzeltrainings, „Gesamttraining“ öffnet nur den Hinweis, dass man schon dort ist (Lehrkraft 21.11.2026)
 const ortHTML=()=>'<span class="waso"><button class="wasol" data-akt="ort">'+(S.modus==='einzel'?'Einzeltraining':'Gesamttraining')+'</button> · </span>';
-const wasZeile=()=>'<p class="was"><span>'+ortHTML()+'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button> · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
-const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
+const wasZeile=()=>A.heraus?herausWas():'<p class="was"><span>'+ortHTML()+'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button> · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
+const kopfTeil=auf=>{const t=auf.term?'<p class="term">'+auf.term+'</p>':'';return wasZeile()+(auf.termOben?t:'')+'<p class="frage">'+auf.frage+'</p>'+(auf.termOben?'':t)+'<div class="denk" hidden></div>';};      // termOben: der Term steht über der Frage („f(x) = 2x + 1. In welchem Punkt …“; LF2, Fordere mich heraus)
 const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3 class="lt">'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
 function zeigeSchritte(){const z=$('.zeilen');if(!z)return;const s=A.auf.schritte||[];
   for(let i=z.children.length;i<A.gezeigt&&i<s.length;i++)z.appendChild(el('<div class="zl'+(s[i].text?' text':'')+(s[i].kl?' '+s[i].kl:'')+'"><span>'+(s[i].text||/\bzul\b/.test(s[i].kl||'')?mtext(s[i].h):s[i].h)+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</div>'));      // in Sätzen stehen Zahlen und Terme in der Textschrift (mtext, Lehrkraft 23.11.2026)
@@ -2394,18 +2909,24 @@ const FORM={
   /* Quick: Antippen ist die Antwort. Nur die gewählte Antwort trägt das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der rechten oberen Ecke wie bei der Wischkarte;
      nach einem Fehler ist die richtige, nicht gewählte Antwort weiß mit grün gestricheltem Rand, ohne Zeichen; die übrigen verblassen
      (Lehrkraft 23.11.2026: „Ansonsten folge ich deinem Vorschlag für die Mechanik.“, „Ja gestrichelt mit 2 px ist gut.“). Vorher wurde die richtige grün mit ✓. */
+  /* auf.optFest: Die Antworten sind Terme und brechen nicht um; am Handy rückt dafür ihr Rand enger (26.11.2026: „g(x) = −4/3 x −“ stand über der „1“) */
   wahl(auf,m){
     m.className='buehne eins';
     m.innerHTML='<section class="karte'+(auf.bild?' mitbild':'')+'">'+wasZeile()+'<div class="inhalt">'+(auf.bild?'<div class="bild">'+auf.bild+'</div>':'')+
       '<div class="rechts"><p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>'+
-      '<div class="opts eck n'+auf.opts.length+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+weich(o.html)+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
+      '<div class="opts eck n'+auf.opts.length+(auf.optFest?' ofest':'')+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+weich(o.html)+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
     $$('.opt',m).forEach(b=>b.addEventListener('click',()=>{if(A.gewertet)return;const o=auf.opts[+b.dataset.i];
       $$('.opt',m).forEach((x,i)=>{x.disabled=true;x.classList.add(x===b?(o.ok?'ok':'falsch'):auf.opts[i].ok&&!o.ok?'fehlt':'uebrig');});
       abgeben(!!o.ok,o.hinweis||null);}));
     setHaupt('weiter',false);
   },
   /* Write: Zahl mit dem eigenen Ziffernfeld. Einstellungen der Aufgabe: bruch (Taste a/b), bild (links Frage und Bild, rechts Eingabe und Rechnung), keineText (Knopf
-     wie „keine Lösung“), buchst (Buchstabentasten am Laptop für Umschalter, etwa {h:'H',t:'T'} für Hochpunkt und Tiefpunkt), notiz (zur Bedienung; verschwindet nach „Prüfen“) */
+     wie „keine Lösung“), buchst (Buchstabentasten am Laptop für Umschalter, etwa {h:'H',t:'T'} für Hochpunkt und Tiefpunkt), notiz (zur Bedienung; verschwindet nach „Prüfen“),
+     leer (Felder, die leer bleiben dürfen, etwa der zweite Punkt bei einem Berührpunkt: ['c','d']), nach(w,m) (nach „Prüfen“ oder „Lösung“: die Aufgabe zeichnet in ihr
+     Bild, etwa die eigene Parabel; QF4), vz (Felder ohne eigenes Minus, deren Vorzeichen der Umschalter davor trägt, etwa die Zahl im Linearfaktor: {p:'s1',q:'s2'};
+     die Taste − stellt dort den Umschalter um, am Laptop setzt + ihn auf plus; QF4), frageRechts (mit Bild: Frage und Term stehen rechts über der
+     Eingabe, links nur das Bild und darüber der Denkanstoß; für lange Sachtexte), bereit(w) (eine weitere Bedingung für „Prüfen“, etwa eine fertige Zeichnung: Form zeichnein). Für Formen,
+     die auf dieser aufbauen, stehen die Eingaben in A.w, und A.zeig() zeigt sie neu (LF2, Fordere mich heraus) */
   eingabe(auf,m){
     m.className='buehne';
     const keys=['7','8','9','del','4','5','6','−','1','2','3',',','0'].concat(auf.bruch?['/']:[]);
@@ -2413,13 +2934,13 @@ const FORM={
       '<button type="button" data-k="weiter" class="breit fn" aria-label="Nächstes Feld">→</button></div>',satz=auf.einKl==='satz';
     const rt=auf.rtitel||'Rechnung',rl=auf.rleer!==undefined?auf.rleer:'Rechne mit dem Stift.';      // keine Ankündigung, was später hier steht (Lehrkraft 22.11.2026): nur der Auftrag; die Überschrift kommt mit dem Inhalt
     const kern='<div class="ein'+(auf.einKl?' '+auf.einKl:'')+'">'+auf.ein+'</div>'+(auf.notiz?'<p class="notiz">'+auf.notiz+'</p>':'')+'<div class="rueck" hidden></div>'+(satz?'':T);
-    if(auf.bild)m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="bild">'+auf.bild+'</div></section>'+      // mit Bild: links Frage und Bild, rechts Eingabe, Tasten und Rechnung (LF2)
-      '<section class="karte rechnung mitein"><div class="ein'+(auf.einKl?' '+auf.einKl:'')+'">'+auf.ein+'</div>'+(auf.notiz?'<p class="notiz">'+auf.notiz+'</p>':'')+'<div class="rueck" hidden></div>'+T+
+    if(auf.bild)m.innerHTML='<section class="karte">'+(auf.frageRechts?wasZeile()+'<div class="denk" hidden></div>':kopfTeil(auf))+'<div class="bild">'+auf.bild+'</div></section>'+      // mit Bild: links Frage und Bild, rechts Eingabe, Tasten und Rechnung (LF2); mit frageRechts links nur das Bild, darüber der Denkanstoß (rechts schöbe er die Tasten aus dem Blick)
+      '<section class="karte rechnung mitein">'+(auf.frageRechts?'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':''):'')+'<div class="ein'+(auf.einKl?' '+auf.einKl:'')+'">'+auf.ein+'</div>'+(auf.notiz?'<p class="notiz">'+auf.notiz+'</p>':'')+'<div class="rueck" hidden></div>'+T+
       '<h3 class="lt">'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>';
     else m.innerHTML='<section class="karte">'+kopfTeil(auf)+kern+'</section>'+
       (satz?'<section class="karte rechnung">'+T+'<h3 class="lt">'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>':rechnungKarte(rt,rl));
     if(auf.keineText)$('.ein',m).insertAdjacentHTML('afterend','<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">'+auf.keineText+'</button></p>');
-    const felder=$$('.feld[data-f]',m),spiegel=$$('.feld.spiegel',m),ums=$$('.umsch',m),kb=$('.keine',m),w={};let aktiv=0;
+    const felder=$$('.feld[data-f]',m),spiegel=$$('.feld.spiegel',m),ums=$$('.umsch',m),kb=$('.keine',m),w={},LEER=auf.leer||[];let aktiv=0;
     /* Nach „Prüfen“ trägt jede Eingabe ihr Urteil: grün mit ✓ oder rot mit ✗ (Lehrkraft 22.11.2026). pruefe() nennt in falsch alle falschen Eingaben;
        was nicht darin steht, ist richtig. Nennt es nichts, gibt es kein Urteil. Danach ist die Aufgabe zu Ende: Wer falsch prüft, sieht gleich die Lösung (abgeben, zeigt). */
     const ohneUrteil=()=>felder.concat(ums,kb?[kb]:[]).forEach(x=>x.classList.remove('ok','falsch','folge','fehlt','uebrig'));
@@ -2428,10 +2949,14 @@ const FORM={
     const zeig=()=>{felder.forEach((f,i)=>{f.classList.toggle('aktiv',i===aktiv&&!A.fertig&&!w.keine);f.classList.toggle('matt',!!w.keine);f.innerHTML=feldHTML(w.keine?'':(w[f.dataset.f]||''));});
       spiegel.forEach(f=>{f.textContent=w.keine?'':(w[f.dataset.sp]||'');f.classList.toggle('matt',!!w.keine);});
       ums.forEach(u=>u.classList.toggle('matt',!!w.keine));if(kb){kb.classList.toggle('an',!!w.keine);kb.setAttribute('aria-pressed',!!w.keine);}
-      setHaupt('pruefen',!!w.keine||(felder.every(f=>gueltig(w[f.dataset.f]))&&ums.every(u=>!!w[u.dataset.w])));};
+      setHaupt('pruefen',(!!w.keine||(felder.every(f=>gueltig(w[f.dataset.f])||(!w[f.dataset.f]&&LEER.includes(f.dataset.f)))&&ums.every(u=>!!w[u.dataset.w])))&&(!auf.bereit||auf.bereit(w)));};
     if(kb)kb.addEventListener('click',()=>{if(A.fertig)return;w.keine=!w.keine;ohneUrteil();zeig();});
     A.keine=()=>{if(kb)kb.click();};
-    A.taste=k=>{if(A.fertig)return;if(w.keine){w.keine=false;ohneUrteil();}const id=felder[aktiv].dataset.f;let s=w[id]||'';
+    A.taste=k=>{if(A.fertig)return;const id=felder[aktiv].dataset.f;
+      /* vz: In einem Feld, dessen Vorzeichen ein Umschalter trägt, stellt − den Umschalter um (erst −, dann wieder +); + setzt ihn auf plus und tut sonst nichts */
+      if(k==='−'||k==='+'){const um=auf.vz&&auf.vz[id]&&ums.find(x=>x.dataset.w===auf.vz[id]);if(k==='+'&&!um)return;
+        if(um){const b=$('[data-v="'+(k==='+'||w[um.dataset.w]==='−'?'+':'−')+'"]',um);if(b)b.click();return;}}
+      if(w.keine){w.keine=false;ohneUrteil();}let s=w[id]||'';
       if(k==='weiter'){aktiv=(aktiv+1)%felder.length;return zeig();}
       if(k==='del')s=s.slice(0,-1);else if(k==='−')s=s.startsWith('−')?s.slice(1):'−'+s;
       else if(k===','){if(!s.includes(',')&&!s.includes('/')&&/\d$/.test(s))s+=',';}
@@ -2449,8 +2974,10 @@ const FORM={
       if(w.keine){if(kb)kb.classList.add(F.includes('keine')?'falsch':'ok');return r;}
       if(kb)kb.classList.add(auf.loes&&auf.loes.keine||auf.pruefe({keine:true}).ok?'fehlt':'uebrig');
       /* Folgefehler (Lehrkraft 22.11.2026): Was pruefe() in „folge“ nennt, folgt richtig aus einer eigenen falschen Eingabe und bekommt den Haken in Klammern, wie in den Klassenarbeiten */
-      const G=r.folge||[],urt=id=>F.includes(id)?'falsch':G.includes(id)?'folge':'ok';felder.forEach(f=>f.classList.add(urt(f.dataset.f)));ums.forEach(u=>u.classList.add(urt(u.dataset.w)));return r;};
-    A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));if(kb)kb.disabled=true;const n=$('.notiz',m);if(n)n.hidden=true;};      // die Notiz zur Bedienung („Brüche mit der Taste a/b.“) verschwindet mit dem Ziffernfeld
+      const G=r.folge||[],urt=id=>F.includes(id)?'falsch':G.includes(id)?'folge':'ok';felder.forEach(f=>{const id=f.dataset.f,u=urt(id);if(u==='ok'&&!w[id]&&LEER.includes(id))return;f.classList.add(u);});      // zu Recht leer gelassen (leer): kein Urteil am leeren Feld
+      ums.forEach(u=>u.classList.add(urt(u.dataset.w)));return r;};
+    A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));if(kb)kb.disabled=true;const n=$('.notiz',m);if(n)n.hidden=true;if(auf.nach)auf.nach(w,m);};      // die Notiz zur Bedienung („Brüche mit der Taste a/b.“) verschwindet mit dem Ziffernfeld
+    A.w=w;A.zeig=zeig;
     zeig();
   },
   /* Build: Rechnung ordnen mit Andocken (Lehrkraft 23.11.2026: „ja dein Vorschlag ist gut. Bau es so um.“). Ein Tipp legt eine Zeile auf den nächsten freien Platz der eigenen
@@ -2641,13 +3168,15 @@ const FORM={
      lässt die nächste Zeile erscheinen; eine falsche beendet die Aufgabe. Dann wird nur die gewählte Umformung rot, mit ✗ an der rechten oberen Ecke, die übrigen
      Knöpfe verblassen, die restlichen Zeilen stehen als Lösung da, darunter nur der Hinweis (keine Regel: Die Lösung steht schon da). Alles richtig: „Richtig.“
      Vorher ging es nach einem Fehler an einer Aufgabe weiter, die schon als falsch zählte, mit „Jetzt stimmt es.“ am Schluss, und Raten lohnte sich.
-     Ein „Prüfen“ am Ende geht hier nicht: Jeder Schritt hängt am richtigen Ergebnis des vorigen. Die gegebene Gleichung steht schwarz, die neuen Zeilen orange. */
+     Ein „Prüfen“ am Ende geht hier nicht: Jeder Schritt hängt am richtigen Ergebnis des vorigen. Die gegebene Gleichung steht schwarz, die neuen Zeilen orange.
+     Mit Bild (bild, QF4 „Term bestimmen“): links Frage und Bild, rechts die Rechnung, die wächst. */
   kette(auf,m){
-    m.className='buehne eins';const K=auf.kette;let k=0,vorbei=false;      // vorbei: nach einer falschen Wahl ist die Aufgabe zu Ende
+    m.className=auf.bild?'buehne':'buehne eins';const K=auf.kette;let k=0,vorbei=false;      // vorbei: nach einer falschen Wahl ist die Aufgabe zu Ende
     const teileHTML=z=>z.koef?polyTeile(z.koef[0],z.koef[1],z.koef[2]).map(t=>'<span class="tg t'+t.r+'">'+t.h+'</span>').join('')+'<span class="tg te"> = 0</span>':z.h;
     const zeile=(z,neu)=>'<div class="zl'+(neu?' neu':'')+'"><span class="zh">'+teileHTML(z)+'</span><span class="op"></span></div>';
-    m.innerHTML='<section class="karte kette">'+wasZeile()+'<p class="frage">'+auf.frage+'</p><div class="denk" hidden></div>'+
+    const kopf=wasZeile()+'<p class="frage">'+auf.frage+'</p>',rest='<div class="denk" hidden></div>'+
       '<div class="kzeil">'+zeile(auf.start)+'</div><div class="kfrage"><p class="kf"></p><div class="opts kopts"></div></div><div class="rueck" hidden></div></section>';
+    m.innerHTML=auf.bild?'<section class="karte">'+kopf+'<div class="bild">'+auf.bild+'</div></section><section class="karte kette">'+rest:'<section class="karte kette">'+kopf+rest;
     const kz=$('.kzeil',m),kf=$('.kfrage',m);
     const frage=()=>{if(k>=K.length){kf.hidden=true;return;}const s=K[k];$('.kf',kf).innerHTML='<b>Schritt '+(k+1)+'</b> · '+s.frage;
       const o=$('.kopts',kf);o.className='opts kopts eck n'+s.opts.length;o.innerHTML=s.opts.map((x,i)=>'<button class="opt" data-i="'+i+'">'+x.html+'</button>').join('');
@@ -2832,6 +3361,76 @@ const FORM={
     A.sperre=()=>{if(!A.geprueft)L.forEach((l,j)=>{if(!fest[j])gib(j);});wahl=null;zeig();$$('.zu',m).forEach(b=>b.disabled=true);$$('.zvorrat .zu',m).forEach(b=>b.classList.add('uebrig'));$('.zdock',m).classList.add('fertig');};      // nach „Prüfen“ bleiben die eigenen Paare mit ihrem Urteil stehen, nach „Lösung“ stehen die richtigen da
     zeig();
   },
+  /* Umschalter in Kästen (LF2 „Vorzeichen“, 26.11.2026). Die Aufgabe nennt kaesten: je Kasten ein Text (text) und darunter eine Zeile von Umschaltern (um:
+     [{id, vor, opts:[[Wert, Beschriftung], …]}]) mit zwei oder drei Stellungen. „Prüfen“ geht, wenn überall gewählt ist; vorher gibt es kein Urteil. Danach trägt
+     jeder Umschalter sein Urteil: das Zeichen an der Ecke der gewählten Seite, der Rand der Gruppe grün oder rot; die richtige, nicht gewählte Seite ist grün
+     gestrichelt, so dick wie der Rand des Urteils (loes nennt je Umschalter den richtigen Wert). Mit dem Urteil und nach „Lösung“ erscheint neben jedem Text sein
+     Bild (bild(), freiwillig: vorher nähme es die Antwort vorweg), rechts steht die Lösung, darüber das Urteil mit dem Hinweis (links ist mit zwei Kästen und
+     ihren Bildern kein Platz mehr: Die Bühne rollte am iPad). pruefe(w) nennt in falsch alle falschen Umschalter und nur sie; die Aufgabe zählt nur, wenn alle
+     stimmen. */
+  schalter(auf,m){
+    m.className='buehne';const w={};
+    m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="schk">'+auf.kaesten.map((k,i)=>'<div class="schka"><div class="schtx"><p>'+k.text+'</p><div class="schbild" data-i="'+i+'" hidden></div></div>'+
+        '<div class="schz">'+k.um.map(u=>'<span class="schu">'+(u.vor?'<span>'+u.vor+'</span>':'')+'<span class="umsch" data-w="'+u.id+'">'+u.opts.map(o=>'<button type="button" data-v="'+o[0]+'" aria-pressed="false">'+o[1]+'</button>').join('')+'</span></span>').join('')+'</div></div>').join('')+'</div></section>'+
+      '<section class="karte rechnung schr"><div class="rueck" hidden></div><h3 class="lt">'+(auf.rtitel||'Lösung')+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer"></p></section>';
+    const ums=$$('.umsch',m);
+    ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;
+      $$('button',um).forEach(x=>{x.classList.toggle('an',x===b);x.setAttribute('aria-pressed',x===b);});setHaupt('pruefen',ums.every(u=>w[u.dataset.w]!==undefined));})));
+    A.pruefe=()=>{const r=auf.pruefe(w),F=r.falsch||[];
+      ums.forEach(um=>{const id=um.dataset.w,f=F.includes(id);um.classList.add(f?'falsch':'ok');if(f&&auf.loes){const b=$('[data-v="'+auf.loes[id]+'"]',um);if(b)b.classList.add('fehlt');}});
+      return r;};
+    A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));
+      auf.kaesten.forEach((k,i)=>{const b=$('.schbild[data-i="'+i+'"]',m);if(b&&k.bild){b.innerHTML=k.bild();b.hidden=false;}});
+      const dk=$('.denk',m),rk=$('.karte.rechnung',m);if(dk&&rk)rk.appendChild(dk);};      // mit den Bildern ist links kein Platz mehr: Der Denkanstoß rückt unter die Lösung
+    setHaupt('pruefen',false);
+  },
+  /* Zeichnen und Eintippen in einer Aufgabe (LF2 „Parallele durch P“, 26.11.2026). Links das Gitter mit dem Punkt P (auf.P), nicht mit der gegebenen Geraden;
+     zwei Gitterpunkte antippen wie bei „Gerade zeichnen“: Mit dem zweiten steht die eigene Gerade grau da. Rechts die Felder der Gleichung (auf.ein, mit
+     Bruchtaste). „Prüfen“ geht, wenn die Gerade steht und die Felder gefüllt sind. Zeichnung und Felder werden je für sich an der Lösung gemessen (auf.s, auf.b:
+     die gesuchte Gerade): pruefe(w) bekommt die Punkte in w.pts und nennt in falsch die falschen Felder und 'z', wenn die Zeichnung nicht stimmt. Jede Gerade
+     durch zwei verschiedene Gitterpunkte der gesuchten Geraden zählt. Danach und nach „Lösung“ zeigt das Bild die Lösung: die gegebene Gerade (auf.g: {s,b,name})
+     gestrichelt hellblau mit Namen, die gesuchte grün mit ihrer Gleichung (auf.gl), das Steigungsdreieck vom Punkt (0 | b) aus in Richtung P, den Punkt (0 | b)
+     blau; eine falsche eigene Gerade verblasst. */
+  zeichnein(auf,m){
+    const K=geradeK(),P=auf.P,s=auf.s,b=auf.b;let pts=[],farbe='',frisch=false,loes='',loesK='';
+    const unten=P[1]<0,rechts=(s.w>0)===unten;      /* der Name von P steht nicht auf der gesuchten Geraden und nicht in den Zahlen der x-Achse: unter der Achse unter dem Punkt, sonst darüber */
+    const pm='<g class="zk-p"><circle class="zpp" cx="'+K.x(P[0])+'" cy="'+K.y(P[1])+'" r="5.5"/><text class="zpn" x="'+(K.x(P[0])+(rechts?8:-8))+'" y="'+(K.y(P[1])+(unten?19:-8))+'" text-anchor="'+(rechts?'start':'end')+'"><tspan font-style="italic">P</tspan></text></g>';
+    FORM.eingabe(Object.assign({},auf,{bild:K.svg('<g class="zk-k"></g>','<g class="zk-m"></g>'+pm),bereit:()=>pts.length===2}),m);
+    const bild=$('.bild',m);bild.classList.add('setz','zbild','zebild');bild.insertAdjacentHTML('afterend','<p class="notiz zzaehl"></p>');
+    const dk=$('.denk',m),rk=$('.karte.rechnung',m);if(dk&&rk)rk.insertBefore(dk,rk.firstChild);      // der Denkanstoß steht rechts über den Feldern: Links schöbe er das Bild aus dem Blick
+    const svg=$('svg',bild),gk=$('.zk-k',svg),gm=$('.zk-m',svg),aufG=t=>gleich(t.y,s.w*t.x+b);
+    const schraeg=()=>pts.length===2&&pts[0].x!==pts[1].x&&pts[0].y!==pts[1].y;
+    const linie=()=>{if(pts.length<2)return '';const [p,q]=pts,kl='gk '+(farbe||'lmein');      // die eigene Gerade: grau, nach „Prüfen“ grün oder rot
+      if(p.x===q.x)return '<line class="'+kl+'" x1="'+K.x(p.x)+'" y1="'+K.y(5.6)+'" x2="'+K.x(p.x)+'" y2="'+K.y(-5.6)+'"/>';
+      const sl=(q.y-p.y)/(q.x-p.x),bi=p.y-sl*p.x;return '<path class="'+kl+(frisch?' neu':'')+'" pathLength="1" d="'+K.pfad(x=>sl*x+bi)+'"/>';};
+    const mal=()=>{const bl=A.fertig&&!A.richtig?' class="zblass"':'';let h='';      // steht die Lösung da und das Eigene stimmt nicht, verblasst es
+      const eigenD=schraeg()&&!(A.fertig&&A.richtig);      /* stimmt die eigene Gerade, zeigt nur noch das Steigungsdreieck der Lösung, wie man zu b kommt */
+      if(eigenD)h+=dreieckSeiten(K,pts[0].x,pts[0].y,pts[1].x,pts[1].y,'');
+      pts.forEach(p=>{h+='<circle class="sp zfrei'+(p.k?' '+p.k:'')+'" cx="'+K.x(p.x)+'" cy="'+K.y(p.y)+'" r="7.5"/>';});
+      gm.innerHTML='<g'+bl+'>'+h+'</g>'+loes;
+      gk.innerHTML='<g'+bl+'>'+(eigenD?dreieckFlaeche(K,pts[0].x,pts[0].y,pts[1].x,pts[1].y,''):'')+linie()+'</g>'+loesK;frisch=false;
+      const z=$('.zzaehl',m);if(A.fertig){z.hidden=true;return;}
+      z.textContent=pts.length===0?'Tippe zwei Gitterpunkte der Geraden an.':pts.length===1?'Jetzt den zweiten Punkt. Ein zweiter Tipp auf einen Punkt nimmt ihn wieder weg.':'Ein Tipp auf einen Punkt nimmt ihn wieder weg.';};
+    svg.addEventListener('click',ev=>{if(A.fertig)return;const t=K.tipp(svg,ev);if(t.x<-5||t.x>5||t.y<-5||t.y>5)return;
+      const j=pts.findIndex(p=>p.x===t.x&&p.y===t.y);if(j>=0)pts.splice(j,1);else if(pts.length<2)pts.push(t);else pts[1]=t;
+      farbe='';pts.forEach(p=>delete p.k);frisch=pts.length===2;A.w.pts=pts;mal();A.zeig();});
+    A.w.pts=pts;
+    const pruefe0=A.pruefe,sperre0=A.sperre;
+    A.pruefe=()=>{A.w.pts=pts;const r=pruefe0(),zOk=!(r.falsch||[]).includes('z');farbe=zOk?'lg':'lfalsch';pts.forEach(t=>{t.k=aufG(t)?'zok':'falsch';});A.richtig=zOk;mal();return r;};
+    /* die Lösung im Bild: die gegebene Gerade gestrichelt, das Steigungsdreieck von (0 | b) aus in Richtung P, der Punkt (0 | b), die gesuchte Gerade (nur, wenn die eigene
+       nicht schon dort liegt). Liegt Eigenes im Bild, das nicht stimmt, kommt sie etwas später, wenn es verblasst ist */
+    A.sperre=()=>{sperre0();$$('.notiz',m).forEach(n=>{n.hidden=true;});
+      const sp=!A.richtig&&pts.length?' zspaet':'',g=auf.g,ri=P[0]<0?-1:1,x1=ri*s.n,y1=b+ri*s.z,frei=[[P[0],P[1]],[P[0]+.6,P[1]+.6]];
+      for(let i=0;i<=8;i++)frei.push([x1*i/8,b],[x1,b+(y1-b)*i/8],[x1*(.5+i/16),b+(y1-b)*i/16]);
+      /* der Name der gegebenen Geraden: an dem Ende, das weiter von den Achsen weg liegt, auf der Seite, die der gesuchten Geraden abgewandt ist, quer zur Geraden versetzt */
+      const ende=x=>{let y=g.s.w*x+g.b;if(Math.abs(y)>4.3){y=4.3*Math.sign(y);x=(y-g.b)/g.s.w;}return [x,y,Math.min(Math.abs(x),Math.abs(y))];},e1=ende(-3.7),e2=ende(3.7),en=e1[2]>e2[2]?e1:e2;
+      const seite=b>g.b?1:-1,nl=Math.hypot(1,g.s.w),nx=K.x(en[0])+seite*g.s.w/nl*13,ny=K.y(en[1])+seite/nl*13+5;
+      loes=dreieckSeiten(K,0,b,x1,y1,'loes'+sp)+'<circle class="sp loesb'+sp+'" cx="'+K.x(0)+'" cy="'+K.y(b)+'" r="6.5"/>'+
+        '<text class="zgn'+sp+'" x="'+nx.toFixed(1)+'" y="'+ny.toFixed(1)+'" text-anchor="middle"><tspan font-style="italic">'+g.name+'</tspan></text>';
+      loesK='<path class="gk zgeg'+sp+'" d="'+K.pfad(x=>g.s.w*x+g.b)+'"/>'+dreieckFlaeche(K,0,b,x1,y1,'loes'+sp)+(A.richtig?'':'<path class="gk ls neu'+(sp?' spaet':'')+'" pathLength="1" d="'+K.pfad(x=>s.w*x+b)+'"/>');
+      A.gl=glGerade(auf.gl,{m:s.w,b},'lg',{spaet:!A.richtig&&pts.length>0,frei,andere:[{m:g.s.w,b:g.b}]});mal();};
+    mal();
+  },
 };
 
 /* ---------- Hilfen ---------- */
@@ -2839,6 +3438,7 @@ const FORM={
    der zweite Tipp stellt den zweiten mit einer 2 darunter, der dritte schließt. Ohne denk2 bleibt es beim Auf und Zu. A.denk zählt mit: 0 zu, 1 oder 2 offen. */
 const denkHTML=(auf,n)=>!auf.denk2?auf.denk:'<span class="dz"><span>'+auf.denk+'</span><b class="dnr">1</b></span>'+(n>=2?'<span class="dz"><span>'+auf.denk2+'</span><b class="dnr">2</b></span>':'');
 function zeigeHilfen(){const h=$('.hilfen');if(!h)return;const a=A.auf;if(!a){h.innerHTML='';return;}let s='';
+  if(A.heraus){h.innerHTML=herausHilfen();return;}      // Fordere mich heraus: Denkanstoß, Lösung, Erklärung; kein „Nächster Schritt“ (Baustein heraus)
   const n=(a.schritte||[]).length,offen=n&&A.gezeigt<n&&!A.fertig;
   if(a.denk)s+='<button class="hk'+(A.denk?' an':'')+'" data-akt="denk">Denkanstoß</button>';
   if(n){s+='<button class="hk" data-akt="schritt"'+(offen?'':' disabled')+'><span class="nl">Nächster </span>Schritt'+(offen?'<span class="nl"> ('+(A.gezeigt+1)+' von '+n+')</span><span class="nk"> '+(A.gezeigt+1)+'/'+n+'</span>':'')+'</button>';
@@ -2855,7 +3455,8 @@ function loesung(){const n=A.auf.schritte.length;if(A.fertig)return;hilfeGenutzt
 
 /* ---------- Auswertung ---------- */
 function abgeben(ok,hinweis,art){
-  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse','kette'].includes(A.form),zeigt=['eingabe','menge','zeichnen','zuordnen','ordnen','legen2','legen','punkte','ziel','puzzle','einsetzen'].includes(A.form),still=einmal||zeigt||['ordnen','legen2','kette','puzzle','einsetzen'].includes(A.form);let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
+  if(A.heraus)return herausAbgeben(ok,hinweis,art);      // Fordere mich heraus wertet selbst: ohne Band, Punkte und Meldung (Baustein heraus)
+  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse','kette'].includes(A.form),zeigt=['eingabe','menge','zeichnen','zuordnen','ordnen','legen2','legen','punkte','ziel','puzzle','einsetzen','skizze','aussagen','bauen','weg','schalter','zeichnein'].includes(A.form),still=einmal||zeigt||['ordnen','legen2','kette','puzzle','einsetzen'].includes(A.form);let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
   if(erst){
     A.gewertet=true;const zaehlt=!A.hilfe&&art!=='loesung',alt=band(A.t);
     S.zeiten.push({typ:A.t.titel,key:A.key,s:Math.round((performance.now()-A.start)/100)/10,ok:ok&&art!=='loesung',hilfe:!zaehlt});
@@ -2886,7 +3487,7 @@ function abgeben(ok,hinweis,art){
    Im Rückblick bleiben drei Wege offen (Lehrkraft 21.11.2026): der Aufgabentyp führt in sein Einzeltraining, dazu Denkanstoß und Erklärung dieser Aufgabe. */
 var RB=null;
 function merkeLetzte(){const m=$('.buehne');
-  if(!m||S.rueckblick||!A.gewertet||!m.firstChild||m.dataset.nr!==String(A.nr)||(S.letzte&&S.letzte.nr===A.nr))return;
+  if(!m||S.rueckblick||!A.gewertet||A.heraus||!m.firstChild||m.dataset.nr!==String(A.nr)||(S.letzte&&S.letzte.nr===A.nr))return;      // aus dem Bereich „Fordere mich heraus“ gibt es keinen Rückblick
   $$('input',m).forEach(i=>i.setAttribute('value',i.value));              // Regler: die Kopie übernimmt nur das Attribut
   const k=m.cloneNode(true);$$('.wasr,.waso',k).forEach(x=>x.remove());
   $$('.wasl',k).forEach(x=>{const b=document.createElement('b');b.innerHTML=x.innerHTML;x.replaceWith(b);});
@@ -2909,7 +3510,8 @@ function endeLetzte(){if(!S.rueckblick)return;S.rueckblick=false;const m=$('.bue
 
 function weiter(){
   clearTimeout(A.auto);if(!A.gewertet)return;
-  if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(()=>vEinzel({titel:'Alles sitzt!'}));}
+  if(A.heraus)return herausWeiter();      // Fordere mich heraus: der blaue Knopf nach „Prüfen“ (Baustein heraus)
+  if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(()=>vEinzel({titel:'Alles sitzt!',finale:true}));}
   if(S.modus==='gesamt'){
     if(S.pkt>=ETAPPE){const n=S.etappe;S.etappe++;S.pkt=0;S.kronen++;return zeigeKrone('Etappe '+n+' geschafft!',()=>vEinzel({geschafft:n,neu:true}));}
     if(werkDran())return startWerk('gesamt');           // alle sechs Bänder sind voll, nur das Werkstor fehlt noch
@@ -2942,9 +3544,13 @@ function zeigeStand(){
   const emp=empfohlen();
   const ov=el('<div class="ov dunkel"><div class="panel" role="dialog" aria-label="Stand"><div class="pkopf"><h2>Stand</h2><span class="luft"></span>'+kronenHTML()+'<button class="kn" data-zu>Schließen</button></div>'+
     TYPEN.map(t=>t.aktiv?'<button class="reihe" data-typ="'+t.id+'"><b>'+t.titel+'</b>'+bandHTML(t)+'<span>'+markeHTML(t,emp)+'</span></button>':'<div class="reihe aus"><b>'+t.titel+'</b>'+bandHTML(t,0)+'<span>'+markeHTML(t)+'</span></div>').join('')+
-    (ANW?'<button class="reihe" data-werk="1"><b>'+WERKSTOR.titel+'</b>'+bandHTML(WERKSTOR,werkBand())+'<span>'+werkMarke()+'</span></button>':'')+
+    (FALLE?fallReihen():ANW?'<button class="reihe" data-werk="1"><b>'+WERKSTOR.titel+'</b>'+bandHTML(WERKSTOR,werkBand())+'<span>'+werkMarke()+'</span></button>':'')+
+    (HERAUSF?herausReihe():'')+      // Fordere mich heraus: eine Zeile mit den Zeichen, ein Tipp öffnet den Bereich (Baustein heraus)
     '<p class="klein">Tippe eine Zeile an für ihr Einzeltraining.</p></div></div>');
-  ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();const r=e.target.closest('.reihe[data-typ]');if(r){ov.remove();return startEinzel(r.dataset.typ,S.ansicht==='aufgabe'&&(S.modus==='gesamt'||!!(S.einzel&&S.einzel.vonGesamt)));}
+  const vonG=S.ansicht==='aufgabe'&&(S.modus==='gesamt'||(S.modus==='heraus'?S.heraus.vonGesamt:!!(S.einzel&&S.einzel.vonGesamt)));      // aus einer Aufgabe des Gesamttrainings heraus: Der Rückweg führt dorthin zurück
+  ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();const r=e.target.closest('.reihe[data-typ]');if(r){ov.remove();return startEinzel(r.dataset.typ,vonG);}
+    if(e.target.closest('.reihe[data-heraus]')){ov.remove();return herausStart(null,vonG);}
+    const f=e.target.closest('.reihe[data-fall]');if(f){ov.remove();return startWerk('einzel',f.dataset.fall);}
     if(e.target.closest('.reihe[data-werk]')){ov.remove();startWerk('einzel');}});
   document.body.appendChild(ov);
 }
@@ -3264,7 +3870,7 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.ansi
 /* Neu anfangen (Lehrkraft 24.11.2026): In der roten Rückmeldung eines falschen Schritts steht hinter „Schritt 1 zählt in diesem Durchgang nicht.“ klein der
    Link „Neu anfangen, neue Zahlen“. Er beginnt sofort einen neuen Durchgang derselben Anwendung, ohne Krone, im Einzel- wie im Gesamttraining; einen festen
    Knopf dafür gibt es nicht. */
-W.zaehltNicht=n=>'Schritt '+n+' zählt in diesem Durchgang nicht. <button type="button" class="wneu" data-akt="wneu">Neu anfangen, neue Zahlen</button>';
+W.zaehltNicht=n=>'Schritt '+n+' zählt in diesem Durchgang nicht. <button type="button" class="wneu" data-akt="wneu">Neu anfangen, '+(W.neuText||'neue Zahlen')+'</button>';      // W.neuText: was ein neuer Durchgang bringt, wenn es keine neuen Zahlen sind (QF5: „andere Frage“)
 function werkNeu(){if(S.ansicht!=='werk'||!W.L)return;delete S.werk.lauf[S.modus];if(W.raf)cancelAnimationFrame(W.raf);W.rb=null;startWerk(S.modus);}
 W.vor=function(){clearTimeout(W.timer);const L=W.L;if(!L||S.ansicht!=='werk'||W.rb)return;W.merke();L.ph++;L.sub={};W.zeig();
   if(schmal()){const r=$('.wrechts');if(r)r.scrollIntoView({block:'start',behavior:RUHIG?'auto':'smooth'});}};
@@ -3311,12 +3917,13 @@ W.rbEnde=function(){const R=W.rb,r=$('.wrechts');if(!R)return;W.rb=null;
    Durchgang alle drei Schritte ohne Lösung gelungen sind; Etappen-Krone und Finale bleiben, wie sie sind. */
 W.ende=function(){const f=$('.leiste');
   if(S.modus==='gesamt')return W.setH(WERKSTOR.titel.replace(/^(Der|Die|Das) /,'')+' beenden',true,()=>werkWeiter(false));
-  if(f&&!$('.wnoch',f)){f.classList.add('wende');const h=$('.haupt',f);if(h)h.insertAdjacentHTML('beforebegin','<button type="button" class="wnoch" data-akt="wnoch">Noch einmal, neue Zahlen</button>');}
+  if(f&&!$('.wnoch',f)){f.classList.add('wende');const h=$('.haupt',f);if(h)h.insertAdjacentHTML('beforebegin','<button type="button" class="wnoch" data-akt="wnoch">Noch einmal, '+(W.neuText||'neue Zahlen')+'</button>');}
   W.setH('Fertig',true,()=>werkWeiter(false));};
 function werkWeiter(nochmal){
+  if(FALLE)return fallWeiter(nochmal);      // mehrere Anwendungen: Ein Fall ist keine Etappe (Baustein faelle)
   const modus=S.modus,L=W.L,verdient=!!L&&L.ok.every(Boolean);delete S.werk.lauf[modus];clearTimeout(W.timer);if(W.raf)cancelAnimationFrame(W.raf);W.rb=null;
   const neu=()=>startWerk('einzel');
-  if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(nochmal?neu:()=>vEinzel({titel:'Alles sitzt!'}));}
+  if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(nochmal?neu:()=>vEinzel({titel:'Alles sitzt!',finale:true}));}
   if(modus==='gesamt'){const n=S.etappe;S.etappe++;S.pkt=0;S.kronen++;S.geuebt=true;S.werk.faellig=n+2;       // noch nicht alles geschafft: zwei Etappen später noch einmal, mit neuen Zahlen
     return zeigeKrone('Etappe '+n+' geschafft!',()=>vEinzel({geschafft:n,neu:true}));}
   if(!verdient)return nochmal?neu():vEinzel();
@@ -4133,7 +4740,7 @@ const AKT={
   einzelstart:b=>startEinzel(b.dataset.typ),
   einzeltyp:b=>zeigeEinzelFrage(b.dataset.typ),
   ort:()=>{if(S.modus==='gesamt')return zeigeGesamtHinweis();clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;vEinzel();},
-  zurueck:()=>{clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;if(S.modus==='gesamt')vStart();else if(S.ansicht==='aufgabe'&&S.einzel&&S.einzel.vonGesamt)startGesamt();else vEinzel();},
+  zurueck:()=>{clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;if(S.modus==='heraus')return herausFertig();if(S.modus==='gesamt')vStart();else if(S.ansicht==='aufgabe'&&S.einzel&&S.einzel.vonGesamt)startGesamt();else vEinzel();},
   werk:()=>startWerk('einzel'),wst:b=>W.zeigeStation(+b.dataset.s),wnoch:()=>werkWeiter(true),wneu:()=>werkNeu(),wdenk:()=>W.denk(),wschritt:()=>W.schritt(false),wloesung:()=>W.schritt(true),
   menue:zeigeMenue,stand:zeigeStand,letzte:zeigeLetzte,
   ton:()=>{S.ton=!S.ton;$$('.kn.ton').forEach(b=>b.innerHTML=S.ton?TON_AN:TON_AUS);if(!S.ton)return;      // der Ton ist am Anfang aus; das Antippen schaltet ihn ein und lässt ihn sofort hören
@@ -4144,6 +4751,7 @@ const AKT={
   erklaerung:()=>{clearTimeout(A.auto);erklFuer(A.auf.erkl)();},
   lerkl:()=>{if(S.letzte)erklFuer(S.letzte.auf.erkl)();},
   ldenk:()=>{const L=S.letzte,d=$('.buehne .denk');if(!L||!d)return;L.denkAn=((+L.denkAn||0)+1)%(L.auf.denk2?3:2);d.hidden=!L.denkAn;d.innerHTML=denkHTML(L.auf,L.denkAn);const b=$('[data-akt="ldenk"]');if(b)b.classList.toggle('an',!!L.denkAn);},
+  heraus:()=>herausStart(),herausnr:b=>herausWechsel(b.dataset.h),herausfertig:()=>herausFertig(),herauserkl:()=>{erklEbene();},
   werkl:()=>{clearTimeout(W.timer);(ERKL[W.erkl]||zeigeInfo1)();},
   info1:()=>{adresse('info-1');zeigeInfo1()._ende=()=>adresse('erklaerungen');},
   tafel:()=>{adresse('tafel-runde');zeigeTafel()._ende=()=>adresse('erklaerungen');},
@@ -4163,6 +4771,7 @@ document.addEventListener('pointerdown',()=>Sound.init(),{passive:true});
    Knopfs (0,3 s, Wechsel nach 270 ms) entfiel am 24.11.2026 (Lehrkraft: „verstößt so ein bisschen gegen diese Einfachheit“) */
 const RUHIG=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TIPP={gesamt:['tipp',140],einzel:['tipp',140],erkl:['tipp',140],einzelstart:['tipp',140],werk:['tipp',140],
+heraus:['tipp',140],
 info1:['tipp',140],tafel:['tipp',140],info2:['tipp',140],info3:['tipp',140],info2a:['tipp',140],probe:['tipp',140],erkunder:['tipp',140],erkunder2:['tipp',140]
 };
 document.addEventListener('click',e=>{Sound.init();const b=e.target.closest('[data-akt]');if(!b||b.disabled)return;const f=AKT[b.dataset.akt];if(!f)return;
@@ -4192,7 +4801,7 @@ document.addEventListener('keydown',e=>{
     if(e.key.toLowerCase()==='k'){A.keine();return;}if(k){e.preventDefault();A.taste(k);return;}}
   if((A.form==='wahl'||A.form==='mehr')&&!A.gewertet&&/^[1-4]$/.test(e.key)){const o=$$('.opt')[+e.key-1];if(o)o.click();return;}
   if(A.form==='eingabe'&&A.taste&&!A.fertig){
-    const k=/^\d$/.test(e.key)?e.key:e.key==='-'?'−':e.key==='/'?'/':(e.key===','||e.key==='.')?',':e.key==='Backspace'?'del':(e.key==='Tab'||e.key==='ArrowRight')?'weiter':null;
+    const k=/^\d$/.test(e.key)?e.key:e.key==='-'?'−':e.key==='+'?'+':e.key==='/'?'/':(e.key===','||e.key==='.')?',':e.key==='Backspace'?'del':(e.key==='Tab'||e.key==='ArrowRight')?'weiter':null;
     if(e.key.toLowerCase()==='k'&&A.keine){A.keine();return;}
     const bu=A.auf.buchst&&A.auf.buchst[e.key.toLowerCase()];if(bu){const b=$('.umsch [data-v="'+bu+'"]');if(b)b.click();return;}      // Buchstabentasten der Aufgabe (QF1, QF2: H und T)
     if(k){e.preventDefault();A.taste(k);return;}}
@@ -4215,10 +4824,11 @@ function nachAdresse(){let h=(location.hash||'').replace('#','');
   if(h==='einzeltraining')vEinzel();else if(h==='erklaerungen')vErkl();
   else if(ADR[h]){vErkl();AKT[ADR[h]]();}
   else if(h==='gesamttraining')startGesamt();else if(h===WERKSTOR.id&&ANW)startWerk('einzel');
+  else if(h===HERAUS_ADR&&HERAUSF)herausStart();      /* #fordere-mich-heraus öffnet den Bereich wie seine Kachel: die erste offene Herausforderung */
   else vStart();}
 window.addEventListener('hashchange',()=>{const h=(location.hash||'').replace('#','');
-  if((['einzeltraining','erklaerungen','auto',WERKSTOR.id].includes(h)||ADR[h]||ALT[h])&&S.ansicht!=='aufgabe'&&S.ansicht!=='werk')nachAdresse();});
-window.LF2={AKKU,AKKA,S,A,W,TYPEN,GEN,TAFEL,LX,zeigeTafel,Sound,FORM,weiter,zeigeFinale,zeigeKrone,startEinzel,startGesamt,startWerk,werkWeiter,werkDran,vStart,vEinzel,vErkl,ANW,ERKL,zeichenHinweis,probeFall,probeFehler,stg,term,num};     // für die Prüfläufe
+  if((['einzeltraining','erklaerungen','auto',WERKSTOR.id,HERAUS_ADR].includes(h)||ADR[h]||ALT[h])&&S.ansicht!=='aufgabe'&&S.ansicht!=='werk')nachAdresse();});
+window.LF2={AKKU,AKKA,S,A,W,TYPEN,GEN,TAFEL,LX,zeigeTafel,Sound,FORM,weiter,zeigeFinale,zeigeKrone,startEinzel,startGesamt,startWerk,werkWeiter,werkDran,vStart,vEinzel,vErkl,ANW,ERKL,zeichenHinweis,probeFall,probeFehler,stg,term,num,HERAUSF,HGEN,herausStart,herausAufgabe,herausWechsel,abgeben,vzLage,vzAuf,massFall,massAuf,treffAuf,parAuf,doppeltFall,doppeltAuf};     // für die Prüfläufe
 
 
 /* =====================================================================
@@ -4235,8 +4845,11 @@ function lsSpeicher(){try{if(location.protocol==='file:')return null;const s=win
 /* Was gemerkt wird: nur Zähler und Einstellungen, keine Aufgaben, keine Eingaben, keine Zeiten (S.zeiten, S.offen, S.letzte, S.werk.lauf bleiben weg) */
 function lsDaten(){const typ={};
   TYPEN.forEach(t=>{const s=S.typ[t.id];typ[t.id]={top:s.top,streak:s.streak,sl:s.sl,halb:s.halb,falsch:s.falsch,zuletzt:s.zuletzt,faellig:s.faellig};});
-  return {v:LS.v,merken:true,etappe:S.etappe,pkt:S.pkt,pos:S.pos,letzter:S.letzter,kronen:S.kronen,filter:{q:!!S.filter.q,b:!!S.filter.b,w:!!S.filter.w},ton:!!S.ton,
-    geuebt:!!S.geuebt,finale:!!S.finale,typ,werk:{ok:S.werk.ok.slice(),faellig:S.werk.faellig,n:S.werk.n}};}
+  const d={v:LS.v,merken:true,etappe:S.etappe,pkt:S.pkt,pos:S.pos,letzter:S.letzter,kronen:S.kronen,filter:{q:!!S.filter.q,b:!!S.filter.b,w:!!S.filter.w},ton:!!S.ton,
+    geuebt:!!S.geuebt,finale:!!S.finale,typ,werk:{ok:S.werk.ok.slice(),faellig:S.werk.faellig,n:S.werk.n}};
+  if(FALLE)d.faelle=fallDaten();      // mehrere Anwendungen: der Stand jedes Falls (Baustein faelle); ohne FAELLE bleibt der Eintrag, wie er war
+  if(HERAUSF)d.heraus=herausDaten();      // Fordere mich heraus: die Kennungen der geknackten Herausforderungen (Baustein heraus); ohne HERAUS bleibt der Eintrag, wie er war
+  return d;}
 /* Einen Eintrag prüfen und übernehmen: alles oder nichts. Fehlt ein Aufgabentyp (neue Fassung), fängt er vorn an; unbekannte bleiben weg */
 function lsUebernimm(d){
   const ganz=(x,a,b)=>Number.isInteger(x)&&x>=a&&x<=b,ja=x=>typeof x==='boolean',obj=x=>!!x&&typeof x==='object'&&!Array.isArray(x);
@@ -4246,6 +4859,8 @@ function lsUebernimm(d){
   const f=d.filter;if(!obj(f)||!ja(f.q)||!ja(f.b)||!ja(f.w)||!(f.q||f.b||f.w))return false;
   const w=d.werk;if(!obj(w)||!Array.isArray(w.ok)||w.ok.length!==3||!w.ok.every(ja)||!ganz(w.faellig,0,9999)||!ganz(w.n,0,1e7))return false;
   if(!obj(d.typ))return false;
+  if(FALLE&&!fallGueltig(d.faelle))return false;
+  if(HERAUSF&&d.heraus!==undefined&&!herausGueltig(d.heraus))return false;      // ein alter Eintrag ohne dieses Feld bleibt gültig (LS.v steigt nicht)
   const typ={};
   for(const t of TYPEN){const s=d.typ[t.id],n=t.level.length;
     if(s===undefined){typ[t.id]=null;continue;}
@@ -4255,6 +4870,8 @@ function lsUebernimm(d){
   TYPEN.forEach(t=>{if(typ[t.id])S.typ[t.id]=typ[t.id];});
   Object.assign(S,{etappe:d.etappe,pkt:d.pkt,pos:d.pos,letzter:TYP[d.letzter]?d.letzter:null,kronen:d.kronen,filter:{q:f.q,b:f.b,w:f.w},ton:d.ton,geuebt:d.geuebt,finale:d.finale});
   S.werk.ok=w.ok.slice();S.werk.faellig=w.faellig;S.werk.n=w.n;
+  if(FALLE)fallUebernimm(d.faelle);
+  if(HERAUSF&&d.heraus)herausUebernimm(d.heraus);
   return true;}
 /* Beim Öffnen: still laden; ein kaputter oder veralteter Eintrag wird gelöscht */
 function lsLaden(){LS.sp=lsSpeicher();LS.ok=!!LS.sp;if(!LS.ok)return;
@@ -4270,7 +4887,7 @@ function lsBald(){if(!LS.an)return;clearTimeout(LS.t);LS.t=setTimeout(lsMerken,3
 function lsWeg(){LS.an=false;LS.zuletzt='';clearTimeout(LS.t);try{if(LS.sp)LS.sp.removeItem(LS.key);}catch(e){}}
 /* Die Zeile auf der Startseite: Schalter, daneben „Lernstand löschen“, wenn etwas gespeichert ist; die Rückfrage steht an derselben Stelle */
 function lernHTML(){if(!LS.ok)return '';
-  if(LS.frage)return '<div class="lern frage" id="lern"><span class="lfr">Lernstand löschen? Balken, Kronen und Etappen fangen dann von vorn an.</span>'+
+  if(LS.frage)return '<div class="lern frage" id="lern"><span class="lfr">Lernstand löschen? Balken, Kronen'+(HERAUSF?', Etappen und Herausforderungen':' und Etappen')+' fangen dann von vorn an.</span>'+
     '<span class="lkn"><button class="kn lja" data-akt="lja">Löschen</button><button class="kn" data-akt="lnein">Abbrechen</button></span></div>';
   return '<div class="lern" id="lern"><button class="lsw" data-akt="lmerken" role="switch" aria-checked="'+LS.an+'"><span class="sw'+(LS.an?' an':'')+'" aria-hidden="true"></span><span>Lernstand auf diesem Gerät merken</span></button>'+
     (LS.an?'<button class="lweg" data-akt="lfrage">Lernstand löschen</button>':'')+'</div>';}
