@@ -54,7 +54,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 @media (max-width:760px){
 .sfuss{margin:0 .6rem .6rem}}
 
-/* happymatty: Zurück-Knopf (Logo) oben links und Datenschutz in der kleinen Zeile (CLAUDE.md der Webseite) */
+/* happymatty: Zurück-Knopf (Logo) oben links und Datenschutz in der kleinen Zeile */
 .kn{background:#fff;border:1.5px solid #B9C4D0;border-radius:.55rem;padding:.25rem .75rem;font-weight:700;font-size:.95rem;min-height:2.4rem;white-space:nowrap;display:inline-flex;align-items:center;gap:.45rem;color:#39424C}
 .kn:active,.hk:active{transform:translateY(1px)}
 .kn.ton,.kn.voll{padding:.25rem .55rem}
@@ -185,6 +185,7 @@ sup{font-size:.62em;line-height:0;vertical-align:.58em;margin-left:.04em}
 .opts.n2,.opts.n4{grid-template-columns:repeat(2,minmax(0,1fr))}
 .opt{background:#fff;border:.14rem solid var(--blau);border-radius:.8rem;min-height:3.7rem;font-size:1.4rem;padding:.4rem 2.2rem;box-shadow:0 .2rem 0 #C9D6E2;position:relative;color:var(--text);min-width:0;-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}
 .opt:disabled{box-shadow:none;cursor:default;border-color:#C9D0D8;color:#6B7580}
+.opts.ofest .opt{white-space:nowrap}      /* Antworten, die Terme sind (auf.optFest): Ein Term bricht nicht um (26.11.2026) */
 .opt.gew{background:#EAF3F9;box-shadow:0 0 0 .2rem #CFE3F1}
 .opt.fehlt{border:.14rem dashed var(--gruen);color:var(--text);background:#fff}      /* die richtige, nicht gewählte Antwort: weiß, grün gestrichelt, ohne Zeichen (Lehrkraft 23.11.2026); Strich so dick wie der Rahmen des Urteils (.14rem), wächst mit (Lehrkraft 24.11.2026) */
 .opt.ok{border-color:var(--gruen);background:#EAF4E6;color:var(--text)}
@@ -666,6 +667,7 @@ html{font-size:clamp(15px,4.3vw,19px)}
 .mitbild .bild{max-width:17rem;margin:0 auto;width:100%}
 .opts.n4{grid-template-columns:repeat(2,minmax(0,1fr))}
 .opt{font-size:1.25rem;padding:.4rem 1.4rem;min-height:3.3rem}
+.opts.ofest .opt{padding-left:.3rem;padding-right:.3rem}      /* das Urteil steht an der Ecke: Der Term darf fast bis an den Rand */
 .leiste:not(.ex){padding:.45rem .6rem .6rem;flex-direction:column;align-items:stretch;gap:.45rem}
 .leiste:not(.ex) .hilfen{flex:none;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
 .hilfen::-webkit-scrollbar{display:none}
@@ -904,6 +906,47 @@ svg.zieh{touch-action:none}
 .ghtipp input{flex:1}
 .ghtipp output{min-width:4.5rem;text-align:right;font-weight:700}
 .geh .ein.satz{flex-direction:column;align-items:flex-start;font-size:1.35rem}
+/* Fordere mich heraus (Baustein heraus, LF2, 26.11.2026). Das Zeichen: ein Diamant in Akzentpink (Lehrkraft: „Gehen wir auf Pink.“). Leer: weiß, Rand #9AA5B1,
+   Facetten #C3CAD2; gefüllt: Füllung #CC79A7, Rand und Facetten #8A3F6B. Kachel in der Übersicht des Einzeltrainings: blau wie die der Anwendung, nur Titel und
+   Zeichen (1,75 rem). Kopfzeile der Aufgabe: am Platz des Balkens die Reihe der Zeichen, jedes in einem Knopf (2,45 rem, Zeichen 1,7 rem, Rand Akzentblau, Ecken
+   wie .wst); der aktuelle dunkel umrandet mit hellblauem Hof. Nach „Prüfen“ unten rechts „Fertig“ weiß mit blauem Rand neben dem blauen Knopf (wie .wnoch). */
+.dia{display:block;flex:none;width:1.75rem;height:1.75rem;overflow:visible}
+.dia .dgr{fill:#fff;stroke:none}
+.dia .da{fill:none;stroke:#9AA5B1;stroke-width:6;stroke-linejoin:round;stroke-linecap:round}
+.dia .df{fill:none;stroke:#C3CAD2;stroke-width:4;stroke-linejoin:round;stroke-linecap:round}
+.dia .dfuell{fill:#CC79A7;stroke:none}
+.dia.voll .dgr{fill:#CC79A7}
+.dia.voll .da,.dia.voll .df{stroke:#8A3F6B}
+.ka.fmhka{gap:.45rem}
+.fmhz{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap}
+.fmhz .mk{margin-left:.4rem}
+.gross.flach.fmhgr b{font-size:2.2rem}
+.fmhreihe .fmhz{grid-column:2/4;gap:.3rem;flex-wrap:nowrap}
+.fmhreihe .dia{width:1.4rem;height:1.4rem}
+.fmhr{flex:1;display:flex;align-items:center;gap:.35rem;min-width:0}
+.fmhk{box-sizing:border-box;flex:none;width:2.45rem;height:2.45rem;padding:0;border:.12rem solid var(--blau);border-radius:.5rem;background:#fff;display:inline-flex;align-items:center;justify-content:center;transition:background-color .15s,border-color .15s,box-shadow .15s}
+.fmhk .dia{width:1.7rem;height:1.7rem}
+.fmhk.akt{border-color:var(--text);box-shadow:0 0 0 .22rem #CFE3F1}
+.fmhk:active{background:#DCEAF5}
+.fmhfertig{background:#fff;color:var(--blau);border:.14rem solid var(--blau);border-radius:.75rem;min-height:3rem;min-width:6.5rem;font-size:1.1rem;font-weight:700;padding:.3rem 1rem;box-shadow:0 .2rem 0 #C9D6E2;line-height:1.15;transition:transform .12s ease-out,box-shadow .12s ease-out,background-color .15s}
+.fmhfertig:active{transform:translateY(.14rem);box-shadow:none}
+.leiste.fmhende .haupt{line-height:1.15}
+@media (hover:hover){
+.fmhk:hover{background:#EAF3F9}
+.fmhfertig:hover{background:#EAF3F9}}
+/* der Moment „Alle geknackt!“: wie die Krone nach der Etappe, mit einem großen gefüllten Diamanten */
+.fmhgross{width:min(38vw,11.5rem);animation:kronepop .7s cubic-bezier(.2,1.5,.4,1)}
+.fmhgross .dia{width:100%;height:auto}
+@media (max-width:760px){
+.kopf.trk .fmhr{order:5;flex-basis:100%}
+.gross.flach.fmhgr b{font-size:1.8rem}
+.reihe.fmhreihe{grid-template-columns:minmax(0,1fr) auto}
+.fmhreihe .fmhz{grid-column:2}
+.fmhreihe .dia{width:1.25rem;height:1.25rem}
+.leiste.fmhende{flex-direction:row;flex-wrap:wrap;align-items:stretch}
+.leiste.fmhende .hilfen{flex:1 1 100%}
+.leiste.fmhende .fmhfertig{flex:0 0 auto;min-width:5.6rem;font-size:1rem}
+.leiste.fmhende .haupt{flex:1 1 0;min-width:0;font-size:1.05rem;padding:.3rem .6rem}}
 /* Eigenes CSS des Trainings; das Bauskript setzt es in das gemeinsame CSS des Trainingsrahmens ein (trainingsrahmen/src/rahmen.css, Zeile „/*@@ EIGEN“). */
 
 /* Zuordnen */
@@ -940,6 +983,82 @@ svg.zieh{touch-action:none}
 .tfregler .tffl{margin:.1rem 0 0;font-size:1.5rem;text-align:right;color:var(--gruen)}
 .tfregler .tffl b{font-family:var(--satz);font-weight:400}
 .ghsvg{overflow:visible}      /* Beschriftungen am Rand bei den Extremfällen (x = 0, andere Seite 0) nicht abschneiden */
+
+/* ---------- Fordere mich heraus (27.11.2026): vier Herausforderungen (src/c_heraus.js) ----------
+   Kopf der Aufgabe: Angabe und Auftrag (fett); nach „Prüfen“ das Bild (Über, auf oder unter? rechts unter dem Urteil, sonst links unter dem Urteil).
+   Eigene Namen mit fh (wie in den QF3-, QF4- und QF5-Trainings). Die Nullstellen lila und pink wie in Info 1 (dort .info1); gemeinsame Nullstellen und Gefragtes orange. */
+.fhnw{white-space:nowrap}
+.fhneu{display:block;margin:0 0 .15rem;font-size:1.1rem;line-height:1.4}
+.fhauf{display:block;margin-top:.15rem;font-size:1.05rem;line-height:1.3}
+/* die Lage im Fallturm als Band wie das Situationsband der Blätter (wie in den QF3- und QF4-Trainings) */
+.fhlage{display:block;font-size:.9rem;line-height:1.3;color:#39424C;background:#F3F7FA;border-left:.22rem solid var(--blau);border-radius:.3rem;padding:.3rem .6rem;margin:0 0 .3rem}
+.karte:has(.fhlage) .fhauf{font-size:1rem}
+/* Felder in einem Satz: ein Feld und das Wort dahinter bleiben in einer Zeile */
+.fhpaar{display:inline-flex;align-items:center;gap:.45rem;white-space:nowrap}
+.karte:has(.fhpaar) .ein.satz{font-size:1.12rem;gap:.35rem}
+.karte:has(.fhpaar) .ein.satz .feld{height:2.25rem;font-size:1.3rem}
+/* Eine gemeinsame Nullstelle: „c = ☐ oder c = ☐“ in einer Zeile */
+.karte:has(.fhgem) .ein.satz{font-size:1.45rem}
+.karte:has(.fhgem) .ein.satz .sz{flex-wrap:nowrap;gap:.4rem;white-space:nowrap}
+.karte:has(.fhgem) .feld{min-width:3.4rem;height:2.5rem;font-size:1.4rem}
+@media (min-width:761px){.buehne:has(.fhlage){grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)}.buehne:has(.fhlage) .rechnung .zeilen{line-height:1.32}.buehne:has(.fhlage) .rechnung .zl{margin:0}}      /* Der Fallturm: rechts lange Zeilen der Lösung, etwas enger */
+@media (min-width:1200px){.buehne:has(.fhlage){grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr)}}      /* am Laptop ist die Schrift größer: links die lange Lage, rechts ist Platz */
+/* die Bilder nach „Prüfen“ */
+.fhnach svg{display:block;width:100%;height:auto;max-height:none}
+.fhnach{display:block;max-width:16rem;width:100%;margin:.1rem auto 0;animation:rein .35s;--cx1:#85609E;--cx2:#CE65A2}
+.schk~.fhnach{max-width:19rem;margin:.5rem auto 0}
+.fhnach.fhrechts{max-width:19rem;margin:.5rem auto 0}
+.fhnach .glg{font-size:.8rem}
+.fhnach .gt{paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round}      /* die Zahlen an den Achsen bleiben lesbar, wo eine Kurve sie kreuzt */
+.gpkt.fhlsg,.gbs.fhlsg{fill:var(--orange)}
+.gbs.fhweit{font-size:13px;paint-order:stroke;stroke:#fff;stroke-width:3px;stroke-linejoin:round}
+.fhpf{stroke:var(--orange);stroke-width:2.2;stroke-linecap:round;fill:none}
+.fhpfs{fill:var(--orange)}
+/* Eine gemeinsame Nullstelle: f lila und pink, g blau; Legende unter dem Bild (wie im QF4-Training) */
+.gk.fhf1{stroke:var(--cx1);stroke-width:2.4}
+.gk.fhf2{stroke:var(--cx2);stroke-width:2.4}
+.fhleg{display:flex;flex-wrap:wrap;justify-content:center;gap:.1rem .7rem;font-size:.88rem;line-height:1.2;color:#39424C;margin-top:.1rem}
+.fhli{display:inline-flex;align-items:center;gap:.3rem;white-space:nowrap}
+.fhli svg{width:1.6rem;height:.6rem;flex:none}
+.fhl{stroke-linecap:round;fill:none;stroke-width:3}
+.fhl.fhf1{stroke:var(--cx1)}
+.fhl.fhf2{stroke:var(--cx2)}
+/* Der Fallturm: die Röhre, die Kapsel in gleichen Zeitabständen, Marken; die negative Lösung durchgestrichen */
+.fhturm{display:block;width:100%;height:auto}
+.fhnach:has(.fhturm){max-width:17rem}
+.fhroehre{fill:#EAF3F9;stroke:var(--blau);stroke-width:1.6}
+.fhroehre.fhverl{fill:#fff;stroke-dasharray:5 4}
+.fhmk{stroke:#9AA4AF;stroke-width:1.2;stroke-dasharray:4 3}
+.fhmk.fhorange{stroke:var(--orange);stroke-width:1.6}
+.fhtx{font-family:var(--satz);font-size:14.5px;fill:#39424C}
+.fhtx.fhorange{fill:var(--orange);font-weight:700}
+.fhtx.fhklein{fill:#6E6E6E;font-size:13.5px}
+.fhkap{fill:var(--blau)}
+.fhziel{fill:var(--orange);stroke:#fff;stroke-width:1.5}
+s.fhweg{color:#9AA4AF;text-decoration-thickness:.08em}
+/* Über, auf oder unter?: je Stelle ein Kasten; breit: „bei x = 3“ und der Umschalter in einer Zeile */
+.schtx p:has(.fhst){font-size:1.2rem;line-height:1.25;white-space:nowrap}
+.fhst{font-family:var(--satz)}
+.karte:has(.fhst) .denk{padding:.3rem .7rem}
+@media (min-width:761px){
+.schk:has(.fhst){gap:.35rem}
+.schka:has(.fhst){flex-direction:row;align-items:center;gap:.6rem;padding:.12rem .35rem .12rem .9rem}
+.schka:has(.fhst) .schtx{flex:1;min-height:2.3rem;gap:.5rem}
+.schka:has(.fhst) .schz{flex:none;padding-top:0}
+.schka:has(.fhst) .schu{font-size:1.15rem}
+.schka:has(.fhst) .schu .umsch button{padding:.26rem .65rem;min-width:3.4rem;min-height:0}
+.schka:has(.fhst) .schu .umsch button.fehlt,.schka:has(.fhst) .schu .umsch:not(.wegw).falsch button.fehlt{padding:calc(.26rem - .12rem) calc(.65rem - .12rem)}}
+@media (min-width:761px){.buehne:has(.fhgem){grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr)}.buehne:has(.fhgem) .rechnung .zeilen{line-height:1.34}.buehne:has(.fhst) .rechnung .zeilen{line-height:1.3}.buehne:has(.fhst) .rechnung .zl.text{margin-bottom:.05rem}}
+/* Erst aufräumen: die Gleichung in der Textschrift wie ein Term */
+.term .fhgl2{white-space:normal}
+@media (max-width:760px){
+.schtx p:has(.fhst){font-size:1.1rem}
+.schka:has(.fhst){flex-direction:row;align-items:center;gap:.5rem;padding:.3rem .45rem .3rem .75rem}
+.schka:has(.fhst) .schtx{flex:none;min-height:0}
+.schka:has(.fhst) .schz{flex:1;padding-top:0}
+.karte:has(.fhgem) .ein.satz{font-size:1.25rem}
+.karte:has(.fhgem) .feld{min-width:2.8rem;height:2.4rem;font-size:1.25rem}
+.fhnach{max-width:19rem}}
 
 /* ---------- Urteil an jeder Eingabe nach „Prüfen“ (Lehrkraft 22.11.2026) ----------
    Grün mit ✓ oder rot mit ✗ an der Ecke, Rand durchgezogen, helle Füllung: Das Zeichen trägt die Aussage mit, nicht nur die Farbe.
@@ -1147,6 +1266,31 @@ svg.zieh{touch-action:none}
    (Zeilen nach dem Fehler), Umformung wählen, Formel-Puzzle, Einsetzen, Zuordnen, Kärtchen legen, Weg wählen. Nicht: Zeilen einer Rechnung, Teile eines Satzes
    mit Umschaltern, Graphen. */
 .uebrig{opacity:.4;box-shadow:none}
+/* Umschalter in Kästen (Form schalter, LF2, Fordere mich heraus „Vorzeichen“): je Kasten ein Text, daneben nach „Prüfen“ sein Bild, darunter die Umschalter mit
+   zwei oder drei Stellungen. Urteil wie an jedem Umschalter (Zeichen an der Ecke der gewählten Seite, Rand der Gruppe grün oder rot); die richtige, nicht gewählte
+   Seite grün gestrichelt, so dick wie der Rand des Urteils (.12rem), wächst mit (Lehrkraft 24.11.2026). */
+.schk{display:flex;flex-direction:column;gap:.6rem;margin-top:.1rem}
+.schka{border:1.5px solid var(--rand);border-radius:.7rem;background:#FAFCFE;padding:.45rem .8rem .6rem;display:flex;flex-direction:column;gap:.3rem}
+.schtx{display:flex;align-items:center;gap:.8rem;min-height:2.8rem}
+.schtx p{margin:0;flex:1;min-width:0;font-size:1.1rem;line-height:1.3}
+.schbild{flex:none;width:4.4rem;animation:rein .35s}
+.rechnung.schr>.rueck{margin:0 0 .7rem}
+.schbild svg{display:block;width:100%;height:auto}
+.schz{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.2rem;padding-top:.4rem}
+.schu{display:inline-flex;align-items:center;gap:.5rem;font-size:1.35rem}
+.schu>span:first-child{min-width:1.05em}
+.schu .umsch button{padding:.45rem .6rem;min-width:2.75rem;white-space:nowrap}
+.schu .umsch button+button{border-left:.06rem solid #C9D6E2}
+.schu .umsch button.fehlt,.schu .umsch:not(.wegw).falsch button.fehlt{border:.12rem dashed var(--gruen);border-radius:.34rem;padding:calc(.45rem - .12rem) calc(.6rem - .12rem);color:var(--text);background:#fff}
+@media (max-width:760px){
+.rechnung.schr:not(:has(.zeilen>*)){display:none}
+.schtx p{font-size:1.05rem}
+.schbild{width:4.6rem}
+.schz{gap:.75rem 1rem}
+.schu{flex:1 1 100%}
+.schu .umsch{flex:1;display:flex}
+.schu .umsch button{flex:1 1 0;padding:.45rem .3rem;min-width:0}
+.schu .umsch button.fehlt,.schu .umsch:not(.wegw).falsch button.fehlt{padding:calc(.45rem - .12rem) calc(.3rem - .12rem)}}
 
 </style></head>
 <body><div id="app"></div>
@@ -1199,7 +1343,7 @@ function poly(a,b,c){            // ax² + bx + c ohne Klammern; Glieder mit 0 e
    Variablen kursiv, in ihren Farben, so groß wie die Rechenzeilen daneben („Mitte: x = −2“, „Hochpunkt H(−2 | 8)“). mtext() setzt die
    Mathematik eines Satzes in <span class="mtx">; die Größe kommt aus --mg des Zusammenhangs (rahmen.css). Mathematik ist: Zahlen, Variablen
    (<i>, ein einzelner Kleinbuchstabe als Wort), Hochzahlen, Brüche, Wurzeln und die Rechenzeichen zwischen ihnen, Einheiten direkt hinter
-   einer Zahl („15 m“, „50 %“). Satzzeichen am Ende („bei 1.“, „b = 1:“) bleiben in Indie Flower. Farbspannen und andere Spannen sind
+   einer Zahl („15 m“, „50 %“, „400 €“). Satzzeichen am Ende („bei 1.“, „b = 1:“) bleiben in Indie Flower. Farbspannen und andere Spannen sind
    durchlässig: Läuft eine Rechnung über ihre Grenze, wird die Textschrift dort geschlossen und dahinter wieder geöffnet.
    Ein Bindestrich hinter einer Variablen („y‑Achse“, „p,q‑Formel“) wird geschützt (U+2011), damit dort nicht getrennt wird. */
 const MTX_EINHEIT=/^(km\/h|m²|m³|cm²|cm|mm|km|min|ml|GB|MB|kg|g|m|s|h|l|%|°C|°|€)(?![A-Za-zÄÖÜäöüß0-9])/;
@@ -1226,7 +1370,7 @@ function mtext(h){
   const nb=(k,d)=>{const p=echt.indexOf(k)+d;return p>=0&&p<echt.length?it[echt[p]]:null;};
   // 2. Einheiten hinter Zahlen, einzelne Kleinbuchstaben als Variablen, geschützte Bindestriche hinter Variablen
   for(let k=0;k<it.length;k++){const x=it[k];if(x.t==='T')continue;
-    if(x.t==='W'&&(x.wort||x.s==='%')){
+    if(x.t==='W'&&(x.wort||x.s==='%'||x.s==='€')){      /* € hinter einer Zahl ist eine Einheit wie m oder % („400 €“; Lehrkraft 26.11.2026) */
       const v1=nb(k,-1),v2=nb(k,-2),p=echt.indexOf(k),rest=echt.slice(p).map(j=>it[j].s).join(''),em=rest.match(MTX_EINHEIT);
       if(em&&(v1&&v1.t==='N'||v1&&v1.t==='S'&&v2&&v2.t==='N')){let s=em[0];for(let q=p;s.length&&q<echt.length;q++){const y=it[echt[q]];if(s.indexOf(y.s)!==0)break;y.t='U';s=s.slice(y.s.length);}continue;}
       const n1=nb(k,1);
@@ -1321,10 +1465,10 @@ const LEVELNR={q:1,b:2,w:3};     // Quick, Build, Write sind Arbeitsbegriffe der
 
 /* =====================================================================
    QF2-Training „Nullstellen ohne Formel“: Einstellung
-   Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung.
+   Was dieses Training vom Rahmen unterscheidet: Titel, Version, Kopfzeile, Aufgabentypen, Anwendung und Fordere mich heraus.
    Gebaut wird mit build.py auf dem Trainingsrahmen (trainingsrahmen/ im Wurzelordner des Backups).
    ===================================================================== */
-const VERSION='v11.3';
+const VERSION='v12';
 const EINHEIT='nullstellen-ohne-formel';      // Ordner der Themeneinheit auf happymatty.de: Schlüssel des Lernstands (happymatty:nullstellen-ohne-formel:lernstand)
 const TITEL='Nullstellen ohne Formel',KURZ='QF2';
 const FACH='Mathematik',THEMA='Quadratische Funktionen',THEMA_URL='/quadratische-funktionen/',TEILTHEMA='Nullstellen, Hoch- &amp; Tiefpunkt'; // Kopfzeile der Startseite, wie _einheit.json
@@ -1341,6 +1485,10 @@ const TYPEN=[
 const WERKSTOR={id:'gehege',titel:'Das Hühnergehege'};
 
 const ANW=true;
+/* Fordere mich heraus (Plan des Chats vom 27.11.2026; Lehrkraft: „Es ist für die besseren Schüler gedacht.“): der Bereich für die Starken, eine Einstellung des Rahmens
+   (Baustein heraus), wie in LF2, QF3 und QF4 als breite Kachel ganz unten unter der Kachel der Anwendung. Vier Herausforderungen in dieser Reihenfolge, Thema: Nullstellen
+   mit Köpfchen; ihre Aufgaben stehen in c_heraus.js (HGEN). */
+const HERAUS=[{id:'lage',titel:'Über, auf oder unter?'},{id:'raeumen',titel:'Erst aufräumen'},{id:'gemeinsam',titel:'Eine gemeinsame Nullstelle'},{id:'fall',titel:'Der Fallturm'}];
 
 /* =====================================================================
    Trainingsrahmen: Zustand, Ablauf, Wertung, Knöpfe, Koordinaten
@@ -1349,7 +1497,19 @@ const ANW=true;
 const TYP={};
 TYPEN.forEach(t=>TYP[t.id]=t);
 const S={ansicht:'start',modus:null,etappe:1,pkt:0,pos:0,letzter:null,kronen:0,filter:{q:true,b:true,w:true},ton:false,geuebt:false,finale:false,typ:{},einzel:null,zeiten:[],offen:{}};
-function neuerStand(){TYPEN.forEach(t=>S.typ[t.id]={top:0,streak:0,sl:-1,halb:false,falsch:0,zuletzt:-1,faellig:null});S.werk={ok:[false,false,false],faellig:3,lauf:{},n:0};}
+/* Mehrere Anwendungen (QF5, 25.11.2026): Nennt die Einstellung FAELLE (eine Liste {id,titel}), hat das Training mehrere Anwendungen, die „Fälle“, jede mit eigenem Stand
+   in S.werke; S.werk und WERKSTOR sind dann der Fall, der gerade läuft (fallWahl im Baustein faelle). Ohne FAELLE bleibt es bei der einen Anwendung WERKSTOR. */
+const FALLE=typeof FAELLE!=='undefined'?FAELLE:null;
+/* Fordere mich heraus (LF2, 26.11.2026): Nennt die Einstellung HERAUS (eine Liste {id,titel}, drei bis fünf), hat das Training den Bereich „Fordere mich heraus“
+   (Baustein heraus): eine Kachel in der Übersicht des Einzeltrainings, eigene Aufgaben, je geknackter Herausforderung ein gefülltes Zeichen. Sein Stand steht in
+   S.heraus; auf Bänder, Etappen, Punkte, Kronen und Finale wirkt er nicht. Ohne HERAUS bleibt alles, wie es ist. */
+const HERAUSF=typeof HERAUS!=='undefined'?HERAUS:null;
+/* PowerCheck (26.11.2026): Nennt die Einstellung POWERCHECK, ist die Seite der PowerCheck einer ganzen Reihe (Baustein powercheck): die Aufgabentypen aller
+   Trainings der Reihe in Blöcken je Level, gemischt über die Blätter, Aufstieg nach einmal richtig, ein Band je Blatt, dazu das Stück, das die Blätter verbindet.
+   HINWEIS (Baustein hinweis): einmal beim ersten Start ein kurzer Hinweis über der ersten Aufgabe. Ohne diese Einstellungen bleibt alles, wie es ist. */
+const PCF=typeof POWERCHECK!=='undefined'?POWERCHECK:null;
+const HINWEISF=typeof HINWEIS!=='undefined'?HINWEIS:null;
+function neuerStand(){TYPEN.forEach(t=>S.typ[t.id]={top:0,streak:0,sl:-1,halb:false,falsch:0,zuletzt:-1,faellig:null});S.werk={ok:[false,false,false],faellig:3,lauf:{},n:0};if(FALLE)fallStand();if(HERAUSF)herausStand();if(PCF)pcNeu();}
 neuerStand();
 const A={};                                        // die aktuelle Aufgabe
 let aufgabeNr=0;
@@ -1358,11 +1518,11 @@ const band=t=>{const st=S.typ[t.id],n=t.level.length;return st.top>=n?1:(st.top+
 const voll=t=>S.typ[t.id].top>=t.level.length;
 const sechsVoll=()=>TYPEN.filter(t=>t.aktiv).every(voll);
 const werkBand=()=>S.werk.ok.filter(Boolean).length/3, werkVoll=()=>S.werk.ok.every(Boolean);
-const alleVoll=()=>sechsVoll()&&(!ANW||werkVoll());
+const alleVoll=()=>PCF?pcAlleVoll():sechsVoll()&&(!ANW||(FALLE?FALLE.every(fallVoll):werkVoll()));
 /* Ist im Gesamttraining als Nächstes die Anwendung dran? Am Anfang einer Etappe, wenn es fällig ist; sofort, wenn sonst alles sitzt; und solange ein Durchgang offen ist.
    Es braucht den Stift: Ist Level 3 abgeschaltet, wartet es */
-function werkDran(){return ANW&&!werkVoll()&&S.filter.w&&(!!S.werk.lauf.gesamt||sechsVoll()||(S.pkt===0&&S.etappe>=S.werk.faellig));}
-const etappeText=()=>'Gesamttraining. Etappe '+S.etappe+(werkDran()?': '+WERKSTOR.titel+'.':'.');
+function werkDran(){if(PCF)return pcWerkDran();if(FALLE)return fallDran()!==null;return ANW&&!werkVoll()&&S.filter.w&&(!!S.werk.lauf.gesamt||sechsVoll()||(S.pkt===0&&S.etappe>=S.werk.faellig));}
+const etappeText=()=>PCF?pcEtappeText():FALLE&&werkDran()?'Gesamttraining. '+fallDran().titel+'.':'Gesamttraining. Etappe '+S.etappe+(werkDran()?': '+WERKSTOR.titel+'.':'.');
 /* Level, die es im Aufgabentyp nicht gibt, sind im Einzeltraining ausgegraut (Lehrkraft 22.11.2026). Kommt dort keins der eingeschalteten Level vor,
    gelten alle Level des Typs: Kein Einzeltraining bleibt ohne Aufgaben. Im Gesamttraining gilt die Einstellung, wie sie ist. */
 const lvFrei=t=>S.modus==='einzel'&&!t.level.some(k=>S.filter[k]);
@@ -1376,6 +1536,7 @@ function empfohlen(){              // höchstens zwei Marken zugleich: die mit d
 
 /* Der Ablauf des Gesamttrainings (Checkpoint 3) */
 function naechste(){
+  if(PCF)return pcNaechste();      // PowerCheck: Blöcke je Level, Mix über die Blätter (Baustein powercheck)
   const akt=TYPEN.filter(t=>t.aktiv);
   let kand=akt.map(t=>[t,aktLevel(t)]).filter(x=>x[1]!==null);
   if(!kand.length){
@@ -1390,6 +1551,7 @@ function naechste(){
   return pick(pool.filter(([t])=>S.typ[t.id].zuletzt===min));
 }
 function werte(t,li,ok,zaehlt){
+  if(PCF)return pcWerte(t,li,ok,zaehlt);      // PowerCheck: einmal richtig heißt aufsteigen
   const st=S.typ[t.id],key=t.level[li];let ereignis=null;
   st.zuletzt=S.pos;st.faellig=null;
   if(li>=st.top){
@@ -1490,6 +1652,138 @@ function fenster(pts,o){o=o||{};let xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]).conc
   y0=Math.floor((y0-span*.15)/sy)*sy;y1=Math.ceil((y1+span*.15)/sy)*sy;if(y1-y0<4*sy){y1+=sy;y0-=sy;}
   const ex=Math.min(34,(o.breite||330)/(x1-x0)),ey=Math.min(ex,(o.hoehe||330)/(y1-y0));
   return {X:[x0,x1],Y:[y0,y1],o:{ex,ey,sy,lx:(x1-x0)>12?4:2,ly:sy*2,sx:1}};}
+
+/* ---------- Fordere mich heraus (Lehrkraft 26.11.2026) ----------
+   Ein eigener Bereich für die Starken, freiwillig und von Anfang an offen: eine breite Kachel unten in der Übersicht des Einzeltrainings, darin je
+   Herausforderung ein Diamant (gefüllt = geknackt). Ein Tipp führt ohne eigene Übersicht in die erste offene Herausforderung. In der Kopfzeile steht am Platz des
+   Etappen-Balkens die Reihe der Zeichen, jedes ein Knopf: Ein Tipp wechselt jederzeit, auch zu einer geknackten; eine angefangene Aufgabe bleibt stehen, bis sie
+   geprüft ist (S.heraus.offen, wie S.offen im Rahmen).
+   Was zählt: ein Versuch wie überall, „Prüfen“ zeigt Urteil und Lösung. Geknackt ist eine Herausforderung, wenn beim Prüfen alles stimmt und vorher nicht „Lösung“
+   getippt wurde; ihr Zeichen füllt sich und bleibt gefüllt, auch wenn ein späterer Versuch misslingt. Hilfen: Denkanstoß (kostet nichts), Lösung, Erklärung
+   (öffnet die Übersicht aller Erklärungen als Ebene); kein „Nächster Schritt“. Der Bereich wirkt nicht auf Erfolgsbänder, Etappen, Punkte, Kronen, „empfohlen“
+   und Finale; es gibt keine Meldung unten rechts und kein „‹ Letzte Aufgabe“.
+   Stand in S.heraus: ok (Kennung → geknackt), offen (Kennung → angefangene Aufgabe), letzte (Kennung → sig der letzten Aufgabe), id (die laufende),
+   vonGesamt (aus einer Aufgabe des Gesamttrainings über „Stand“ geöffnet: Der Rückweg führt dann dorthin zurück). */
+const HERAUS_ADR='fordere-mich-heraus',HERAUS_ZAHL=['','Eine','Zwei','Drei','Vier','Fünf','Sechs'];
+function herausStand(){S.heraus={ok:{},offen:{},letzte:{},id:null,vonGesamt:false};}
+const herausOk=h=>!!S.heraus.ok[h.id];
+const herausAlle=()=>HERAUSF.every(herausOk);
+const herausName=h=>h.titel.replace(/<[^>]+>/g,'');
+const herausSig=a=>a.sig||[a.frage,a.term,a.ein].join('|');
+
+/* Das Zeichen: ein Diamant in Akzentpink (Lehrkraft 26.11.2026: „Gehen wir auf Pink.“). Leer: weiß, Rand #9AA5B1, Facetten #C3CAD2; gefüllt: Füllung #CC79A7,
+   Rand und Facetten #8A3F6B (rahmen.css, Abschnitt heraus). Drei Pfade: Grund (dgr), Rand (da), Facetten (df); beim Füllen steigt zwischen Grund und Rand die Farbe. */
+const DIA_A='M30 14 L70 14 L92 38 L50 92 L8 38 Z',DIA_F='M8 38 L92 38 M30 14 L38 38 L50 92 M70 14 L62 38 L50 92 M50 14 L38 38 M50 14 L62 38';
+const diamant=voll=>'<svg class="dia'+(voll?' voll':'')+'" viewBox="0 0 100 100" aria-hidden="true"><g><path class="dgr" d="'+DIA_A+'"/><path class="da" d="'+DIA_A+'"/><path class="df" d="'+DIA_F+'"/></g></svg>';
+const herausZeichen=()=>HERAUSF.map(h=>diamant(herausOk(h))).join('');
+
+/* Übersicht des Einzeltrainings: die Kachel ganz unten, blau wie die der Anwendung, ohne Erfolgsband: nur der Titel und die Zeichen; sie zeigen nur den Stand.
+   Sind alle gefüllt, steht „✓ alle geknackt“ dabei (wie „✓ sitzt“). Nach dem Finale heißt der große flache Knopf der Seite „Alles sitzt!“ so wie der Bereich
+   und führt hinein, solange nicht alle geknackt sind (herausKnopf). Im Fenster „Stand“ eine Zeile mit den Zeichen (herausReihe). */
+function herausKachel(titel){const n=HERAUSF.filter(herausOk).length;      // titel, freiwillig: ein anderer Titel der Kachel (QF5: „Vier Herausforderungen“, weil die Gruppe darüber schon „Fordere mich heraus“ heißt)
+  return '<button class="ka breit fmhka" data-akt="heraus" aria-label="Fordere mich heraus: '+n+' von '+HERAUSF.length+' geknackt"><span class="kt"><b>'+(titel||'Fordere mich heraus')+'</b></span>'+
+    '<span class="fmhz">'+herausZeichen()+(herausAlle()?'<span class="mk ok">✓ alle geknackt</span>':'')+'</span></button>';}
+const herausKnopf=()=>'<button class="gross flach fmhgr" data-akt="heraus"><b>Fordere mich heraus</b><small>'+(HERAUS_ZAHL[HERAUSF.length]||HERAUSF.length)+' Herausforderungen.</small></button>';
+const herausReihe=()=>'<button class="reihe fmhreihe" data-heraus="1" aria-label="Fordere mich heraus: '+HERAUSF.filter(herausOk).length+' von '+HERAUSF.length+' geknackt"><b>Fordere mich heraus</b><span class="fmhz">'+herausZeichen()+'</span></button>';
+
+/* Aufgabenbildschirm: Kopfzeile ohne „Automatik ▼“, am Platz des Balkens die Reihe der Zeichen; der Rest wie trainingRahmen() */
+function herausRahmen(){S.ansicht='aufgabe';adresse(HERAUS_ADR);
+  setApp('<header class="kopf trk"><button class="kn" data-akt="zurueck">‹ '+(S.heraus.vonGesamt?'Gesamttraining':'Einzeltraining')+'</button>'+
+    '<div class="fmhr" role="group" aria-label="Herausforderungen"></div>'+tonKnopf()+
+    '<button class="kn stand" data-akt="stand"><span class="si"><i></i><i></i><i></i></span><span class="wort">Stand</span></button></header>'+
+    '<main class="buehne"></main><footer class="leiste"><div class="hilfen"></div><button class="haupt" data-akt="haupt" disabled>Prüfen</button></footer>','tr');}
+function herausKopf(){const r=$('.fmhr');if(!r)return;
+  r.innerHTML=HERAUSF.map(h=>{const ok=herausOk(h),akt=h.id===S.heraus.id;
+    return '<button type="button" class="fmhk'+(akt?' akt':'')+'" data-akt="herausnr" data-h="'+h.id+'" aria-label="'+herausName(h)+(ok?', geknackt':', offen')+'"'+(akt?' aria-current="true"':'')+'>'+diamant(ok)+'</button>';}).join('');}
+/* Über der Aufgabe: „Fordere mich heraus · ‹Name›“, der Bereich grau, der Name fett dunkelgrau; beides nicht antippbar, also nicht blau */
+const herausWas=()=>'<p class="was"><span>Fordere mich heraus · <b>'+A.heraus.titel+'</b></span></p>';
+const herausHilfen=()=>{const a=A.auf,n=(a.schritte||[]).length;
+  return (a.denk?'<button class="hk'+(A.denk?' an':'')+'" data-akt="denk"'+(A.fertig?' disabled':'')+'>Denkanstoß</button>':'')+(n?'<button class="hk" data-akt="loesung"'+(A.fertig?' disabled':'')+'>Lösung</button>':'')+
+    '<button class="hk erkl" data-akt="herauserkl">Erklärung</button>';};
+
+/* Hinein: von der Kachel, vom Knopf nach dem Finale und über die Adresse in die erste offene Herausforderung (sind alle geknackt: in die erste), aus dem Fenster
+   „Stand“ ebenso; von dort aus einer Aufgabe des Gesamttrainings heraus mit dem Rückweg „‹ Gesamttraining“ */
+function herausStart(id,vonGesamt){clearTimeout(A.auto);S.modus='heraus';S.heraus.vonGesamt=!!vonGesamt;
+  const h=HERAUSF.find(x=>x.id===id)||HERAUSF.find(x=>!herausOk(x))||HERAUSF[0];herausRahmen();herausAufgabe(h.id);}
+/* Eine Herausforderung zeigen: die angefangene Aufgabe, wenn es eine gibt, sonst eine neue mit neuen Zahlen, nie dieselbe wie beim letzten Mal */
+function herausAufgabe(id){const H=S.heraus,h=HERAUSF.find(x=>x.id===id)||HERAUSF[0];H.id=h.id;
+  let auf=H.offen[h.id];
+  if(!auf){let n=0;do{auf=HGEN[h.id]();}while(herausSig(auf)===H.letzte[h.id]&&++n<40);H.letzte[h.id]=herausSig(auf);H.offen[h.id]=auf;}
+  Object.keys(A).forEach(k=>delete A[k]);
+  Object.assign(A,{nr:++aufgabeNr,heraus:h,auf,form:auf.form,start:performance.now(),gewertet:false,fertig:false,hilfe:false,gezeigt:0,denk:false,versuche:0});
+  const f=$('.leiste');if(f){f.classList.remove('fmhende');$$('.fmhfertig',f).forEach(x=>x.remove());}
+  herausKopf();const m=$('.buehne');m.scrollTop=0;m.dataset.nr=A.nr;
+  FORM[auf.form](auf,m);zeigeHilfen();}
+/* Ein Tipp auf ein Zeichen: wechseln. Auf das laufende: nichts, solange die Aufgabe offen ist; ist sie geprüft, kommt sie mit neuen Zahlen */
+function herausWechsel(id){if(id===S.heraus.id&&!A.gewertet)return;if(herausWarte(()=>herausAufgabe(id)))return;herausAufgabe(id);}
+
+/* Wertung (statt abgeben()): Urteil und Lösung wie überall, aber ohne Band, Punkte und Meldung. Unten rechts stehen danach zwei Knöpfe: links weiß „Fertig“,
+   rechts blau der nächste Schritt: geknackt und noch andere offen: „Nächste Herausforderung“; nicht geknackt: „Noch einmal, neue Zahlen“; geknackt und keine
+   mehr offen: nur „Fertig“, blau. Enter drückt den blauen Knopf. */
+function herausAbgeben(ok,hinweis,art){if(A.gewertet)return;
+  const H=S.heraus,id=H.id,sah=art==='loesung',knackt=!!ok&&!sah&&!A.hilfe,neu=knackt&&!H.ok[id];
+  A.gewertet=true;A.fertig=true;A.versuche++;delete H.offen[id];if(knackt)H.ok[id]=true;
+  if(sah)zeigeRueck('neutral','Lösung angesehen.');else if(ok)zeigeRueck('gut','Richtig.',A.auf.nachher||'');else zeigeRueck('schlecht',hinweis||'Nicht richtig.');
+  /* Steht die Lösung da, klappt der Denkanstoß zu, und sein Knopf ist aus wie „Lösung“: Er hat seinen Dienst getan, und Hinweis, Lösung, Bild und zwei
+     Denkanstöße haben am iPad nicht zusammen Platz (die Bühne rollte) */
+  A.denk=0;{const d=$('.buehne .denk');if(d){d.hidden=true;d.innerHTML='';}}
+  if(A.sperre)A.sperre();
+  if(A.auf.schritte){A.gezeigt=A.auf.schritte.length;zeigeSchritte();}
+  const gl=A.gl||A.auf.gl;if(gl)zeigeGl(typeof gl==='function'?gl():gl);
+  const f=$('.leiste'),hb=$('.leiste .haupt');
+  A.hnach=!knackt?'nochmal':herausAlle()?'fertig':'naechste';A.haupt='weiter';
+  if(f&&hb){f.classList.add('fmhende');if(A.hnach!=='fertig'&&!$('.fmhfertig',f))hb.insertAdjacentHTML('beforebegin','<button type="button" class="fmhfertig" data-akt="herausfertig">Fertig</button>');
+    hb.hidden=false;hb.disabled=false;hb.textContent=A.hnach==='nochmal'?'Noch einmal, neue Zahlen':A.hnach==='naechste'?'Nächste Herausforderung':'Fertig';}
+  zeigeHilfen();
+  if(neu){herausFuell(id);herausKlang(false);if(herausAlle())herausBald();}
+  else if(ok&&!sah)Sound.richtig();}
+function herausWeiter(){const H=S.heraus,i=HERAUSF.findIndex(h=>h.id===H.id);
+  if(A.hnach==='nochmal')return herausAufgabe(H.id);
+  if(A.hnach==='naechste'){for(let k=1;k<=HERAUSF.length;k++){const h=HERAUSF[(i+k)%HERAUSF.length];if(!herausOk(h))return herausAufgabe(h.id);}}
+  herausFertig();}
+/* „Fertig“ und der Zurück-Knopf: zur Übersicht des Einzeltrainings, oder zurück zur Aufgabe, die im Gesamttraining stehen geblieben ist */
+function herausFertig(){if(herausWarte(herausFertig))return;if(S.heraus.vonGesamt)startGesamt();else vEinzel();}
+
+/* Belohnung. Beim Knacken füllt sich das Zeichen in der Kopfzeile: Die Farbe steigt in 0,45 s von der Spitze unten nach oben, dann pulst es einmal, klein, groß,
+   klein, als Transformation um die eigene Mitte (im SVG gerechnet, nicht über transform-origin: Safari). Dazu der eigene Klang, im selben Moment. Mit „Bewegung
+   reduzieren“ steht das Zeichen sofort gefüllt da. */
+function herausFuell(id){const b=$('.fmhk[data-h="'+id+'"]'),sv=b&&$('.dia',b);if(!sv)return;b.setAttribute('aria-label',b.getAttribute('aria-label').replace(/, offen$/,', geknackt'));
+  if(RUHIG){sv.classList.add('voll');return;}
+  const NS='http://www.w3.org/2000/svg',g=$('g',sv),cid='fmhclip'+(++gid),cp=document.createElementNS(NS,'clipPath'),r=document.createElementNS(NS,'rect'),fl=document.createElementNS(NS,'path');
+  cp.setAttribute('id',cid);r.setAttribute('x','0');r.setAttribute('width','100');r.setAttribute('y','96');r.setAttribute('height','0');cp.appendChild(r);
+  fl.setAttribute('class','dfuell');fl.setAttribute('d',DIA_A);fl.setAttribute('clip-path','url(#'+cid+')');
+  sv.insertBefore(cp,g);g.insertBefore(fl,$('.da',g));
+  tween(450,p=>{const y=96-86*p;r.setAttribute('y',y.toFixed(1));r.setAttribute('height',(96-y).toFixed(1));},easeInOut).onDone=()=>{
+    sv.classList.add('voll');cp.remove();fl.remove();
+    tween(550,p=>g.setAttribute('transform','translate(50 53) scale('+(1+.3*Math.sin(Math.PI*p)).toFixed(3)+') translate(-50 -53)'),p=>p).onDone=()=>g.removeAttribute('transform');};}
+/* Sind alle geknackt: ein kurzer Moment wie bei der Krone, über die ganze Seite, zwei Sekunden oder bis zum Tipp, Enter oder Leertaste; kein Feuerwerk. Er kommt,
+   wenn das letzte Zeichen gefüllt ist; wer vorher „Fertig“ oder ein Zeichen tippt, sieht ihn davor (herausWarte). Danach steht die Aufgabe mit ihrer Lösung wieder da. */
+let herausTimer=0;
+function herausBald(){clearTimeout(herausTimer);
+  const los=()=>{herausTimer=0;if(S.modus!=='heraus'||S.ansicht!=='aufgabe'||!$('.fmhr'))return;if($('.ov')||$('.ebene')||$('.menue')){herausTimer=setTimeout(los,500);return;}herausMoment();};
+  herausTimer=setTimeout(los,RUHIG?250:1150);}
+function herausWarte(danach){if(!herausTimer)return false;clearTimeout(herausTimer);herausTimer=0;herausMoment(danach);return true;}
+function herausMoment(danach){
+  const ov=el('<div class="ov krone-ov fmhmoment" role="dialog" aria-label="Alle geknackt"><div class="fmhgross">'+diamant(true)+'</div><h2>Alle geknackt!</h2></div>');
+  document.body.appendChild(ov);herausKlang(true);let zu=false;
+  const ende=()=>{if(zu)return;zu=true;clearTimeout(t);ov.remove();if(danach)danach();};
+  const t=setTimeout(ende,2000);ov.addEventListener('click',ende);ov._zu=ende;}
+
+/* Der eigene Klang des Bereichs, „Glas“ (Lehrkraft 26.11.2026, aus drei Fassungen gewählt: „A“; alle drei zum Anhören: planung/klang.js im Quellenordner des
+   LF2-Trainings): beim Knacken zwei gläserne Töne und ein Funkeln, beim Moment „Alle geknackt!“ fünf Töne aufwärts und ein Akkord, der ausklingt. Er nutzt nur
+   Sound.note(): Der Klang folgt dem Ton-Knopf (am Anfang aus). Abgrenzung: „richtig“ sind zwei kurze Sinustöne, „Etappe“ ein Arpeggio mit Akkord; der Diamant
+   klingt höher, gläsern und länger. */
+const HGLAS=[[1,1],[2.76,.3],[5.4,.12]];      /* unharmonische Teiltöne: klingt nach Glas, nicht nach Marimba */
+function herausKlang(alle){const t=Sound.now();
+  if(!alle){Sound.note(1568,t,0.9,0.05,HGLAS);Sound.note(2093,t+0.11,1.1,0.045,HGLAS);Sound.note(3136,t+0.24,0.5,0.018,[[1,1]]);return;}
+  [1047,1319,1568,2093,2637].forEach((f,i)=>Sound.note(f,t+i*0.13,0.9,0.045,HGLAS));
+  [1047,1568,2093,2637].forEach(f=>Sound.note(f,t+0.8,2.0,0.028,[[1,1],[2.76,.2]]));Sound.note(3136,t+1.05,0.8,0.016,[[1,1]]);}
+
+/* Lernstand: Ist der Schalter an, merkt sich das Training auch, welche Herausforderungen geknackt sind (ihre Kennungen), sonst nichts aus dem Bereich. Ein alter
+   Eintrag ohne dieses Feld bleibt gültig; unbekannte Kennungen fallen weg. */
+const herausDaten=()=>HERAUSF.filter(herausOk).map(h=>h.id);
+const herausGueltig=d=>Array.isArray(d)&&d.length<=40&&d.every(x=>typeof x==='string'&&x.length<=40);
+function herausUebernimm(d){HERAUSF.forEach(h=>{if(d.includes(h.id))S.heraus.ok[h.id]=true;});}
 
 /* =====================================================================
    Aufgaben QF2: je Aufgabentyp und Level ein Erzeuger mit neuen Zahlen
@@ -1856,9 +2150,430 @@ const GEN={
 };
 
 /* =====================================================================
+   Fordere mich heraus (QF2, 27.11.2026): vier Herausforderungen für die Starken, Thema: Nullstellen mit Köpfchen
+   1 Über, auf oder unter? · 2 Erst aufräumen · 3 Eine gemeinsame Nullstelle · 4 Der Fallturm
+   Die erste ist der Einstieg ohne Rechnung (was Nullstellen über den Graphen verraten), die zweite stellt Gleichungen mit Falle, die dritte verbindet zwei Funktionen,
+   die vierte deutet das Quadrat im freien Fall. Der Bereich selbst steht im Rahmen (trainingsrahmen/src/bausteine/heraus.js); hier stehen nur die Aufgaben: HGEN nennt
+   je Kennung aus HERAUS (einstellung.js) eine Funktion, die eine Aufgabe erzeugt wie GEN. „Über, auf oder unter?“ mit neuen Zahlen je Versuch, die anderen aus festen
+   Listen mit glatten Zahlen (FH_GL, FH_G und FH_F, FH_TURM); sig ist die Kennung der Aufgabe (nie zweimal hintereinander dieselbe). Plan:
+   planung/Auftrag_Fordere_mich_heraus_27-11-2026.md; Festlegungen: entscheidungen.md, Abschnitt „Fordere mich heraus“. Rechenprüfung: pruefen/heraus_test.js; im
+   Browser: pruefen/heraus.py.
+   Schreibweise wie im Training (b_gen.js): Rechnungen mit Umformungsstrich, „x = 3 oder x = −3“, 𝕃 = {−3; 3}, x² gleich einer negativen Zahl mit rotem Blitz; die
+   Nullstellen in den Bildern lila (x₁) und pink (x₂) wie in Info 1. Keine Scheitelpunktform, kein Parameter t.
+   Hilfen aus den QF3-, QF4- und QF5-Trainings übernommen (dort src/c_heraus.js): fhNah, fhNw, fhPaar, fhSatz, fhRueck, fhLeg, fhBildLinks, fhPasse, fhLade.
+   Im Bauplan steht dieser Teil nach b_gen.js und vor ansicht.js und d_gehege.js: koord, fenster, glKurve werden nur beim Aufruf gebraucht, nie beim Laden.
+   ===================================================================== */
+const fhNah=(a,b,t)=>isFinite(a)&&Math.abs(a-b)<=(t===undefined?1e-6:t)+1e-9;
+const fhNw=h=>'<span class="fhnw">'+h+'</span>';                   // bricht nicht um
+const fhE=(z,e)=>zahl(z)+'&nbsp;'+e;                                // Zahl und Einheit bleiben zusammen
+const fhPaar=(f,t)=>'<span class="fhpaar">'+f+'<span>'+t+'</span></span>';      // ein Feld und das Wort dahinter bleiben in einer Zeile („☐ s lang.“)
+const fhSatz=(...t)=>'<span class="sz">'+t.map(x=>/^<span class="(feld|fhpaar)/.test(x)?x:'<span>'+x+'</span>').join('')+'</span>';
+const FH_XA='<span class="fhnw"><i>x</i>-Achse</span>';      // „x-Achse“ bricht nicht am Bindestrich um (in Hinweisen; die Zeilen der Lösung schützt mtext())
+const fhSchmal=()=>typeof innerWidth==='number'&&innerWidth<=760;      // schmale Anordnung (Handy) wie im Rahmen
+const fhR2=n=>Math.round(n*100)/100+0;                                // auf zwei Nachkommastellen
+/* Mathematik aus einer kurzen Schreibweise: x, ^2, *, - (für die festen Gleichungen von „Erst aufräumen“) */
+const fhM=s=>s.replace(/\^2/g,'²').replace(/\*/g,'·').replace(/-/g,'−').replace(/x/g,'<i>x</i>').replace(/²/g,'<sup>2</sup>');
+/* Legende unter einem Bild: [Klasse der Linie, Text] (aus dem QF4-Training) */
+const fhLeg=L=>'<span class="fhleg">'+L.map(([a,w])=>'<span class="fhli"><svg viewBox="0 0 28 10" aria-hidden="true"><line class="fhl '+a+'" x1="2" y1="5" x2="26" y2="5"/></svg>'+w+'</span>').join('')+'</span>';
+const fhKurve=(k,f,kl,von,bis)=>'<path class="gk '+kl+'" d="'+k.pfad(f,von,bis)+'"/>';
+
+/* Rückmeldung bei Feldern, deren letztes aus den ersten gefolgert ist (wie im QF3-, QF4- und QF5-Training, Lehrkraft 22.11.2026: Folgefehler mit Haken in Klammern).
+   Stimmen die ersten (aOk): nur der Fehler im gefolgerten Feld (t). Sonst steht der Fehler in den ersten (t); passt das gefolgerte zur eigenen Zahl, davor
+   „Richtig gefolgert.“ (ist der Fehler nicht erkannt, t = allg: „Richtig gefolgert, aber … stimmt nicht.“). Passt es nicht: der erkannte Fehler allein. */
+function fhRueck(aOk,passt,t,allg,was){if(aOk)return t;if(passt)return t===allg?'Richtig gefolgert, aber '+was:'Richtig gefolgert. '+t;return t;}
+
+/* Nach „Prüfen“ und nach „Lösung“: das Bild links, unter dem Urteil (Eingabe) oder unter den vier Kästen (Über, auf oder unter?). Innen ein .bild, damit die Gleichung
+   am Graphen (zeigeGl) darin steht; die Größe trägt die Hülle. Gibt das innere .bild zurück. (nach dem QF4-Training)
+   Wo mehr Platz ist, entscheidet das nächste Bild der Seite (dann stehen Urteil und Zeilen der Lösung da), vor dem zweiten Setzen der Gleichung am Graphen (zeigeGl):
+   Rollt die Bühne mit dem Bild links, kommt es unter die Zeilen der Lösung, wenn sie dort weniger rollt; dann wird es, wenn nötig, kleiner (fhPasseJetzt). Am Laptop
+   (1366 × 768) ist links oft kein Platz mehr und rechts genug, am iPad (1024 × 768) oft umgekehrt. Am Handy bleibt es links. */
+function fhBildLinks(m,html,unten){const k1=$('.karte',m),e=k1&&($('.ein',k1)||$('.schk',k1));if(!e||$('.fhnach',m))return null;const r=$('.rueck',k1);
+  const h=el('<div class="fhnach fhunter"><div class="bild">'+html+'</div>'+(unten||'')+'</div>'),b=h.firstChild;(r||e).insertAdjacentElement('afterend',h);
+  if(!fhSchmal())requestAnimationFrame(()=>{const bu=h.closest('.buehne'),z=$('.karte.rechnung .zeilen',m),vor=h.previousElementSibling;if(!bu||!z)return;const ueb=()=>bu.scrollHeight-bu.clientHeight;
+    const links=ueb();if(links>1){z.insertAdjacentElement('afterend',h);h.classList.add('fhrechts');const rechts=ueb();if(rechts>=links){vor.insertAdjacentElement('afterend',h);h.classList.remove('fhrechts');}}
+    fhPasseJetzt(m);$$('.glg',h).forEach(x=>{if(x._gl)setzeGl(x);});});
+  return b;}
+/* Das Bild passt sich dem Platz an (iPad, Laptop; nicht am Handy, dort darf die Bühne rollen): Rollt die Bühne, wenn Urteil, Bild und Lösung dastehen, wird das Bild
+   so viel kleiner, bis sie nicht mehr rollt, höchstens auf 55 %. Hilft das Verkleinern nicht (die andere Karte ist höher), bleibt das Bild, wie es war. (fhPasse aus dem
+   QF4-Training, hier ohne eigenes nächstes Bild: fhBildLinks ruft es dort auf) */
+function fhPasseJetzt(m){if(fhSchmal())return;const h=$('.fhnach',m),bu=h&&h.closest('.buehne'),sv=h&&$('svg',h);if(!bu||!sv)return;
+  const w0=h.getBoundingClientRect().width;h.style.transition='none';      // mit „Bewegung reduzieren“ gleitet sonst jede Eigenschaft kurz (.01 s), und gemessen würde noch die alte Breite
+  for(let n=0;n<3;n++){const ueber=bu.scrollHeight-bu.clientHeight,hh=sv.getBoundingClientRect().height,w=h.getBoundingClientRect().width;if(ueber<=1||!hh)return;
+    const neu=Math.max(w0*.55,w*(hh-ueber-2)/hh);if(neu>=w-.5)return;h.style.maxWidth=neu.toFixed(1)+'px';
+    if(bu.scrollHeight-bu.clientHeight>=ueber){h.style.maxWidth='';return;}}}
+
+/* =====================================================================
+   1 Über, auf oder unter? (Form schalter): der Einstieg ohne Rechnung
+   Eine Funktion, vier Stellen; zu jeder entscheidet der Schüler, ob der Graph dort über, auf oder unter der x-Achse liegt. Zählt nur, wenn alle vier stimmen
+   (Raten: 1 von 81). Nullstellen und Öffnung reichen: Zwischen den Nullstellen liegt der Graph auf der einen Seite der Achse, außerhalb auf der anderen (Blatt,
+   Aufgabe 5 a: Bremsweg länger als Reaktionsweg). Funktionen in den Formen des Blatts mit neuen Zahlen: nf a · (x − u) · (x − v) · aus a x² + b x · wq a x² + c mit zwei
+   Nullstellen · ber a · (x − u)² · keine a x² + c ohne Nullstelle (rund jede achte). a aus ±0,5, ±1, ±2, ±3; Nullstellen ganz zwischen −6 und 6.
+   Stellen: eine Nullstelle, eine dazwischen, eine außerhalb, eine weit draußen (|x| ≥ 50); bei Berührung die Berührstelle und drei andere; ohne Nullstelle vier beliebige.
+   Typische Fehler (je ein anderes Muster, nie das richtige; pruefen/heraus_test.js): Öffnung übersehen (alles vertauscht) · zwischen und außen vertauscht · Nullstellen
+   mit falschem Vorzeichen abgelesen (aus x + 1 wird 1) · neben der Berührstelle „unter“ · ohne Nullstelle „unter“. Der Hinweis gilt der ersten falsch entschiedenen
+   Stelle und nennt den Grund; ist alles vertauscht, nennt er die Öffnung.
+   Nach „Prüfen“ und „Lösung“ das Bild, unter den Kästen oder unter der Lösung, wo Platz ist: die Parabel mit ihren Nullstellen (lila, pink) und den Stellen als Punkte, die Stelle weit draußen als Pfeil am Rand.
+   ===================================================================== */
+const FH_UM=[['ueber','über'],['auf','auf'],['unter','unter']],FH_UMT={ueber:'über',auf:'auf',unter:'unter'};
+const FH_AS=[-3,-2,-1,-0.5,0.5,1,2,3],FH_WEIT=[50,-50,100,-100,1000,-1000,200,-200];
+const fhVor=a=>a===1?'':a===-1?'−':zahl(a)+' · ';                  // die Zahl vor den Klammern
+function fhLageFkt(form){let a,u,v,n=0;const ns=[-6,-5,-4,-3,-2,-1,1,2,3,4,5,6];
+  if(form==='nf'){do{a=pick(FH_AS);u=pick(ns);v=pick(ns);n++;}while((v-u<2||u===-v)&&n<500);
+    return {form,a,L:[u,v],f:x=>a*(x-u)*(x-v),term:fhVor(a)+lf(u)+' · '+lf(v),weg:'Nullstellen '+zahl(u)+' und '+zahl(v)+': Dort wird eine Klammer null.'};}
+  if(form==='aus'){do{a=pick(FH_AS);u=pick(ns);n++;}while((Math.abs(a)===0.5&&u%2||Math.abs(u)<2)&&n<500);      /* |u| ≥ 2: zwischen 0 und u liegt eine ganze Zahl */const b=r4(-a*u),L=sortiert([0,u]),g=Math.abs(a)===0.5?(a<0?-1:1)*0.5:a;
+    const vor=(g===1?'':g===-1?'−':zahl(g))+X,inn=lin(r4(a/g),r4(b/g));
+    return {form,a,L,f:x=>a*x*x+b*x,term:poly(a,b,0),weg:'Ausklammern: '+vor+' · '+inn+' = 0, also '+oder(0,u)+'.'};}
+  if(form==='wq'){do{a=pick(FH_AS);u=pick([1,2,3,4,5,6]);n++;}while(((Math.abs(a)===0.5&&u%2)||Math.abs(a*u*u)>50)&&n<500);const c=r4(-a*u*u);
+    return {form,a,L:[-u,u],f:x=>a*x*x+c,term:poly(a,0,c),weg:'Wurzel ziehen: '+X+Q+' = '+zahl(u*u)+', also '+oder(u,-u)+'.'};}
+  if(form==='ber'){a=pick(FH_AS);u=pick([-5,-4,-3,-2,-1,0,1,2,3,4,5]);
+    return {form,a,L:[u],f:x=>a*(x-u)*(x-u),term:u===0?glied(a,2):fhVor(a)+lf(u)+Q,weg:'Nur bei '+X+' = '+zahl(u)+' ist die Klammer null: Dort berührt der Graph die '+X+'-Achse.'};}
+  do{a=pick(FH_AS);u=pick([1,2,3,4,5,6,8,9]);n++;}while(Math.abs(a)===0.5&&u%2&&n<500);const c=r4(a*u);
+  return {form:'keine',a,L:[],f:x=>a*x*x+c,term:poly(a,0,c),weg:X+Q+' = '+zahl(-c/a)+BLITZ+' Nicht möglich: keine Nullstelle.'};}
+const fhLageWert=(F,x)=>{const y=F.f(x);return Math.abs(y)<1e-9?'auf':y>0?'ueber':'unter';};
+/* die vier Stellen mit ihrer Art (null, zwischen, aussen, weit, neben, frei) */
+function fhLageStellen(F){const L=F.L,weit=pick(FH_WEIT),S=[];
+  if(L.length===2){const [u,v]=L,zw=[];for(let x=u+1;x<v;x++)zw.push(x);const au=[u-1,u-2,u-3,v+1,v+2,v+3].filter(x=>Math.abs(x)<=8);
+    S.push({x:pick(L),art:'null'},{x:pick(zw),art:'zwischen'},{x:pick(au),art:'aussen'},{x:weit,art:'weit'});}
+  else if(L.length===1){const u=L[0];      // je eine Stelle links und rechts der Berührstelle
+    S.push({x:u,art:'null'},{x:pick([u-1,u-2,u-3]),art:'neben'},{x:pick([u+1,u+2,u+3]),art:'neben'},{x:weit,art:'weit'});}
+  else{const fr=shuffle([-4,-3,-2,-1,0,1,2,3,4]);S.push({x:fr[0],art:'frei'},{x:fr[1],art:'frei'},{x:fr[2],art:'frei'},{x:weit,art:'weit'});}
+  return shuffle(S);}
+/* die Antworten, wenn ein typischer Fehler gemacht wird (für die Prüfung: jedes Muster ist ein anderes als das richtige) */
+function fhLageMuster(F,S){const flip=w=>w==='ueber'?'unter':w==='unter'?'ueber':w,R=S.map(s=>fhLageWert(F,s.x)),M={};
+  M.oeffnung=R.map(flip);
+  if(F.L.length===2){M.zwischen=S.map((s,i)=>s.art==='zwischen'?flip(R[i]):R[i]);
+    const G={f:x=>F.a*(x+F.L[0])*(x+F.L[1])};if(F.L[0]!==-F.L[1])M.vorzeichen=S.map(s=>fhLageWert(G,s.x));}
+  if(F.L.length===1)M.neben=S.map((s,i)=>s.art==='neben'?flip(R[i]):R[i]);      // neben der Berührstelle auf der falschen Seite
+  if(!F.L.length)M.keine=S.map((s,i)=>flip(R[i]));                              // ohne Nullstelle auf der falschen Seite (bei x² + 4: „unter“)
+  return M;}
+function fhLageGrund(F,s){const x=X,auf=F.a>0,xs=x+' = '+zahl(s.x),sd=w=>w==='ueber'?'über':'unter';
+  const offen='Nach '+(auf?'oben':'unten')+' geöffnet';
+  if(s.art==='null')return F.form==='nf'?xs+' ist eine Nullstelle: '+lf(s.x).replace(/^\(|\)$/g,'')+' wird dort null. Der Graph liegt auf der '+FH_XA+'.'
+    :F.form==='ber'?xs+' ist die Berührstelle: Dort liegt der Graph auf der '+FH_XA+'.':xs+' ist eine Nullstelle: Dort liegt der Graph auf der '+FH_XA+'.';
+  if(s.art==='zwischen')return xs+' liegt zwischen den Nullstellen. '+offen+': dort '+sd(auf?'unter':'ueber')+' der '+FH_XA+'.';
+  if(s.art==='aussen')return xs+' liegt außerhalb der Nullstellen. '+offen+': dort '+sd(auf?'ueber':'unter')+' der '+FH_XA+'.';
+  if(s.art==='weit')return F.L.length?xs+' liegt weit außen. '+offen+': dort '+sd(auf?'ueber':'unter')+' der '+FH_XA+'.'
+    :xs+': '+V('f')+' hat keine Nullstelle. '+offen+': überall '+sd(auf?'ueber':'unter')+' der '+FH_XA+'.';
+  if(s.art==='neben')return xs+': Der Graph berührt die '+FH_XA+' nur bei '+zahl(F.L[0])+'. '+offen+': sonst '+sd(auf?'ueber':'unter')+' ihr.';
+  return xs+': '+V('f')+' hat keine Nullstelle. '+offen+': überall '+sd(auf?'ueber':'unter')+' der '+FH_XA+'.';}
+/* der Hinweis zur ersten falsch entschiedenen Stelle; ist alles vertauscht (Öffnung übersehen), die Öffnung; „auf“ an einer Stelle, deren Gegenzahl Nullstelle ist: Vorzeichen */
+function fhLageHinweis(F,S,w){const R=S.map(s=>fhLageWert(F,s.x)),falsch=S.map((s,i)=>w[i]!==R[i]),x=X;
+  const nichtAuf=S.map((s,i)=>i).filter(i=>R[i]!=='auf');
+  if(nichtAuf.length>=2&&nichtAuf.every(i=>w[i]&&w[i]!=='auf'&&w[i]!==R[i])&&S.every((s,i)=>R[i]!=='auf'||w[i]==='auf')){
+    const auf=F.a>0;return F.L.length===2?'Nach '+(auf?'oben':'unten')+' geöffnet: außen '+(auf?'über':'unter')+' der '+FH_XA+', zwischen den Nullstellen '+(auf?'unter':'über')+' ihr.'
+      :F.L.length===1?'Nach '+(auf?'oben':'unten')+' geöffnet: Neben der Berührstelle liegt der Graph '+(auf?'über':'unter')+' der '+FH_XA+'.'
+      :V('f')+' hat keine Nullstelle. Nach '+(auf?'oben':'unten')+' geöffnet: überall '+(auf?'über':'unter')+' der '+FH_XA+'.';}
+  const i=falsch.indexOf(true),s=S[i];
+  if(w[i]==='auf'&&R[i]!=='auf'&&F.L.some(u=>u===-s.x&&u!==0))return X+' = '+zahl(s.x)+' ist keine Nullstelle. Vorzeichen: Die Nullstellen sind '+F.L.map(zahl).join(' und ')+'.';
+  return fhLageGrund(F,s);}
+function fhLage(){let F,S,n=0;
+  for(;;){F=fhLageFkt(Math.random()<.125?'keine':pick(['nf','nf','aus','wq','ber']));S=fhLageStellen(F);n++;
+    const R=S.map(s=>fhLageWert(F,s.x)),M=fhLageMuster(F,S),xs=S.map(s=>s.x);
+    if(new Set(xs).size<4)continue;if(F.L.length&&new Set(R).size<2)continue;
+    const xm=F.L.length===2?(F.L[0]+F.L[1])/2:F.L.length?F.L[0]:0;if(Math.abs(F.f(xm))>40||S.some(s=>s.art!=='weit'&&Math.abs(F.f(s.x))>40))continue;      // das Bild bleibt lesbar
+    if(Object.values(M).some(m=>m.join()===R.join()))continue;      // kein typischer Fehler ergibt zufällig die richtige Antwort
+    break;}
+  const R=S.map(s=>fhLageWert(F,s.x)),loes={};S.forEach((s,i)=>{loes['s'+i]=R[i];});
+  const auf=F.a>0,vor=F.form==='nf'||F.form==='ber'?'Zahl vor den Klammern':'Zahl vor '+X+Q;
+  const kl=F.form==='nf'||F.form==='ber'?'vor den Klammern':'vor '+X+Q;
+  const oe=(Math.abs(F.a)===1?(auf?'Kein Minus ':'Ein Minus ')+kl:(auf?'Positiv ':'Negativ ')+kl+' ('+zahl(F.a)+')')+': nach '+(auf?'oben':'unten')+' geöffnet.';
+  const kurz={null:'Nullstelle',zwischen:'zwischen den Nullstellen',aussen:'außerhalb',weit:'weit außen',neben:'neben der Berührstelle',frei:'keine Nullstelle'};
+  const zeilen=[zl(F.weg,null,true),zl(oe,null,true)].concat(S.map((s,i)=>zl(X+' = '+zahl(s.x)+': '+(s.art==='null'?(F.form==='ber'?'Berührstelle':'Nullstelle')+', auf der '+X+'-Achse.':(s.art==='frei'?'':kurz[s.art]+', ')+FH_UMT[R[i]]+' der '+X+'-Achse.'),null,true)));
+  return {form:'schalter',sig:F.term+' | '+S.map(s=>s.x).join(' '),fkt:F,stellen:S,loes,
+    frage:'<span class="fhneu">'+fhNw(fx(F.term))+'</span><b class="fhauf">Liegt der Graph von '+V('f')+' an diesen Stellen über, auf oder unter der '+X+'-Achse? Entscheide ohne Rechnen.</b>',
+    kaesten:S.map((s,i)=>({text:'<span class="fhst">bei '+fhNw(X+' = '+zahl(s.x))+'</span>',um:[{id:'s'+i,vor:'',opts:FH_UM}]})),
+    denk:'Du musst nichts ausrechnen. Wo hat '+V('f')+' Nullstellen? Ist die Parabel nach oben oder nach unten geöffnet?',
+    denk2:'Zwischen den Nullstellen liegt der Graph auf der einen Seite der '+X+'-Achse, außerhalb auf der anderen.',
+    schritte:zeilen,
+    pruefe:w=>{const F_=S.map((s,i)=>'s'+i).filter(id=>w[id]!==loes[id]);if(!F_.length)return {ok:true};
+      return {ok:false,falsch:F_,hinweis:fhLageHinweis(F,S,S.map((s,i)=>w['s'+i]))};},
+    /* nach „Lösung“ ist nichts gewählt: Dann zeigen alle Stellen ihre Antwort grün gestrichelt wie eine richtige, nicht gewählte; rechts das Bild */
+    nach(w,m_){if(!S.some((s,i)=>w['s'+i]))S.forEach((s,i)=>{const u=$('.umsch[data-w="s'+i+'"] [data-v="'+R[i]+'"]',m_);if(u)u.classList.add('fehlt');});fhLageBild(m_,F,S);}};}
+/* das Bild: die Parabel, ihre Nullstellen lila und pink (eine Berührstelle lila), die Stellen als orange Punkte auf dem Graphen; die Stelle weit draußen als Pfeil
+   am Rand, oben oder unten, je nachdem, wo der Graph dort liegt */
+function fhLageKoord(F,S){const nah=S.filter(s=>s.art!=='weit').map(s=>s.x),wx=S.find(s=>s.art==='weit').x,xs=nah.concat(F.L),x0=Math.min(...xs)-1,x1=Math.max(...xs)+1,xm=F.L.length===2?(F.L[0]+F.L[1])/2:F.L.length?F.L[0]:0;
+  /* zur Seite der Stelle weit draußen zwei Einheiten mehr: Dort verlässt der Graph das Bild nach oben oder unten, und in der Ecke ist Platz für den Pfeil */
+  const pts=nah.map(x=>[x,F.f(x)]).concat(F.L.map(u=>[u,0]),[[xm,F.f(xm)],[x0,F.f(x0)],[x1,F.f(x1)]]).filter(p=>Math.abs(p[1])<=60).concat([[wx>0?Math.max(x1+2,4):Math.min(x0-2,-4),0]]);      /* mindestens bis −5 bzw. 5: In der Ecke steht der Pfeil, neben ihm nicht die y-Achse */
+  const W=fenster(pts,{breite:300,hoehe:fhSchmal()?190:140});return Object.assign(koord(W.X,W.Y,Object.assign({},W.o,{label:'Parabel mit den Nullstellen und den vier Stellen'})),{o:W.o});}
+function fhLageBild(m_,F,S){const k=fhLageKoord(F,S),wt=S.find(s=>s.art==='weit'),oben=F.f(wt.x)>0,re=wt.x>0;
+  let mk=F.L.map((u,i)=>k.pkt(u,0,i?'px2':'px1','',0,0)).join('');
+  S.filter(s=>s.art!=='weit'&&s.art!=='null').forEach(s=>{const y=F.f(s.x);if(y>=k.Y[0]&&y<=k.Y[1])mk+=k.pkt(s.x,y,'fhlsg','',0,0);});
+  /* der Pfeil am Rand: „x = 100 →“ rechts oder „← x = −1000“ links, im Rand über dem Bild, wenn der Graph dort über der x-Achse liegt, sonst im Rand darunter.
+     Dort ist die Kurve abgeschnitten, und es stehen keine Zahlen (die x-Achse liegt nie am Rand: Bei über ist oben, bei unter ist unten Platz im Ausschnitt). */
+  const txt='<tspan font-style="italic">x</tspan> = '+zahl(wt.x),bw=7.5*(4+zahl(wt.x).length)+16,x0=re?k.W-k.R-bw:k.R,x1=x0+bw,yr=oben?k.R-4:k.H-4;
+  const xp=re?x1:x0,xt=re?x1-14:x0+14;
+  mk+='<path class="fhpf" d="M'+(re?xp-12:xp+12)+' '+(yr-4.5)+'h'+(re?8:-8)+'"/><path class="fhpfs" d="M'+xp+' '+(yr-4.5)+'l'+(re?-6:6)+' -4v8z"/>'+
+    '<text class="gbs fhlsg fhweit" x="'+xt+'" y="'+yr+'" text-anchor="'+(re?'end':'start')+'">'+txt+'</text>';
+  const hart=[];for(let x=x0-4;x<=x1+4;x+=3)for(let y=yr-17;y<=yr+6;y+=3)hart.push([x,y]);      /* die Gleichung am Graphen liegt nicht auf dem Pfeil */
+  const frei=[];
+  const b=fhBildLinks(m_,k.svg(fhKurve(k,F.f,''),mk));if(!b)return;
+  const gl=glKurve(k,fx(F.term),F.f,'lb',{frei:S.filter(s=>s.art!=='weit').map(s=>[s.x,F.f(s.x)]).concat(F.L.map(u=>[u,0]),frei)});gl.hart=hart;A.gl=[gl];}      /* Platz und Größe: fhBildLinks */
+
+/* =====================================================================
+   2 Erst aufräumen (Form menge, „Lösungen eintippen“ wie im Training): Gleichungen mit Falle
+   Die drei Wege des Blatts gehen erst, wenn alles auf einer Seite steht; „Produkt gleich null“ geht nur mit 0 rechts; nie durch x oder eine Klammer teilen, sonst geht
+   eine Lösung verloren; auch eine Klammer kann man ausklammern (Info 3). Jede Gleichung ist so gebaut, dass danach Ausklammern oder Wurzel ziehen reicht, nie die
+   p,q-Formel (QF3). 20 feste Gleichungen in drei Arten (A nicht durch x teilen, B eine Klammer ausklammern, C rechts steht keine Null), je Versuch eine andere Art.
+   Jede nennt ihre Rechnung (z), ihre Lösungsmenge (L) und ihre typischen Fehler (k: [Menge, Hinweis]); pruefen/heraus_test.js liest jede Gleichung aus ihrem Text,
+   setzt die Lösungen ein, rechnet die Lösungsmenge nach und prüft, dass kein typischer Fehler die richtige Menge ergibt und keine zwei dieselbe.
+   Die Rechnung in der kurzen Schreibweise von fhM: [Zeile, Umformung] oder ['§Satz'].
+   ===================================================================== */
+const FH_GL=[
+  /* A Nicht durch x teilen */
+  {art:'A',gl:'x^2 = 7x',L:[0,7],z:[['x^2 = 7x','| - 7x'],['x^2 - 7x = 0'],['x * (x - 7) = 0'],['x = 0 oder x = 7']],
+    k:[[[7],'d:x'],[[-7,0],'v:x^2 - 7x = 0']]},
+  {art:'A',gl:'3x^2 = 12x',L:[0,4],z:[['3x^2 = 12x','| - 12x'],['3x^2 - 12x = 0'],['3x * (x - 4) = 0'],['x = 0 oder x = 4']],
+    k:[[[4],'d:3x'],[[-4,0],'v:3x^2 - 12x = 0']]},
+  {art:'A',gl:'2x^2 = -8x',L:[-4,0],z:[['2x^2 = -8x','| + 8x'],['2x^2 + 8x = 0'],['2x * (x + 4) = 0'],['x = 0 oder x = -4']],
+    k:[[[-4],'d:2x'],[[0,4],'v:2x^2 + 8x = 0']]},
+  {art:'A',gl:'x * (x + 3) = 4x',L:[0,1],z:[['x * (x + 3) = 4x'],['x^2 + 3x = 4x','| - 4x'],['x^2 - x = 0'],['x * (x - 1) = 0'],['x = 0 oder x = 1']],
+    k:[[[1],'d:x'],[[-7,0],'v:x^2 - x = 0'],[[-3,0],'p:']]},
+  {art:'A',gl:'x^2 + 5 = 5 - 3x',L:[-3,0],z:[['x^2 + 5 = 5 - 3x','| - 5'],['x^2 = -3x','| + 3x'],['x^2 + 3x = 0'],['x * (x + 3) = 0'],['x = 0 oder x = -3']],
+    k:[[[-3],'d:x'],[[0,3],'v:x^2 + 3x = 0']]},
+  /* B Eine Klammer ausklammern: (x − p) steckt in beiden Summanden */
+  {art:'B',gl:'(x - 2)^2 = 5 * (x - 2)',L:[2,7],kl:'x - 2',z:[['(x - 2)^2 = 5 * (x - 2)','| - 5 * (x - 2)'],['(x - 2)^2 - 5 * (x - 2) = 0'],['(x - 2) * ((x - 2) - 5) = 0'],['(x - 2) * (x - 7) = 0'],['x = 2 oder x = 7']],
+    k:[[[7],'d:x - 2|2'],[[2],'p:5 * (x - 2)'],[[-3,2],'v:x - 7']]},
+  {art:'B',gl:'(x + 1)^2 = 3 * (x + 1)',L:[-1,2],kl:'x + 1',z:[['(x + 1)^2 = 3 * (x + 1)','| - 3 * (x + 1)'],['(x + 1)^2 - 3 * (x + 1) = 0'],['(x + 1) * ((x + 1) - 3) = 0'],['(x + 1) * (x - 2) = 0'],['x = -1 oder x = 2']],
+    k:[[[2],'d:x + 1|-1'],[[-1],'p:3 * (x + 1)'],[[-4,-1],'v:x - 2']]},
+  {art:'B',gl:'x * (x - 5) = 2 * (x - 5)',L:[2,5],kl:'x - 5',z:[['x * (x - 5) = 2 * (x - 5)','| - 2 * (x - 5)'],['x * (x - 5) - 2 * (x - 5) = 0'],['(x - 5) * (x - 2) = 0'],['x = 5 oder x = 2']],
+    k:[[[2],'d:x - 5|5'],[[0,5],'p:2 * (x - 5)'],[[-2,5],'v:x - 2']]},
+  {art:'B',gl:'(x - 3)^2 = 2 * (x - 3)',L:[3,5],kl:'x - 3',z:[['(x - 3)^2 = 2 * (x - 3)','| - 2 * (x - 3)'],['(x - 3)^2 - 2 * (x - 3) = 0'],['(x - 3) * ((x - 3) - 2) = 0'],['(x - 3) * (x - 5) = 0'],['x = 3 oder x = 5']],
+    k:[[[5],'d:x - 3|3'],[[3],'p:2 * (x - 3)'],[[1,3],'v:x - 5']]},
+  /* C Rechts steht keine Null: erst ausmultiplizieren */
+  {art:'C',gl:'(x - 3) * (x + 3) = 16',L:[-5,5],q:25,z:[['(x - 3) * (x + 3) = 16'],['x^2 - 9 = 16','| + 9'],['x^2 = 25','| √'],['x = 5 oder x = -5']],
+    k:[[[-3,3],'p:'],[[13,19],'p:'],[[5],'n:5|25'],[[-25,25],'w:25|5']]},
+  {art:'C',gl:'(x + 2)^2 = 4x + 13',L:[-3,3],q:9,z:[['(x + 2)^2 = 4x + 13'],['x^2 + 4x + 4 = 4x + 13','| - 4x'],['x^2 + 4 = 13','| - 4'],['x^2 = 9','| √'],['x = 3 oder x = -3']],
+    k:[[[-2],'p:'],[[3],'n:3|9'],[[-9,9],'w:9|3']]},
+  {art:'C',gl:'x * (x + 6) = 6x + 49',L:[-7,7],q:49,z:[['x * (x + 6) = 6x + 49'],['x^2 + 6x = 6x + 49','| - 6x'],['x^2 = 49','| √'],['x = 7 oder x = -7']],
+    k:[[[-6,0],'p:'],[[7],'n:7|49'],[[-49,49],'w:49|7']]},
+  {art:'C',gl:'(x - 4) * (x + 4) = -7',L:[-3,3],q:9,z:[['(x - 4) * (x + 4) = -7'],['x^2 - 16 = -7','| + 16'],['x^2 = 9','| √'],['x = 3 oder x = -3']],
+    k:[[[-4,4],'p:'],[[-11,-3],'p:'],[[3],'n:3|9'],[[-9,9],'w:9|3']]},
+  {art:'C',gl:'2x * (x - 3) = -6x + 50',L:[-5,5],q:25,z:[['2x * (x - 3) = -6x + 50'],['2x^2 - 6x = -6x + 50','| + 6x'],['2x^2 = 50','| : 2'],['x^2 = 25','| √'],['x = 5 oder x = -5']],
+    k:[[[0,3],'p:'],[[5],'n:5|25'],[[-25,25],'w:25|5']]},
+  {art:'C',gl:'(2x - 1) * (2x + 1) = 8',L:[-1.5,1.5],q:2.25,z:[['(2x - 1) * (2x + 1) = 8'],['4x^2 - 1 = 8','| + 1'],['4x^2 = 9','| : 4'],['x^2 = 2,25','| √'],['x = 1,5 oder x = -1,5']],
+    k:[[[-0.5,0.5],'p:'],[[3.5,4.5],'p:'],[[1.5],'n:1,5|2,25'],[[-2.25,2.25],'w:2,25|1,5'],[[-3,3],'t:4|2,25']]},
+  {art:'C',gl:'(x + 5) * (x - 5) = 11',L:[-6,6],q:36,z:[['(x + 5) * (x - 5) = 11'],['x^2 - 25 = 11','| + 25'],['x^2 = 36','| √'],['x = 6 oder x = -6']],
+    k:[[[-5,5],'p:'],[[6,16],'p:'],[[6],'n:6|36'],[[-36,36],'w:36|6']]},
+  {art:'C',gl:'x * (x - 4) = -4x + 36',L:[-6,6],q:36,z:[['x * (x - 4) = -4x + 36'],['x^2 - 4x = -4x + 36','| + 4x'],['x^2 = 36','| √'],['x = 6 oder x = -6']],
+    k:[[[0,4],'p:'],[[6],'n:6|36'],[[-36,36],'w:36|6']]},
+  {art:'C',gl:'(x - 1) * (x + 1) = -10',L:[],q:-9,z:[['(x - 1) * (x + 1) = -10'],['x^2 - 1 = -10','| + 1'],['x^2 = -9!']],k:[]},
+  {art:'C',gl:'x * (x + 2) = 2x - 4',L:[],q:-4,z:[['x * (x + 2) = 2x - 4'],['x^2 + 2x = 2x - 4','| - 2x'],['x^2 = -4!']],k:[]},
+  {art:'C',gl:'(x + 4) * (x - 4) = -16',L:[0],q:0,z:[['(x + 4) * (x - 4) = -16'],['x^2 - 16 = -16','| + 16'],['x^2 = 0','| √'],['x = 0']],
+    k:[[[-4,4],'p:'],[[-20,-12],'p:']]}
+];
+const FH_ART={A:'Nicht durch '+X+' teilen: alles auf eine Seite, dann ausklammern.',B:'Die Klammer steckt in beiden Summanden: Klammere sie aus.',C:'Rechts steht keine 0: erst ausmultiplizieren.'};
+/* der Hinweis zu einem typischen Fehler aus seiner Kurzform: d Durch x (oder eine Klammer) geteilt · v Vorzeichen beim Herüberbringen · p Produkt gleich null, obwohl
+   rechts nicht 0 steht · n nur die positive Lösung · w Wurzel vergessen · t nicht durch die Zahl vor x² geteilt */
+function fhGlHinweis(G,c){const [art,r]=[c[0],c.slice(2)],x=X;
+  if(art==='d'){if(G.art==='B'){const [k,p]=r.split('|');return 'Durch '+fhM(k)+' teilen verliert '+x+' = '+zahl(+p)+'. Klammere '+fhM(k)+' aus.';}
+    return 'Du hast durch '+fhM(r)+' geteilt. Dabei geht '+x+' = 0 verloren.';}
+  if(art==='v')return G.art==='B'?'Vorzeichen: Ausgeklammert bleibt ('+fhM(r)+').':'Vorzeichen beim Herüberbringen: Es wird '+fhM(r)+'.';
+  if(art==='p')return G.art==='B'?'Produkt gleich null geht nur mit 0 rechts. Bring '+fhM(r)+' erst nach links.':'Produkt gleich null geht nur mit 0 rechts. Multipliziere erst aus.';
+  if(art==='n'){const [w,q]=r.split('|');return 'Es fehlt eine Lösung: Auch (−'+w+')'+Q+' = '+q+'.';}
+  if(art==='w'){const [q,w]=r.split('|');return 'Zieh noch die Wurzel: '+x+Q+' = '+q+', also '+x+' = '+w+' oder '+x+' = −'+w+'.';}
+  if(art==='t'){const [a,q]=r.split('|');return 'Teile erst durch '+a+': '+x+Q+' = '+q+'.';}
+  return '';}
+/* die Zeilen der Rechnung; „x² = −9!“ bekommt den Blitz und „Nicht möglich …“ */
+function fhGlZeilen(G){const Z=[zl(FH_ART[G.art],null,true)];
+  G.z.forEach(([h,op])=>{if(/!$/.test(h)){Z.push(zl(fhM(h.slice(0,-1))+BLITZ),zl(NEGQ,null,true));return;}
+    Z.push(zl(fhM(h),op?op==='| √'?WURZ:fhM(op):undefined));});
+  Z.push(zl(menge(G.L)));return Z;}
+let fhGlArt=null;
+function fhGl(G){const kand=G.k.map(([M,c])=>[M,fhGlHinweis(G,c)]);
+  const leerT=!G.L.length?null:G.art==='A'?'Hier gibt es Lösungen: Eine davon ist '+X+' = 0.':G.art==='B'?'Hier gibt es Lösungen: Klammere '+fhM(G.kl)+' aus.'
+    :'Hier gibt es '+(G.L.length===1?'eine Lösung':'Lösungen')+': Am Ende steht '+X+Q+' = '+zahl(G.q)+'.';
+  return {form:'menge',sig:G.gl,gl:G,L:G.L,tastenRechts:true,frage:'<b class="fhauf">Löse die Gleichung.</b>',term:'<span class="fhgl2">'+fhM(G.gl)+'</span>',
+    denk:'Bring alles auf eine Seite, bis rechts 0 steht. Teile nie durch '+X+' oder durch eine Klammer.',
+    denk2:'Steckt in jedem Summanden derselbe Faktor, auch eine Klammer? Klammere ihn aus. Fallen die '+X+'-Glieder weg, zieh die Wurzel.',
+    schritte:fhGlZeilen(G),kand,
+    pruefe:(E,keine)=>pruefeMenge(G.L,E,keine,kand,leerT)};}
+
+/* =====================================================================
+   3 Eine gemeinsame Nullstelle (Form eingabe, zwei Felder „c = ☐ oder c = ☐“, Reihenfolge egal, das zweite darf leer bleiben)
+   Gegeben g mit zwei Nullstellen und f mit der unbekannten Zahl c. Eine gemeinsame Nullstelle ist eine Nullstelle von g; also erst die Nullstellen von g (Produkt,
+   Ausklammern oder Wurzel ziehen), dann jede in f einsetzen: f muss dort 0 sein. g aus FH_G (8), f aus FH_F (4): 32 Paare; dazu seltener (rund jede vierte) die zweite
+   Art f(x) = x² + b · x mit g ohne Nullstelle 0 und nicht symmetrisch (FH_GB).
+   f = a·x² − s·c (s = 1: x² − c, 2x² − c; s = −1: c − x², x² + c mit a = −1 bzw. 1 umgerechnet): c = a·u²/s. Typische Fehler (je eine eigene Menge, nie die richtige;
+   pruefen/heraus_test.js): nicht quadriert (c = a·u/s) · Vorzeichen (−c) · bei 2x² − c die 2 vergessen · nur ein Wert · c = 0 vergessen · die Nullstellen statt c.
+   Bei x² − c und c − x² ergeben „nicht quadriert“ und „die Nullstellen eingetippt“ dieselben Zahlen (c = u): ein Hinweis für beide. Zweite Art: b = −u; Fehler:
+   Vorzeichen (b = u, zugleich die Nullstellen) · nicht durch u geteilt (b = −u²) · nur ein Wert.
+   ===================================================================== */
+const FH_G=[{t:'(x + 2) * (x - 5)',L:[-2,5],w:'p'},{t:'(x - 1) * (x - 4)',L:[1,4],w:'p'},{t:'(x + 3) * (x - 1)',L:[-3,1],w:'p'},{t:'(x - 2) * (x - 6)',L:[2,6],w:'p'},
+  {t:'x^2 - 3x',L:[0,3],w:'a',a:'x * (x - 3)'},{t:'x^2 + 2x',L:[-2,0],w:'a',a:'x * (x + 2)'},{t:'2x^2 - 10x',L:[0,5],w:'a',a:'2x * (x - 5)'},{t:'x^2 - 16',L:[-4,4],w:'w',q:16}];
+const FH_F=[{t:'x^2 - c',a:1,s:1},{t:'2x^2 - c',a:2,s:1},{t:'c - x^2',a:-1,s:-1},{t:'x^2 + c',a:1,s:-1}];
+const FH_GB=[0,1,2,3];      // die zweite Art nur mit den vier Produkten (keine Nullstelle 0, nicht symmetrisch)
+/* die Nullstellen von g mit ihrem Weg, als Zeilen */
+function fhGZeilen(g){const G=fhM(g.t);
+  if(g.w==='p')return [zl(gl0(G)),zl(oder(g.L[0],g.L[1]))];
+  if(g.w==='a')return [zl(gl0(G)),zl(gl0(fhM(g.a))),zl(oder(0,g.L.find(u=>u!==0)))];
+  return [zl(gl0(G),plus(g.q)),zl(X+Q+' = '+zahl(g.q),WURZ),zl(oder(g.L[1],g.L[0]))];}
+/* f mit einer Zahl an der Stelle von x (für die Zeile f(u) = …) */
+const fhFEin=(F,u,p)=>F.b?kl(u)+Q+' + '+p+' · '+kl(u):F.t==='x^2 - c'?kl(u)+Q+' − '+p:F.t==='2x^2 - c'?'2 · '+kl(u)+Q+' − '+p:F.t==='c - x^2'?p+' − '+kl(u)+Q:kl(u)+Q+' + '+p;
+function fhGemFall(gi,fi,b){const g=FH_G[gi];
+  if(b){const W=sortiert(g.L.map(u=>-u));return {b:true,gi,g,F:{b:true,t:'x^2 + b * x'},W,p:V('b'),fehler:{vz:sortiert(g.L.slice()),geteilt:sortiert(g.L.map(u=>-u*u))}};}
+  const F=FH_F[fi],W=sortiert(g.L.map(u=>F.a*u*u/F.s));
+  return {b:false,gi,fi,g,F,W,p:V('c'),fehler:{nichtQ:sortiert(g.L.map(u=>F.a*u/F.s)),vz:sortiert(W.map(c=>-c)),aVerg:F.a===2?sortiert(g.L.map(u=>u*u/F.s)):null,null:sortiert(g.L.slice())}};}
+function fhGem(G){const {g,F,W,p}=G,gT=fhM(g.t),fT=F.b?glied(1,2)+' + '+V('b')+' · '+X:fhM(F.t).replace(/c/,V('c')),u0=g.L,pn=F.b?'b':'c';
+  /* je Nullstelle von g: f(u) = 0 → c */
+  const wertZeile=u=>{const w=F.b?-u:F.a*u*u/F.s,ein=fhFEin(F,u,p);
+    if(F.b){const k=r4(u*u);return zl(V('f')+'('+zahl(u)+') = '+ein+' = '+zahl(k)+(u<0?' − ':' + ')+zahl(Math.abs(u))+p+' = 0 &nbsp;⇒&nbsp; '+p+' = '+zahl(w));}
+    const k=r4(Math.abs(F.a)*u*u);const mitte=F.t==='c - x^2'?p+' − '+zahl(k):F.t==='x^2 + c'?zahl(k)+' + '+p:zahl(k)+' − '+p;
+    return zl(V('f')+'('+zahl(u)+') = '+ein+' = '+mitte+' = 0 &nbsp;⇒&nbsp; '+p+' = '+zahl(w));};
+  const S=[zl('Zuerst die Nullstellen von '+V('g')+':',null,true)].concat(fhGZeilen(g));
+  S.push(zl('Dort muss auch '+V('f')+' null sein:',null,true));
+  u0.forEach(u=>S.push(wertZeile(u)));
+  /* Probe mit dem Wert, der nicht 0 ist (bei nur einem Wert mit diesem): f hat dann die Nullstellen ±u (bei b: 0 und u) */
+  const cw=u=>F.b?-u:F.a*u*u/F.s,wP=W.find(c=>c!==0)!==undefined?W.find(c=>c!==0):W[0],uP=u0.find(u=>fhNah(cw(u),wP)),fN=F.b?sortiert([0,uP]):sortiert([uP,-uP]);
+  S.push(zl('Probe: Mit '+p+' = '+zahl(wP)+' hat '+V('f')+' die Nullstelle'+(fN.length>1?'n ':' ')+fN.map(zahl).join(' und ')+'; '+zahl(uP)+' ist auch Nullstelle von '+V('g')+'.',null,true));
+  S.push(zl(W.length===2?p+' = '+zahl(W[0])+' oder '+p+' = '+zahl(W[1]):'Nur '+p+' = '+zahl(W[0])+': Beide Nullstellen ergeben dieselbe Zahl.',null,W.length!==2));
+  /* typische Fehler: zu einer falschen Zahl die Nullstelle, aus der sie kommt, und der Hinweis dazu */
+  const mitteT=u=>{const k=r4(Math.abs(F.b?1:F.a)*u*u);return F.b?zahl(k)+(u<0?' − ':' + ')+zahl(Math.abs(u))+p:F.t==='c - x^2'?p+' − '+zahl(k):F.t==='x^2 + c'?zahl(k)+' + '+p:zahl(k)+' − '+p;};
+  const bei=(z,fn)=>u0.find(u=>fhNah(z,fn(u)));
+  /* die typischen Fehler je Nullstelle: [Name, Zahl zu u]; erst wird die ganze Eingabe mit jedem Fehler verglichen, dann jede falsche Zahl für sich (bei der Nullstelle 1
+     ist u² = u: Dann passt eine Zahl zu zwei Fehlern, und der erste in dieser Reihenfolge gibt den Hinweis) */
+  const FEHL=F.b?[['vz',x=>x],['geteilt',x=>-x*x]]:[['vz',x=>-cw(x)]].concat(F.a===2?[['aVerg',x=>x*x/F.s]]:[],[['nichtQ',x=>F.a*x/F.s],['null',x=>x]]);
+  const hinweisZu=(n,u)=>F.b?(n==='vz'?'Setze die Nullstelle ein: '+V('f')+'('+zahl(u)+') = '+mitteT(u)+' = 0, also '+p+' = '+zahl(-u)+'.'
+      :'Teile noch durch die Nullstelle: Aus '+zahl(u)+p+' = '+zahl(-u*u)+' folgt '+p+' = '+zahl(-u)+'.')
+    :n==='vz'?'Vorzeichen: Aus '+mitteT(u)+' = 0 folgt '+p+' = '+zahl(cw(u))+'.'
+    :n==='aVerg'?'Die 2 vor '+X+Q+' gehört dazu: '+V('f')+'('+zahl(u)+') = '+fhFEin(F,u,p)+' = '+mitteT(u)+' = 0.'
+    :'Setze die Nullstelle in '+V('f')+' ein und quadriere: '+V('f')+'('+zahl(u)+') = '+fhFEin(F,u,p)+' = '+mitteT(u)+' = 0.';
+  const hinweis=(E,falsche)=>{const Eu=sortiert(E);
+    for(const [n,fn] of FEHL){const M=sortiert(u0.map(fn));if(M.length===Eu.length&&M.every((v,i)=>fhNah(v,Eu[i]))){const u=u0.find(x=>!W.some(c=>fhNah(c,fn(x))))!==undefined?u0.find(x=>!W.some(c=>fhNah(c,fn(x)))):u0[0];return hinweisZu(n,u);}}
+    for(const z of falsche)for(const [n,fn] of FEHL){const u=u0.find(x=>fhNah(z,fn(x)));if(u!==undefined)return hinweisZu(n,u);}
+    return null;};
+  const null0=u0.includes(0),allg='Setze jede Nullstelle von '+V('g')+' in '+V('f')+' ein. Dort muss '+V('f')+' null sein.';
+  return {form:'eingabe',einKl:'satz',sig:(F.b?'b/':'c/'+G.fi+'/')+G.gi,fall:G,leer:['b'],
+    frage:'<span class="fhneu">Gegeben sind '+fhNw(V('g')+'('+X+') = '+gT)+' und '+fhNw(V('f')+'('+X+') = '+fT)+' mit einer Zahl '+p+'.</span>'+
+      '<b class="fhauf">Für welche Zahl '+p+' haben '+V('f')+' und '+V('g')+' eine gemeinsame Nullstelle? Gib alle an.</b>',
+    ein:fhSatz(p+' =',FELD('a'),'oder '+p+' =',FELD('b'))+'<span class="fhgem" hidden></span>',notiz:'Gibt es nur eine Zahl, bleibt das zweite Feld leer.',rtitel:'Lösung',rleer:'',
+    denk:'Eine gemeinsame Nullstelle ist auch eine Nullstelle von '+V('g')+'. Bestimme zuerst die Nullstellen von '+V('g')+'.',
+    denk2:'Setze jede Nullstelle von '+V('g')+' in '+V('f')+' ein. Dort muss '+V('f')+' null sein.',
+    schritte:S,
+    pruefe(w){const a=num(w.a),b=w.b?num(w.b):NaN,istA=isFinite(a),istB=isFinite(b),inW=z=>W.some(c=>fhNah(z,c));
+      const aOk=istA&&inW(a),bOk=istB?inW(b)&&(!fhNah(a,b)||W.length===1):!w.b&&W.length===1;
+      const menge_=sortiert([a,b].filter(isFinite));if(aOk&&bOk&&menge_.length===W.length)return {ok:true};
+      const F_=[];if(!aOk)F_.push('a');if(!bOk)F_.push('b');
+      const falsche=[a,b].filter((z,i)=>isFinite(z)&&!(i?bOk:aOk));let h=hinweis([a,b].filter(isFinite),falsche);
+      if(!h){if(menge_.length<W.length&&menge_.every(inW))h=null0&&!menge_.some(z=>fhNah(z,0))?'Auch 0 ist Nullstelle von '+V('g')+': '+V('f')+'(0) = 0 heißt '+p+' = 0.':V('g')+' hat zwei Nullstellen. Prüfe beide.';
+        else h=allg;}
+      return {ok:false,falsch:F_,hinweis:h};},
+    nach(w,m_){fhGemBild(m_,G);}};}
+/* das Bild unter dem Urteil: g blau mit Gleichung, f für jede Zahl lila und pink (Legende darunter), die gemeinsamen Nullstellen orange */
+function fhGemBild(m_,G){const {g,F,W}=G,gf=x=>g.t==='x^2 - 16'?x*x-16:g.w==='a'?(g.t==='2x^2 - 10x'?2*x*x-10*x:g.t==='x^2 - 3x'?x*x-3*x:x*x+2*x):(x-g.L[0])*(x-g.L[1]);
+  const fk=c=>F.b?x=>x*x+c*x:x=>F.a*x*x-F.s*c,xm=(g.L[0]+g.L[1])/2,e=Math.abs(g.L[1]-g.L[0])/2+1.6;
+  const pts=[[g.L[0],0],[g.L[1],0],[xm,gf(xm)],[xm-e,gf(xm-e)],[xm+e,gf(xm+e)],[xm,-gf(xm)*.45]].filter(p=>Math.abs(p[1])<=40);
+  const Wf=fenster(pts,{breite:300,hoehe:fhSchmal()?190:130}),k=koord(Wf.X,Wf.Y,Object.assign({},Wf.o,{label:'g und f mit gemeinsamer Nullstelle'}));
+  const kur=W.map((c,i)=>fhKurve(k,fk(c),i?'fhf2':'fhf1')).join('')+fhKurve(k,gf,'');
+  const mk=g.L.map(u=>k.pkt(u,0,'fhlsg','',0,0)).join('');
+  const b=fhBildLinks(m_,k.svg(kur,mk),fhLeg(W.map((c,i)=>[i?'fhf2':'fhf1',V('f')+' mit '+G.p+' = '+zahl(c)])));if(!b)return;
+  A.gl=[glKurve(k,V('g')+'('+X+') = '+fhM(g.t),gf,'lb',{andere:W.map(fk),frei:g.L.map(u=>[u,0])})];}      /* Platz und Größe: fhBildLinks */
+
+/* =====================================================================
+   4 Der Fallturm (Form eingabe, zwei Felder): das Quadrat im freien Fall
+   h(t) = H − 5t² ist die Höhe der Kapsel über dem Ende der Fallstrecke in m, t Sekunden nach dem Loslassen. Drei echte Türme (Sachprüfung: entscheidungen.md):
+   der 2,2-Sekunden-Turm der NASA in Cleveland (24 m, Windschild), der Fallturm Bremen (110 m, luftleere Röhre), die Zero Gravity Research Facility der NASA (132 m,
+   Vakuum). Feld 1 immer die Fallzeit T = √(H/5); Feld 2 eine von drei Fragen: (i) halbe Höhe √(H/10) · (ii) gefallen nach der halben Zeit H/4 · (iii) Fallstrecke für die
+   doppelte Zeit 4H. Neun Fälle (FH_FALL).
+   Toleranz: Zeiten ±0,01 s (auf zwei Nachkommastellen gerundet oder abgeschnitten); (ii) ±0,05 m und (iii) ±0,5 m, damit auch gilt, was aus der gerundeten Fallzeit
+   gerechnet ist (5 · (4,69 : 2)² = 27,495; 5 · (2 · 5,14)² = 528,39). Jeder typische Fehler liegt weit außerhalb (pruefen/heraus_test.js).
+   Typische Fehler: Wurzel vergessen (H/5) · negative Lösung · mal 5 statt durch 5 (√(5H)) · (i) halbe Zeit (T/2), Wurzel vergessen (H/10), mal 5 · (ii) H/2,
+   Resthöhe 3H/4 · (iii) 2H. Folgefehler: (ii) und (iii) gemessen an der eigenen Fallzeit T′ (5 · (T′/2)², 5 · (2T′)²), dann (✓); (i) hängt nicht an T. Ein richtiges
+   Feld 2 behält seinen Haken auch bei falschem T: H/4 und 4H folgen auch ohne T.
+   ===================================================================== */
+const FH_TURM=[
+  {id:'nasa22',H:24,name:'Im 2,2-Sekunden-Turm der NASA in Cleveland',wie:'Das Experiment fällt in einem Windschild: Die Luft bremst nur den Schild.',kurz:'Cleveland',
+    echt:'Im echten Turm fällt das Experiment 2,2&nbsp;s: Die Erde zieht mit 9,81 statt 10&nbsp;m/s².'},
+  {id:'bremen',H:110,name:'Im Fallturm Bremen',wie:'In der luftleer gepumpten Röhre bremst keine Luft.',kurz:'Bremen',
+    echt:'In Bremen fällt die Kapsel 4,74&nbsp;s: Die Erde zieht mit 9,81 statt 10&nbsp;m/s².'},
+  {id:'zgrf',H:132,name:'In der Zero Gravity Research Facility der NASA',wie:'In der luftleer gepumpten Röhre bremst keine Luft.',kurz:'Cleveland',
+    echt:'Im echten Turm fällt die Kapsel 5,18&nbsp;s und ist unten rund 50&nbsp;m/s schnell.'}];
+const FH_FALL=[];FH_TURM.forEach((T,ti)=>['halb','zeit','doppelt'].forEach(fr=>FH_FALL.push({ti,fr})));
+function fhFallFall(F0){const T=FH_TURM[F0.ti],H=T.H,t=Math.sqrt(H/5),th=Math.sqrt(H/10);
+  return Object.assign({},F0,{turm:T,H,T:t,T2:fhR2(t),th,th2:fhR2(th),soll:F0.fr==='halb'?th:F0.fr==='zeit'?H/4:4*H,tol:F0.fr==='halb'?.01:F0.fr==='zeit'?.05:.5,
+    f1:{wurzel:H/5,neg:-t,mal:Math.sqrt(5*H)},
+    f2:F0.fr==='halb'?{halbZeit:t/2,wurzel:H/10,neg:-th,mal:Math.sqrt(2.5*H)}:F0.fr==='zeit'?{haelfte:H/2,rest:3*H/4}:{doppelt:2*H},
+    folge:F0.fr==='zeit'?(z=>1.25*z*z):F0.fr==='doppelt'?(z=>20*z*z):null});}
+function fhFall(F0){const F=fhFallFall(F0),{turm,H,fr}=F,tv=V('t'),hv=V('h'),tq=tv+Q,sek=z=>fhE(z,'s'),m=z=>fhE(z,'m');
+  const hT=hv+'('+tv+') = '+H+' − 5'+tq;
+  const lage=turm.name+' fällt eine Kapsel mit einem Experiment '+m(H)+' tief. '+turm.wie+' Solange sie fällt, ist sie schwerelos. '+fhNw(hT)+' ist ihre Höhe über dem Ende der Fallstrecke in m, '+tv+' Sekunden nach dem Loslassen.';
+  const frage2=fr==='halb'?fhSatz('Auf halber Höhe ist sie nach',fhPaar(FELD('b'),'s.')):fr==='zeit'?fhSatz('Nach der halben Zeit ist sie',fhPaar(FELD('b'),'m gefallen.'))
+    :fhSatz('Für die doppelte Zeit braucht man',fhPaar(FELD('b'),'m.'));
+  /* die Lösung: unten ist h(t) = 0, Wurzel ziehen, die negative Lösung entfällt; dann die zweite Frage; dazu eine Zeile Wirklichkeit */
+  const q=r4(H/5),S=[zl('Unten ist '+hv+'('+tv+') = 0:',null,true),zl(H+' − 5'+tq+' = 0',plus(-H)),zl('−5'+tq+' = −'+H,'| : (−5)'),zl(tq+' = '+zahl(q),WURZ),
+    zl(tv+' ≈ '+zahl(F.T2)+' &nbsp;oder&nbsp; <s class="fhweg">'+tv+' ≈ −'+zahl(F.T2)+'</s>'),zl('Die Zeit ist positiv: Sie fällt '+sek(F.T2)+' lang.',null,true)];
+  if(fr==='halb'){const h2=r4(H/2);S.push(zl('Halbe Höhe, nicht halbe Zeit: '+hv+'('+tv+') = '+zahl(h2),null,true),zl(H+' − 5'+tq+' = '+zahl(h2),plus(-H)),zl('−5'+tq+' = −'+zahl(h2),'| : (−5)'),
+      zl(tq+' = '+zahl(r4(H/10)),WURZ),zl(tv+' ≈ '+zahl(F.th2)+' &nbsp;('+tv+' &gt; 0)'));}
+  else if(fr==='zeit')S.push(zl('Gefallen ist sie nach '+tv+' Sekunden 5'+tq+' Meter.',null,true),zl('Halbe Zeit: 5 · ('+tv+' : 2)'+Q+' = 5'+tq+' : 4, ein Viertel.',null,true),
+      zl(m(H)+' : 4 = '+m(r4(H/4))));
+  else S.push(zl('Gefallen ist sie nach '+tv+' Sekunden 5'+tq+' Meter.',null,true),zl('Doppelte Zeit: 5 · (2'+tv+')'+Q+' = 4 · 5'+tq+', die vierfache Strecke.',null,true),
+      zl('4 · '+m(H)+' = '+m(4*H)));
+  S.push(zl(fr==='doppelt'&&turm.id==='bremen'?'Bremen hat keine 440&nbsp;m: Ein Katapult schießt die Kapsel hoch, sie steigt und fällt 9,3&nbsp;s lang.':turm.echt,null,true));
+  /* typische Fehler */
+  const z2=n=>zahl(fhR2(n));
+  const t1=z=>fhNah(z,F.f1.wurzel,.01)?'Zieh noch die Wurzel: '+tq+' = '+zahl(q)+', also '+tv+' ≈ '+z2(F.T)+'.'
+    :fhNah(z,F.f1.neg,.01)?'Die Zeit nach dem Loslassen ist positiv: '+tv+' ≈ '+z2(F.T)+'.'
+    :fhNah(z,F.f1.mal,.01)?'Teile durch 5, nicht mal 5: '+tq+' = '+H+' : 5 = '+zahl(q)+'.'
+    :'Die Fallzeit stimmt nicht: Unten ist '+hv+'('+tv+') = 0.';
+  const t2=z=>{const f=F.f2;
+    if(fr==='halb')return fhNah(z,f.halbZeit,.01)?'Halbe Höhe heißt '+hv+'('+tv+') = '+zahl(H/2)+', nicht halbe Zeit.':fhNah(z,f.wurzel,.01)?'Zieh noch die Wurzel: '+tq+' = '+zahl(r4(H/10))+', also '+tv+' ≈ '+z2(F.th)+'.'
+      :fhNah(z,f.neg,.01)?'Die Zeit nach dem Loslassen ist positiv: '+tv+' ≈ '+z2(F.th)+'.':fhNah(z,f.mal,.01)?'Teile durch 5, nicht mal 5: '+tq+' = '+zahl(H/2)+' : 5 = '+zahl(r4(H/10))+'.'
+      :'Halbe Höhe heißt '+hv+'('+tv+') = '+zahl(H/2)+'. Löse diese Gleichung.';
+    if(fr==='zeit')return fhNah(z,f.haelfte,.05)?'In der halben Zeit fällt sie nur ein Viertel: 5 · ('+tv+' : 2)'+Q+' = 5'+tq+' : 4.':fhNah(z,f.rest,.05)?'Gefragt ist, wie weit sie gefallen ist, nicht wie hoch sie noch ist.'
+      :'In der halben Zeit fällt sie ein Viertel der Strecke: '+m(H)+' : 4.';
+    return fhNah(z,f.doppelt,.5)?'Doppelte Zeit: 5 · (2'+tv+')'+Q+' = 4 · 5'+tq+', also die vierfache Strecke.':'Doppelte Zeit heißt vierfache Strecke: 5 · (2'+tv+')'+Q+' = 4 · 5'+tq+'.';};
+  return {form:'eingabe',einKl:'satz',sig:turm.id+'/'+fr,fall:F,
+    frage:'<span class="fhlage">'+lage+'</span><b class="fhauf">'+(fr==='halb'?'Wie lange fällt die Kapsel, und wann ist sie auf halber Höhe?':fr==='zeit'?'Wie lange fällt die Kapsel, und wie weit fällt sie in der halben Zeit?'
+      :'Wie lange fällt die Kapsel, und wie lang müsste die Fallstrecke für die doppelte Zeit sein?')+'</b>',
+    ein:fhSatz('Die Kapsel fällt',fhPaar(FELD('a'),'s lang.'))+frage2,notiz:'Runde auf zwei Nachkommastellen.',folgt:fr==='halb'?undefined:{b:['a']},rtitel:'Lösung',rleer:'',
+    denk:'Unten ist '+hv+'('+tv+') = 0. Löse die Gleichung ohne Formel.',
+    denk2:fr==='halb'?'Auf halber Höhe ist '+hv+'('+tv+') = '+zahl(H/2)+'. Löse auch diese Gleichung.':'Im Term steht '+tq+'. Was wird aus 5'+tq+', wenn '+tv+' halb oder doppelt so groß ist?',
+    schritte:S,fehler:{f1:F.f1,f2:F.f2},
+    pruefe(w){const a=num(w.a),b=num(w.b),aOk=fhNah(a,F.T,.01),bOk=fhNah(b,F.soll,F.tol);if(aOk&&bOk)return {ok:true};
+      const folge=!aOk&&!bOk&&F.folge&&isFinite(a)&&fhNah(b,F.folge(a),Math.max(F.tol,.002*Math.abs(F.folge(a)))),F_=[],G_=[];
+      if(!aOk)F_.push('a');if(!bOk){if(folge)G_.push('b');else F_.push('b');}
+      const allg='Die Fallzeit stimmt nicht: Unten ist '+hv+'('+tv+') = 0.';
+      return {ok:false,falsch:F_,folge:G_,hinweis:fhRueck(aOk,folge,aOk?t2(b):t1(a),allg,'die Fallzeit stimmt nicht.')};},
+    nach(w,m_){fhFallBild(m_,F);}};}
+/* das Bild unter dem Urteil: die Röhre senkrecht, die Kapsel in gleichen Zeitabständen (die Abstände wachsen), Marken für halbe Höhe und halbe Zeit, der gefragte Punkt
+   orange. Bei der doppelten Zeit geht die Röhre gestrichelt weiter bis 4H. */
+function fhFallBild(m_,F){const {H,fr}=F,dop=fr==='doppelt',Hm=dop?4*H:H,W=300,Hh=fhSchmal()?170:122,o=10,u=Hh-10,y=s=>o+(u-o)*s/Hm,xr=128,br=13;
+  const n=dop?8:6,Tm=dop?2*F.T:F.T,P=[];for(let i=0;i<=n;i++){const t=Tm*i/n;P.push(5*t*t);}
+  let s='<svg class="fhturm" viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Fallröhre mit der Kapsel in gleichen Zeitabständen">';
+  s+='<rect class="fhroehre" x="'+(xr-br/2)+'" y="'+o+'" width="'+br+'" height="'+(y(H)-o)+'" rx="3"/>';
+  if(dop)s+='<rect class="fhroehre fhverl" x="'+(xr-br/2)+'" y="'+y(H)+'" width="'+br+'" height="'+(y(4*H)-y(H))+'" rx="3"/>';
+  /* Marken: links die Höhe über dem Ende (oben H, unten 0), rechts die Zeit */
+  const mk=(sf,txt,kl,rechts)=>'<line class="fhmk '+(kl||'')+'" x1="'+(xr-br/2-14)+'" y1="'+y(sf).toFixed(1)+'" x2="'+(xr+br/2+14)+'" y2="'+y(sf).toFixed(1)+'"/>'+
+    '<text class="fhtx '+(kl||'')+'" x="'+(rechts?xr+br/2+18:xr-br/2-18)+'" y="'+(y(sf)+4.5).toFixed(1)+'" text-anchor="'+(rechts?'start':'end')+'">'+txt+'</text>';
+  s+=mk(0,'Start',null,false)+mk(H,dop?'Röhre zu Ende':'Ende',null,false);
+  if(fr==='halb')s+=mk(H/2,'halbe Höhe','fhorange',false)+mk(H/4,'halbe Zeit',null,true);
+  if(fr==='zeit')s+=mk(H/4,'halbe Zeit: '+fhE(r4(H/4),'m'),'fhorange',true)+mk(H/2,'halbe Höhe',null,false);
+  if(dop)s+=mk(4*H,'doppelte Zeit: '+fhE(4*H,'m'),'fhorange',true);
+  P.forEach((sf,i)=>{s+='<circle class="fhkap" cx="'+xr+'" cy="'+y(sf).toFixed(1)+'" r="4.2"/>';});
+  /* der gefragte Punkt orange: halbe Höhe (eigene Zeit), halbe Zeit, Ende der doppelten Strecke */
+  const ziel=fr==='halb'?H/2:fr==='zeit'?H/4:4*H;s+='<circle class="fhziel" cx="'+xr+'" cy="'+y(ziel).toFixed(1)+'" r="6"/>';
+  if(fr==='halb')s+='<text class="fhtx fhorange" x="'+(xr+br/2+18)+'" y="'+(y(H/2)+4.5).toFixed(1)+'">nach '+fhE(F.th2,'s')+'</text>';
+  s+='<text class="fhtx fhklein" x="'+(xr+br/2+18)+'" y="'+(y(H)+4.5).toFixed(1)+'">nach '+fhE(F.T2,'s')+'</text>';
+  s+='</svg>';
+  fhBildLinks(m_,s);}      /* Platz und Größe: fhBildLinks */
+
+/* Die Handschrift der Lösung gleich mit der ersten Aufgabe laden, nicht erst beim ersten „Prüfen“: Bis sie da ist, steht die Lösung in einer Ersatzschrift
+   und ist höher, die Bühne rollte dann kurz (QF4, auf GitHub gemessen, 27.11.2026). Ohne document.fonts (node, alte Browser) nichts. */
+let fhSchrift=false;
+function fhLade(){if(fhSchrift||typeof document==='undefined'||!document.fonts||!document.fonts.load)return;fhSchrift=true;
+  try{document.fonts.load("1rem 'Indie Flower'");}catch(e){}}
+/* Die Aufgaben des Bereichs: je Kennung aus HERAUS (einstellung.js) eine Funktion. „Erst aufräumen“: je Versuch eine andere Art als zuletzt (A, B, C im Wechsel) */
+const HGEN={
+  lage(){fhLade();return fhLage();},
+  raeumen(){fhLade();const art=pick(['A','B','C'].filter(a=>a!==fhGlArt));fhGlArt=art;return fhGl(pick(FH_GL.filter(G=>G.art===art)));},
+  gemeinsam(){fhLade();return Math.random()<.25?fhGem(fhGemFall(pick(FH_GB),null,true)):fhGem(fhGemFall(Math.floor(Math.random()*FH_G.length),Math.floor(Math.random()*FH_F.length),false));},
+  fall(){fhLade();return fhFall(pick(FH_FALL));}
+};
+
+/* =====================================================================
    Trainingsrahmen: Ansichten, Aufgabenrahmen, Formen (Objekt FORM, die Formen setzt das Bauskript ein), Hilfen, Wertung, Rückblick, Fenster, Finale
    ===================================================================== */
 function vStart(){
+  if(PCF)return pcStart();      // PowerCheck: zwei Knöpfe, „PowerCheck“ und „Stand“ (Baustein powercheck)
   S.ansicht='start';adresse('');
   setApp(startKopf()+
     '<main class="startm"><button class="gross" data-akt="gesamt"><b>'+(S.geuebt?'Weiter':'Start')+'</b><small>'+(S.geuebt?etappeText():'Gesamttraining. Alles gemischt.')+'</small></button>'+
@@ -1870,7 +2585,7 @@ function vStart(){
    Version, Datenschutz und Impressum stehen am Fuß der Startseite. */
 function startKopf(){
   return '<header class="kopf"><a class="logo" id="heim" href="/" aria-label="Zurück zu happymatty.de"><img src="/stil/icon-192.png" alt=""><span>happymatty.de</span></a><span class="luft"></span>'+kronenHTML()+tonKnopf()+'</header>'+
-    '<div class="skopf"><p class="szeile"><a href="/">'+FACH+'</a> · <a class="thema" href="'+THEMA_URL+'">'+THEMA+'</a> · <span class="teilthema">'+TEILTHEMA+'</span></p><h1>'+TITEL+'</h1><p class="sunter">Interaktives Training</p></div>';}
+    '<div class="skopf"><p class="szeile"><a href="/">'+FACH+'</a> · <a class="thema" href="'+THEMA_URL+'">'+THEMA+'</a>'+(TEILTHEMA?' · <span class="teilthema">'+TEILTHEMA+'</span>':'')+'</p><h1>'+TITEL+'</h1><p class="sunter">'+(typeof UNTERTITEL!=='undefined'?UNTERTITEL:'Interaktives Training')+'</p></div>';}      // ohne Teilthema und mit eigener Unterzeile: PowerCheck
 // Die Versionsnummer steht nicht mehr sichtbar auf der Seite (Lehrkraft 21.11.2026); sie bleibt als data-version im Quelltext
 // Fußzeile der Startseite wie auf der übrigen Webseite (Lehrkraft 21.11.2026): Lizenz, Name, Datenschutzerklärung, Impressum in Indie Flower über einer blauen Linie
 function startFuss(){return '<footer class="sfuss" data-version="'+VERSION+'">CC BY-NC-SA 4.0 · <span class="name">Patrick Saul</span> · <a href="/datenschutz/" target="_blank" rel="noopener">Datenschutzerklärung</a> · <a href="/impressum/" target="_blank" rel="noopener">Impressum</a></footer>';}
@@ -1880,12 +2595,13 @@ function kachel(t,emp){
 const werkMarke=()=>werkVoll()?'<span class="mk ok">✓ sitzt</span>':'';
 function werkKachel(){return '<button class="ka breit" data-akt="werk"><span class="kt"><b>'+WERKSTOR.titel+'</b><span class="mk dg">Anwendung</span></span><div class="kz">'+bandHTML(WERKSTOR,werkBand())+'<span class="ms">'+werkMarke()+'</span></div></button>';}
 function vEinzel(o){
+  if(PCF)return pcStand(o);      // PowerCheck: statt der Übersicht des Einzeltrainings der Stand mit einem Band je Blatt
   o=o||{};S.ansicht='einzel';adresse('einzeltraining');const emp=empfohlen();
   const titel=o.geschafft?'Etappe '+o.geschafft+' geschafft!':o.titel||'Einzeltraining';
   setApp('<header class="kopf"><button class="kn" data-akt="start">‹ Start</button><h1>'+titel+'</h1><span class="luft"></span>'+kronenHTML(o.neu)+tonKnopf()+'</header>'+
-    '<main class="seite">'+(o.geschafft||o.titel?'<button class="gross flach" data-akt="gesamt"><b>Weiter</b><small>'+etappeText()+'</small></button>':'')+
+    '<main class="seite">'+(o.geschafft||o.titel?(o.finale&&HERAUSF&&!herausAlle()?herausKnopf():'<button class="gross flach" data-akt="gesamt"><b>Weiter</b><small>'+etappeText()+'</small></button>'):'')+      // nach dem Finale führt der große Knopf in den Bereich „Fordere mich heraus“, solange dort nicht alles geknackt ist (Baustein heraus)
     '<div class="zs"><span>Einzelne Aufgaben gezielt üben.</span></div>'+      // ohne das Wort „Zwischenstand“: Die Erfolgsbänder erklären sich selbst (Lehrkraft 21.11.2026)
-    '<div class="kacheln">'+TYPEN.map(t=>kachel(t,emp)).join('')+(ANW?werkKachel():'')+'</div></main>');
+    (FALLE?fallUebersicht(emp):'<div class="kacheln">'+TYPEN.map(t=>kachel(t,emp)).join('')+(ANW?werkKachel():'')+(HERAUSF?herausKachel():'')+'</div>')+'</main>');      // mit mehreren Anwendungen (FAELLE): zwei Gruppen mit Überschrift, je Fall eine Kachel (Baustein faelle). Mit HERAUS: ganz unten die Kachel „Fordere mich heraus“ (Baustein heraus); in einem Training mit Fällen ist der Bereich die dritte Gruppe unter den Fällen (fallUebersicht, Baustein faelle; QF5)
 }
 /* Übersicht der Erklärungen (Variante B, Lehrkraft 24.11.2026): je Kachel nur der Titel (das Thema), wo nötig eine graue Unterzeile, und die Marke Watch, Try
    oder Talk; keine Nummern („Info 1“, „Aufgabe 5“), nicht die Wörter „Erklärung“ und „Erkunder“, keine Zeile „Infoboxen · Watch: zusehen …“ mehr. Reihenfolge
@@ -1917,7 +2633,7 @@ function trainingRahmen(){
    Im Gesamttraining bleibt neben dem Balken die Etappe */
 function zeigeEtappe(){const l=$('.el'),b=$('.eb i');if(!l)return;
   const p=S.modus==='gesamt'?S.pkt:S.einzel.pkt;l.textContent=S.modus==='gesamt'?'Etappe '+S.etappe:'';b.style.width=Math.min(100,Math.round(p/ETAPPE*100))+'%';}
-function setHaupt(art,an){const h=$('.leiste .haupt');if(!h)return;A.haupt=art;h.hidden=false;h.textContent=art==='pruefen'?'Prüfen':'Weiter';h.disabled=!an;}
+function setHaupt(art,an){const h=$('.leiste .haupt');if(!h)return;A.haupt=art;h.hidden=false;h.textContent=art==='pruefen'?'Prüfen':A.weiterText||'Weiter';h.disabled=!an;}
 function toast(t,alt,neu,text){const host=$('.toasts');if(!host)return;
   const e=el('<div class="toast"><b>'+t.titel+'</b>'+bandHTML(t,alt)+'<span class="tx">'+text+'</span></div>');host.appendChild(e);
   setTimeout(()=>{const i=$('.bd i',e);if(i)i.style.width=Math.round(neu*100)+'%';},350);setTimeout(()=>e.remove(),3300);}
@@ -1960,6 +2676,7 @@ function neueAufgabe(wieder){
   const m=$('.buehne');m.scrollTop=0;m.dataset.nr=A.nr;
   FORM[auf.form](auf,m);
   zeigeHilfen();zeigeEtappe();
+  if(HINWEISF&&S.modus==='gesamt')hinweisZeige();      // einmal beim ersten Start: der Hinweis über der ersten Aufgabe (Baustein hinweis)
 }
 function zeigeLeer(){
   Object.keys(A).forEach(k=>delete A[k]);
@@ -1974,8 +2691,8 @@ const weich=h=>h.replace(/Normalparabel/g,'Normal\u00ADparabel').replace(/Scheit
 // Davor steht der Ort, „Gesamttraining ·“ oder „Einzeltraining ·“: Der Knopf oben links nennt nur den Rückweg, nicht den Ort. Auch der Ort ist blau und antippbar (AKT.ort):
 // „Einzeltraining“ führt zur Übersicht des Einzeltrainings, „Gesamttraining“ öffnet nur den Hinweis, dass man schon dort ist (Lehrkraft 21.11.2026)
 const ortHTML=()=>'<span class="waso"><button class="wasol" data-akt="ort">'+(S.modus==='einzel'?'Einzeltraining':'Gesamttraining')+'</button> · </span>';
-const wasZeile=()=>'<p class="was"><span>'+ortHTML()+'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button> · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
-const kopfTeil=auf=>wasZeile()+'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>';
+const wasZeile=()=>A.heraus?herausWas():A.kopf?A.kopf():PCF?pcWas():'<p class="was"><span>'+ortHTML()+'<button class="wasl" data-akt="einzeltyp" data-typ="'+A.t.id+'">'+A.t.titel+'</button> · Level '+LEVELNR[A.key]+'</span>'+(S.letzte?'<button class="wasr" data-akt="letzte">‹ Letzte Aufgabe</button>':'')+'</p>';
+const kopfTeil=auf=>{const t=auf.term?'<p class="term">'+auf.term+'</p>':'';return wasZeile()+(auf.termOben?t:'')+'<p class="frage">'+auf.frage+'</p>'+(auf.termOben?'':t)+'<div class="denk" hidden></div>';};      // termOben: der Term steht über der Frage („f(x) = 2x + 1. In welchem Punkt …“; LF2, Fordere mich heraus)
 const rechnungKarte=(titel,leer)=>'<section class="karte rechnung"><h3 class="lt">'+titel+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer">'+(leer||'')+'</p></section>';
 function zeigeSchritte(){const z=$('.zeilen');if(!z)return;const s=A.auf.schritte||[];
   for(let i=z.children.length;i<A.gezeigt&&i<s.length;i++)z.appendChild(el('<div class="zl'+(s[i].text?' text':'')+(s[i].kl?' '+s[i].kl:'')+'"><span>'+(s[i].text||/\bzul\b/.test(s[i].kl||'')?mtext(s[i].h):s[i].h)+'</span>'+(s[i].op?'<span class="op">'+s[i].op+'</span>':'')+'</div>'));      // in Sätzen stehen Zahlen und Terme in der Textschrift (mtext, Lehrkraft 23.11.2026)
@@ -2044,18 +2761,24 @@ const FORM={
   /* Quick: Antippen ist die Antwort. Nur die gewählte Antwort trägt das Urteil, ganz grün mit ✓ oder ganz rot mit ✗ an der rechten oberen Ecke wie bei der Wischkarte;
      nach einem Fehler ist die richtige, nicht gewählte Antwort weiß mit grün gestricheltem Rand, ohne Zeichen; die übrigen verblassen
      (Lehrkraft 23.11.2026: „Ansonsten folge ich deinem Vorschlag für die Mechanik.“, „Ja gestrichelt mit 2 px ist gut.“). Vorher wurde die richtige grün mit ✓. */
+  /* auf.optFest: Die Antworten sind Terme und brechen nicht um; am Handy rückt dafür ihr Rand enger (26.11.2026: „g(x) = −4/3 x −“ stand über der „1“) */
   wahl(auf,m){
     m.className='buehne eins';
     m.innerHTML='<section class="karte'+(auf.bild?' mitbild':'')+'">'+wasZeile()+'<div class="inhalt">'+(auf.bild?'<div class="bild">'+auf.bild+'</div>':'')+
       '<div class="rechts"><p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':'')+'<div class="denk" hidden></div>'+
-      '<div class="opts eck n'+auf.opts.length+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+weich(o.html)+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
+      '<div class="opts eck n'+auf.opts.length+(auf.optFest?' ofest':'')+'">'+auf.opts.map((o,i)=>'<button class="opt" data-i="'+i+'">'+weich(o.html)+'</button>').join('')+'</div><div class="rueck" hidden></div></div></div></section>';
     $$('.opt',m).forEach(b=>b.addEventListener('click',()=>{if(A.gewertet)return;const o=auf.opts[+b.dataset.i];
       $$('.opt',m).forEach((x,i)=>{x.disabled=true;x.classList.add(x===b?(o.ok?'ok':'falsch'):auf.opts[i].ok&&!o.ok?'fehlt':'uebrig');});
       abgeben(!!o.ok,o.hinweis||null);}));
     setHaupt('weiter',false);
   },
   /* Write: Zahl mit dem eigenen Ziffernfeld. Einstellungen der Aufgabe: bruch (Taste a/b), bild (links Frage und Bild, rechts Eingabe und Rechnung), keineText (Knopf
-     wie „keine Lösung“), buchst (Buchstabentasten am Laptop für Umschalter, etwa {h:'H',t:'T'} für Hochpunkt und Tiefpunkt), notiz (zur Bedienung; verschwindet nach „Prüfen“) */
+     wie „keine Lösung“), buchst (Buchstabentasten am Laptop für Umschalter, etwa {h:'H',t:'T'} für Hochpunkt und Tiefpunkt), notiz (zur Bedienung; verschwindet nach „Prüfen“),
+     leer (Felder, die leer bleiben dürfen, etwa der zweite Punkt bei einem Berührpunkt: ['c','d']), nach(w,m) (nach „Prüfen“ oder „Lösung“: die Aufgabe zeichnet in ihr
+     Bild, etwa die eigene Parabel; QF4), vz (Felder ohne eigenes Minus, deren Vorzeichen der Umschalter davor trägt, etwa die Zahl im Linearfaktor: {p:'s1',q:'s2'};
+     die Taste − stellt dort den Umschalter um, am Laptop setzt + ihn auf plus; QF4), frageRechts (mit Bild: Frage und Term stehen rechts über der
+     Eingabe, links nur das Bild und darüber der Denkanstoß; für lange Sachtexte), bereit(w) (eine weitere Bedingung für „Prüfen“, etwa eine fertige Zeichnung: Form zeichnein). Für Formen,
+     die auf dieser aufbauen, stehen die Eingaben in A.w, und A.zeig() zeigt sie neu (LF2, Fordere mich heraus) */
   eingabe(auf,m){
     m.className='buehne';
     const keys=['7','8','9','del','4','5','6','−','1','2','3',',','0'].concat(auf.bruch?['/']:[]);
@@ -2063,13 +2786,13 @@ const FORM={
       '<button type="button" data-k="weiter" class="breit fn" aria-label="Nächstes Feld">→</button></div>',satz=auf.einKl==='satz';
     const rt=auf.rtitel||'Rechnung',rl=auf.rleer!==undefined?auf.rleer:'Rechne mit dem Stift.';      // keine Ankündigung, was später hier steht (Lehrkraft 22.11.2026): nur der Auftrag; die Überschrift kommt mit dem Inhalt
     const kern='<div class="ein'+(auf.einKl?' '+auf.einKl:'')+'">'+auf.ein+'</div>'+(auf.notiz?'<p class="notiz">'+auf.notiz+'</p>':'')+'<div class="rueck" hidden></div>'+(satz?'':T);
-    if(auf.bild)m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="bild">'+auf.bild+'</div></section>'+      // mit Bild: links Frage und Bild, rechts Eingabe, Tasten und Rechnung (LF2)
-      '<section class="karte rechnung mitein"><div class="ein'+(auf.einKl?' '+auf.einKl:'')+'">'+auf.ein+'</div>'+(auf.notiz?'<p class="notiz">'+auf.notiz+'</p>':'')+'<div class="rueck" hidden></div>'+T+
+    if(auf.bild)m.innerHTML='<section class="karte">'+(auf.frageRechts?wasZeile()+'<div class="denk" hidden></div>':kopfTeil(auf))+'<div class="bild">'+auf.bild+'</div></section>'+      // mit Bild: links Frage und Bild, rechts Eingabe, Tasten und Rechnung (LF2); mit frageRechts links nur das Bild, darüber der Denkanstoß (rechts schöbe er die Tasten aus dem Blick)
+      '<section class="karte rechnung mitein">'+(auf.frageRechts?'<p class="frage">'+auf.frage+'</p>'+(auf.term?'<p class="term">'+auf.term+'</p>':''):'')+'<div class="ein'+(auf.einKl?' '+auf.einKl:'')+'">'+auf.ein+'</div>'+(auf.notiz?'<p class="notiz">'+auf.notiz+'</p>':'')+'<div class="rueck" hidden></div>'+T+
       '<h3 class="lt">'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>';
     else m.innerHTML='<section class="karte">'+kopfTeil(auf)+kern+'</section>'+
       (satz?'<section class="karte rechnung">'+T+'<h3 class="lt">'+rt+'</h3><div class="zeilen"></div><p class="leer">'+rl+'</p></section>':rechnungKarte(rt,rl));
     if(auf.keineText)$('.ein',m).insertAdjacentHTML('afterend','<p class="keinezeile"><button type="button" class="keine" aria-pressed="false">'+auf.keineText+'</button></p>');
-    const felder=$$('.feld[data-f]',m),spiegel=$$('.feld.spiegel',m),ums=$$('.umsch',m),kb=$('.keine',m),w={};let aktiv=0;
+    const felder=$$('.feld[data-f]',m),spiegel=$$('.feld.spiegel',m),ums=$$('.umsch',m),kb=$('.keine',m),w={},LEER=auf.leer||[];let aktiv=0;
     /* Nach „Prüfen“ trägt jede Eingabe ihr Urteil: grün mit ✓ oder rot mit ✗ (Lehrkraft 22.11.2026). pruefe() nennt in falsch alle falschen Eingaben;
        was nicht darin steht, ist richtig. Nennt es nichts, gibt es kein Urteil. Danach ist die Aufgabe zu Ende: Wer falsch prüft, sieht gleich die Lösung (abgeben, zeigt). */
     const ohneUrteil=()=>felder.concat(ums,kb?[kb]:[]).forEach(x=>x.classList.remove('ok','falsch','folge','fehlt','uebrig'));
@@ -2078,10 +2801,14 @@ const FORM={
     const zeig=()=>{felder.forEach((f,i)=>{f.classList.toggle('aktiv',i===aktiv&&!A.fertig&&!w.keine);f.classList.toggle('matt',!!w.keine);f.innerHTML=feldHTML(w.keine?'':(w[f.dataset.f]||''));});
       spiegel.forEach(f=>{f.textContent=w.keine?'':(w[f.dataset.sp]||'');f.classList.toggle('matt',!!w.keine);});
       ums.forEach(u=>u.classList.toggle('matt',!!w.keine));if(kb){kb.classList.toggle('an',!!w.keine);kb.setAttribute('aria-pressed',!!w.keine);}
-      setHaupt('pruefen',!!w.keine||(felder.every(f=>gueltig(w[f.dataset.f]))&&ums.every(u=>!!w[u.dataset.w])));};
+      setHaupt('pruefen',(!!w.keine||(felder.every(f=>gueltig(w[f.dataset.f])||(!w[f.dataset.f]&&LEER.includes(f.dataset.f)))&&ums.every(u=>!!w[u.dataset.w])))&&(!auf.bereit||auf.bereit(w)));};
     if(kb)kb.addEventListener('click',()=>{if(A.fertig)return;w.keine=!w.keine;ohneUrteil();zeig();});
     A.keine=()=>{if(kb)kb.click();};
-    A.taste=k=>{if(A.fertig)return;if(w.keine){w.keine=false;ohneUrteil();}const id=felder[aktiv].dataset.f;let s=w[id]||'';
+    A.taste=k=>{if(A.fertig)return;const id=felder[aktiv].dataset.f;
+      /* vz: In einem Feld, dessen Vorzeichen ein Umschalter trägt, stellt − den Umschalter um (erst −, dann wieder +); + setzt ihn auf plus und tut sonst nichts */
+      if(k==='−'||k==='+'){const um=auf.vz&&auf.vz[id]&&ums.find(x=>x.dataset.w===auf.vz[id]);if(k==='+'&&!um)return;
+        if(um){const b=$('[data-v="'+(k==='+'||w[um.dataset.w]==='−'?'+':'−')+'"]',um);if(b)b.click();return;}}
+      if(w.keine){w.keine=false;ohneUrteil();}let s=w[id]||'';
       if(k==='weiter'){aktiv=(aktiv+1)%felder.length;return zeig();}
       if(k==='del')s=s.slice(0,-1);else if(k==='−')s=s.startsWith('−')?s.slice(1):'−'+s;
       else if(k===','){if(!s.includes(',')&&!s.includes('/')&&/\d$/.test(s))s+=',';}
@@ -2099,8 +2826,10 @@ const FORM={
       if(w.keine){if(kb)kb.classList.add(F.includes('keine')?'falsch':'ok');return r;}
       if(kb)kb.classList.add(auf.loes&&auf.loes.keine||auf.pruefe({keine:true}).ok?'fehlt':'uebrig');
       /* Folgefehler (Lehrkraft 22.11.2026): Was pruefe() in „folge“ nennt, folgt richtig aus einer eigenen falschen Eingabe und bekommt den Haken in Klammern, wie in den Klassenarbeiten */
-      const G=r.folge||[],urt=id=>F.includes(id)?'falsch':G.includes(id)?'folge':'ok';felder.forEach(f=>f.classList.add(urt(f.dataset.f)));ums.forEach(u=>u.classList.add(urt(u.dataset.w)));return r;};
-    A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));if(kb)kb.disabled=true;const n=$('.notiz',m);if(n)n.hidden=true;};      // die Notiz zur Bedienung („Brüche mit der Taste a/b.“) verschwindet mit dem Ziffernfeld
+      const G=r.folge||[],urt=id=>F.includes(id)?'falsch':G.includes(id)?'folge':'ok';felder.forEach(f=>{const id=f.dataset.f,u=urt(id);if(u==='ok'&&!w[id]&&LEER.includes(id))return;f.classList.add(u);});      // zu Recht leer gelassen (leer): kein Urteil am leeren Feld
+      ums.forEach(u=>u.classList.add(urt(u.dataset.w)));return r;};
+    A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));felder.forEach(f=>f.classList.remove('aktiv'));if(kb)kb.disabled=true;const n=$('.notiz',m);if(n)n.hidden=true;if(auf.nach)auf.nach(w,m);};      // die Notiz zur Bedienung („Brüche mit der Taste a/b.“) verschwindet mit dem Ziffernfeld
+    A.w=w;A.zeig=zeig;
     zeig();
   },
   /* Build: Rechnung ordnen mit Andocken (Lehrkraft 23.11.2026: „ja dein Vorschlag ist gut. Bau es so um.“). Ein Tipp legt eine Zeile auf den nächsten freien Platz der eigenen
@@ -2323,6 +3052,31 @@ const FORM={
     A.sperre=()=>{if(!A.geprueft){gib(0);gib(1);}$$('.chip',m).forEach(b=>b.disabled=true);$$('.kheim .chip',m).forEach(b=>b.classList.add('uebrig'));$('.kdock',m).classList.add('fertig');zeig();};      // nach „Prüfen“ bleiben die eigenen Kärtchen mit ihrem Urteil liegen, die übrigen verblassen
     zeig();
   },
+  /* Umschalter in Kästen (LF2 „Vorzeichen“, 26.11.2026). Die Aufgabe nennt kaesten: je Kasten ein Text (text) und darunter eine Zeile von Umschaltern (um:
+     [{id, vor, opts:[[Wert, Beschriftung], …]}]) mit zwei oder drei Stellungen. „Prüfen“ geht, wenn überall gewählt ist; vorher gibt es kein Urteil. Danach trägt
+     jeder Umschalter sein Urteil: das Zeichen an der Ecke der gewählten Seite, der Rand der Gruppe grün oder rot; die richtige, nicht gewählte Seite ist grün
+     gestrichelt, so dick wie der Rand des Urteils (loes nennt je Umschalter den richtigen Wert). Mit dem Urteil und nach „Lösung“ erscheint neben jedem Text sein
+     Bild (bild(), freiwillig: vorher nähme es die Antwort vorweg), rechts steht die Lösung, darüber das Urteil mit dem Hinweis (links ist mit zwei Kästen und
+     ihren Bildern kein Platz mehr: Die Bühne rollte am iPad). pruefe(w) nennt in falsch alle falschen Umschalter und nur sie; die Aufgabe zählt nur, wenn alle
+     stimmen. Freiwillig, seit 26.11.2026 (QF5, „Was ändert sich?“): nach(w,m) wie bei der Eingabe, ein eigenes Bild nach „Prüfen“ oder „Lösung“; rechts (HTML), schon vor
+     „Prüfen“ oben in der Karte der Lösung, etwa ein Bild der Lage, das nichts verrät (breit; am Handy ist die leere Karte ausgeblendet). Ohne beides wie bisher. */
+  schalter(auf,m){
+    m.className='buehne';const w={};
+    m.innerHTML='<section class="karte">'+kopfTeil(auf)+'<div class="schk">'+auf.kaesten.map((k,i)=>'<div class="schka"><div class="schtx"><p>'+k.text+'</p><div class="schbild" data-i="'+i+'" hidden></div></div>'+
+        '<div class="schz">'+k.um.map(u=>'<span class="schu">'+(u.vor?'<span>'+u.vor+'</span>':'')+'<span class="umsch" data-w="'+u.id+'">'+u.opts.map(o=>'<button type="button" data-v="'+o[0]+'" aria-pressed="false">'+o[1]+'</button>').join('')+'</span></span>').join('')+'</div></div>').join('')+'</div></section>'+
+      '<section class="karte rechnung schr">'+(auf.rechts?'<div class="schre">'+auf.rechts+'</div>':'')+'<div class="rueck" hidden></div><h3 class="lt">'+(auf.rtitel||'Lösung')+'</h3><div class="vor"></div><div class="zeilen"></div><p class="leer"></p></section>';
+    const ums=$$('.umsch',m);
+    ums.forEach(um=>$$('button',um).forEach(b=>b.addEventListener('click',()=>{if(A.fertig)return;w[um.dataset.w]=b.dataset.v;
+      $$('button',um).forEach(x=>{x.classList.toggle('an',x===b);x.setAttribute('aria-pressed',x===b);});setHaupt('pruefen',ums.every(u=>w[u.dataset.w]!==undefined));})));
+    A.pruefe=()=>{const r=auf.pruefe(w),F=r.falsch||[];
+      ums.forEach(um=>{const id=um.dataset.w,f=F.includes(id);um.classList.add(f?'falsch':'ok');if(f&&auf.loes){const b=$('[data-v="'+auf.loes[id]+'"]',um);if(b)b.classList.add('fehlt');}});
+      return r;};
+    A.sperre=()=>{$$('.karte',m).forEach(k=>k.classList.add('gesperrt'));
+      auf.kaesten.forEach((k,i)=>{const b=$('.schbild[data-i="'+i+'"]',m);if(b&&k.bild){b.innerHTML=k.bild();b.hidden=false;}});
+      const dk=$('.denk',m),rk=$('.karte.rechnung',m);if(dk&&rk)rk.appendChild(dk);      // mit den Bildern ist links kein Platz mehr: Der Denkanstoß rückt unter die Lösung
+      if(auf.nach)auf.nach(w,m);};      // nach(w,m), freiwillig: Nach „Prüfen“ oder „Lösung“ zeichnet die Aufgabe ein eigenes Bild, etwa alt und neu in einem (QF5, Fordere mich heraus „Was ändert sich?“, 26.11.2026); ohne nach wie bisher
+    setHaupt('pruefen',false);
+  },
 };
 
 /* ---------- Hilfen ---------- */
@@ -2330,6 +3084,7 @@ const FORM={
    der zweite Tipp stellt den zweiten mit einer 2 darunter, der dritte schließt. Ohne denk2 bleibt es beim Auf und Zu. A.denk zählt mit: 0 zu, 1 oder 2 offen. */
 const denkHTML=(auf,n)=>!auf.denk2?auf.denk:'<span class="dz"><span>'+auf.denk+'</span><b class="dnr">1</b></span>'+(n>=2?'<span class="dz"><span>'+auf.denk2+'</span><b class="dnr">2</b></span>':'');
 function zeigeHilfen(){const h=$('.hilfen');if(!h)return;const a=A.auf;if(!a){h.innerHTML='';return;}let s='';
+  if(A.heraus){h.innerHTML=herausHilfen();return;}      // Fordere mich heraus: Denkanstoß, Lösung, Erklärung; kein „Nächster Schritt“ (Baustein heraus)
   const n=(a.schritte||[]).length,offen=n&&A.gezeigt<n&&!A.fertig;
   if(a.denk)s+='<button class="hk'+(A.denk?' an':'')+'" data-akt="denk">Denkanstoß</button>';
   if(n){s+='<button class="hk" data-akt="schritt"'+(offen?'':' disabled')+'><span class="nl">Nächster </span>Schritt'+(offen?'<span class="nl"> ('+(A.gezeigt+1)+' von '+n+')</span><span class="nk"> '+(A.gezeigt+1)+'/'+n+'</span>':'')+'</button>';
@@ -2346,9 +3101,11 @@ function loesung(){const n=A.auf.schritte.length;if(A.fertig)return;hilfeGenutzt
 
 /* ---------- Auswertung ---------- */
 function abgeben(ok,hinweis,art){
-  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse','kette'].includes(A.form),zeigt=['eingabe','menge','zeichnen','zuordnen','ordnen','legen2','legen','punkte','ziel','puzzle','einsetzen'].includes(A.form),still=einmal||zeigt||['ordnen','legen2','kette','puzzle','einsetzen'].includes(A.form);let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
+  if(A.heraus)return herausAbgeben(ok,hinweis,art);      // Fordere mich heraus wertet selbst: ohne Band, Punkte und Meldung (Baustein heraus)
+  const erst=!A.gewertet,einmal=['wahl','wisch','mehr','stapel','fehler','achse','kette'].includes(A.form),zeigt=['eingabe','menge','zeichnen','zuordnen','ordnen','legen2','legen','punkte','ziel','puzzle','einsetzen','skizze','aussagen','bauen','weg','schalter','zeichnein'].includes(A.form),still=einmal||zeigt||['ordnen','legen2','kette','puzzle','einsetzen'].includes(A.form);let ereignis=null;A.versuche++;     // einmal: Antippen ist die Antwort; still: kein Satz zum Verbessern; zeigt: Hier gibt es „Prüfen“, und falsch geprüft zeigt gleich die Lösung mit ihren Schritten, ohne zweiten Versuch (Lehrkraft 22.11.2026)
   if(erst){
-    A.gewertet=true;const zaehlt=!A.hilfe&&art!=='loesung',alt=band(A.t);
+    A.gewertet=true;const zaehlt=!A.hilfe&&art!=='loesung',alt=A.zaehle?0:band(A.t);
+    if(A.zaehle)A.zaehle(ok&&art!=='loesung',zaehlt);else{      // eigene Wertung eines Bausteins (PowerCheck: die Schritte des verbindenden Stücks): ohne Band, Punkte und Meldung
     S.zeiten.push({typ:A.t.titel,key:A.key,s:Math.round((performance.now()-A.start)/100)/10,ok:ok&&art!=='loesung',hilfe:!zaehlt});
     ereignis=werte(A.t,A.li,ok&&art!=='loesung',zaehlt);
     delete S.offen[offenKey()];
@@ -2356,9 +3113,9 @@ function abgeben(ok,hinweis,art){
     zeigeEtappe();
     if(ok&&zaehlt)Sound.richtig();
     if(ereignis==='level'){toast(A.t,alt,band(A.t),'Level '+LEVELNR[A.key]+' geschafft');Sound.level();}
-    if(ereignis==='sitzt'){toast(A.t,alt,1,'✓ sitzt');Sound.sitzt();}
+    if(ereignis==='sitzt'){toast(A.t,alt,1,'✓ sitzt');Sound.sitzt();}}
   }
-  const emp=!ok&&art!=='loesung'&&erst&&A.auf.erkl&&S.typ[A.t.id].falsch>=2?'Tipp: Die Erklärung zeigt es Schritt für Schritt.':'';
+  const emp=!ok&&art!=='loesung'&&erst&&A.auf.erkl&&(S.typ[A.t.id]||{}).falsch>=2?'Tipp: Die Erklärung zeigt es Schritt für Schritt.':'';
   /* nach „Lösung“ und „Nächster Schritt“ nur „Lösung angesehen.“ bzw. „Mit Hilfe gelöst.“ (Lehrkraft 23.11.2026: „das die Aufgabe dann wieder kommt wird er auch merken.“) */
   if(art==='loesung')zeigeRueck('neutral','Lösung angesehen.');
   else if(ok&&erst&&A.hilfe)zeigeRueck('neutral','Mit Hilfe gelöst.');
@@ -2377,7 +3134,7 @@ function abgeben(ok,hinweis,art){
    Im Rückblick bleiben drei Wege offen (Lehrkraft 21.11.2026): der Aufgabentyp führt in sein Einzeltraining, dazu Denkanstoß und Erklärung dieser Aufgabe. */
 var RB=null;
 function merkeLetzte(){const m=$('.buehne');
-  if(!m||S.rueckblick||!A.gewertet||!m.firstChild||m.dataset.nr!==String(A.nr)||(S.letzte&&S.letzte.nr===A.nr))return;
+  if(!m||S.rueckblick||!A.gewertet||A.heraus||A.ohneLetzte||!m.firstChild||m.dataset.nr!==String(A.nr)||(S.letzte&&S.letzte.nr===A.nr))return;      // aus dem Bereich „Fordere mich heraus“ gibt es keinen Rückblick
   $$('input',m).forEach(i=>i.setAttribute('value',i.value));              // Regler: die Kopie übernimmt nur das Attribut
   const k=m.cloneNode(true);$$('.wasr,.waso',k).forEach(x=>x.remove());
   $$('.wasl',k).forEach(x=>{const b=document.createElement('b');b.innerHTML=x.innerHTML;x.replaceWith(b);});
@@ -2400,9 +3157,13 @@ function endeLetzte(){if(!S.rueckblick)return;S.rueckblick=false;const m=$('.bue
 
 function weiter(){
   clearTimeout(A.auto);if(!A.gewertet)return;
-  if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(()=>vEinzel({titel:'Alles sitzt!'}));}
+  if(A.heraus)return herausWeiter();
+  if(A.weiter)return A.weiter();      // eigener Ablauf eines Bausteins (PowerCheck: das verbindende Stück)      // Fordere mich heraus: der blaue Knopf nach „Prüfen“ (Baustein heraus)
+  if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(()=>vEinzel({titel:'Alles sitzt!',finale:true}));}
   if(S.modus==='gesamt'){
+    if(PCF)pcWeiterschalten();      // PowerCheck: Ist der Block fertig, kommt der nächste (Baustein powercheck)
     if(S.pkt>=ETAPPE){const n=S.etappe;S.etappe++;S.pkt=0;S.kronen++;return zeigeKrone('Etappe '+n+' geschafft!',()=>vEinzel({geschafft:n,neu:true}));}
+    if(PCF&&S.pc.zeig){S.pc.zeig=false;return vEinzel({offen:true});}      // PowerCheck: nach Block 3 zeigt der Zwischenstand, was offen ist
     if(werkDran())return startWerk('gesamt');           // alle sechs Bänder sind voll, nur das Werkstor fehlt noch
   }else{
     if(S.einzel.pkt>=ETAPPE){S.kronen++;return zeigeKrone('15 Punkte geschafft!',()=>vEinzel({neu:true}));}
@@ -2430,12 +3191,17 @@ function zeigeMenue(){
   document.body.appendChild(ov);document.body.appendChild(mn);
 }
 function zeigeStand(){
+  if(PCF)return pcStandFenster();      // PowerCheck: ein Band je Blatt (Baustein powercheck)
   const emp=empfohlen();
   const ov=el('<div class="ov dunkel"><div class="panel" role="dialog" aria-label="Stand"><div class="pkopf"><h2>Stand</h2><span class="luft"></span>'+kronenHTML()+'<button class="kn" data-zu>Schließen</button></div>'+
     TYPEN.map(t=>t.aktiv?'<button class="reihe" data-typ="'+t.id+'"><b>'+t.titel+'</b>'+bandHTML(t)+'<span>'+markeHTML(t,emp)+'</span></button>':'<div class="reihe aus"><b>'+t.titel+'</b>'+bandHTML(t,0)+'<span>'+markeHTML(t)+'</span></div>').join('')+
-    (ANW?'<button class="reihe" data-werk="1"><b>'+WERKSTOR.titel+'</b>'+bandHTML(WERKSTOR,werkBand())+'<span>'+werkMarke()+'</span></button>':'')+
+    (FALLE?fallReihen():ANW?'<button class="reihe" data-werk="1"><b>'+WERKSTOR.titel+'</b>'+bandHTML(WERKSTOR,werkBand())+'<span>'+werkMarke()+'</span></button>':'')+
+    (HERAUSF?herausReihe():'')+      // Fordere mich heraus: eine Zeile mit den Zeichen, ein Tipp öffnet den Bereich (Baustein heraus)
     '<p class="klein">Tippe eine Zeile an für ihr Einzeltraining.</p></div></div>');
-  ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();const r=e.target.closest('.reihe[data-typ]');if(r){ov.remove();return startEinzel(r.dataset.typ,S.ansicht==='aufgabe'&&(S.modus==='gesamt'||!!(S.einzel&&S.einzel.vonGesamt)));}
+  const vonG=S.ansicht==='aufgabe'&&(S.modus==='gesamt'||(S.modus==='heraus'?S.heraus.vonGesamt:!!(S.einzel&&S.einzel.vonGesamt)));      // aus einer Aufgabe des Gesamttrainings heraus: Der Rückweg führt dorthin zurück
+  ov.addEventListener('click',e=>{if(e.target===ov||e.target.closest('[data-zu]'))return ov.remove();const r=e.target.closest('.reihe[data-typ]');if(r){ov.remove();return startEinzel(r.dataset.typ,vonG);}
+    if(e.target.closest('.reihe[data-heraus]')){ov.remove();return herausStart(null,vonG);}
+    const f=e.target.closest('.reihe[data-fall]');if(f){ov.remove();return startWerk('einzel',f.dataset.fall);}
     if(e.target.closest('.reihe[data-werk]')){ov.remove();startWerk('einzel');}});
   document.body.appendChild(ov);
 }
@@ -2773,7 +3539,7 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(S.ansi
 /* Neu anfangen (Lehrkraft 24.11.2026): In der roten Rückmeldung eines falschen Schritts steht hinter „Schritt 1 zählt in diesem Durchgang nicht.“ klein der
    Link „Neu anfangen, neue Zahlen“. Er beginnt sofort einen neuen Durchgang derselben Anwendung, ohne Krone, im Einzel- wie im Gesamttraining; einen festen
    Knopf dafür gibt es nicht. */
-W.zaehltNicht=n=>'Schritt '+n+' zählt in diesem Durchgang nicht. <button type="button" class="wneu" data-akt="wneu">Neu anfangen, neue Zahlen</button>';
+W.zaehltNicht=n=>'Schritt '+n+' zählt in diesem Durchgang nicht. <button type="button" class="wneu" data-akt="wneu">Neu anfangen, '+(W.neuText||'neue Zahlen')+'</button>';      // W.neuText: was ein neuer Durchgang bringt, wenn es keine neuen Zahlen sind (QF5: „andere Frage“)
 function werkNeu(){if(S.ansicht!=='werk'||!W.L)return;delete S.werk.lauf[S.modus];if(W.raf)cancelAnimationFrame(W.raf);W.rb=null;startWerk(S.modus);}
 W.vor=function(){clearTimeout(W.timer);const L=W.L;if(!L||S.ansicht!=='werk'||W.rb)return;W.merke();L.ph++;L.sub={};W.zeig();
   if(schmal()){const r=$('.wrechts');if(r)r.scrollIntoView({block:'start',behavior:RUHIG?'auto':'smooth'});}};
@@ -2820,12 +3586,13 @@ W.rbEnde=function(){const R=W.rb,r=$('.wrechts');if(!R)return;W.rb=null;
    Durchgang alle drei Schritte ohne Lösung gelungen sind; Etappen-Krone und Finale bleiben, wie sie sind. */
 W.ende=function(){const f=$('.leiste');
   if(S.modus==='gesamt')return W.setH(WERKSTOR.titel.replace(/^(Der|Die|Das) /,'')+' beenden',true,()=>werkWeiter(false));
-  if(f&&!$('.wnoch',f)){f.classList.add('wende');const h=$('.haupt',f);if(h)h.insertAdjacentHTML('beforebegin','<button type="button" class="wnoch" data-akt="wnoch">Noch einmal, neue Zahlen</button>');}
+  if(f&&!$('.wnoch',f)){f.classList.add('wende');const h=$('.haupt',f);if(h)h.insertAdjacentHTML('beforebegin','<button type="button" class="wnoch" data-akt="wnoch">Noch einmal, '+(W.neuText||'neue Zahlen')+'</button>');}
   W.setH('Fertig',true,()=>werkWeiter(false));};
 function werkWeiter(nochmal){
+  if(FALLE)return fallWeiter(nochmal);      // mehrere Anwendungen: Ein Fall ist keine Etappe (Baustein faelle)
   const modus=S.modus,L=W.L,verdient=!!L&&L.ok.every(Boolean);delete S.werk.lauf[modus];clearTimeout(W.timer);if(W.raf)cancelAnimationFrame(W.raf);W.rb=null;
   const neu=()=>startWerk('einzel');
-  if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(nochmal?neu:()=>vEinzel({titel:'Alles sitzt!'}));}
+  if(!S.finale&&alleVoll()){S.finale=true;return zeigeFinale(nochmal?neu:()=>vEinzel({titel:'Alles sitzt!',finale:true}));}
   if(modus==='gesamt'){const n=S.etappe;S.etappe++;S.pkt=0;S.kronen++;S.geuebt=true;S.werk.faellig=n+2;       // noch nicht alles geschafft: zwei Etappen später noch einmal, mit neuen Zahlen
     return zeigeKrone('Etappe '+n+' geschafft!',()=>vEinzel({geschafft:n,neu:true}));}
   if(!verdient)return nochmal?neu():vEinzel();
@@ -2843,7 +3610,7 @@ function werkWeiter(nochmal){
    der Ebene darüber; o.alle: false ohne „Alle Erklärungen“. */
 function ebene(titel,marke,innen,o){o=o||{};
   const unten=$$('.ebene').pop()||null,ausAufgabe=S.ansicht==='aufgabe'||S.ansicht==='werk';
-  const zur=unten?unten._name:ausAufgabe?'Aufgabe':'Erklärungen',alle=o.alle!==false&&!unten&&(ausAufgabe||o.bleibt);
+  const zur=unten?unten._name:ausAufgabe?'Aufgabe':'Erklärungen',alle=o.alle!==false&&!unten&&(ausAufgabe||o.bleibt)&&!PCF;      // im PowerCheck gibt es keine Übersicht der Erklärungen
   const e=el('<div class="ebene"><div class="innen"><header class="kopf"><button class="kn" data-zu>‹ '+zur+'</button>'+(alle?'<button class="kn ealle" data-alle>Alle Erklärungen</button>':'')+
     '<h1>'+titel+'</h1>'+(marke?'<span class="mk dg">'+marke+'</span>':'')+'<span class="luft"></span>'+tonKnopf()+'</header>'+innen+'</div></div>');
   e._name=o.name||'Erklärungen';e._bleibt=!!o.bleibt;e._adr=(location.hash||'').replace('#','');      // die eigene Adresse: Der Aufruf setzt sie vorher
@@ -3169,7 +3936,7 @@ const AKT={
   einzelstart:b=>startEinzel(b.dataset.typ),
   einzeltyp:b=>zeigeEinzelFrage(b.dataset.typ),
   ort:()=>{if(S.modus==='gesamt')return zeigeGesamtHinweis();clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;vEinzel();},
-  zurueck:()=>{clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;if(S.modus==='gesamt')vStart();else if(S.ansicht==='aufgabe'&&S.einzel&&S.einzel.vonGesamt)startGesamt();else vEinzel();},
+  zurueck:()=>{clearTimeout(A.auto);clearTimeout(W.timer);W.lauf++;if(S.modus==='heraus')return herausFertig();if(S.modus==='gesamt')vStart();else if(S.ansicht==='aufgabe'&&S.einzel&&S.einzel.vonGesamt)startGesamt();else vEinzel();},
   werk:()=>startWerk('einzel'),wst:b=>W.zeigeStation(+b.dataset.s),wnoch:()=>werkWeiter(true),wneu:()=>werkNeu(),wdenk:()=>W.denk(),wschritt:()=>W.schritt(false),wloesung:()=>W.schritt(true),
   menue:zeigeMenue,stand:zeigeStand,letzte:zeigeLetzte,
   ton:()=>{S.ton=!S.ton;$$('.kn.ton').forEach(b=>b.innerHTML=S.ton?TON_AN:TON_AUS);if(!S.ton)return;      // der Ton ist am Anfang aus; das Antippen schaltet ihn ein und lässt ihn sofort hören
@@ -3180,6 +3947,7 @@ const AKT={
   erklaerung:()=>{clearTimeout(A.auto);erklFuer(A.auf.erkl)();},
   lerkl:()=>{if(S.letzte)erklFuer(S.letzte.auf.erkl)();},
   ldenk:()=>{const L=S.letzte,d=$('.buehne .denk');if(!L||!d)return;L.denkAn=((+L.denkAn||0)+1)%(L.auf.denk2?3:2);d.hidden=!L.denkAn;d.innerHTML=denkHTML(L.auf,L.denkAn);const b=$('[data-akt="ldenk"]');if(b)b.classList.toggle('an',!!L.denkAn);},
+  heraus:()=>herausStart(),herausnr:b=>herausWechsel(b.dataset.h),herausfertig:()=>herausFertig(),herauserkl:()=>{erklEbene();},
   werkl:()=>{clearTimeout(W.timer);zeigeInfo2();},
   info1:()=>{adresse('info-1');zeigeInfo1()._ende=()=>adresse('erklaerungen');},
   tafel:()=>{adresse('tafel-runde');zeigeTafel()._ende=()=>adresse('erklaerungen');},
@@ -3196,6 +3964,7 @@ document.addEventListener('pointerdown',()=>Sound.init(),{passive:true});
    Knopfs (0,3 s, Wechsel nach 270 ms) entfiel am 24.11.2026 (Lehrkraft: „verstößt so ein bisschen gegen diese Einfachheit“) */
 const RUHIG=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 const TIPP={gesamt:['tipp',140],einzel:['tipp',140],erkl:['tipp',140],einzelstart:['tipp',140],werk:['tipp',140],
+heraus:['tipp',140],
 info1:['tipp',140],tafel:['tipp',140],info2:['tipp',140],info3:['tipp',140],erkunder:['tipp',140]
 };
 document.addEventListener('click',e=>{Sound.init();const b=e.target.closest('[data-akt]');if(!b||b.disabled)return;const f=AKT[b.dataset.akt];if(!f)return;
@@ -3223,7 +3992,7 @@ document.addEventListener('keydown',e=>{
     if(e.key.toLowerCase()==='k'){A.keine();return;}if(k){e.preventDefault();A.taste(k);return;}}
   if((A.form==='wahl'||A.form==='mehr')&&!A.gewertet&&/^[1-4]$/.test(e.key)){const o=$$('.opt')[+e.key-1];if(o)o.click();return;}
   if(A.form==='eingabe'&&A.taste&&!A.fertig){
-    const k=/^\d$/.test(e.key)?e.key:e.key==='-'?'−':e.key==='/'?'/':(e.key===','||e.key==='.')?',':e.key==='Backspace'?'del':(e.key==='Tab'||e.key==='ArrowRight')?'weiter':null;
+    const k=/^\d$/.test(e.key)?e.key:e.key==='-'?'−':e.key==='+'?'+':e.key==='/'?'/':(e.key===','||e.key==='.')?',':e.key==='Backspace'?'del':(e.key==='Tab'||e.key==='ArrowRight')?'weiter':null;
     if(e.key.toLowerCase()==='k'&&A.keine){A.keine();return;}
     const bu=A.auf.buchst&&A.auf.buchst[e.key.toLowerCase()];if(bu){const b=$('.umsch [data-v="'+bu+'"]');if(b)b.click();return;}      // Buchstabentasten der Aufgabe (QF1, QF2: H und T)
     if(k){e.preventDefault();A.taste(k);return;}}
@@ -3241,10 +4010,11 @@ function nachAdresse(){const h=(location.hash||'').replace('#','');
   if(h==='einzeltraining')vEinzel();else if(h==='erklaerungen')vErkl();
   else if(h==='info-1'){vErkl();AKT.info1();}else if(h==='info-2'){vErkl();AKT.info2();}else if(h==='info-3'){vErkl();AKT.info3();}else if(h==='erkunder'){vErkl();AKT.erkunder();}else if(h==='tafel-runde'){vErkl();AKT.tafel();}
   else if(h==='gesamttraining')startGesamt();else if(h==='huehnergehege'&&ANW)startWerk('einzel');
+  else if(h===HERAUS_ADR&&HERAUSF)herausStart();      /* #fordere-mich-heraus öffnet den Bereich wie seine Kachel: die erste offene Herausforderung */
   else vStart();}
 window.addEventListener('hashchange',()=>{const h=(location.hash||'').replace('#','');
-  if(['einzeltraining','erklaerungen','info-1','info-2','info-3','erkunder','tafel-runde','huehnergehege'].includes(h)&&S.ansicht!=='aufgabe'&&S.ansicht!=='werk')nachAdresse();});
-window.QF2={S,A,W,TYPEN,GEN,GEHG,TAFEL,zeigeTafel,Sound,FORM,weiter,zeigeFinale,zeigeKrone,startEinzel,startGesamt,startWerk,werkWeiter,werkDran,vStart,vEinzel};     // für die Prüfläufe
+  if(['einzeltraining','erklaerungen','info-1','info-2','info-3','erkunder','tafel-runde','huehnergehege',HERAUS_ADR].includes(h)&&S.ansicht!=='aufgabe'&&S.ansicht!=='werk')nachAdresse();});
+window.QF2={S,A,W,TYPEN,GEN,GEHG,TAFEL,zeigeTafel,Sound,FORM,weiter,zeigeFinale,zeigeKrone,startEinzel,startGesamt,startWerk,werkWeiter,werkDran,vStart,vEinzel,HERAUSF,HGEN,herausStart,herausAufgabe,herausWechsel,herausSig,abgeben,FH_GL,FH_G,FH_F,FH_FALL,fhLage,fhGl,fhGem,fhGemFall,fhFall};     // für die Prüfläufe
 
 
 /* =====================================================================
@@ -3261,8 +4031,13 @@ function lsSpeicher(){try{if(location.protocol==='file:')return null;const s=win
 /* Was gemerkt wird: nur Zähler und Einstellungen, keine Aufgaben, keine Eingaben, keine Zeiten (S.zeiten, S.offen, S.letzte, S.werk.lauf bleiben weg) */
 function lsDaten(){const typ={};
   TYPEN.forEach(t=>{const s=S.typ[t.id];typ[t.id]={top:s.top,streak:s.streak,sl:s.sl,halb:s.halb,falsch:s.falsch,zuletzt:s.zuletzt,faellig:s.faellig};});
-  return {v:LS.v,merken:true,etappe:S.etappe,pkt:S.pkt,pos:S.pos,letzter:S.letzter,kronen:S.kronen,filter:{q:!!S.filter.q,b:!!S.filter.b,w:!!S.filter.w},ton:!!S.ton,
-    geuebt:!!S.geuebt,finale:!!S.finale,typ,werk:{ok:S.werk.ok.slice(),faellig:S.werk.faellig,n:S.werk.n}};}
+  const d={v:LS.v,merken:true,etappe:S.etappe,pkt:S.pkt,pos:S.pos,letzter:S.letzter,kronen:S.kronen,filter:{q:!!S.filter.q,b:!!S.filter.b,w:!!S.filter.w},ton:!!S.ton,
+    geuebt:!!S.geuebt,finale:!!S.finale,typ,werk:{ok:S.werk.ok.slice(),faellig:S.werk.faellig,n:S.werk.n}};
+  if(FALLE)d.faelle=fallDaten();      // mehrere Anwendungen: der Stand jedes Falls (Baustein faelle); ohne FAELLE bleibt der Eintrag, wie er war
+  if(PCF)d.pc=pcDaten();      // PowerCheck: Block, Versuche, Blätter der Etappe und das verbindende Stück (Baustein powercheck)
+  if(HINWEISF)d.hinweis=hinweisGesehen;      // ob der Hinweis beim ersten Start schon gezeigt wurde (Baustein hinweis)
+  if(HERAUSF)d.heraus=herausDaten();      // Fordere mich heraus: die Kennungen der geknackten Herausforderungen (Baustein heraus); ohne HERAUS bleibt der Eintrag, wie er war
+  return d;}
 /* Einen Eintrag prüfen und übernehmen: alles oder nichts. Fehlt ein Aufgabentyp (neue Fassung), fängt er vorn an; unbekannte bleiben weg */
 function lsUebernimm(d){
   const ganz=(x,a,b)=>Number.isInteger(x)&&x>=a&&x<=b,ja=x=>typeof x==='boolean',obj=x=>!!x&&typeof x==='object'&&!Array.isArray(x);
@@ -3272,6 +4047,10 @@ function lsUebernimm(d){
   const f=d.filter;if(!obj(f)||!ja(f.q)||!ja(f.b)||!ja(f.w)||!(f.q||f.b||f.w))return false;
   const w=d.werk;if(!obj(w)||!Array.isArray(w.ok)||w.ok.length!==3||!w.ok.every(ja)||!ganz(w.faellig,0,9999)||!ganz(w.n,0,1e7))return false;
   if(!obj(d.typ))return false;
+  if(FALLE&&!fallGueltig(d.faelle))return false;
+  if(HERAUSF&&d.heraus!==undefined&&!herausGueltig(d.heraus))return false;
+  if(PCF&&!pcGueltig(d.pc))return false;
+  if(HINWEISF&&d.hinweis!==undefined&&typeof d.hinweis!=='boolean')return false;      // ein alter Eintrag ohne dieses Feld bleibt gültig (LS.v steigt nicht)
   const typ={};
   for(const t of TYPEN){const s=d.typ[t.id],n=t.level.length;
     if(s===undefined){typ[t.id]=null;continue;}
@@ -3281,6 +4060,10 @@ function lsUebernimm(d){
   TYPEN.forEach(t=>{if(typ[t.id])S.typ[t.id]=typ[t.id];});
   Object.assign(S,{etappe:d.etappe,pkt:d.pkt,pos:d.pos,letzter:TYP[d.letzter]?d.letzter:null,kronen:d.kronen,filter:{q:f.q,b:f.b,w:f.w},ton:d.ton,geuebt:d.geuebt,finale:d.finale});
   S.werk.ok=w.ok.slice();S.werk.faellig=w.faellig;S.werk.n=w.n;
+  if(FALLE)fallUebernimm(d.faelle);
+  if(HERAUSF&&d.heraus)herausUebernimm(d.heraus);
+  if(PCF)pcUebernimm(d.pc);
+  if(HINWEISF&&d.hinweis)hinweisGesehen=true;
   return true;}
 /* Beim Öffnen: still laden; ein kaputter oder veralteter Eintrag wird gelöscht */
 function lsLaden(){LS.sp=lsSpeicher();LS.ok=!!LS.sp;if(!LS.ok)return;
@@ -3296,7 +4079,7 @@ function lsBald(){if(!LS.an)return;clearTimeout(LS.t);LS.t=setTimeout(lsMerken,3
 function lsWeg(){LS.an=false;LS.zuletzt='';clearTimeout(LS.t);try{if(LS.sp)LS.sp.removeItem(LS.key);}catch(e){}}
 /* Die Zeile auf der Startseite: Schalter, daneben „Lernstand löschen“, wenn etwas gespeichert ist; die Rückfrage steht an derselben Stelle */
 function lernHTML(){if(!LS.ok)return '';
-  if(LS.frage)return '<div class="lern frage" id="lern"><span class="lfr">Lernstand löschen? Balken, Kronen und Etappen fangen dann von vorn an.</span>'+
+  if(LS.frage)return '<div class="lern frage" id="lern"><span class="lfr">Lernstand löschen? Balken, Kronen'+(HERAUSF?', Etappen und Herausforderungen':' und Etappen')+' fangen dann von vorn an.</span>'+
     '<span class="lkn"><button class="kn lja" data-akt="lja">Löschen</button><button class="kn" data-akt="lnein">Abbrechen</button></span></div>';
   return '<div class="lern" id="lern"><button class="lsw" data-akt="lmerken" role="switch" aria-checked="'+LS.an+'"><span class="sw'+(LS.an?' an':'')+'" aria-hidden="true"></span><span>Lernstand auf diesem Gerät merken</span></button>'+
     (LS.an?'<button class="lweg" data-akt="lfrage">Lernstand löschen</button>':'')+'</div>';}
