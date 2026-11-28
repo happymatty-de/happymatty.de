@@ -27,7 +27,7 @@ html.weihnachten footer{border-top-color:#59A3CD}
 html.weihnachten .fliesstext .kasten{background:rgba(156,205,240,.13)}
 
 /* Die Girlande braucht oben Platz; Überschriften rücken dafür etwas zusammen, damit am Handy nichts tiefer rutscht */
-html.weihnachten .seite{padding-top:3rem}
+html.weihnachten .seite{padding-top:2.6rem}
 html.weihnachten h1{margin-top:1.1rem}
 html.weihnachten .themenkopf{margin-top:2rem}
 
@@ -44,7 +44,7 @@ html.weihnachten .themenkopf{margin-top:2rem}
 @keyframes w-wiegen{from{transform:translateX(-7px)}to{transform:translateX(7px)}}
 
 /* ---------- Oberer Rand: Girlande, feine Lichterkette, Adventskerzen ---------- */
-.w-oben{position:absolute;left:0;top:0;width:100%;height:48px;z-index:2;pointer-events:none}
+.w-oben{position:absolute;left:0;top:0;width:100%;height:36px;z-index:2;pointer-events:none}
 .w-girlande{position:absolute;left:0;top:0;width:100%;height:36px;background:url(weihnachten/girlande.png) center top/350px 36px repeat-x}
 .w-leds{position:absolute;left:0;top:0;width:100%;height:36px}
 .w-leds i{position:absolute;width:3px;height:3px;margin:-1.5px 0 0 -1.5px;border-radius:50%;background:#FFF6DA;
@@ -53,8 +53,12 @@ html.weihnachten .themenkopf{margin-top:2rem}
 @keyframes w-funkeln{0%,100%{opacity:.5;transform:scale(.8)}45%{opacity:1;transform:scale(1.2)}62%{opacity:.8;transform:scale(1)}}
 @keyframes w-blitzen{0%,68%,100%{opacity:.65;transform:scale(.9)}74%{opacity:1;transform:scale(1.9)}80%{opacity:.3;transform:scale(.8)}87%{opacity:1;transform:scale(1.5)}}
 
-/* Adventskerzen in der Mitte: Ab jedem Adventssonntag brennt eine mehr, und sie brennen langsam herunter */
-.w-kranz{position:absolute;left:50%;top:0;width:124px;height:48px;margin-left:-62px}
+/* Adventskranz: steht rechts auf der Linie der Kopfzeile, sonst rechts auf der Fußlinie (saison.js, kranzPlatz).
+   Ab jedem Adventssonntag brennt eine Kerze mehr, und sie brennen langsam herunter. */
+html.weihnachten .kopf,html.weihnachten footer{position:relative}
+.w-kranz{position:absolute;right:0;width:124px;height:48px;z-index:2;pointer-events:none}
+.w-kranz-kopf{bottom:-3px}
+.w-kranz-fuss{bottom:100%;margin-bottom:-2px}
 .w-kranz-gruen{position:absolute;left:0;bottom:0;width:124px;height:20px;background:url(weihnachten/kranz.png) center/124px 20px no-repeat}
 .w-kerze{position:absolute;bottom:8px;width:9px;margin-left:-4.5px;border-radius:2px 2px 0 0;
   background:linear-gradient(90deg,#A91E1E 0,#E24A3E 36%,#CC2B28 62%,#8E1B1B 100%)}
@@ -82,14 +86,34 @@ html.weihnachten .liste li{position:relative}
   animation:w-pendeln 5s ease-in-out infinite alternate}
 .w-kugeln svg{display:block}
 @keyframes w-pendeln{from{transform:rotate(-1.5deg)}to{transform:rotate(1.5deg)}}
-/* Eine kleine Figur sitzt auf der ersten Kachel unter jeder weiteren Überschrift */
+/* Eine kleine Figur sitzt auf der ersten Kachel unter jeder weiteren Überschrift,
+   auf der Startseite auch auf den Klassen-Kacheln BF2 und BGY */
 .w-figur{position:absolute;right:.9rem;bottom:100%;margin-bottom:-4px;z-index:1;pointer-events:none}
+html.weihnachten .klassen li{position:relative}
+.klassen .w-figur{right:.45rem}
+
+/* ---------- Der Schlitten fährt langsam über die Fußlinie ---------- */
+.w-bahn{position:absolute;left:0;right:0;bottom:calc(100% + 1px);height:34px;z-index:1;overflow:hidden;pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%)}
+.w-schlitten{position:absolute;bottom:-2px;left:-120px;width:116px;height:30px;animation:w-fahrt 26s linear infinite}
+.w-schlitten svg{display:block;overflow:visible}
+@keyframes w-fahrt{from{left:-120px}84%,to{left:100%}}
+.w-trab{animation:w-trab .52s ease-in-out infinite alternate}
+.w-trab-2{animation-delay:-.26s}
+@keyframes w-trab{from{transform:translateY(0)}to{transform:translateY(-1.3px)}}
+
+/* ---------- Der Smiley im Logo trägt eine Weihnachtsmütze ---------- */
+html.weihnachten .logo{position:relative}
+.w-muetze{position:absolute;left:.22rem;top:-.74rem;width:27px;height:21px;transform:rotate(-13deg);pointer-events:none}
+.w-muetze svg{display:block}
 
 @media (prefers-reduced-motion:reduce){
-  .w-schnee,.w-schnee i,.w-leds i,.w-kerze b,.w-kerze u,.w-kugeln{animation:none}
+  .w-schnee,.w-schnee i,.w-leds i,.w-kerze b,.w-kerze u,.w-kugeln,.w-trab{animation:none}
+  .w-schlitten{animation:none;left:56%}
 }
 
 }
 
 /* Im Druck bleibt alles wie außerhalb der Saison */
-@media print{.w-himmel,.w-oben,.w-schneedecke,.w-kugeln,.w-figur{display:none}}
+@media print{.w-himmel,.w-oben,.w-schneedecke,.w-kugeln,.w-figur,.w-kranz,.w-bahn,.w-muetze{display:none}}

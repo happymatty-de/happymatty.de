@@ -784,20 +784,31 @@ später denselben Weg nutzen.
 - **Schmuck:**
   - Oben eine Tannengirlande mit feiner Lichterkette: kleine warmweiße LEDs, jede funkelt in ihrem
     eigenen Takt.
-  - In der Mitte der Girlande vier rote Adventskerzen, auf jeder Seite gleich: Ab jedem
-    Adventssonntag brennt eine mehr (der vierte Advent ist der letzte Sonntag bis zum 24. Dezember),
-    die Flammen flackern, und jede Kerze brennt von Woche zu Woche etwas herunter. Vor dem ersten
-    Advent stehen sie ohne Flamme da. Neben „happymatty.de“ ist dafür kein Platz: Auf Themenseite
-    und Themeneinheit steht dort der Zurück-Link.
+  - Ein Adventskranz mit vier roten Kerzen: Ab jedem Adventssonntag brennt eine mehr (der vierte
+    Advent ist der letzte Sonntag bis zum 24. Dezember), die Flammen flackern, und jede Kerze brennt
+    von Woche zu Woche etwas herunter. Vor dem ersten Advent stehen sie ohne Flamme da. Der Kranz
+    steht rechts **auf der Linie der Kopfzeile**, deutlich unter der Girlande (Patrick 28.11.2026:
+    „Das Ding muss auf die Linie, wo Happy Matty steht, auf die Kopfzeilenlinie“; in der Mitte der
+    Girlande sah es aus, als zündeten die Kerzen die Zweige an). Trägt die Kopfzeile dort Schrift
+    (Bildungsgang, Thema, Teilthema) oder reicht Logo oder Zurück-Link bis dorthin, steht er rechts
+    auf der Fußlinie; das prüft `saison.js` auf jeder Seite und bei jeder Breite selbst.
   - Auf der ersten Kachel jeder Seite (nie auf den Klassen-Kacheln) liegt Schnee, und an ihr
     hängen drei Kugeln. Eine Kugel, die Schrift oder ein Kennzeichen verdecken würde, bleibt weg.
   - Auf der ersten Kachel unter jeder weiteren Überschrift (`themenkopf`) sitzt rechts eine kleine
     Figur: Schneemann, Laterne, Tannenbaum, Geschenke, Rotkehlchen, je Seite in anderer Reihenfolge
     (auf der Startseite der Tannenbaum bei „Training“). Reicht die Überschrift bis unter die
-    Figur, etwa auf einem schmalen Handy, bleibt sie weg.
+    Figur, etwa auf einem schmalen Handy, bleibt sie weg. Auf der Startseite sitzen dazu die
+    Laterne auf der Klassen-Kachel BF2 und die Geschenke auf BGY (Patrick 28.11.2026: Die
+    Startseite hatte zu wenig; keine dritte Figur, der Tannenbaum wird nicht wiederholt; über BF1
+    steht die Überschrift „Klassen“).
+  - Auf der Fußlinie fährt der Weihnachtsmann mit Schlitten und zwei Rentieren langsam von links
+    nach rechts durch, immer wieder, die ganze Saison (Patrick: „Der muss ja auch zu Weihnachten
+    irgendwann ankommen“); das vordere Rentier hat eine rote Nase. Steht der Kranz auf der
+    Fußlinie, fährt der Schlitten hinter ihm durch.
+  - Der Smiley im Logo trägt eine Weihnachtsmütze.
 - **Einfach bleiben** (Patrick 28.11.2026: „es soll einfach bleiben“; Claude soll bremsen, wenn
   etwas zu viel, zu aufwendig oder zu fehlerträchtig wird). Kein Schmuck verdeckt Inhalt. Auf dem
-  Handy rutscht nichts tiefer: Die Girlande braucht oben 29 Pixel, dafür rücken die Überschriften
+  Handy rutscht nichts tiefer: Die Girlande braucht oben 22 Pixel, dafür rücken die Überschriften
   in der Saison etwas zusammen (auf der Startseite bleibt „Interaktive Trainings“ sichtbar wie
   vorher). Verworfen: Lichterketten an den Seiten und am Fuß (am Handy kein Rand, unten doppelt),
   Klang beim Antippen einer Kachel (die Seite wechselt sofort), ein Ausschalter für Ton (er müsste
@@ -813,10 +824,9 @@ später denselben Weg nutzen.
 - **Prüfen an einem anderen Tag:** `?datum=2026-12-20` hinter der Adresse zeigt die Seite wie an
   diesem Tag (vier Kerzen), `?datum=2026-07-01` wie außerhalb der Saison. Das Datum wandert über
   die Links der Seite mit.
-- **Noch geplant** (Stand 28.11.2026, mit Patrick besprochen): ein Schlitten mit Weihnachtsmann,
-  der langsam auf der Fußlinie durchfährt; eine Weihnachtsmütze für den Smiley im Logo; die
-  Lichterkette als Glockenspiel und Jingle Bells nur auf der Startseite. Ton erklingt nie von
-  selbst, nur wenn jemand etwas antippt.
+- **Noch geplant** (Stand 28.11.2026, mit Patrick besprochen): die Lichterkette als Glockenspiel
+  und Jingle Bells nur auf der Startseite. Ton erklingt nie von selbst, nur wenn jemand etwas
+  antippt.
 
 ## Inhalte auf den öffentlichen Seiten
 
