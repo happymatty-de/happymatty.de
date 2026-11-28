@@ -3,8 +3,8 @@
    und die Seite wird geschmückt; das Aussehen steht in saison.css, die Bilder liegen in /stil/weihnachten/.
    Es wird nichts gespeichert und nichts von fremden Servern geladen.
    Zum Prüfen lässt sich das Datum in der Adresse vorgeben: ?datum=2026-12-06
-   Klang (Lichterkette als Glockenspiel, Glocke mit Jingle Bells auf der Startseite) gibt es vorerst nur zum
-   Probehören: ?klang=1, ?klang=2 oder ?klang=3 hinter der Adresse. Es erklingt nie etwas von selbst. */
+   Klang (Lichterkette als Glockenspiel, Glocke mit Jingle Bells auf der Startseite) steht in weihnachten/klang.js
+   und wird vorerst nur zum Probehören geladen: ?klang=1 hinter der Adresse. Es erklingt nie etwas von selbst. */
 (function () {
   var d = document, html = d.documentElement, suche = location.search;
   var heute = new Date(), probe = /[?&]datum=(\d{4})-(\d\d)-(\d\d)/.exec(suche);
@@ -12,7 +12,7 @@
   var monat = heute.getMonth() + 1, tag = heute.getDate();
   var weihnachten = (monat === 11 && tag >= 24) || monat === 12 || (monat === 1 && tag <= 6);
   if (weihnachten) html.className += (html.className ? ' ' : '') + 'weihnachten';
-  var klang = /[?&]klang=([123])/.exec(suche), art = klang ? +klang[1] : 0;
+  var klang = /[?&]klang=(\d)/.exec(suche);
   var mit = (probe ? '&datum=' + probe[1] + '-' + probe[2] + '-' + probe[3] : '') + (klang ? '&klang=' + klang[1] : '');
   mit = mit.slice(1);
   if (!weihnachten && !mit) return;
@@ -132,12 +132,14 @@
   }
 
   /* Figuren sitzen rechts oben auf einer Kachel: auf der ersten Kachel unter jeder weiteren Überschrift
-     und auf der Startseite auf den Klassen-Kacheln BF2 (Laterne) und BGY (Geschenke). */
-  var figuren = [], MASS = { schneemann: [42, 50], laterne: [40, 52], baum: [48, 55], geschenke: [52, 40], vogel: [38, 34] };
-  function figur(li, name, kopf) {
+     und auf der Startseite auf den Klassen-Kacheln: BF1 Schneemann (er schmilzt), BF2 Laterne, BGY Geschenke.
+     Über BF1 steht die Überschrift „Klassen“, deshalb sitzt der Schneemann dort ganz am rechten Rand. */
+  var figuren = [], MASS = { schneemann: [36, 48], laterne: [40, 52], baum: [48, 55], geschenke: [52, 40], vogel: [40, 38] };
+  function figur(li, name, kopf, eng) {
     if (!li) return;
-    var f = neu('img', 'w-figur'); f.alt = ''; f.width = MASS[name][0]; f.height = MASS[name][1]; f.src = BILD + 'figur-' + name + '.svg';
-    li.appendChild(f); figuren.push([f, kopf]);
+    var f = neu('img', 'w-figur' + (eng ? ' w-figur-eng' : '')); f.alt = ''; f.width = MASS[name][0]; f.height = MASS[name][1];
+    f.src = BILD + 'figur-' + name + '.svg?v=2';
+    li.appendChild(f); figuren.push([f, kopf, eng ? 2 : 6]);
   }
   function kacheln() {
     var listen = d.querySelectorAll('ul.liste'), namen = ['schneemann', 'laterne', 'baum', 'geschenke', 'vogel'];
@@ -152,7 +154,7 @@
     var klassen = d.querySelector('ul.klassen');
     if (klassen) {
       var kl = klassen.querySelectorAll('li'), ueber = klassen.previousElementSibling;
-      figur(kl[1], 'laterne', ueber); figur(kl[2], 'geschenke', ueber);
+      figur(kl[0], 'schneemann', ueber, true); figur(kl[1], 'laterne', ueber); figur(kl[2], 'geschenke', ueber);
     }
   }
   /* Reicht die Überschrift bis unter die Figur (schmales Handy), bleibt die Figur weg */
@@ -160,12 +162,13 @@
     for (var i = 0; i < figuren.length; i++) {
       var f = figuren[i][0], kopf = figuren[i][1], frei = true;
       f.style.visibility = '';
-      if (kopf) { var z = schrift(kopf), ort = f.getBoundingClientRect(); for (var j = 0; j < z.length; j++) if (trifft(z[j], ort, 6)) frei = false; }
+      if (kopf) { var z = schrift(kopf), ort = f.getBoundingClientRect(); for (var j = 0; j < z.length; j++) if (trifft(z[j], ort, figuren[i][2])) frei = false; }
       f.style.visibility = frei ? '' : 'hidden';
     }
   }
 
-  /* Der Weihnachtsmann fährt mit Schlitten und zwei Rentieren langsam über die Fußlinie, immer wieder */
+  /* Der Weihnachtsmann fährt mit Schlitten und zwei Rentieren langsam über die Fußlinie, immer wieder;
+     er bewegt die Zügel im Takt der trabenden Rentiere */
   function rentier(x, rot) {
     return '<g transform="translate(' + x + ',0)"><g class="w-trab' + (rot ? ' w-trab-2' : '') + '">'
       + '<path d="M7,20 L4,28.6 M9.4,20 L10,28.6 M19,20 L18.4,28.6 M21,19.6 L25,28" stroke="#7E5A3C" stroke-width="1.7" stroke-linecap="round" fill="none"/>'
@@ -183,11 +186,10 @@
   }
   function schlitten() {
     var t = '<svg width="116" height="30" viewBox="0 0 116 30">'
-      + '<path d="M27.5,14 L66,14.4 L98,14.4" stroke="#D9B13A" stroke-width=".8" fill="none"/>'
+      + '<path d="M66,14.4 L98,14.4" stroke="#D9B13A" stroke-width=".8" fill="none"/>'
       + '<path d="M2,27.7 L30,27.7 C35.4,27.7 37.6,24.4 35.8,21.2 M10,27.7 V23 M25,27.7 V23" stroke="#D9B13A" stroke-width="1.6" stroke-linecap="round" fill="none"/>'
       + '<ellipse cx="9.4" cy="10.6" rx="5.2" ry="5.8" fill="#8A5A2B"/><path d="M7.6,5.6 L11.4,5.2 L10.2,3.2 L8.6,3.4 Z" fill="#6E4520"/>'
       + '<ellipse cx="18.6" cy="13" rx="5.2" ry="5.8" fill="#D63A2F"/>'
-      + '<path d="M19.6,11.4 L27.4,14" stroke="#D63A2F" stroke-width="2.6" stroke-linecap="round"/><circle cx="27.6" cy="14" r="1.5" fill="#fff"/>'
       + '<circle cx="19.8" cy="6.8" r="3.1" fill="#F2C9A5"/>'
       + '<path d="M17,7 C16.6,11.6 22.6,12.6 23,7.6 C21.6,9 18.6,8.8 17,7 Z" fill="#fff"/>'
       + '<path d="M16.6,5.2 L23,4.6 C21,1.2 17.6,0.6 14.4,2.4 C15.8,2.8 16.4,3.8 16.6,5.2 Z" fill="#D63A2F"/>'
@@ -195,116 +197,22 @@
       + '<path d="M3.6,23.4 L3.6,14.6 C3.6,12.4 5,11.6 7,11.8 L8.4,12 L8.4,17.6 L26.4,17.6 L30,13 L33.4,13 L30.6,23.4 Z" fill="#C62828"/>'
       + '<path d="M3.6,14.6 C3.6,12.4 5,11.6 7,11.8 L8.4,12 M26.4,17.6 L30,13 L33.4,13" stroke="#F4C542" stroke-width="1" stroke-linecap="round" fill="none"/>'
       + '<rect x="3.6" y="21.6" width="27.4" height="1.8" fill="#8E1B1B"/>'
+      + '<g transform="translate(66,14.4)"><g class="w-zuegel"><path d="M0,0 L-38.6,0" stroke="#D9B13A" stroke-width=".8" fill="none"/></g></g>'
+      + '<g transform="translate(19.6,11.4)"><g class="w-arm"><path d="M0,0 L7.8,2.6" stroke="#D63A2F" stroke-width="2.6" stroke-linecap="round"/><circle cx="8" cy="2.6" r="1.5" fill="#fff"/></g></g>'
       + rentier(44, false) + rentier(78, true) + '</svg>';
     return neu('div', 'w-bahn', '<div class="w-schlitten">' + t + '</div>');
   }
 
-  /* Der Smiley im Logo trägt eine Weihnachtsmütze */
+  /* Der Smiley im Logo trägt eine Weihnachtsmütze: über die ganze Breite, an den Seiten etwas herunter
+     (Maße im Bild: Das Logo liegt bei 0 bis 33,6; die Größe steht in saison.css in rem und wächst mit) */
   function muetze() {
-    return neu('span', 'w-muetze', '<svg width="27" height="21" viewBox="0 0 27 21">'
-      + '<path d="M4.6,15 C4.8,6.4 9.6,2.4 15.4,2.6 C20.6,2.8 23.2,6.4 24,10 C21.8,8 19.6,8 18.4,9.4 C19.6,11.4 20,13.2 20.2,15 Z" fill="#D63A2F"/>'
-      + '<path d="M15.4,2.6 C20.6,2.8 23.2,6.4 24,10 C21.8,8 19.6,8 18.4,9.4 C18,6.4 17,4.2 15.4,2.6 Z" fill="#B3211F"/>'
-      + '<rect x="2" y="13.6" width="20.6" height="5.6" rx="2.8" fill="#fff" stroke="#D5E3F2" stroke-width=".6"/>'
-      + '<circle cx="24" cy="11" r="2.9" fill="#fff" stroke="#D5E3F2" stroke-width=".6"/></svg>');
-  }
-
-  /* ---------- Klang: Es erklingt nur, was jemand antippt ---------- */
-  /* Drei Fassungen zum Probehören: 1 Glockenspiel pur, 2 Spieluhr mit Bass, 3 weich und ruhiger.
-     Je Teilton: Vielfaches der Tonhöhe, Lautstärke, Ausklingzeit in Sekunden. */
-  var ARTEN = {
-    1: { teile: [[1, 1, 1.5], [2.76, 0.26, 0.5], [5.4, 0.1, 0.22]], an: 0.003, laut: 0.2, tempo: 120, bass: 0 },
-    2: { teile: [[1, 1, 1.0], [2, 0.4, 0.55], [3, 0.12, 0.3], [4.2, 0.05, 0.15]], an: 0.002, laut: 0.2, tempo: 112, bass: 2 },
-    3: { teile: [[1, 1, 2.0], [2, 0.16, 1.0], [3, 0.05, 0.5]], an: 0.012, laut: 0.22, tempo: 100, bass: 1 }
-  };
-  var BASSTON = [[1, 1, 1.4], [2, 0.5, 0.8], [3, 0.12, 0.4]];
-  var ton = null, haupt = null;
-  function audio() {
-    var A = window.AudioContext || window.webkitAudioContext; if (!A) return null;
-    if (!ton) { ton = new A(); haupt = ton.createGain(); haupt.gain.value = 0.8; haupt.connect(ton.destination); }
-    if (ton.state === 'suspended') ton.resume();
-    return ton;
-  }
-  function glocke(ctx, ziel, f, t, laut, teile, an) {
-    for (var i = 0; i < teile.length; i++) {
-      var o = ctx.createOscillator(), g = ctx.createGain(), aus = teile[i][2];
-      o.type = 'sine'; o.frequency.value = f * teile[i][0];
-      g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(laut * teile[i][1], t + an);
-      g.gain.exponentialRampToValueAtTime(0.0001, t + an + aus);
-      o.connect(g); g.connect(ziel); o.start(t); o.stop(t + an + aus + 0.05);
-    }
-  }
-  /* Tonleiter der Lichterkette: C-Dur ab c'' (523,25 Hz), von links nach rechts */
-  function hoehe(stufe) { return 523.25 * Math.pow(2, ([0, 2, 4, 5, 7, 9, 11][stufe % 7] + 12 * Math.floor(stufe / 7)) / 12); }
-  /* Jingle Bells (James Lord Pierpont, 1857, gemeinfrei), der Kehrreim: Stufe der Tonleiter (0 = C) und Dauer in Schlägen */
-  var LIED = [[2, 1], [2, 1], [2, 2], [2, 1], [2, 1], [2, 2], [2, 1], [4, 1], [0, 1.5], [1, 0.5], [2, 4],
-    [3, 1], [3, 1], [3, 1.5], [3, 0.5], [3, 1], [2, 1], [2, 1], [2, 0.5], [2, 0.5], [2, 1], [1, 1], [1, 1], [2, 1], [1, 2], [4, 2],
-    [2, 1], [2, 1], [2, 2], [2, 1], [2, 1], [2, 2], [2, 1], [4, 1], [0, 1.5], [1, 0.5], [2, 4],
-    [3, 1], [3, 1], [3, 1.5], [3, 0.5], [3, 1], [2, 1], [2, 1], [2, 0.5], [2, 0.5], [4, 1], [4, 1], [3, 1], [1, 1], [0, 4]];
-  var BASS = [130.81, 130.81, 130.81, 130.81, 174.61, 130.81, 146.83, 196, 130.81, 130.81, 130.81, 130.81, 174.61, 130.81, 196, 130.81];  /* je Takt: C C C C F C D G | C C C C F C G C */
-  function lied(ctx, ziel, t0, nr) {
-    var a = ARTEN[nr], schlag = 60 / a.tempo, t = t0, noten = [], i;
-    for (i = 0; i < LIED.length; i++) {
-      glocke(ctx, ziel, hoehe(LIED[i][0]), t, a.laut, a.teile, a.an);
-      noten.push([t, LIED[i][0]]);
-      t += LIED[i][1] * schlag;
-    }
-    for (i = 0; a.bass && i < BASS.length; i++) {
-      glocke(ctx, ziel, BASS[i], t0 + i * 4 * schlag, 0.15, BASSTON, 0.01);
-      glocke(ctx, ziel, BASS[i] * (a.bass === 2 ? 1 : 1.5), t0 + (i * 4 + 2) * schlag, a.bass === 2 ? 0.12 : 0.07, BASSTON, 0.01);
-    }
-    return { noten: noten, ende: t };
-  }
-
-  var kette = null, knopf = null, spielt = null;
-  function zonen() { return Math.max(8, Math.min(15, Math.floor(kette.clientWidth / 44))); }
-  /* Die LEDs einer Zone leuchten kurz auf */
-  function leuchte(z) {
-    var W = kette.clientWidth, n = zonen(), l = kette.children;
-    for (var i = 0; i < l.length; i++) {
-      var x = parseFloat(l[i].style.left);
-      if (x >= z * W / n && x < (z + 1) * W / n) (function (e) { e.classList.add('w-an'); setTimeout(function () { e.classList.remove('w-an'); }, 280); })(l[i]);
-    }
-  }
-  function liedAus() {
-    if (!spielt) return;
-    for (var i = 0; i < spielt.uhren.length; i++) clearTimeout(spielt.uhren[i]);
-    var tor = spielt.tor; spielt = null;
-    try { tor.gain.setTargetAtTime(0, ton.currentTime, 0.04); } catch (e) {}
-    setTimeout(function () { try { tor.disconnect(); } catch (e) {} }, 500);
-    if (knopf) { knopf.classList.remove('w-laeutet'); knopf.setAttribute('aria-label', 'Jingle Bells abspielen'); }
-  }
-  function liedAn() {
-    var ctx = audio(); if (!ctx) return;
-    var tor = ctx.createGain(); tor.connect(haupt);
-    var plan = lied(ctx, tor, ctx.currentTime + 0.1, art), uhren = [];
-    for (var i = 0; i < plan.noten.length; i++) (function (n) {
-      uhren.push(setTimeout(function () { leuchte(n[1]); }, Math.max(0, (n[0] - ctx.currentTime) * 1000)));
-    })(plan.noten[i]);
-    uhren.push(setTimeout(liedAus, (plan.ende - ctx.currentTime) * 1000 + 400));
-    spielt = { tor: tor, uhren: uhren };
-    knopf.classList.add('w-laeutet'); knopf.setAttribute('aria-label', 'Jingle Bells anhalten');
-  }
-  /* Lichterkette als Glockenspiel; auf der Startseite hängt dazu eine Glocke, die Jingle Bells spielt */
-  function klangAn(oben) {
-    oben.className += ' w-klang';
-    kette.addEventListener('click', function (e) {
-      var ctx = audio(); if (!ctx) return;
-      var ort = kette.getBoundingClientRect(), n = zonen(), z = Math.max(0, Math.min(n - 1, Math.floor((e.clientX - ort.left) / ort.width * n)));
-      glocke(ctx, haupt, hoehe(z), ctx.currentTime + 0.01, ARTEN[art].laut, ARTEN[art].teile, ARTEN[art].an);
-      leuchte(z);
-    });
-    if (!/^\/(index\.html)?$/.test(location.pathname)) return;
-    knopf = d.createElement('button'); knopf.type = 'button'; knopf.className = 'w-glocke'; knopf.setAttribute('aria-label', 'Jingle Bells abspielen');
-    knopf.innerHTML = '<svg width="24" height="30" viewBox="0 0 24 30" aria-hidden="true"><defs><linearGradient id="w-gold" x1="0" x2="1" y1="0" y2="0">'
-      + '<stop offset="0" stop-color="#F8DC8A"/><stop offset=".5" stop-color="#E3B341"/><stop offset="1" stop-color="#B8891F"/></linearGradient></defs>'
-      + '<path d="M12,0 V6" stroke="#D63A2F" stroke-width="1.6"/>'
-      + '<path d="M12,7 C7.6,7 6.2,11 6.2,15.4 C6.2,19.4 4.8,21.4 3.4,22.8 H20.6 C19.2,21.4 17.8,19.4 17.8,15.4 C17.8,11 16.4,7 12,7 Z" fill="url(#w-gold)"/>'
-      + '<path d="M9.2,10.4 C8,12.4 7.8,15.2 8,18" stroke="#FFF6D2" stroke-width="1.2" stroke-linecap="round" fill="none" opacity=".85"/>'
-      + '<rect x="2.6" y="22" width="18.8" height="2.8" rx="1.4" fill="#C9961F"/><circle cx="12" cy="26.8" r="2.1" fill="#B8891F"/>'
-      + '<path d="M12,6.4 C8.6,3 5.4,4 6,6.4 C6.6,8.6 10,8 12,6.4 Z M12,6.4 C15.4,3 18.6,4 18,6.4 C17.4,8.6 14,8 12,6.4 Z" fill="#D63A2F" stroke="#8E1B1B" stroke-width=".5"/>'
-      + '<circle cx="12" cy="6.4" r="1.3" fill="#E0453A" stroke="#8E1B1B" stroke-width=".5"/></svg>';
-    knopf.addEventListener('click', function (e) { e.stopPropagation(); if (spielt) liedAus(); else liedAn(); });
-    oben.appendChild(knopf);
+    var rand = 'M-2.4,7.4 C-2.9,2.6 -1.6,0.4 2,0.2 L31.6,0.2 C35.2,0.4 36.5,2.6 36,7.4';
+    return neu('span', 'w-muetze', '<svg viewBox="-7.2 -16.4 48.6 28.4">'
+      + '<path d="M-0.6,2.4 C0,-7.6 6.4,-14.6 15.2,-15 C24,-15.4 32,-12 37,-5.6 C33.2,-8 29.6,-7.8 27.6,-5.8 C31,-3.4 33.6,-0.8 34.2,2.4 Z" fill="#D63A2F"/>'
+      + '<path d="M22,-14.4 C28.6,-13.6 33.6,-10.2 37,-5.6 C33.2,-8 29.6,-7.8 27.6,-5.8 C27.2,-9 25.4,-12 22,-14.4 Z" fill="#B3211F"/>'
+      + '<path d="' + rand + '" fill="none" stroke="#C9D9EA" stroke-width="7.6" stroke-linecap="round"/>'
+      + '<path d="' + rand + '" fill="none" stroke="#fff" stroke-width="6.4" stroke-linecap="round"/>'
+      + '<circle cx="37.4" cy="-4.8" r="3.5" fill="#fff" stroke="#C9D9EA" stroke-width=".6"/></svg>');
   }
 
   bereit(function () {
@@ -312,15 +220,15 @@
     var oben = neu('div', 'w-oben', '<div class="w-girlande"></div><div class="w-leds"></div>');
     b.insertBefore(oben, b.firstChild);
     b.insertBefore(neu('div', 'w-himmel', '<div class="w-schnee"><i></i></div><div class="w-schnee w-schnee-2"><i></i></div>'), b.firstChild);
-    kette = oben.querySelector('.w-leds');
+    var kette = oben.querySelector('.w-leds');
     if (logo) logo.appendChild(muetze());
     if (fuss) fuss.appendChild(schlitten());
     kranzbild = kranz();
     leds(kette); kacheln();
-    if (art) klangAn(oben);
     function ordnen() { kranzPlatz(); platz(); kugelnPlatz(); }
     ordnen();
     if (d.fonts && d.fonts.ready) d.fonts.ready.then(ordnen);
+    if (klang) { var k = d.createElement('script'); k.src = BILD + 'klang.js?v=2'; d.head.appendChild(k); }
     var warten;
     window.addEventListener('resize', function () { clearTimeout(warten); warten = setTimeout(function () { leds(kette); ordnen(); }, 150); });
   });

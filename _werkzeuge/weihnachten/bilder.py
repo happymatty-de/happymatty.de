@@ -106,33 +106,67 @@ def huegel(cx, y, rx):
             f'<ellipse cx="{cx + rx * 0.25:.1f}" cy="{y + 1.2}" rx="{rx * 0.6:.1f}" ry="1.6" fill="#D5E3F2"/>')
 
 
+RUHE = '@media (prefers-reduced-motion:reduce){*{animation:none!important}}'
+
+
+def dreh(x, y, klasse, inhalt):
+    '''Gruppe, die sich um den Punkt (x, y) bewegt: Die Animation der Klasse dreht, staucht oder schiebt um diesen Punkt.'''
+    return f'<g transform="translate({x},{y})"><g class="{klasse}"><g transform="translate({-x},{-y})">{inhalt}</g></g></g>'
+
+
+# Die Figuren bewegen sich ganz leicht; die Bewegung steht in der SVG-Datei selbst (als Bild eingebunden läuft sie mit).
 FIGUREN = {
-    'figur-baum': (48, 55, '<g transform="translate(0,3)">' + huegel(24, 49, 19) + '''
+    # Tannenbaum: geschwungene Zweige, Lametta, Lichter, die abwechselnd funkeln, der Stern leuchtet
+    'figur-baum': (48, 55, '<style>.a{animation:f 2.6s ease-in-out infinite}.b{animation:f 2.6s ease-in-out -1.3s infinite}'
+                           '.g{animation:g 3.2s ease-in-out infinite alternate}'
+                           '@keyframes f{0%,100%{opacity:.35}50%{opacity:1}}@keyframes g{from{opacity:.45}to{opacity:1}}' + RUHE + '</style>'
+                           '<defs><radialGradient id="b-stern"><stop offset="0" stop-color="#FFE9A0" stop-opacity=".95"/><stop offset=".45" stop-color="#FFD772" stop-opacity=".4"/><stop offset="1" stop-color="#FFD772" stop-opacity="0"/></radialGradient></defs>'
+                           '<g transform="translate(0,3)">' + huegel(24, 49, 19) + '''
 <rect x="22" y="41" width="4" height="8" fill="#7A4A21"/>
-<path d="M24,19 L41,43 L7,43 Z" fill="#2E8B45"/><path d="M7,43 L41,43 L38.6,39.6 L9.4,39.6 Z" fill="#1F6B34"/>
-<path d="M24,11 L37,31 L11,31 Z" fill="#34994D"/><path d="M11,31 L37,31 L34.8,27.6 L13.2,27.6 Z" fill="#237339"/>
-<path d="M24,4 L33,19 L15,19 Z" fill="#3BA555"/><path d="M15,19 L33,19 L31,15.7 L17,15.7 Z" fill="#287D3F"/>
-<ellipse cx="9.5" cy="42.4" rx="4" ry="1.7" fill="#fff"/><ellipse cx="38.5" cy="42.4" rx="4" ry="1.7" fill="#fff"/>
-<ellipse cx="13.2" cy="30.4" rx="3.4" ry="1.5" fill="#fff"/><ellipse cx="34.8" cy="30.4" rx="3.4" ry="1.5" fill="#fff"/>
-<ellipse cx="17" cy="18.4" rx="2.8" ry="1.3" fill="#fff"/><ellipse cx="31" cy="18.4" rx="2.8" ry="1.3" fill="#fff"/>
-<path d="M24,4 L27.2,9.6 Q25.6,8.6 24,10 Q22.4,8.6 20.8,9.6 Z" fill="#fff"/>
-<circle cx="20" cy="25" r="1.9" fill="#E0453A"/><circle cx="29" cy="24" r="1.7" fill="#F4C542"/>
-<circle cx="16" cy="37" r="2" fill="#F4C542"/><circle cx="24.5" cy="35.5" r="2" fill="#59A3CD"/><circle cx="32" cy="37.5" r="1.9" fill="#E0453A"/>
-<circle cx="23" cy="14.5" r="1.5" fill="#59A3CD"/>
-<circle cx="24" cy="3.6" r="6.5" fill="#FFD772" opacity=".28"/>
-<path d="M24,-1.2 L25.4,2 L28.9,2.3 L26.2,4.6 L27,8 L24,6.2 L21,8 L21.8,4.6 L19.1,2.3 L22.6,2 Z" fill="#F4C542" stroke="#D9A31C" stroke-width=".5" transform="translate(0,1.6)"/></g>'''),
-    'figur-schneemann': (42, 50, huegel(21, 47, 17) + '''
-<path d="M11,31 L4,25 M6.4,27 L4.2,29.4 M6.4,27 L7,23.6" stroke="#8A5A2B" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-<path d="M31,31 L38,25 M35.6,27 L37.8,29.4 M35.6,27 L35,23.6" stroke="#8A5A2B" stroke-width="1.4" stroke-linecap="round" fill="none"/>
-<circle cx="21" cy="35" r="11.5" fill="#fff"/><path d="M29,26.8 A11.5,11.5 0 0 1 21,46.5 A14,14 0 0 0 29,26.8 Z" fill="#D5E3F2"/>
-<circle cx="21" cy="18" r="8" fill="#fff"/><path d="M26.6,12.3 A8,8 0 0 1 21,26 A10,10 0 0 0 26.6,12.3 Z" fill="#D5E3F2"/>
-<path d="M13.4,22.6 Q21,26.6 28.6,22.6 L28.9,25.6 Q21,29.6 13.1,25.6 Z" fill="#D63A2F"/>
-<path d="M25,25.8 L28.6,25 L30.2,33 L26.8,33.6 Z" fill="#C62828"/>
-<g transform="rotate(-9 21 11)"><rect x="12" y="9.6" width="18" height="2.5" rx="1.2" fill="#22303F"/><rect x="15.2" y="2.4" width="11.6" height="8" rx="1" fill="#22303F"/><rect x="15.2" y="7.2" width="11.6" height="2.4" fill="#D63A2F"/></g>
-<circle cx="18.2" cy="16.8" r="1.15" fill="#22303F"/><circle cx="23.8" cy="16.8" r="1.15" fill="#22303F"/>
-<path d="M21,18.6 L28.4,20.2 L21,21.4 Z" fill="#F08A24"/>
-<circle cx="17.6" cy="21.4" r=".6" fill="#22303F"/><circle cx="19.2" cy="22.4" r=".6" fill="#22303F"/><circle cx="23" cy="22.5" r=".6" fill="#22303F"/><circle cx="24.6" cy="21.6" r=".6" fill="#22303F"/>
-<circle cx="21" cy="32" r="1.25" fill="#22303F"/><circle cx="21" cy="37.4" r="1.25" fill="#22303F"/>'''),
+<path d="M24,19 L42,43.4 Q37.4,41 33,43.4 Q28.6,41 24,43.4 Q19.4,41 15,43.4 Q10.6,41 6,43.4 Z" fill="#23803C"/>
+<path d="M24,11 L38,31.4 Q34.4,29.2 31,31.4 Q27.6,29.2 24,31.4 Q20.4,29.2 17,31.4 Q13.6,29.2 10,31.4 Z" fill="#2E9449"/>
+<path d="M24,4 L34,19.4 Q31.4,17.6 29,19.4 Q26.6,17.6 24,19.4 Q21.4,17.6 19,19.4 Q16.6,17.6 14,19.4 Z" fill="#3BA858"/>
+<path d="M24,19 L29.5,26.4 Q24,30 18.5,26.4 Z" fill="#1F6B34" opacity=".55"/><path d="M24,11 L28.6,17.6 Q24,20.6 19.4,17.6 Z" fill="#237339" opacity=".55"/>
+<path d="M12.4,35.4 Q24,41 35.6,35" fill="none" stroke="#F4C542" stroke-width="1.1" stroke-linecap="round"/>
+<path d="M15.4,24.4 Q24,29 32.6,24" fill="none" stroke="#F4C542" stroke-width="1.1" stroke-linecap="round"/>
+<path d="M19,13.6 Q24,16.6 29,13.4" fill="none" stroke="#F4C542" stroke-width="1" stroke-linecap="round"/>
+<ellipse cx="8" cy="42.6" rx="3.6" ry="1.5" fill="#fff"/><ellipse cx="40" cy="42.6" rx="3.6" ry="1.5" fill="#fff"/>
+<ellipse cx="12" cy="30.6" rx="3" ry="1.3" fill="#fff"/><ellipse cx="36" cy="30.6" rx="3" ry="1.3" fill="#fff"/>
+<ellipse cx="16" cy="18.6" rx="2.4" ry="1.1" fill="#fff"/><ellipse cx="32" cy="18.6" rx="2.4" ry="1.1" fill="#fff"/>
+<circle cx="18.6" cy="33.4" r="2.1" fill="#E0453A"/><circle cx="30.4" cy="38.6" r="2.1" fill="#59A3CD"/><circle cx="28.4" cy="22.6" r="1.9" fill="#E0453A"/><circle cx="21" cy="22" r="1.7" fill="#59A3CD"/>
+<g fill="#FFF3C4"><circle class="a" cx="14.6" cy="37.2" r="1.3"/><circle class="b" cx="24" cy="38.6" r="1.3"/><circle class="a" cx="33.6" cy="36.6" r="1.3"/>
+<circle class="b" cx="17.6" cy="26" r="1.2"/><circle class="a" cx="24.6" cy="27.2" r="1.2"/><circle class="b" cx="31" cy="25.6" r="1.2"/>
+<circle class="a" cx="21.4" cy="15" r="1.1"/><circle class="b" cx="26.8" cy="14.8" r="1.1"/></g>
+<circle class="g" cx="24" cy="4" r="9" fill="url(#b-stern)"/>
+<path d="M24,-2.2 L25.7,1.6 L29.8,2 L26.7,4.7 L27.6,8.8 L24,6.7 L20.4,8.8 L21.3,4.7 L18.2,2 L22.3,1.6 Z" fill="#F7CB4D" stroke="#D9A31C" stroke-width=".5" transform="translate(0,1)"/></g>'''),
+
+    # Schneemann aus drei Kugeln: Er sackt langsam zusammen, die Möhre rutscht schräg nach unten, eine Pfütze entsteht,
+    # dann richtet er sich mit einem kleinen Schwung wieder auf
+    'figur-schneemann': (36, 48, '<style>.s,.k,.h,.m,.p,.l,.r{animation-duration:14s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}'
+        '.s{animation-name:s}.k{animation-name:k}.h{animation-name:h}.m{animation-name:m}.p{animation-name:p}.l{animation-name:l}.r{animation-name:r}'
+        '@keyframes s{0%,8%{transform:scale(1,1)}58%,72%{transform:scale(1.14,.75)}80%{transform:scale(.96,1.06)}86%,100%{transform:scale(1,1)}}'
+        '@keyframes k{0%,8%{transform:translate(0,0) rotate(0deg)}58%,72%{transform:translate(1.2px,1.8px) rotate(11deg)}80%{transform:translate(0,-.6px) rotate(-3deg)}86%,100%{transform:translate(0,0) rotate(0deg)}}'
+        '@keyframes h{0%,8%{transform:rotate(-9deg)}58%,72%{transform:translate(-1.2px,.8px) rotate(-27deg)}80%{transform:rotate(-3deg)}86%,100%{transform:rotate(-9deg)}}'
+        '@keyframes m{0%,8%{transform:translate(0,0) rotate(0deg)}58%,72%{transform:translate(.6px,2.8px) rotate(42deg)}80%{transform:rotate(-7deg)}86%,100%{transform:translate(0,0) rotate(0deg)}}'
+        '@keyframes p{0%,14%{transform:scale(.3,1);opacity:0}58%,72%{transform:scale(1,1);opacity:.95}84%,100%{transform:scale(.3,1);opacity:0}}'
+        '@keyframes l{0%,8%{transform:rotate(0deg)}58%,72%{transform:rotate(-24deg)}86%,100%{transform:rotate(0deg)}}'
+        '@keyframes r{0%,8%{transform:rotate(0deg)}58%,72%{transform:rotate(24deg)}86%,100%{transform:rotate(0deg)}}' + RUHE + '</style>'
+        + huegel(18, 45, 13)
+        + dreh(18, 45.8, 'p', '<ellipse cx="18" cy="45.8" rx="16.4" ry="2.4" fill="#A9D0F0"/>')
+        + dreh(18, 45, 's',
+               dreh(11.4, 24.6, 'l', '<path d="M11.4,24.6 L5.8,20 M7.8,21.6 L6,23.4 M7.8,21.6 L8.2,19" stroke="#8A5A2B" stroke-width="1.3" stroke-linecap="round" fill="none"/>')
+               + dreh(24.6, 24.6, 'r', '<path d="M24.6,24.6 L30.2,20 M28.2,21.6 L30,23.4 M28.2,21.6 L27.8,19" stroke="#8A5A2B" stroke-width="1.3" stroke-linecap="round" fill="none"/>')
+               + '<circle cx="18" cy="35.6" r="9.6" fill="#fff"/><path d="M24.8,28.8 A9.6,9.6 0 0 1 18,45.2 A11.8,11.8 0 0 0 24.8,28.8 Z" fill="#D5E3F2"/>'
+               + '<circle cx="18" cy="23.8" r="7.2" fill="#fff"/><path d="M23.1,18.7 A7.2,7.2 0 0 1 18,31 A9,9 0 0 0 23.1,18.7 Z" fill="#D5E3F2"/>'
+               + '<circle cx="18" cy="23" r="1.05" fill="#22303F"/><circle cx="18" cy="27" r="1.05" fill="#22303F"/><circle cx="18" cy="34" r="1.15" fill="#22303F"/>'
+               + dreh(18, 18.6, 'k',
+                      '<circle cx="18" cy="13.4" r="5.5" fill="#fff"/><path d="M21.9,9.5 A5.5,5.5 0 0 1 18,18.9 A6.9,6.9 0 0 0 21.9,9.5 Z" fill="#D5E3F2"/>'
+                      '<path d="M12.7,16.8 Q18,19.8 23.3,16.8 L23.6,19.2 Q18,22.4 12.4,19.2 Z" fill="#D63A2F"/><path d="M20.4,19.9 L23,19.2 L24.3,25 L21.8,25.5 Z" fill="#C62828"/>'
+                      '<circle cx="16" cy="12.2" r=".95" fill="#22303F"/><circle cx="20.1" cy="12.2" r=".95" fill="#22303F"/>'
+                      '<circle cx="15.5" cy="15.6" r=".5" fill="#22303F"/><circle cx="16.9" cy="16.4" r=".5" fill="#22303F"/><circle cx="19.2" cy="16.4" r=".5" fill="#22303F"/><circle cx="20.6" cy="15.6" r=".5" fill="#22303F"/>'
+                      + dreh(18, 13.9, 'm', '<path d="M18,12.8 L24.6,14.3 L18,15.1 Z" fill="#F08A24"/>')
+                      + dreh(18, 8.8, 'h', '<rect x="11.6" y="7.7" width="12.8" height="2.2" rx="1.1" fill="#22303F"/><rect x="13.8" y="1.6" width="8.4" height="6.6" rx=".9" fill="#22303F"/><rect x="13.8" y="5.4" width="8.4" height="1.9" fill="#D63A2F"/>')))),
+
     'figur-geschenke': (52, 40, huegel(26, 37, 23) + '''
 <rect x="20" y="14" width="13" height="23" fill="#2E8B45"/><rect x="19" y="11" width="15" height="4" rx=".8" fill="#3BA555"/><rect x="25" y="11" width="3" height="26" fill="#F4C542"/>
 <rect x="4" y="16" width="22" height="21" fill="#C62828"/><rect x="2.6" y="12" width="24.8" height="5.2" rx="1" fill="#E0453A"/>
@@ -143,29 +177,44 @@ FIGUREN = {
 <rect x="31" y="23" width="17" height="14" fill="#2B8CC9"/><rect x="30" y="19.6" width="19" height="4.4" rx=".9" fill="#59A3CD"/>
 <rect x="38" y="19.6" width="3" height="17.4" fill="#fff"/><rect x="31" y="28.6" width="17" height="2.6" fill="#fff"/>
 <path d="M39.5,19.4 C37,14.6 33,16 34.2,18.4 C35,20 37.8,20 39.5,19.4 Z M39.5,19.4 C42,14.6 46,16 44.8,18.4 C44,20 41.2,20 39.5,19.4 Z" fill="#fff" stroke="#C9D9EA" stroke-width=".5"/>'''),
-    'figur-laterne': (40, 52, '''
-<defs><radialGradient id="l-schein"><stop offset="0" stop-color="#FFD772" stop-opacity=".75"/><stop offset=".5" stop-color="#FFC24A" stop-opacity=".28"/><stop offset="1" stop-color="#FFC24A" stop-opacity="0"/></radialGradient>
-<radialGradient id="l-glas" cx=".5" cy=".55" r=".7"><stop offset="0" stop-color="#FFF8DA"/><stop offset="1" stop-color="#F5C24A"/></radialGradient></defs>
-<circle cx="20" cy="30" r="20" fill="url(#l-schein)"/>''' + huegel(20, 49, 15) + '''
+
+    # Laterne: Der Schein atmet und zuckt ab und zu, als ginge ein Luftzug durch; anders als die Kerzen am Kranz
+    'figur-laterne': (40, 52, '<style>.g{animation:g 4.6s linear infinite}.f{animation:f 1.3s ease-in-out infinite alternate}.d{animation:d 4.6s linear infinite}'
+        '@keyframes g{0%,100%{opacity:1;transform:scale(1)}9%{opacity:.72;transform:scale(.93)}13%{opacity:1;transform:scale(1.03)}38%{opacity:.94}43%{opacity:.62;transform:scale(.9)}47%{opacity:1;transform:scale(1.02)}71%{opacity:.9}75%{opacity:.76;transform:scale(.95)}80%{opacity:1;transform:scale(1)}}'
+        '@keyframes d{0%,100%{opacity:0}9%{opacity:.2}13%{opacity:0}43%{opacity:.3}47%{opacity:0}75%{opacity:.16}80%{opacity:0}}'
+        '@keyframes f{from{transform:scale(1.06,.9) skewX(-5deg)}to{transform:scale(.92,1.14) skewX(5deg)}}' + RUHE + '</style>'
+        '<defs><radialGradient id="l-schein"><stop offset="0" stop-color="#FFD772" stop-opacity=".75"/><stop offset=".5" stop-color="#FFC24A" stop-opacity=".28"/><stop offset="1" stop-color="#FFC24A" stop-opacity="0"/></radialGradient>'
+        '<radialGradient id="l-glas" cx=".5" cy=".55" r=".7"><stop offset="0" stop-color="#FFF8DA"/><stop offset="1" stop-color="#F5C24A"/></radialGradient></defs>'
+        + dreh(20, 30, 'g', '<circle cx="20" cy="30" r="20" fill="url(#l-schein)"/>') + huegel(20, 49, 15) + '''
 <path d="M15.6,9.4 Q20,0.6 24.4,9.4" fill="none" stroke="#D9B13A" stroke-width="1.5" stroke-linecap="round"/>
 <path d="M11.4,15.6 L20,8.4 L28.6,15.6 Z" fill="#B8891F"/><rect x="10.4" y="15" width="19.2" height="2.6" rx="1" fill="#D9B13A"/>
-<rect x="12.6" y="17.6" width="14.8" height="25.4" fill="url(#l-glas)"/>
-<rect x="18.2" y="31" width="3.6" height="12" rx=".8" fill="#FFFDF4"/>
-<path d="M20,22.4 C22.6,25.8 22.4,29.4 20,30.6 C17.6,29.4 17.4,25.8 20,22.4 Z" fill="#FF9D2E"/><path d="M20,25.4 C21.3,27.2 21.2,29.2 20,29.9 C18.8,29.2 18.7,27.2 20,25.4 Z" fill="#FFE889"/>
+<rect x="12.6" y="17.6" width="14.8" height="25.4" fill="url(#l-glas)"/><rect class="d" x="12.6" y="17.6" width="14.8" height="25.4" fill="#A85F00" opacity="0"/>
+<rect x="18.2" y="31" width="3.6" height="12" rx=".8" fill="#FFFDF4"/>'''
+        + dreh(20, 30.6, 'f', '<path d="M20,22.4 C22.6,25.8 22.4,29.4 20,30.6 C17.6,29.4 17.4,25.8 20,22.4 Z" fill="#FF9D2E"/><path d="M20,25.4 C21.3,27.2 21.2,29.2 20,29.9 C18.8,29.2 18.7,27.2 20,25.4 Z" fill="#FFE889"/>') + '''
 <path d="M12.6,17.6 V43 M27.4,17.6 V43 M20,17.6 V21" fill="none" stroke="#A87916" stroke-width="1.6"/>
 <rect x="10.4" y="42.6" width="19.2" height="3" rx="1" fill="#D9B13A"/><rect x="12.2" y="45.4" width="15.6" height="1.8" fill="#B8891F"/>
 <path d="M9,47.4 L3.4,43.6 M8.2,47.6 L2.4,46.2 M9.6,46.8 L5.6,41.8" stroke="#2E8B45" stroke-width="1.5" stroke-linecap="round" fill="none"/>
 <circle cx="9.6" cy="46.4" r="2" fill="#D63A2F"/><circle cx="12" cy="48" r="1.6" fill="#C62828"/>'''),
-    'figur-vogel': (38, 34, huegel(19, 31, 13) + '''
-<path d="M9,20.6 L1.4,25.4 L3,18.6 Z" fill="#7E6148"/>
-<path d="M15.4,27 V31 M20.6,27 V31" stroke="#D9A066" stroke-width="1.3" stroke-linecap="round"/>
-<ellipse cx="17" cy="18.6" rx="10.6" ry="9.2" fill="#A98566"/>
-<circle cx="24.4" cy="11.6" r="7" fill="#A98566"/>
-<path d="M20.2,12.4 C21,8.6 28.6,8 30.6,12 C32.4,16.4 29.4,24 22.6,24.6 C17.8,23.4 18.2,16.6 20.2,12.4 Z" fill="#E8662A"/>
-<ellipse cx="17.4" cy="24" rx="7.4" ry="3.6" fill="#F3EBDD"/>
-<path d="M6.6,17.4 C9.4,12.8 16.6,13.4 17.8,17.6 C16.6,22.4 9.6,23.4 6.6,17.4 Z" fill="#7E6148"/>
-<path d="M30.8,10.6 L36.4,12.4 L30.8,13.8 Z" fill="#F2B134"/>
-<circle cx="26.6" cy="9.8" r="1.35" fill="#1B1B1B"/><circle cx="27" cy="9.4" r=".45" fill="#fff"/>'''),
+
+    # Rotkehlchen mit Bommelmütze: hüpft ab und zu zweimal kurz und wippt mit dem Schwanz
+    'figur-vogel': (40, 38, '<style>.v{animation:v 5.4s ease-in-out infinite}.t{animation:t 5.4s ease-in-out infinite}'
+        '@keyframes v{0%,80%,100%{transform:translateY(0)}84%{transform:translateY(-2.6px)}88%{transform:translateY(0)}92%{transform:translateY(-1.7px)}96%{transform:translateY(0)}}'
+        '@keyframes t{0%,34%,46%,100%{transform:rotate(0deg)}38%{transform:rotate(-14deg)}42%{transform:rotate(4deg)}}' + RUHE + '</style>'
+        + huegel(20, 35, 14)
+        + '<g class="v">'
+        + dreh(10, 23.6, 't', '<path d="M10,22 L1,25.8 L2.6,21.4 L0.8,18.6 L10,19.6 Z" fill="#6E5540"/>') + '''
+<path d="M16.4,30.6 V35 M21.8,30.6 V35 M14.6,35 H18 M20,35 H23.4" stroke="#D9A066" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+<ellipse cx="18.4" cy="22.6" rx="10.8" ry="9.2" fill="#A58160"/>
+<circle cx="25.6" cy="15.4" r="7" fill="#A58160"/>
+<path d="M20.6,16.6 C21,11.6 28.8,10.6 31.4,14.6 C32.8,17.2 32.2,20.6 30.6,23.4 C28.4,27.6 23.8,29.4 20.8,28 C17.6,25.2 19,20.2 20.6,16.6 Z" fill="#E9692C"/>
+<path d="M24.4,15.6 C26.4,13.4 29.6,13.8 30.6,16 C30.2,19.4 27.6,22 24.8,22.4 C23,20.6 23,17.8 24.4,15.6 Z" fill="#F4905A" opacity=".8"/>
+<ellipse cx="18" cy="28.2" rx="7.2" ry="3.4" fill="#F5EEE2"/>
+<path d="M7.4,21.6 C10.2,16.4 17.8,16.6 19.4,21.2 C18.2,26.6 11.2,27.8 7.4,21.6 Z" fill="#7C6048"/>
+<path d="M10.4,21.4 C12.8,19.6 15.6,19.8 17.6,21.4 M10,23.6 C12.6,22.6 15.2,22.8 17.2,24" stroke="#5F4937" stroke-width=".7" stroke-linecap="round" fill="none"/>
+<path d="M31.8,14 L37.4,15.8 L31.8,17.2 Z" fill="#F2B134"/><path d="M31.8,15.7 L36.4,15.8" stroke="#B9801A" stroke-width=".5"/>
+<circle cx="28.2" cy="13.4" r="1.4" fill="#1B1B1B"/><circle cx="28.6" cy="13" r=".45" fill="#fff"/>
+<path d="M19.8,11.4 C20.4,5.4 25.4,2 30.2,5.2 C28.2,5.6 27.6,7 28,8.8 Z" fill="#D63A2F"/>
+<path d="M19.2,12.6 L28.6,9.6" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/><circle cx="30.8" cy="4.8" r="2" fill="#fff"/></g>'''),
 }
 
 
