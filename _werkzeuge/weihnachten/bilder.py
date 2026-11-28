@@ -114,6 +114,62 @@ def dreh(x, y, klasse, inhalt):
     return f'<g transform="translate({x},{y})"><g class="{klasse}"><g transform="translate({-x},{-y})">{inhalt}</g></g></g>'
 
 
+def lage(tx=0, ty=0, dreh_=0, sx=1, sy=1):
+    """Eine Lage für die Bewegung: verschoben, gedreht, gestaucht (immer dieselbe Folge, damit der Browser weich überblendet)."""
+    return f'translate({tx}px,{ty}px) rotate({dreh_}deg) scale({sx},{sy})'
+
+
+def schneemann():
+    """Der schmelzende Schneemann (36 x 48). Jedes Teil hat vier Lagen: steht, halb geschmolzen, Haufen, Schwung beim Aufrichten."""
+    dauer = 24   # Sekunden je Runde: etwa 5 stehen, 11 schmelzen, knapp 6 liegen, 2,5 aufrichten
+    teile = {    # Klasse: (halb geschmolzen, Haufen, Schwung, Ruhelage)
+        'u': (lage(0, 0, 0, 1.2, .76), lage(0, 0, 0, 1.42, .5), lage(0, 0, 0, .97, 1.05), lage()),                 # untere Kugel
+        'm': (lage(.6, 6, 0, 1.16, .82), lage(1.4, 13.4, 0, 1.34, .62), lage(0, -.9, 0, .97, 1.05), lage()),       # mittlere Kugel
+        'k': (lage(-1, 10, -6, 1.1, .88), lage(-2.2, 20.2, -14, 1.22, .74), lage(0, -1.6, 3, .98, 1.04), lage()),  # Kopf
+        'c': (lage(-.6, 9.6, -3, 1.12, .86), lage(-3, 19.4, -6, 1.3, .62), lage(0, -1.3, 2), lage()),              # Schal
+        'e1': (lage(-1.3, 10.2), lage(-2.4, 20), lage(0, -1.6), lage()),                                           # Augen
+        'e2': (lage(-.5, 11.6), lage(-1.2, 22), lage(.2, -1.6), lage()),
+        'd1': (lage(-1.6, 10.2), lage(-4.3, 18.3), lage(0, -1.6), lage()),                                         # Mund
+        'd2': (lage(-1.1, 10.8), lage(-3.3, 19.8), lage(0, -1.6), lage()),
+        'd3': (lage(-.8, 10.4), lage(-2.4, 19.2), lage(0, -1.6), lage()),
+        'd4': (lage(-.2, 11.4), lage(0, 20.8), lage(0, -1.6), lage()),
+        'n': (lage(.9, 11.2, 26), lage(4.4, 22.9, 52), lage(0, -1.6, -7), lage()),                                 # Möhre
+        'b1': (lage(2.6, 7.4), lage(11.4, 18.4), lage(0, -.9), lage()),                                            # Knöpfe
+        'b2': (lage(-1.6, 6.6), lage(-5.6, 15.6), lage(0, -.9), lage()),
+        'b3': (lage(.6, 4), lage(2.2, 9.6), lage(0, -.3), lage()),
+        'h': (lage(-2.4, 10.6, -22), lage(-9.4, 29.8, -62), lage(0, -2.2, -3), lage(0, 0, -9)),                    # Hut
+        'l': (lage(-1, 6.4, -18), lage(-3.4, 15.9, -46), lage(0, -.9, 10), lage()),                                # Arme
+        'r': (lage(1, 6.4, 18), lage(3.4, 15.9, 46), lage(0, -.9, -10), lage()),
+    }
+    klassen = list(teile) + ['p']
+    stil = (','.join('.' + k for k in klassen)
+            + f'{{animation-duration:{dauer}s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}}'
+            + ''.join(f'.{k}{{animation-name:{k}}}' for k in klassen))
+    for k, (halb, haufen, schwung, ruhe) in teile.items():
+        stil += (f'@keyframes {k}{{0%,6%{{transform:{ruhe};animation-timing-function:ease-in}}'
+                 f'30%{{transform:{halb};animation-timing-function:ease-out}}'
+                 f'52%,76%{{transform:{haufen}}}81.5%{{transform:{schwung}}}86%,100%{{transform:{ruhe}}}}}')
+    stil += '@keyframes p{0%,10%{transform:scale(.3,1);opacity:0}52%,76%{transform:scale(1,1);opacity:.95}85%,100%{transform:scale(.3,1);opacity:0}}'
+
+    def punkt(k, x, y, r):
+        return dreh(x, y, k, f'<circle cx="{x}" cy="{y}" r="{r}" fill="#22303F"/>')
+
+    return ('<style>' + stil + RUHE + '</style>'
+            + huegel(18, 45, 13)
+            + dreh(18, 45.8, 'p', '<ellipse cx="18" cy="45.8" rx="16.4" ry="2.4" fill="#A9D0F0"/>')
+            + dreh(11.4, 24.6, 'l', '<path d="M11.4,24.6 L5.8,20 M7.8,21.6 L6,23.4 M7.8,21.6 L8.2,19" stroke="#8A5A2B" stroke-width="1.3" stroke-linecap="round" fill="none"/>')
+            + dreh(24.6, 24.6, 'r', '<path d="M24.6,24.6 L30.2,20 M28.2,21.6 L30,23.4 M28.2,21.6 L27.8,19" stroke="#8A5A2B" stroke-width="1.3" stroke-linecap="round" fill="none"/>')
+            + dreh(18, 45.2, 'u', '<circle cx="18" cy="35.6" r="9.6" fill="#fff"/><path d="M24.8,28.8 A9.6,9.6 0 0 1 18,45.2 A11.8,11.8 0 0 0 24.8,28.8 Z" fill="#D5E3F2"/>')
+            + dreh(18, 23.8, 'm', '<circle cx="18" cy="23.8" r="7.2" fill="#fff"/><path d="M23.1,18.7 A7.2,7.2 0 0 1 18,31 A9,9 0 0 0 23.1,18.7 Z" fill="#D5E3F2"/>')
+            + punkt('b1', 18, 23, 1.05) + punkt('b2', 18, 27, 1.05) + punkt('b3', 18, 34, 1.15)
+            + dreh(18, 19.5, 'c', '<path d="M12.7,16.8 Q18,19.8 23.3,16.8 L23.6,19.2 Q18,22.4 12.4,19.2 Z" fill="#D63A2F"/><path d="M20.4,19.9 L23,19.2 L24.3,25 L21.8,25.5 Z" fill="#C62828"/>')
+            + dreh(18, 13.4, 'k', '<circle cx="18" cy="13.4" r="5.5" fill="#fff"/><path d="M21.9,9.5 A5.5,5.5 0 0 1 18,18.9 A6.9,6.9 0 0 0 21.9,9.5 Z" fill="#D5E3F2"/>')
+            + punkt('e1', 16, 12.2, .95) + punkt('e2', 20.1, 12.2, .95)
+            + punkt('d1', 15.5, 15.6, .5) + punkt('d2', 16.9, 16.4, .5) + punkt('d3', 19.2, 16.4, .5) + punkt('d4', 20.6, 15.6, .5)
+            + dreh(18, 13.9, 'n', '<path d="M18,12.8 L24.6,14.3 L18,15.1 Z" fill="#F08A24"/>')
+            + dreh(18, 8.8, 'h', '<rect x="11.6" y="7.7" width="12.8" height="2.2" rx="1.1" fill="#22303F"/><rect x="13.8" y="1.6" width="8.4" height="6.6" rx=".9" fill="#22303F"/><rect x="13.8" y="5.4" width="8.4" height="1.9" fill="#D63A2F"/>'))
+
+
 # Die Figuren bewegen sich ganz leicht; die Bewegung steht in der SVG-Datei selbst (als Bild eingebunden läuft sie mit).
 FIGUREN = {
     # Tannenbaum: geschwungene Zweige, Lametta, Lichter, die abwechselnd funkeln, der Stern leuchtet
@@ -140,32 +196,10 @@ FIGUREN = {
 <circle class="g" cx="24" cy="4" r="9" fill="url(#b-stern)"/>
 <path d="M24,-2.2 L25.7,1.6 L29.8,2 L26.7,4.7 L27.6,8.8 L24,6.7 L20.4,8.8 L21.3,4.7 L18.2,2 L22.3,1.6 Z" fill="#F7CB4D" stroke="#D9A31C" stroke-width=".5" transform="translate(0,1)"/></g>'''),
 
-    # Schneemann aus drei Kugeln: Er sackt langsam zusammen, die Möhre rutscht schräg nach unten, eine Pfütze entsteht,
-    # dann richtet er sich mit einem kleinen Schwung wieder auf
-    'figur-schneemann': (36, 48, '<style>.s,.k,.h,.m,.p,.l,.r{animation-duration:14s;animation-timing-function:ease-in-out;animation-iteration-count:infinite}'
-        '.s{animation-name:s}.k{animation-name:k}.h{animation-name:h}.m{animation-name:m}.p{animation-name:p}.l{animation-name:l}.r{animation-name:r}'
-        '@keyframes s{0%,8%{transform:scale(1,1)}58%,72%{transform:scale(1.14,.75)}80%{transform:scale(.96,1.06)}86%,100%{transform:scale(1,1)}}'
-        '@keyframes k{0%,8%{transform:translate(0,0) rotate(0deg)}58%,72%{transform:translate(1.2px,1.8px) rotate(11deg)}80%{transform:translate(0,-.6px) rotate(-3deg)}86%,100%{transform:translate(0,0) rotate(0deg)}}'
-        '@keyframes h{0%,8%{transform:rotate(-9deg)}58%,72%{transform:translate(-1.2px,.8px) rotate(-27deg)}80%{transform:rotate(-3deg)}86%,100%{transform:rotate(-9deg)}}'
-        '@keyframes m{0%,8%{transform:translate(0,0) rotate(0deg)}58%,72%{transform:translate(.6px,2.8px) rotate(42deg)}80%{transform:rotate(-7deg)}86%,100%{transform:translate(0,0) rotate(0deg)}}'
-        '@keyframes p{0%,14%{transform:scale(.3,1);opacity:0}58%,72%{transform:scale(1,1);opacity:.95}84%,100%{transform:scale(.3,1);opacity:0}}'
-        '@keyframes l{0%,8%{transform:rotate(0deg)}58%,72%{transform:rotate(-24deg)}86%,100%{transform:rotate(0deg)}}'
-        '@keyframes r{0%,8%{transform:rotate(0deg)}58%,72%{transform:rotate(24deg)}86%,100%{transform:rotate(0deg)}}' + RUHE + '</style>'
-        + huegel(18, 45, 13)
-        + dreh(18, 45.8, 'p', '<ellipse cx="18" cy="45.8" rx="16.4" ry="2.4" fill="#A9D0F0"/>')
-        + dreh(18, 45, 's',
-               dreh(11.4, 24.6, 'l', '<path d="M11.4,24.6 L5.8,20 M7.8,21.6 L6,23.4 M7.8,21.6 L8.2,19" stroke="#8A5A2B" stroke-width="1.3" stroke-linecap="round" fill="none"/>')
-               + dreh(24.6, 24.6, 'r', '<path d="M24.6,24.6 L30.2,20 M28.2,21.6 L30,23.4 M28.2,21.6 L27.8,19" stroke="#8A5A2B" stroke-width="1.3" stroke-linecap="round" fill="none"/>')
-               + '<circle cx="18" cy="35.6" r="9.6" fill="#fff"/><path d="M24.8,28.8 A9.6,9.6 0 0 1 18,45.2 A11.8,11.8 0 0 0 24.8,28.8 Z" fill="#D5E3F2"/>'
-               + '<circle cx="18" cy="23.8" r="7.2" fill="#fff"/><path d="M23.1,18.7 A7.2,7.2 0 0 1 18,31 A9,9 0 0 0 23.1,18.7 Z" fill="#D5E3F2"/>'
-               + '<circle cx="18" cy="23" r="1.05" fill="#22303F"/><circle cx="18" cy="27" r="1.05" fill="#22303F"/><circle cx="18" cy="34" r="1.15" fill="#22303F"/>'
-               + dreh(18, 18.6, 'k',
-                      '<circle cx="18" cy="13.4" r="5.5" fill="#fff"/><path d="M21.9,9.5 A5.5,5.5 0 0 1 18,18.9 A6.9,6.9 0 0 0 21.9,9.5 Z" fill="#D5E3F2"/>'
-                      '<path d="M12.7,16.8 Q18,19.8 23.3,16.8 L23.6,19.2 Q18,22.4 12.4,19.2 Z" fill="#D63A2F"/><path d="M20.4,19.9 L23,19.2 L24.3,25 L21.8,25.5 Z" fill="#C62828"/>'
-                      '<circle cx="16" cy="12.2" r=".95" fill="#22303F"/><circle cx="20.1" cy="12.2" r=".95" fill="#22303F"/>'
-                      '<circle cx="15.5" cy="15.6" r=".5" fill="#22303F"/><circle cx="16.9" cy="16.4" r=".5" fill="#22303F"/><circle cx="19.2" cy="16.4" r=".5" fill="#22303F"/><circle cx="20.6" cy="15.6" r=".5" fill="#22303F"/>'
-                      + dreh(18, 13.9, 'm', '<path d="M18,12.8 L24.6,14.3 L18,15.1 Z" fill="#F08A24"/>')
-                      + dreh(18, 8.8, 'h', '<rect x="11.6" y="7.7" width="12.8" height="2.2" rx="1.1" fill="#22303F"/><rect x="13.8" y="1.6" width="8.4" height="6.6" rx=".9" fill="#22303F"/><rect x="13.8" y="5.4" width="8.4" height="1.9" fill="#D63A2F"/>')))),
+    # Schneemann aus drei Kugeln: Er schmilzt langsam zu einem Haufen. Die Kugeln sacken ineinander und werden breit,
+    # Augen, Mund, Knöpfe und Möhre rutschen jedes für sich weg, der Hut gleitet zur Seite, eine Pfütze entsteht.
+    # So bleibt er eine Weile liegen, dann richtet er sich mit einem kleinen Schwung wieder auf (kein Sprung am Ende).
+    'figur-schneemann': (36, 48, schneemann()),
 
     'figur-geschenke': (52, 40, huegel(26, 37, 23) + '''
 <rect x="20" y="14" width="13" height="23" fill="#2E8B45"/><rect x="19" y="11" width="15" height="4" rx=".8" fill="#3BA555"/><rect x="25" y="11" width="3" height="26" fill="#F4C542"/>
@@ -178,17 +212,16 @@ FIGUREN = {
 <rect x="38" y="19.6" width="3" height="17.4" fill="#fff"/><rect x="31" y="28.6" width="17" height="2.6" fill="#fff"/>
 <path d="M39.5,19.4 C37,14.6 33,16 34.2,18.4 C35,20 37.8,20 39.5,19.4 Z M39.5,19.4 C42,14.6 46,16 44.8,18.4 C44,20 41.2,20 39.5,19.4 Z" fill="#fff" stroke="#C9D9EA" stroke-width=".5"/>'''),
 
-    # Laterne: Der Schein atmet und zuckt ab und zu, als ginge ein Luftzug durch; anders als die Kerzen am Kranz
-    'figur-laterne': (40, 52, '<style>.g{animation:g 4.6s linear infinite}.f{animation:f 1.3s ease-in-out infinite alternate}.d{animation:d 4.6s linear infinite}'
-        '@keyframes g{0%,100%{opacity:1;transform:scale(1)}9%{opacity:.72;transform:scale(.93)}13%{opacity:1;transform:scale(1.03)}38%{opacity:.94}43%{opacity:.62;transform:scale(.9)}47%{opacity:1;transform:scale(1.02)}71%{opacity:.9}75%{opacity:.76;transform:scale(.95)}80%{opacity:1;transform:scale(1)}}'
-        '@keyframes d{0%,100%{opacity:0}9%{opacity:.2}13%{opacity:0}43%{opacity:.3}47%{opacity:0}75%{opacity:.16}80%{opacity:0}}'
+    # Laterne: Nur die Flamme der Kerze bewegt sich; der Schein um die Laterne steht ruhig auf hellster Stufe
+    # (Patrick 28.11.2026: kein pulsierendes Licht)
+    'figur-laterne': (40, 52, '<style>.f{animation:f 1.3s ease-in-out infinite alternate}'
         '@keyframes f{from{transform:scale(1.06,.9) skewX(-5deg)}to{transform:scale(.92,1.14) skewX(5deg)}}' + RUHE + '</style>'
         '<defs><radialGradient id="l-schein"><stop offset="0" stop-color="#FFD772" stop-opacity=".75"/><stop offset=".5" stop-color="#FFC24A" stop-opacity=".28"/><stop offset="1" stop-color="#FFC24A" stop-opacity="0"/></radialGradient>'
         '<radialGradient id="l-glas" cx=".5" cy=".55" r=".7"><stop offset="0" stop-color="#FFF8DA"/><stop offset="1" stop-color="#F5C24A"/></radialGradient></defs>'
-        + dreh(20, 30, 'g', '<circle cx="20" cy="30" r="20" fill="url(#l-schein)"/>') + huegel(20, 49, 15) + '''
+        '<circle cx="20" cy="30" r="20" fill="url(#l-schein)"/>' + huegel(20, 49, 15) + '''
 <path d="M15.6,9.4 Q20,0.6 24.4,9.4" fill="none" stroke="#D9B13A" stroke-width="1.5" stroke-linecap="round"/>
 <path d="M11.4,15.6 L20,8.4 L28.6,15.6 Z" fill="#B8891F"/><rect x="10.4" y="15" width="19.2" height="2.6" rx="1" fill="#D9B13A"/>
-<rect x="12.6" y="17.6" width="14.8" height="25.4" fill="url(#l-glas)"/><rect class="d" x="12.6" y="17.6" width="14.8" height="25.4" fill="#A85F00" opacity="0"/>
+<rect x="12.6" y="17.6" width="14.8" height="25.4" fill="url(#l-glas)"/>
 <rect x="18.2" y="31" width="3.6" height="12" rx=".8" fill="#FFFDF4"/>'''
         + dreh(20, 30.6, 'f', '<path d="M20,22.4 C22.6,25.8 22.4,29.4 20,30.6 C17.6,29.4 17.4,25.8 20,22.4 Z" fill="#FF9D2E"/><path d="M20,25.4 C21.3,27.2 21.2,29.2 20,29.9 C18.8,29.2 18.7,27.2 20,25.4 Z" fill="#FFE889"/>') + '''
 <path d="M12.6,17.6 V43 M27.4,17.6 V43 M20,17.6 V21" fill="none" stroke="#A87916" stroke-width="1.6"/>

@@ -138,7 +138,7 @@
   function figur(li, name, kopf, eng) {
     if (!li) return;
     var f = neu('img', 'w-figur' + (eng ? ' w-figur-eng' : '')); f.alt = ''; f.width = MASS[name][0]; f.height = MASS[name][1];
-    f.src = BILD + 'figur-' + name + '.svg?v=2';
+    f.src = BILD + 'figur-' + name + '.svg?v=3';
     li.appendChild(f); figuren.push([f, kopf, eng ? 2 : 6]);
   }
   function kacheln() {
@@ -232,7 +232,7 @@
     function ordnen() { kranzPlatz(); platz(); kugelnPlatz(); }
     ordnen();
     if (d.fonts && d.fonts.ready) d.fonts.ready.then(ordnen);
-    if (klang) { var k = d.createElement('script'); k.src = BILD + 'klang.js?v=3'; d.head.appendChild(k); }
+    if (klang) { var k = d.createElement('script'); k.src = BILD + 'klang.js?v=4'; d.head.appendChild(k); }
     var warten;
     window.addEventListener('resize', function () { clearTimeout(warten); warten = setTimeout(function () { leds(kette); ordnen(); }, 150); });
   });

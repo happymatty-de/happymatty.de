@@ -1,6 +1,7 @@
 /* Klang der Weihnachtszeit auf happymatty.de (CLAUDE.md, Abschnitt „Saison“); saison.js lädt diese Datei nach.
    Es erklingt nur, was jemand antippt: Die Lichterkette ist ein Glockenspiel, und auf der Startseite hängt eine
-   Glocke, die Jingle Bells spielt (erst klassisch als Glockenspiel, dann mit Bass, Beat und Synthesizer).
+   Glocke, die Jingle Bells spielt (erst klassisch als Glockenspiel, dann mit Bass, Beat und Synthesizer, nach
+   einem Drop zum Schluss ein ruhiges Klavier).
    Alle Töne entstehen im Browser; nichts wird geladen oder gespeichert.
    Wichtig: Töne werden erst kurz vor ihrem Einsatz angelegt. Hunderte vorbereitete Tongeber überlasten den Ton
    im Browser, dann knarzt es (so geschehen am 28.11.2026 in Safari). Im Drop spielen Bass und Synthesizer deshalb
@@ -11,8 +12,10 @@
   if (!oben || !kette || !A) return;
   var ton = null, haupt = null;
   /* Fassung des Lieds: 1 endet nach dem Kehrreim mit Beat (24 Takte, gut 40 Sekunden);
-     2 hängt einen Aufbau und den Drop an (44 Takte, knapp 80 Sekunden). Gewählt mit ?klang=1 oder ?klang=2. */
-  var FASSUNG = (/[?&]klang=(\d)/.exec(location.search) || [])[1] === '2' ? 2 : 1;
+     2 hängt vier Takte Aufbau und den Drop über den ganzen Kehrreim an (44 Takte, knapp 80 Sekunden);
+     3 ist die Grundfassung: kürzerer Aufbau, der Drop nur über die erste Hälfte, zum Schluss ein ruhiges Klavier
+     und das Glöckchen (gut 70 Sekunden). ?klang=1 und ?klang=2 holen die älteren Fassungen zurück. */
+  var WAHL = (/[?&]klang=(\d)/.exec(location.search) || [])[1], FASSUNG = WAHL === '1' ? 1 : WAHL === '2' ? 2 : 3;
   var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function ausgang(ctx) {                       /* Summe mit sanftem Begrenzer, damit nichts übersteuert */
@@ -76,6 +79,31 @@
   function clap(ctx, ziel, t, laut) { zisch(ctx, ziel, t, 0.15, laut, 'bandpass', 1700); zisch(ctx, ziel, t + 0.012, 0.1, laut * 0.6, 'bandpass', 2300); }
   function trommel(ctx, ziel, t, laut) { zisch(ctx, ziel, t, 0.07, laut, 'bandpass', 1900); zisch(ctx, ziel, t, 0.05, laut * 0.5, 'highpass', 5000); }
   function becken(ctx, ziel, t, laut) { zisch(ctx, ziel, t, 1.3, laut, 'highpass', 5200); }
+
+  /* Klavierklang für den Schluss (Fassung 3), nachgebildet, keine Aufnahme: ein Ton aus zwölf Teiltönen (je höher,
+     desto leiser) auf zwei leicht gegeneinander verstimmten „Saiten“. Der Anschlag ist hell und laut, dann wird der
+     Ton rasch weicher und klingt langsam aus. */
+  function saite(c) {
+    if (!c.hmSaite) {
+      var st = [0, 1, 0.55, 0.3, 0.2, 0.11, 0.08, 0.05, 0.035, 0.022, 0.015, 0.01, 0.007];
+      c.hmSaite = c.createPeriodicWave(new Float32Array(st.length), new Float32Array(st));
+    }
+    return c.hmSaite;
+  }
+  function klavier(c, ziel, f, t, dauer, laut) {
+    var fl = c.createBiquadFilter(), g = c.createGain();
+    fl.type = 'lowpass'; fl.Q.value = 0.5;
+    fl.frequency.setValueAtTime(Math.min(9000, f * 10), t); fl.frequency.exponentialRampToValueAtTime(Math.max(600, f * 2.5), t + 0.45);
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(laut, t + 0.006);
+    g.gain.exponentialRampToValueAtTime(laut * 0.42, t + 0.2); g.gain.exponentialRampToValueAtTime(laut * 0.09, t + dauer * 0.8);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dauer);
+    [-2.5, 2.5].forEach(function (cent) {
+      var o = c.createOscillator(); o.setPeriodicWave(saite(c)); o.frequency.value = f; o.detune.value = cent;
+      o.connect(fl); o.start(t); o.stop(t + dauer + 0.05);
+    });
+    fl.connect(g); g.connect(ziel);
+  }
+  function midi(m) { return 440 * Math.pow(2, (m - 69) / 12); }
 
   /* ---------- Nur für den Drop (Fassung 2) ---------- */
   /* Verzerrer: rundet Spitzen weich ab; Bass und Bassdrum bekommen dadurch Obertöne und klingen auch
@@ -217,6 +245,7 @@
       }
     })(takt);
     if (fassung === 2) ende = drop(dazu);
+    else if (fassung === 3) ende = drop3(dazu);
     else dazu(ERSTE, function (c, z, t) {          /* Schluss: ein Schlag und ein C-Dur-Akkord aus Glocken */
       kick(c, z, t, 0.6); [0, 2, 4, 7].forEach(function (st) { glocke(c, z, hoehe(st), t, 0.16); });
     });
@@ -224,16 +253,37 @@
     return { liste: e, ende: ende };
   }
 
+  /* ---------- Bausteine für Aufbau und Drop ---------- */
+  function wirbel(dazu, ab, bis, schritt, l0, l1) {    /* Trommelwirbel, der lauter wird */
+    var n = Math.round((bis - ab) / schritt), i;
+    for (i = 0; i < n; i++) (function (i) { dazu(ab + i * schritt, function (c, z, t) { trommel(c, z, t, l0 + (l1 - l0) * i / n); }); })(i);
+  }
+  /* Ein Takt des Drops ab Schlag s0 (nr: Nummer des Takts im Kehrreim): stampfende Bassdrum, Clap auf 2 und 4,
+     rollender Bass auf den drei Sechzehnteln zwischen den Schlägen, Hi-Hats (offen auf dem „und“); mit arp dazu das
+     Arpeggio, mit fuell auf dem letzten Schlag ein Wirbel statt der Bassdrum */
+  function takt(dazu, s0, nr, arp, fuell) {
+    var a = AKKORD[FOLGE[nr]], tief = a[0] / 2, s;
+    for (s = 0; s < 4; s++) (function (s) {
+      if (!(fuell && s === 3)) {
+        dazu(s0 + s, function (c, z, t, st) { var w = werk(c, z, st); kickFett(c, w, z, t, 1); pump(w, t); }, { takt: nr * 4 + s });
+        if (s % 2 === 1) dazu(s0 + s, function (c, z, t) { clap(c, z, t, 0.3); zisch(c, z, t, 0.16, 0.09, 'highpass', 3500); });
+      }
+      dazu(s0 + s + 0.25, function (c, z, t, st) { bassTon(werk(c, z, st), tief, t, 0.095, 0.8, 900); hihat(c, z, t, 0.045); });
+      dazu(s0 + s + 0.5, function (c, z, t, st) { bassTon(werk(c, z, st), tief, t, 0.095, 1, 2600); hihat(c, z, t, 0.13, true); });
+      dazu(s0 + s + 0.75, function (c, z, t, st) { bassTon(werk(c, z, st), s % 2 ? tief * 2 : tief, t, 0.095, 0.8, 1500); hihat(c, z, t, 0.045); });
+      if (arp) for (var k = 0; k < 4; k++) (function (k) {
+        var f = a[1][ARP[s * 4 + k]];
+        dazu(s0 + s + k * 0.25, function (c, z, t, st) { synth(c, werk(c, z, st).pumpe, f, t, 0.1, 0.045, 3000, 900, 3, 'square'); });
+      })(k);
+    })(s);
+  }
+
   /* Fassung 2: Nach dem Kehrreim hört das Lied nicht auf. Vier Takte Aufbau über G (die Bassdrum schweigt,
      Glocken laufen nach oben, ein Wirbel wird immer schneller, ein Ton zieht hoch, dann ein halber Schlag Stille),
      danach der Drop: der ganze Kehrreim noch einmal, mit stampfender Bassdrum, rollendem tiefen Bass, offenen
      Hi-Hats und der Melodie eine Oktave tiefer auf dem Synthesizer; die Lichterkette blinkt im Takt. */
   function drop(dazu) {
-    var k, takt, sch;
-    function wirbel(ab, bis, schritt, l0, l1) {
-      var n = Math.round((bis - ab) / schritt), i;
-      for (i = 0; i < n; i++) (function (i) { dazu(ab + i * schritt, function (c, z, t) { trommel(c, z, t, l0 + (l1 - l0) * i / n); }); })(i);
-    }
+    var k, nr, sch;
     /* Takte 25 und 26: Schlussakkord der ersten Runde, dann wird es leise: Glocken zerlegen G7, darunter ein liegender Bass */
     dazu(ERSTE, function (c, z, t) {
       kick(c, z, t, 0.6); becken(c, z, t, 0.14); [0, 2, 4, 7].forEach(function (st) { glocke(c, z, hoehe(st), t, 0.16); });
@@ -247,7 +297,7 @@
     dazu(ERSTE + 4, function (c, z, t) { synth(c, z, 98, t, 1.6, 0.14, 520, 150, 3); });
     for (k = 0; k < 4; k++) (function (k) { dazu(ERSTE + 4 + k, function (c, z, t) { clap(c, z, t, 0.08 + 0.02 * k); }); })(k);
     /* Takte 27 und 28: Der Wirbel wird schneller, die Glocken laufen die Tonleiter hoch, der Bass pocht */
-    wirbel(ERSTE + 8, ERSTE + 12, 0.5, 0.1, 0.18); wirbel(ERSTE + 12, ERSTE + 14, 0.25, 0.16, 0.24); wirbel(ERSTE + 14, DROP - 0.5, 0.125, 0.18, 0.32);
+    wirbel(dazu, ERSTE + 8, ERSTE + 12, 0.5, 0.1, 0.18); wirbel(dazu, ERSTE + 12, ERSTE + 14, 0.25, 0.16, 0.24); wirbel(dazu, ERSTE + 14, DROP - 0.5, 0.125, 0.18, 0.32);
     dazu(ERSTE + 8, function (c, z, t) { zieh(c, z, t, 7.5 * SCHLAG); });
     for (k = 0; k < 15; k++) (function (k) { dazu(ERSTE + 8 + k * 0.5, function (c, z, t) { synth(c, z, 98, t, 0.18, 0.12 + 0.006 * k, 500 + 150 * k, 240, 4); }); })(k);
     for (k = 0; k < 22; k++) (function (k) {
@@ -267,25 +317,8 @@
       }, stufe);
       sch += lang;
     });
-    for (takt = 0; takt < 16; takt++) (function (takt) {
-      var a = AKKORD[FOLGE[takt]], tief = a[0] / 2, s0 = DROP + takt * 4, s;
-      for (s = 0; s < 4; s++) (function (s) {
-        var fuell = takt === 7 && s === 3;         /* letzter Schlag vor der zweiten Hälfte: Wirbel statt Bassdrum */
-        if (!fuell) {
-          dazu(s0 + s, function (c, z, t, st) { var w = werk(c, z, st); kickFett(c, w, z, t, 1); pump(w, t); }, { takt: takt * 4 + s });
-          if (s % 2 === 1) dazu(s0 + s, function (c, z, t) { clap(c, z, t, 0.3); zisch(c, z, t, 0.16, 0.09, 'highpass', 3500); });
-        }
-        /* rollender Bass auf den drei Sechzehnteln zwischen den Schlägen, dazu Hi-Hats (offen auf dem „und“) */
-        dazu(s0 + s + 0.25, function (c, z, t, st) { bassTon(werk(c, z, st), tief, t, 0.095, 0.8, 900); hihat(c, z, t, 0.045); });
-        dazu(s0 + s + 0.5, function (c, z, t, st) { bassTon(werk(c, z, st), tief, t, 0.095, 1, 2600); hihat(c, z, t, 0.13, true); });
-        dazu(s0 + s + 0.75, function (c, z, t, st) { bassTon(werk(c, z, st), s % 2 ? tief * 2 : tief, t, 0.095, 0.8, 1500); hihat(c, z, t, 0.045); });
-        if (takt >= 8) for (var k = 0; k < 4; k++) (function (k) {   /* zweite Hälfte: das Arpeggio kommt dazu */
-          var f = a[1][ARP[s * 4 + k]];
-          dazu(s0 + s + k * 0.25, function (c, z, t, st) { synth(c, werk(c, z, st).pumpe, f, t, 0.1, 0.045, 3000, 900, 3, 'square'); });
-        })(k);
-      })(s);
-    })(takt);
-    wirbel(DROP + 31, DROP + 32, 0.25, 0.2, 0.32);
+    for (nr = 0; nr < 16; nr++) takt(dazu, DROP + nr * 4, nr, nr >= 8, nr === 7);   /* in der zweiten Hälfte mit Arpeggio */
+    wirbel(dazu, DROP + 31, DROP + 32, 0.25, 0.2, 0.32);
     dazu(DROP + 32, function (c, z, t) { becken(c, z, t, 0.18); });
     dazu(DROP + 64, function (c, z, t, s) {        /* Schluss: ein letzter Schlag, Becken, tiefer Bass und der C-Dur-Akkord aus Glocken */
       var w = werk(c, z, s);
@@ -294,6 +327,71 @@
     });
     return DROP + 64;
   }
+
+  /* Fassung 3, die Grundfassung (Patrick 28.11.2026, auf Fassung 2 aufgebaut): Der Aufbau ist kürzer (zehn Schläge,
+     gut vier Sekunden). Der Drop läuft nur einmal durch die erste Hälfte des Kehrreims (acht Takte, in den letzten
+     vier mit Arpeggio) und endet mit einem Schlag. Nach kurzem Atemholen spielt ein Klavier allein, etwas langsamer
+     und zum Ende hin ruhiger werdend, „Jingle bells, jingle bells, jingle all the way“ und schließt mit E, D, C;
+     ganz am Ende erklingt noch einmal der Akkord der Glöckchen als Schlusszeichen. */
+  var DROP3 = 106, KLAVIER = 140;
+  function ort(b) { var x = Math.max(0, b - 12); return KLAVIER + 1.1 * b + 0.03125 * x * x; }   /* Schlag des Klaviers -> Schlag des Lieds */
+  /* rechte Hand: Schlag, Ton (MIDI), Dauer in Schlägen, Stufe für das Licht; linke Hand: Schlag, Ton */
+  var RECHTS = [[0, 76, 1, 2], [1, 76, 1, 2], [2, 76, 2, 2], [4, 76, 1, 2], [5, 76, 1, 2], [6, 76, 2, 2],
+    [8, 76, 1, 2], [9, 79, 1, 4], [10, 72, 1.5, 0], [11.5, 74, 0.5, 1], [12, 76, 2, 2], [14, 74, 2, 1], [16, 72, 4, 0]];
+  var LINKS = [[0, 48], [1, 55], [2, 64], [3, 55], [4, 45], [5, 52], [6, 60], [7, 52], [8, 52], [9, 60], [10, 53], [11, 57],
+    [12, 43], [13, 60], [13, 64], [14, 43], [15, 59], [15, 65], [16, 36], [16, 48], [16.1, 60], [16.2, 64], [16.3, 67]];
+  function drop3(dazu) {
+    var k, nr, sch;
+    /* Aufbau: Schlussakkord der ersten Runde, ein Takt Glocken über G7, dann Wirbel, Lauf nach oben, ein halber Schlag Stille */
+    dazu(ERSTE, function (c, z, t) {
+      kick(c, z, t, 0.6); becken(c, z, t, 0.14); [0, 2, 4, 7].forEach(function (st) { glocke(c, z, hoehe(st), t, 0.16); });
+      steiger(c, z, t, (DROP3 - 0.5 - ERSTE) * SCHLAG); synth(c, z, 98, t, 1.6, 0.13, 420, 150, 3);
+    });
+    for (k = 0; k < 6; k++) (function (k) {
+      var st = [4, 6, 8, 10][k % 4];
+      dazu(ERSTE + 1 + k * 0.5, function (c, z, t) { glocke(c, z, hoehe(st), t, 0.09 + 0.01 * k); }, { p: 0.25 + (k % 4) / 6 });
+    })(k);
+    dazu(ERSTE + 2, function (c, z, t) { clap(c, z, t, 0.09); });
+    dazu(ERSTE + 3, function (c, z, t) { clap(c, z, t, 0.12); });
+    wirbel(dazu, ERSTE + 4, ERSTE + 6, 0.5, 0.1, 0.18); wirbel(dazu, ERSTE + 6, ERSTE + 8, 0.25, 0.16, 0.24); wirbel(dazu, ERSTE + 8, DROP3 - 0.5, 0.125, 0.18, 0.32);
+    dazu(ERSTE + 4, function (c, z, t) { zieh(c, z, t, 5.5 * SCHLAG); });
+    for (k = 0; k < 11; k++) (function (k) { dazu(ERSTE + 4 + k * 0.5, function (c, z, t) { synth(c, z, 98, t, 0.18, 0.12 + 0.008 * k, 500 + 200 * k, 240, 4); }); })(k);
+    for (k = 0; k < 18; k++) (function (k) {
+      var st = k < 4 ? k : k - 3, wann = k < 4 ? ERSTE + 4 + k * 0.5 : ERSTE + 6 + (k - 4) * 0.25;
+      dazu(wann, function (c, z, t) { glocke(c, z, hoehe(st), t, 0.1 + 0.002 * k); }, { p: k / 17 });
+    })(k);
+    /* Der Drop: acht Takte, die erste Hälfte des Kehrreims */
+    dazu(DROP3, function (c, z, t, s) { fall(c, werk(c, z, s), t); becken(c, z, t, 0.2); });
+    sch = DROP3;
+    LIED.slice(0, HALB).forEach(function (n) {
+      var stufe = n[0], lang = n[1], hier = sch;
+      dazu(hier, function (c, z, t, s) {
+        var spaet = hier >= DROP3 + 16;
+        leadTon(werk(c, z, s), hoehe(stufe) / 2, t, lang * SCHLAG * 0.88, LEAD);
+        glocke(c, z, hoehe(stufe), t, spaet ? 0.2 : 0.15);
+        if (spaet) glocke(c, z, hoehe(stufe) * 2, t, 0.045);
+      }, stufe);
+      sch += lang;
+    });
+    for (nr = 0; nr < 8; nr++) takt(dazu, DROP3 + nr * 4, nr, nr >= 4, false);
+    wirbel(dazu, DROP3 + 31, DROP3 + 32, 0.25, 0.14, 0.26);
+    dazu(DROP3 + 32, function (c, z, t, s) {       /* ein letzter Schlag mit Becken und tiefem C; danach schweigen Bass und Synthesizer */
+      var w = werk(c, z, s);
+      kickFett(c, w, z, t, 0.9); becken(c, z, t, 0.18); bassTon(w, 65.41, t, 1.2, 0.8, 1800); leadTon(w, 261.63, t, 1, LEAD * 0.7);
+      s.dauer.forEach(function (o) { try { o.stop(t + 1.5); } catch (e) {} });
+    }, { takt: 32 });
+    /* Das Klavier allein */
+    RECHTS.forEach(function (n) {
+      var dauer = n[0] === 16 ? 3.6 : (ort(n[0] + n[2]) - ort(n[0])) * SCHLAG + 0.9;
+      dazu(ort(n[0]), function (c, z, t) { klavier(c, z, midi(n[1]), t, dauer, KLAVIER_R); }, n[3]);
+    });
+    LINKS.forEach(function (n) {
+      dazu(ort(n[0]), function (c, z, t) { klavier(c, z, midi(n[1]), t, n[0] >= 16 ? 3.6 : 1.5, n[1] < 46 ? KLAVIER_L * 1.3 : KLAVIER_L); });
+    });
+    [0, 2, 4, 7].forEach(function (st) { dazu(ort(18), function (c, z, t) { glocke(c, z, hoehe(st), t, 0.15); }, st); });   /* das Glöckchen zum Schluss */
+    return ort(18) + 3;
+  }
+  var KLAVIER_R = 0.13, KLAVIER_L = 0.06;          /* Lautstärke der rechten und der linken Hand */
 
   /* ---------- Lichterkette und Glocke ---------- */
   var knopf = null, spielt = null;

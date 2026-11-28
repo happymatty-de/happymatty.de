@@ -803,12 +803,18 @@ später denselben Weg nutzen.
     benachteiligt fühlt“; der Tannenbaum wird nicht wiederholt). Über BF1 steht die Überschrift
     „Klassen“, deshalb ist der Schneemann schmal und sitzt ganz am rechten Rand der Kachel.
   - Die Figuren bewegen sich „ganz minimal“ (Patrick 28.11.2026); die Bewegung steht in der
-    SVG-Datei selbst. Der Schneemann aus drei Kugeln schmilzt: Er sackt langsam zusammen, die Möhre
-    rutscht schräg nach unten, eine Pfütze entsteht, dann richtet er sich mit kleinem Schwung
-    wieder auf (Patricks Idee). In der Laterne zuckt der Schein ab und zu wie im Luftzug, anders
-    als die Kerzen am Kranz. Am Tannenbaum funkeln die Lichter abwechselnd, der Stern leuchtet.
-    Das Rotkehlchen trägt eine Bommelmütze, hüpft ab und zu und wippt mit dem Schwanz. Nicht zu
-    viele Einzelheiten: Am Handy sind die Figuren klein.
+    SVG-Datei selbst. Der Schneemann aus drei Kugeln schmilzt langsam zu einem Haufen (Patricks
+    Idee; eine Runde dauert 24 Sekunden): Die Kugeln sacken ineinander und werden breit, Augen,
+    Mund, Knöpfe und Möhre rutschen jedes für sich weg, der Hut gleitet zur Seite, eine Pfütze
+    entsteht. So bleibt er knapp sechs Sekunden liegen, dann richtet er sich mit kleinem Schwung
+    wieder auf, ohne Sprung am Ende (Patrick 28.11.2026: „langsamer schmelzen“, „weiter in sich
+    zusammenfallen“, „nicht mehr alles so richtig an einer Stelle“, „mehr noch so ein Haufen“,
+    liegen lassen „'ne Zeit lang“; das Aufrichten „fand ich cool“). In der Laterne bewegt sich nur
+    die Flamme der Kerze; der Schein um die Laterne steht ruhig auf hellster Stufe (Patrick
+    28.11.2026: kein pulsierendes Licht; vorher zuckte der Schein wie im Luftzug). Am Tannenbaum
+    funkeln die Lichter abwechselnd, der Stern leuchtet. Das Rotkehlchen trägt eine Bommelmütze,
+    hüpft ab und zu und wippt mit dem Schwanz. Nicht zu viele Einzelheiten: Am Handy sind die
+    Figuren klein.
   - Auf der Fußlinie fährt der Weihnachtsmann mit Schlitten und zwei Rentieren langsam von links
     nach rechts durch, immer wieder, die ganze Saison (Patrick: „Der muss ja auch zu Weihnachten
     irgendwann ankommen“); das vordere Rentier hat eine rote Nase, die Rentiere traben, und der
@@ -851,32 +857,48 @@ später denselben Weg nutzen.
   - Nur auf der Startseite hängt in der Mitte der Girlande eine goldene Glocke (Patrick: ein Lied
     nur „vorne auf der ersten Seite“). Antippen spielt einmal den Kehrreim von Jingle Bells (1857,
     gemeinfrei), die Lichter leuchten nach der Tonhöhe mit, noch einmal Antippen hält an.
-  - Das Lied, Fassung 1 (`?klang=1`; Patrick 28.11.2026: Glockenspiel behalten, klassisch anfangen,
-    dann Bass, dann „mehr Beat“, „Electronic“, „Synthesizer“, schneller, „nicht gleich komplett in
-    Techno“): 136 Schläge in der Minute, 24 Takte, gut 40 Sekunden. Takte 1 bis 8 nur Glockenspiel
-    (erste Hälfte des Kehrreims), ab Takt 5 setzt ein weicher Bass ein, am Ende ein kurzer Wirbel; ab
-    Takt 9 der ganze Kehrreim mit Bassdrum auf jedem Schlag, Clap auf 2 und 4, Hi-Hat und
-    Synthesizer-Bass dazwischen; ab Takt 17 dazu ein Arpeggio, schnelle Hi-Hats und eine zweite
-    Synthesizer-Stimme. Patrick dazu: „Das ist cool so. Das macht Spaß.“, „gut komponiert“; diese
-    Fassung bleibt als Rückfall erhalten. Dass das Lied von selbst aufhört, ist gewollt.
-  - Fassung 2 (`?klang=2`; Patrick 28.11.2026: am Ende „noch mal mehr Beat“, „stärker Richtung
-    Techno“, ein „Beat Drop“, „darf ruhig stampfen“, „der fette Bass“; bisher „alles noch relativ
-    helle Töne“): Fassung 1 ohne Schlussakkord, dann vier Takte Aufbau über G (die Bassdrum schweigt,
-    Glocken laufen nach oben, ein Wirbel wird schneller, ein Ton zieht hoch, ein halber Schlag
-    Stille) und der Drop: der ganze Kehrreim noch einmal, 16 Takte, mit stampfender, verzerrter
-    Bassdrum, rollendem tiefen Bass auf den Sechzehnteln, offenen Hi-Hats und der Melodie eine Oktave
-    tiefer auf dem Synthesizer, die Glocken darüber; in der zweiten Hälfte kommt das Arpeggio dazu.
-    Im Drop blinkt jede zweite Lampe der Lichterkette im Takt. 44 Takte, knapp 80 Sekunden; der
-    Drop ist rechnerisch gut doppelt so laut wie der Teil davor.
+  - Das Lied gibt es in drei Fassungen; **Fassung 3 ist die Grundfassung**, die älteren bleiben zum
+    Zurückgreifen erhalten (`?klang=1`, `?klang=2`; Patrick 28.11.2026: „lass sie bitte bestehen“).
+    Alle haben 136 Schläge in der Minute und hören von selbst auf (gewollt).
+  - Fassung 1 (Patrick 28.11.2026: Glockenspiel behalten, klassisch anfangen, dann Bass, dann „mehr
+    Beat“, „Electronic“, „Synthesizer“, schneller, „nicht gleich komplett in Techno“): 24 Takte, gut
+    40 Sekunden. Takte 1 bis 8 nur Glockenspiel (erste Hälfte des Kehrreims), ab Takt 5 setzt ein
+    weicher Bass ein, am Ende ein kurzer Wirbel; ab Takt 9 der ganze Kehrreim mit Bassdrum auf jedem
+    Schlag, Clap auf 2 und 4, Hi-Hat und Synthesizer-Bass dazwischen; ab Takt 17 dazu ein Arpeggio,
+    schnelle Hi-Hats und eine zweite Synthesizer-Stimme. Patrick dazu: „Das ist cool so. Das macht
+    Spaß.“, „gut komponiert“.
+  - Fassung 2 (Patrick 28.11.2026: am Ende „noch mal mehr Beat“, „stärker Richtung Techno“, ein
+    „Beat Drop“, „darf ruhig stampfen“, „der fette Bass“; bisher „alles noch relativ helle Töne“):
+    Fassung 1 ohne Schlussakkord, dann vier Takte Aufbau über G (die Bassdrum schweigt, Glocken
+    laufen nach oben, ein Wirbel wird schneller, ein Ton zieht hoch, ein halber Schlag Stille) und
+    der Drop: der ganze Kehrreim noch einmal, 16 Takte, mit stampfender, verzerrter Bassdrum,
+    rollendem tiefen Bass auf den Sechzehnteln, offenen Hi-Hats und der Melodie eine Oktave tiefer
+    auf dem Synthesizer, die Glocken darüber; in der zweiten Hälfte kommt das Arpeggio dazu. Im Drop
+    blinkt jede zweite Lampe der Lichterkette im Takt. 44 Takte, knapp 80 Sekunden; der Drop ist
+    rechnerisch gut doppelt so laut wie der Teil davor. Patrick dazu: „hast du gut gemacht“,
+    „Fassung 2 können wir schon mal übernehmen als neue Grundversion“.
+  - Fassung 3 (Patrick 28.11.2026 zu Fassung 2: der Aufbau von rund acht Sekunden „so auf 4, 5
+    Sekunden reduzieren“; ab Sekunde 60 wiederholte sich der Beat „vollständig und das würde ich
+    rausnehmen“; stattdessen „etwas Ruhigeres“, „einfacher, sanfter, mit schön Klavier gespieltes
+    Jingle Bells“, die „letzten 10 Sekunden“, ohne weitere Instrumente; ganz am Ende noch einmal
+    das Glöckchen: „Okay, Kling, hier ist dann das Ende“): wie Fassung 2 bis Sekunde 42, dann zehn
+    Schläge Aufbau (gut vier Sekunden), der Drop nur einmal durch die erste Hälfte des Kehrreims
+    (acht Takte, in den letzten vier mit Arpeggio), ein Schlag mit Becken und tiefem C bei Sekunde
+    61. Nach kurzem Atemholen spielt ein Klavier allein, etwas langsamer und zum Ende hin ruhiger
+    werdend, „Jingle bells, jingle bells, jingle all the way“ und schließt mit E, D, C; bei Sekunde
+    71 erklingt der Akkord der Glöckchen als Schlusszeichen. Gut 70 Sekunden. Das Klavier ist
+    nachgebildet (zwölf Teiltöne, zwei leicht verstimmte Saiten), keine Aufnahme; eine Aufnahme
+    wäre eine Datei von einigen hundert Kilobyte mehr.
   - Die Töne entstehen im Browser, nichts wird geladen oder gespeichert. Es erklingt nie etwas von
     selbst, deshalb gibt es keinen Ausschalter.
   - **Töne erst kurz vor ihrem Einsatz anlegen** (`liedAn`, `vor`): In der ersten Fassung waren alle
     Töne des Lieds auf einmal vorbereitet, bis zu 300 Tongeber; das überlastete den Ton in Safari
     und knarzte in den ersten 15 Sekunden (Patrick am Mac, 28.11.2026). Im Drop laufen Bass und
     Synthesizer deshalb auf fünf Tongebern durch und bekommen je Ton nur neue Stellwerte (`werk`).
-  - Bis Patrick eine Fassung gewählt und freigegeben hat, gibt es Klang nur mit `?klang=1` oder
-    `?klang=2` hinter der Adresse; danach wird er in `saison.js` fest eingeschaltet. Beim Bau hört
-    niemand mit; geprüft sind rechnerisch Tonhöhen, Lautstärke und Spitzen je Abschnitt.
+  - Bis Patrick den Klang freigibt, gibt es ihn nur mit `?klang=3` hinter der Adresse (`?klang=1`
+    und `?klang=2` für die älteren Fassungen); danach wird er in `saison.js` fest eingeschaltet,
+    mit Fassung 3. Beim Bau hört niemand mit; geprüft sind rechnerisch Tonhöhen, Lautstärke und
+    Spitzen je Abschnitt.
 
 ## Inhalte auf den öffentlichen Seiten
 
