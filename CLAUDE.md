@@ -813,10 +813,16 @@ später denselben Weg nutzen.
     nach rechts durch, immer wieder, die ganze Saison (Patrick: „Der muss ja auch zu Weihnachten
     irgendwann ankommen“); das vordere Rentier hat eine rote Nase, die Rentiere traben, und der
     Weihnachtsmann bewegt die Zügel im Takt. Steht der Kranz auf der Fußlinie, fährt der Schlitten
-    hinter ihm durch.
+    hinter ihm durch. Er kommt erst sechs Sekunden nach dem Aufruf der Seite hervor und bleibt
+    nach jeder Fahrt 18 Sekunden weg, bevor er wiederkommt (Patrick 28.11.2026: „nochmal so ein
+    kleiner Aha-Moment“, die Seite hat schon viele Elemente).
   - Der Smiley im Logo trägt eine Weihnachtsmütze: über die ganze Breite des Logos, an den Seiten
     etwas herunter, mit Abstand zu den Augen (Patrick 28.11.2026: „so wie halt eine Mütze auf dem
-    Kopf bis zu den Ohren“; die erste, schmale Fassung saß zu nah an den Augen).
+    Kopf bis zu den Ohren“; die erste, schmale Fassung saß zu nah an den Augen). Sie ist oben
+    rundlich, hat ein einziges dunkles Rot und einen weichen Rand wie aus Fell; der Zipfel hängt
+    nach rechts, die Bommel sitzt frei an seinem Ende, mit Abstand zum weißen Rand (Patrick
+    28.11.2026 zur zweiten Fassung: „eckig“, „'n bisschen technisch“, „2 verschiedene Rots“, die
+    Bommel „hängt da zu sehr am weißen Rand“).
 - **Einfach bleiben** (Patrick 28.11.2026: „es soll einfach bleiben“; Claude soll bremsen, wenn
   etwas zu viel, zu aufwendig oder zu fehlerträchtig wird). Kein Schmuck verdeckt Inhalt. Auf dem
   Handy rutscht nichts tiefer: Girlande und Mütze brauchen oben 26 Pixel, dafür rücken die Überschriften
@@ -845,20 +851,32 @@ später denselben Weg nutzen.
   - Nur auf der Startseite hängt in der Mitte der Girlande eine goldene Glocke (Patrick: ein Lied
     nur „vorne auf der ersten Seite“). Antippen spielt einmal den Kehrreim von Jingle Bells (1857,
     gemeinfrei), die Lichter leuchten nach der Tonhöhe mit, noch einmal Antippen hält an.
-  - Das Lied (Patrick 28.11.2026: Glockenspiel behalten, klassisch anfangen, dann Bass, dann „mehr
-    Beat“, „Electronic“, „Synthesizer“, schneller, „nicht gleich komplett in Techno“): 136 Schläge
-    in der Minute, 24 Takte, gut 40 Sekunden. Takte 1 bis 8 nur Glockenspiel (erste Hälfte des
-    Kehrreims), ab Takt 5 setzt ein weicher Bass ein, am Ende ein kurzer Wirbel; ab Takt 9 der ganze
-    Kehrreim mit Bassdrum auf jedem Schlag, Clap auf 2 und 4, Hi-Hat und Synthesizer-Bass dazwischen;
-    ab Takt 17 dazu ein Arpeggio, schnelle Hi-Hats und eine zweite Synthesizer-Stimme.
+  - Das Lied, Fassung 1 (`?klang=1`; Patrick 28.11.2026: Glockenspiel behalten, klassisch anfangen,
+    dann Bass, dann „mehr Beat“, „Electronic“, „Synthesizer“, schneller, „nicht gleich komplett in
+    Techno“): 136 Schläge in der Minute, 24 Takte, gut 40 Sekunden. Takte 1 bis 8 nur Glockenspiel
+    (erste Hälfte des Kehrreims), ab Takt 5 setzt ein weicher Bass ein, am Ende ein kurzer Wirbel; ab
+    Takt 9 der ganze Kehrreim mit Bassdrum auf jedem Schlag, Clap auf 2 und 4, Hi-Hat und
+    Synthesizer-Bass dazwischen; ab Takt 17 dazu ein Arpeggio, schnelle Hi-Hats und eine zweite
+    Synthesizer-Stimme. Patrick dazu: „Das ist cool so. Das macht Spaß.“, „gut komponiert“; diese
+    Fassung bleibt als Rückfall erhalten. Dass das Lied von selbst aufhört, ist gewollt.
+  - Fassung 2 (`?klang=2`; Patrick 28.11.2026: am Ende „noch mal mehr Beat“, „stärker Richtung
+    Techno“, ein „Beat Drop“, „darf ruhig stampfen“, „der fette Bass“; bisher „alles noch relativ
+    helle Töne“): Fassung 1 ohne Schlussakkord, dann vier Takte Aufbau über G (die Bassdrum schweigt,
+    Glocken laufen nach oben, ein Wirbel wird schneller, ein Ton zieht hoch, ein halber Schlag
+    Stille) und der Drop: der ganze Kehrreim noch einmal, 16 Takte, mit stampfender, verzerrter
+    Bassdrum, rollendem tiefen Bass auf den Sechzehnteln, offenen Hi-Hats und der Melodie eine Oktave
+    tiefer auf dem Synthesizer, die Glocken darüber; in der zweiten Hälfte kommt das Arpeggio dazu.
+    Im Drop blinkt jede zweite Lampe der Lichterkette im Takt. 44 Takte, knapp 80 Sekunden; der
+    Drop ist rechnerisch gut doppelt so laut wie der Teil davor.
   - Die Töne entstehen im Browser, nichts wird geladen oder gespeichert. Es erklingt nie etwas von
     selbst, deshalb gibt es keinen Ausschalter.
   - **Töne erst kurz vor ihrem Einsatz anlegen** (`liedAn`, `vor`): In der ersten Fassung waren alle
     Töne des Lieds auf einmal vorbereitet, bis zu 300 Tongeber; das überlastete den Ton in Safari
-    und knarzte in den ersten 15 Sekunden (Patrick am Mac, 28.11.2026).
-  - Bis Patrick das Lied gehört und freigegeben hat, gibt es Klang nur mit `?klang=1` hinter der
-    Adresse; danach wird er in `saison.js` fest eingeschaltet. Beim Bau hört niemand mit; geprüft
-    sind rechnerisch Tonhöhen und Lautstärke.
+    und knarzte in den ersten 15 Sekunden (Patrick am Mac, 28.11.2026). Im Drop laufen Bass und
+    Synthesizer deshalb auf fünf Tongebern durch und bekommen je Ton nur neue Stellwerte (`werk`).
+  - Bis Patrick eine Fassung gewählt und freigegeben hat, gibt es Klang nur mit `?klang=1` oder
+    `?klang=2` hinter der Adresse; danach wird er in `saison.js` fest eingeschaltet. Beim Bau hört
+    niemand mit; geprüft sind rechnerisch Tonhöhen, Lautstärke und Spitzen je Abschnitt.
 
 ## Inhalte auf den öffentlichen Seiten
 

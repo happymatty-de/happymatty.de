@@ -203,16 +203,20 @@
     return neu('div', 'w-bahn', '<div class="w-schlitten">' + t + '</div>');
   }
 
-  /* Der Smiley im Logo trägt eine Weihnachtsmütze: über die ganze Breite, an den Seiten etwas herunter
+  /* Der Smiley im Logo trägt eine Weihnachtsmütze: über die ganze Breite, an den Seiten etwas herunter.
+     Rundlich, ein einziges dunkles Rot, der Rand weich aus kleinen Kreisen wie Fell; der Zipfel hängt nach rechts,
+     die Bommel frei daneben, mit Abstand zum Rand
      (Maße im Bild: Das Logo liegt bei 0 bis 33,6; die Größe steht in saison.css in rem und wächst mit) */
   function muetze() {
-    var rand = 'M-2.4,7.4 C-2.9,2.6 -1.6,0.4 2,0.2 L31.6,0.2 C35.2,0.4 36.5,2.6 36,7.4';
+    var k = [[-1.5, 4.3, 3.2], [-1.9, 7.5, 2.7], [35.1, 4.3, 3.2], [35.5, 7.5, 2.7], [38.1, -6.4, 3.2]], i, weiss = '', schatten = '';
+    for (i = 0; i < 9; i++) k.push([1 + i * 3.95, 0.7 - 1.2 * Math.sin(Math.PI * i / 8), i % 2 ? 3.3 : 2.95]);
+    for (i = 0; i < k.length; i++) {
+      weiss += '<circle cx="' + k[i][0].toFixed(2) + '" cy="' + k[i][1].toFixed(2) + '" r="' + k[i][2] + '"/>';
+      schatten += '<circle cx="' + k[i][0].toFixed(2) + '" cy="' + (k[i][1] + 0.7).toFixed(2) + '" r="' + k[i][2] + '"/>';
+    }
     return neu('span', 'w-muetze', '<svg viewBox="-7.2 -16.4 48.6 28.4">'
-      + '<path d="M-0.6,2.4 C0,-7.6 6.4,-14.6 15.2,-15 C24,-15.4 32,-12 37,-5.6 C33.2,-8 29.6,-7.8 27.6,-5.8 C31,-3.4 33.6,-0.8 34.2,2.4 Z" fill="#D63A2F"/>'
-      + '<path d="M22,-14.4 C28.6,-13.6 33.6,-10.2 37,-5.6 C33.2,-8 29.6,-7.8 27.6,-5.8 C27.2,-9 25.4,-12 22,-14.4 Z" fill="#B3211F"/>'
-      + '<path d="' + rand + '" fill="none" stroke="#C9D9EA" stroke-width="7.6" stroke-linecap="round"/>'
-      + '<path d="' + rand + '" fill="none" stroke="#fff" stroke-width="6.4" stroke-linecap="round"/>'
-      + '<circle cx="37.4" cy="-4.8" r="3.5" fill="#fff" stroke="#C9D9EA" stroke-width=".6"/></svg>');
+      + '<path d="M0.2,2 C-0.6,-6 4,-14.6 12.5,-15.2 C20,-15.7 27.5,-13 32.2,-9.2 C34.4,-7.4 36.4,-6.6 38.2,-6.8 C36.6,-4.4 34.9,-2.6 34,-0.4 L33.8,2 Z" fill="#B3202A"/>'
+      + '<g fill="#CBD8E8">' + schatten + '</g><g fill="#fff">' + weiss + '</g></svg>');
   }
 
   bereit(function () {
@@ -228,7 +232,7 @@
     function ordnen() { kranzPlatz(); platz(); kugelnPlatz(); }
     ordnen();
     if (d.fonts && d.fonts.ready) d.fonts.ready.then(ordnen);
-    if (klang) { var k = d.createElement('script'); k.src = BILD + 'klang.js?v=2'; d.head.appendChild(k); }
+    if (klang) { var k = d.createElement('script'); k.src = BILD + 'klang.js?v=3'; d.head.appendChild(k); }
     var warten;
     window.addEventListener('resize', function () { clearTimeout(warten); warten = setTimeout(function () { leds(kette); ordnen(); }, 150); });
   });

@@ -104,13 +104,15 @@ html.weihnachten .klassen li{position:relative}
 .klassen .w-figur{right:.45rem}
 .klassen .w-figur-eng{right:-6px}
 
-/* ---------- Der Schlitten fährt langsam über die Fußlinie ---------- */
+/* ---------- Der Schlitten fährt langsam über die Fußlinie ----------
+   Er kommt erst 6 Sekunden nach dem Aufruf der Seite hervor (ein kleiner Aha-Moment), fährt 22 Sekunden
+   und bleibt dann 18 Sekunden weg, bevor er wiederkommt. */
 .w-bahn{position:absolute;left:0;right:0;bottom:calc(100% + 1px);height:34px;z-index:1;overflow:hidden;pointer-events:none;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%);
   mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%)}
-.w-schlitten{position:absolute;bottom:-2px;left:-120px;width:116px;height:30px;animation:w-fahrt 26s linear infinite}
+.w-schlitten{position:absolute;bottom:-2px;left:-120px;width:116px;height:30px;animation:w-fahrt 40s linear 6s infinite}
 .w-schlitten svg{display:block;overflow:visible}
-@keyframes w-fahrt{from{left:-120px}84%,to{left:100%}}
+@keyframes w-fahrt{from{left:-120px}55%,to{left:100%}}
 .w-trab{animation:w-trab .52s ease-in-out infinite alternate}
 .w-trab-2{animation-delay:-.26s}
 @keyframes w-trab{from{transform:translateY(0)}to{transform:translateY(-1.3px)}}
@@ -123,7 +125,7 @@ html.weihnachten .klassen li{position:relative}
 /* ---------- Der Smiley im Logo trägt eine Weihnachtsmütze ---------- */
 html.weihnachten .logo{position:relative}
 .w-muetze{position:absolute;left:-.45rem;top:-1.025rem;width:3.0375rem;height:1.775rem;pointer-events:none}
-.w-muetze svg{display:block;width:100%;height:100%}
+.w-muetze svg{display:block;width:100%;height:100%;overflow:visible}
 
 @media (prefers-reduced-motion:reduce){
   .w-schnee,.w-schnee i,.w-leds i,.w-kerze b,.w-kerze u,.w-kugeln,.w-trab,.w-arm,.w-zuegel,.w-glocke svg{animation:none}
