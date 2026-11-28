@@ -797,18 +797,29 @@ später denselben Weg nutzen.
   - Auf der ersten Kachel unter jeder weiteren Überschrift (`themenkopf`) sitzt rechts eine kleine
     Figur: Schneemann, Laterne, Tannenbaum, Geschenke, Rotkehlchen, je Seite in anderer Reihenfolge
     (auf der Startseite der Tannenbaum bei „Training“). Reicht die Überschrift bis unter die
-    Figur, etwa auf einem schmalen Handy, bleibt sie weg. Auf der Startseite sitzen dazu die
-    Laterne auf der Klassen-Kachel BF2 und die Geschenke auf BGY (Patrick 28.11.2026: Die
-    Startseite hatte zu wenig; keine dritte Figur, der Tannenbaum wird nicht wiederholt; über BF1
-    steht die Überschrift „Klassen“).
+    Figur, etwa auf einem schmalen Handy, bleibt sie weg. Auf der Startseite sitzt dazu auf jeder
+    Klassen-Kachel eine Figur: BF1 der Schneemann, BF2 die Laterne, BGY die Geschenke (Patrick
+    28.11.2026: Die Startseite hatte zu wenig, und „Ich will nicht, dass die Klasse BF1 sich da
+    benachteiligt fühlt“; der Tannenbaum wird nicht wiederholt). Über BF1 steht die Überschrift
+    „Klassen“, deshalb ist der Schneemann schmal und sitzt ganz am rechten Rand der Kachel.
+  - Die Figuren bewegen sich „ganz minimal“ (Patrick 28.11.2026); die Bewegung steht in der
+    SVG-Datei selbst. Der Schneemann aus drei Kugeln schmilzt: Er sackt langsam zusammen, die Möhre
+    rutscht schräg nach unten, eine Pfütze entsteht, dann richtet er sich mit kleinem Schwung
+    wieder auf (Patricks Idee). In der Laterne zuckt der Schein ab und zu wie im Luftzug, anders
+    als die Kerzen am Kranz. Am Tannenbaum funkeln die Lichter abwechselnd, der Stern leuchtet.
+    Das Rotkehlchen trägt eine Bommelmütze, hüpft ab und zu und wippt mit dem Schwanz. Nicht zu
+    viele Einzelheiten: Am Handy sind die Figuren klein.
   - Auf der Fußlinie fährt der Weihnachtsmann mit Schlitten und zwei Rentieren langsam von links
     nach rechts durch, immer wieder, die ganze Saison (Patrick: „Der muss ja auch zu Weihnachten
-    irgendwann ankommen“); das vordere Rentier hat eine rote Nase. Steht der Kranz auf der
-    Fußlinie, fährt der Schlitten hinter ihm durch.
-  - Der Smiley im Logo trägt eine Weihnachtsmütze.
+    irgendwann ankommen“); das vordere Rentier hat eine rote Nase, die Rentiere traben, und der
+    Weihnachtsmann bewegt die Zügel im Takt. Steht der Kranz auf der Fußlinie, fährt der Schlitten
+    hinter ihm durch.
+  - Der Smiley im Logo trägt eine Weihnachtsmütze: über die ganze Breite des Logos, an den Seiten
+    etwas herunter, mit Abstand zu den Augen (Patrick 28.11.2026: „so wie halt eine Mütze auf dem
+    Kopf bis zu den Ohren“; die erste, schmale Fassung saß zu nah an den Augen).
 - **Einfach bleiben** (Patrick 28.11.2026: „es soll einfach bleiben“; Claude soll bremsen, wenn
   etwas zu viel, zu aufwendig oder zu fehlerträchtig wird). Kein Schmuck verdeckt Inhalt. Auf dem
-  Handy rutscht nichts tiefer: Die Girlande braucht oben 22 Pixel, dafür rücken die Überschriften
+  Handy rutscht nichts tiefer: Girlande und Mütze brauchen oben 26 Pixel, dafür rücken die Überschriften
   in der Saison etwas zusammen (auf der Startseite bleibt „Interaktive Trainings“ sichtbar wie
   vorher). Verworfen: Lichterketten an den Seiten und am Fuß (am Handy kein Rand, unten doppelt),
   Klang beim Antippen einer Kachel (die Seite wechselt sofort), ein Ausschalter für Ton (er müsste
@@ -824,18 +835,30 @@ später denselben Weg nutzen.
 - **Prüfen an einem anderen Tag:** `?datum=2026-12-20` hinter der Adresse zeigt die Seite wie an
   diesem Tag (vier Kerzen), `?datum=2026-07-01` wie außerhalb der Saison. Das Datum wandert über
   die Links der Seite mit.
-- **Klang** (eingebaut 28.11.2026, **noch nicht für alle eingeschaltet**): Die Lichterkette ist ein
-  Glockenspiel: Wer sie antippt, hört einen Ton der C-Dur-Tonleiter, von links nach rechts
-  aufsteigend, und die Lichter an dieser Stelle leuchten auf. Nur auf der Startseite hängt in der
-  Mitte der Girlande eine goldene Glocke: Antippen spielt einmal den Kehrreim von Jingle Bells
-  (1857, gemeinfrei), die Lichter leuchten im Takt mit, noch einmal Antippen hält an (Patrick: ein
-  Lied nur „vorne auf der ersten Seite“). Die Töne entstehen im Browser, nichts wird geladen oder
-  gespeichert. Es erklingt nie etwas von selbst, deshalb gibt es keinen Ausschalter.
-  Drei Fassungen zum Probehören: `?klang=1` (Glockenspiel pur), `?klang=2` (Spieluhr mit Bass),
-  `?klang=3` (weich und ruhiger, mit Bass) hinter der Adresse. Bis Patrick eine gewählt hat, gibt
-  es Klang nur mit dieser Angabe; danach wird die gewählte Fassung in `saison.js` fest
-  eingeschaltet. Beim Bau hat niemand die Fassungen gehört; geprüft sind rechnerisch Tonhöhen und
-  Lautstärke.
+- **Klang** (eingebaut 28.11.2026, **noch nicht für alle eingeschaltet**), in
+  `stil/weihnachten/klang.js`, das `saison.js` nachlädt:
+  - Die Lichterkette ist ein Glockenspiel: Wer sie antippt, hört einen Ton der C-Dur-Tonleiter, von
+    links nach rechts aufsteigend, und die Lichter an dieser Stelle leuchten auf. Mit der Maus
+    genügt es, über die Lichter zu streichen (jede neue Stelle klingt); wer nur zur Leiste des
+    Browsers hochfährt, löst nichts aus. Vor dem ersten Klick auf die Seite lässt der Browser
+    keinen Ton zu.
+  - Nur auf der Startseite hängt in der Mitte der Girlande eine goldene Glocke (Patrick: ein Lied
+    nur „vorne auf der ersten Seite“). Antippen spielt einmal den Kehrreim von Jingle Bells (1857,
+    gemeinfrei), die Lichter leuchten nach der Tonhöhe mit, noch einmal Antippen hält an.
+  - Das Lied (Patrick 28.11.2026: Glockenspiel behalten, klassisch anfangen, dann Bass, dann „mehr
+    Beat“, „Electronic“, „Synthesizer“, schneller, „nicht gleich komplett in Techno“): 136 Schläge
+    in der Minute, 24 Takte, gut 40 Sekunden. Takte 1 bis 8 nur Glockenspiel (erste Hälfte des
+    Kehrreims), ab Takt 5 setzt ein weicher Bass ein, am Ende ein kurzer Wirbel; ab Takt 9 der ganze
+    Kehrreim mit Bassdrum auf jedem Schlag, Clap auf 2 und 4, Hi-Hat und Synthesizer-Bass dazwischen;
+    ab Takt 17 dazu ein Arpeggio, schnelle Hi-Hats und eine zweite Synthesizer-Stimme.
+  - Die Töne entstehen im Browser, nichts wird geladen oder gespeichert. Es erklingt nie etwas von
+    selbst, deshalb gibt es keinen Ausschalter.
+  - **Töne erst kurz vor ihrem Einsatz anlegen** (`liedAn`, `vor`): In der ersten Fassung waren alle
+    Töne des Lieds auf einmal vorbereitet, bis zu 300 Tongeber; das überlastete den Ton in Safari
+    und knarzte in den ersten 15 Sekunden (Patrick am Mac, 28.11.2026).
+  - Bis Patrick das Lied gehört und freigegeben hat, gibt es Klang nur mit `?klang=1` hinter der
+    Adresse; danach wird er in `saison.js` fest eingeschaltet. Beim Bau hört niemand mit; geprüft
+    sind rechnerisch Tonhöhen und Lautstärke.
 
 ## Inhalte auf den öffentlichen Seiten
 
