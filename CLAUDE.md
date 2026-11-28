@@ -824,9 +824,18 @@ später denselben Weg nutzen.
 - **Prüfen an einem anderen Tag:** `?datum=2026-12-20` hinter der Adresse zeigt die Seite wie an
   diesem Tag (vier Kerzen), `?datum=2026-07-01` wie außerhalb der Saison. Das Datum wandert über
   die Links der Seite mit.
-- **Noch geplant** (Stand 28.11.2026, mit Patrick besprochen): die Lichterkette als Glockenspiel
-  und Jingle Bells nur auf der Startseite. Ton erklingt nie von selbst, nur wenn jemand etwas
-  antippt.
+- **Klang** (eingebaut 28.11.2026, **noch nicht für alle eingeschaltet**): Die Lichterkette ist ein
+  Glockenspiel: Wer sie antippt, hört einen Ton der C-Dur-Tonleiter, von links nach rechts
+  aufsteigend, und die Lichter an dieser Stelle leuchten auf. Nur auf der Startseite hängt in der
+  Mitte der Girlande eine goldene Glocke: Antippen spielt einmal den Kehrreim von Jingle Bells
+  (1857, gemeinfrei), die Lichter leuchten im Takt mit, noch einmal Antippen hält an (Patrick: ein
+  Lied nur „vorne auf der ersten Seite“). Die Töne entstehen im Browser, nichts wird geladen oder
+  gespeichert. Es erklingt nie etwas von selbst, deshalb gibt es keinen Ausschalter.
+  Drei Fassungen zum Probehören: `?klang=1` (Glockenspiel pur), `?klang=2` (Spieluhr mit Bass),
+  `?klang=3` (weich und ruhiger, mit Bass) hinter der Adresse. Bis Patrick eine gewählt hat, gibt
+  es Klang nur mit dieser Angabe; danach wird die gewählte Fassung in `saison.js` fest
+  eingeschaltet. Beim Bau hat niemand die Fassungen gehört; geprüft sind rechnerisch Tonhöhen und
+  Lautstärke.
 
 ## Inhalte auf den öffentlichen Seiten
 

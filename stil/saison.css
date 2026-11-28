@@ -53,6 +53,17 @@ html.weihnachten .themenkopf{margin-top:2rem}
 @keyframes w-funkeln{0%,100%{opacity:.5;transform:scale(.8)}45%{opacity:1;transform:scale(1.2)}62%{opacity:.8;transform:scale(1)}}
 @keyframes w-blitzen{0%,68%,100%{opacity:.65;transform:scale(.9)}74%{opacity:1;transform:scale(1.9)}80%{opacity:.3;transform:scale(.8)}87%{opacity:1;transform:scale(1.5)}}
 
+/* Klang (saison.js): Die Lichterkette ist ein Glockenspiel, eine angetippte Zone leuchtet auf;
+   auf der Startseite hängt in der Mitte eine Glocke, die Jingle Bells spielt */
+.w-klang .w-leds{pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.w-leds i.w-an{animation:none;opacity:1;transform:scale(2.6);box-shadow:0 0 5px 2px rgba(255,238,175,1),0 0 16px 7px rgba(255,200,100,.7)}
+.w-glocke{position:absolute;left:50%;top:6px;z-index:3;width:44px;height:44px;margin-left:-22px;padding:0;border:0;background:none;
+  pointer-events:auto;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.w-glocke svg{display:block;margin:6px auto 0;transform-origin:50% 0;animation:w-laeuten 3.2s ease-in-out infinite alternate}
+.w-glocke.w-laeutet svg{animation-duration:.45s}
+.w-glocke:focus-visible{outline:2px solid #FFD772;outline-offset:2px;border-radius:8px}
+@keyframes w-laeuten{from{transform:rotate(-7deg)}to{transform:rotate(7deg)}}
+
 /* Adventskranz: steht rechts auf der Linie der Kopfzeile, sonst rechts auf der Fußlinie (saison.js, kranzPlatz).
    Ab jedem Adventssonntag brennt eine Kerze mehr, und sie brennen langsam herunter. */
 html.weihnachten .kopf,html.weihnachten footer{position:relative}
@@ -109,11 +120,11 @@ html.weihnachten .logo{position:relative}
 .w-muetze svg{display:block}
 
 @media (prefers-reduced-motion:reduce){
-  .w-schnee,.w-schnee i,.w-leds i,.w-kerze b,.w-kerze u,.w-kugeln,.w-trab{animation:none}
+  .w-schnee,.w-schnee i,.w-leds i,.w-kerze b,.w-kerze u,.w-kugeln,.w-trab,.w-glocke svg{animation:none}
   .w-schlitten{animation:none;left:56%}
 }
 
 }
 
 /* Im Druck bleibt alles wie außerhalb der Saison */
-@media print{.w-himmel,.w-oben,.w-schneedecke,.w-kugeln,.w-figur,.w-kranz,.w-bahn,.w-muetze{display:none}}
+@media print{.w-himmel,.w-oben,.w-glocke,.w-schneedecke,.w-kugeln,.w-figur,.w-kranz,.w-bahn,.w-muetze{display:none}}
