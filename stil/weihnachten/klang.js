@@ -2,7 +2,8 @@
    Es erklingt nur, was jemand antippt: Die Lichterkette ist ein Glockenspiel, und auf der Startseite hängt eine
    Glocke, die Jingle Bells spielt (erst klassisch als Glockenspiel, dann mit Bass, Beat und Synthesizer, nach
    einem Drop zum Schluss ein ruhiges Klavier).
-   Alle Töne entstehen im Browser; nichts wird geladen oder gespeichert.
+   Die Töne entstehen im Browser; nur die Klaviertöne des Schlusses sind Aufnahmen und liegen im Ordner klavier/
+   auf dem eigenen Server. Nichts wird gespeichert, nichts von fremden Servern geladen.
    Wichtig: Töne werden erst kurz vor ihrem Einsatz angelegt. Hunderte vorbereitete Tongeber überlasten den Ton
    im Browser, dann knarzt es (so geschehen am 28.11.2026 in Safari). Im Drop spielen Bass und Synthesizer deshalb
    auf wenigen Tongebern, die durchlaufen und je Ton nur neue Stellwerte bekommen. */
@@ -15,10 +16,11 @@
      2 hängt vier Takte Aufbau und den Drop über den ganzen Kehrreim an (44 Takte, knapp 80 Sekunden);
      3 hat einen kürzeren Aufbau, den Drop nur über die erste Hälfte, einen Schlussschlag und danach ein ruhiges
      Klavier (nachgebildet) mit Glöckchen (gut 70 Sekunden);
-     4 ist die Grundfassung: wie 3, aber der Beat geht ohne Schlussschlag direkt in ein reines Klavier über
-     (berechnete Töne), und nach dem Glöckchen kommt ein tiefer Schlussakkord (gut 70 Sekunden).
-     ?klang=1, ?klang=2 und ?klang=3 holen die älteren Fassungen zurück. */
-  var WAHL = (/[?&]klang=(\d)/.exec(location.search) || [])[1], FASSUNG = WAHL === '1' ? 1 : WAHL === '2' ? 2 : WAHL === '3' ? 3 : 4;
+     4 ist wie 3, aber der Beat geht ohne Schlussschlag direkt in ein reines Klavier über (berechnete Töne), und
+     nach dem Glöckchen kommt ein tiefer Schlussakkord (gut 70 Sekunden);
+     5 ist die Grundfassung: wie 4, das Klavier aber aus Aufnahmen eines echten Flügels.
+     ?klang=1 bis ?klang=4 holen die älteren Fassungen zurück. */
+  var WAHL = (/[?&]klang=(\d)/.exec(location.search) || [])[1], FASSUNG = WAHL > 0 && WAHL < 5 ? +WAHL : 5;
   var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function ausgang(ctx) {                       /* Summe mit sanftem Begrenzer, damit nichts übersteuert */
@@ -147,6 +149,38 @@
     q.buffer = fluegel(c, m);
     g.gain.setValueAtTime(laut, t); g.gain.setValueAtTime(laut, t + dauer - 0.3); g.gain.linearRampToValueAtTime(0.0001, t + dauer);
     q.connect(g); g.connect(ziel); q.start(t); q.stop(t + dauer + 0.02);
+  }
+  /* Klavier aus Aufnahmen (Fassung 5): Töne eines echten Flügels, „Salamander Grand Piano V3“ von Alexander Holm,
+     CC BY 3.0 (Quelle und Änderungen in klavier/QUELLE.txt, Namensnennung im Impressum). 13 Töne im Abstand kleiner
+     Terzen liegen als MP3 auf dem eigenen Server; die Töne dazwischen entstehen, indem der Nachbarton einen Halbton
+     schneller oder langsamer läuft. Geladen wird erst, wenn jemand die Glocke antippt. Fehlt eine Aufnahme (kein
+     Netz, alter Browser), spielt an ihrer Stelle der berechnete Ton (fluegel). */
+  var AUFNAHME = { 36: ['C2', 0], 43: ['Fs2', 1], 45: ['A2', 0], 48: ['C3', 0], 52: ['Ds3', 1], 53: ['Fs3', -1], 55: ['Fs3', 1], 57: ['A3', 0],
+    59: ['C4', -1], 60: ['C4', 0], 64: ['Ds4', 1], 65: ['Fs4', -1], 72: ['C5', 0], 74: ['Ds5', -1], 76: ['Ds5', 1], 79: ['Fs5', 1] };
+  var aufnahmen = {}, laedt = false;
+  function ladeKlavier(c) {
+    if (laedt || !window.fetch) return;
+    laedt = true;
+    var namen = {}, m;
+    for (m in AUFNAHME) namen[AUFNAHME[m][0]] = 1;
+    Object.keys(namen).forEach(function (name) {
+      fetch('/stil/weihnachten/klavier/' + name + '.mp3').then(function (r) { if (!r.ok) throw 0; return r.arrayBuffer(); }).then(function (daten) {
+        c.decodeAudioData(daten, function (puffer) {
+          var x = puffer.getChannelData(0), i = 0, n = Math.min(x.length, 4000);
+          while (i < n && Math.abs(x[i]) < 0.004) i++;          /* die Stille überspringen, die das MP3-Format vorn anfügt */
+          aufnahmen[name] = { puffer: puffer, ab: Math.max(0, i - 40) / puffer.sampleRate };
+        }, function () {});
+      }).catch(function () {});
+    });
+  }
+  function klavierTon(c, ziel, m, t, dauer, laut) {
+    var a = AUFNAHME[m], auf = a && aufnahmen[a[0]];
+    if (!auf) { fluegelTon(c, ziel, m, t, dauer, laut * 0.4); return; }
+    var q = c.createBufferSource(), g = c.createGain(), tempo = Math.pow(2, a[1] / 12);
+    dauer = Math.min(dauer, (auf.puffer.duration - auf.ab) / tempo - 0.02);
+    q.buffer = auf.puffer; q.playbackRate.value = tempo;
+    g.gain.setValueAtTime(laut, t); g.gain.setValueAtTime(laut, t + dauer - 0.35); g.gain.linearRampToValueAtTime(0.0001, t + dauer);
+    q.connect(g); g.connect(ziel); q.start(t, auf.ab); q.stop(t + dauer + 0.02);
   }
 
   /* ---------- Nur für den Drop (Fassung 2) ---------- */
@@ -291,6 +325,7 @@
     if (fassung === 2) ende = drop(dazu);
     else if (fassung === 3) ende = drop3(dazu);
     else if (fassung === 4) ende = drop4(dazu);
+    else if (fassung === 5) ende = drop5(dazu);
     else dazu(ERSTE, function (c, z, t) {          /* Schluss: ein Schlag und ein C-Dur-Akkord aus Glocken */
       kick(c, z, t, 0.6); [0, 2, 4, 7].forEach(function (st) { glocke(c, z, hoehe(st), t, 0.16); });
     });
@@ -473,6 +508,24 @@
     return ort4(19.5) + 4;
   }
 
+  /* Fassung 5, die Grundfassung (Patrick 28.11.2026 zu Fassung 4: das Klavier klinge „immer noch ziemlich künstlich“
+     und „ein bisschen verzerrt“; mit echten Klaviertönen werde es „noch ein bisschen klarer und ruhiger“): alles wie
+     Fassung 4, aber das Klavier spielt Aufnahmen eines echten Flügels (klavierTon) und geht am Begrenzer vorbei
+     direkt zum Lautsprecher (zustand.rein), damit nichts mehr am Klang zieht. */
+  var AUFN_R = 0.5, AUFN_L = 0.3, AUFN_S = 0.36;   /* Lautstärke: rechte Hand, linke Hand, Schlussakkord */
+  function drop5(dazu) {
+    grund(dazu);
+    dazu(KLAVIER4, function (c, z, t, s) { s.dauer.forEach(function (o) { try { o.stop(t + 0.2); } catch (e) {} }); });
+    RECHTS.forEach(function (n) {
+      var dauer = n[0] === 16 ? 3.5 : (ort4(n[0] + n[2]) - ort4(n[0])) * SCHLAG + 1.4;
+      dazu(ort4(n[0]), function (c, z, t, s) { klavierTon(c, s.rein || z, n[1], t, dauer, AUFN_R); }, n[3]);
+    });
+    LINKS4.forEach(function (n) { dazu(ort4(n[0]), function (c, z, t, s) { klavierTon(c, s.rein || z, n[1], t, n[0] >= 16 ? 3.5 : 2.6, AUFN_L); }); });
+    [0, 2, 4, 7].forEach(function (st) { dazu(ort4(18), function (c, z, t) { glocke(c, z, hoehe(st), t, 0.14); }, st); });
+    SCHLUSS4.forEach(function (m, i) { dazu(ort4(19.5) + i * 0.09, function (c, z, t, s) { klavierTon(c, s.rein || z, m, t, 3.5, AUFN_S); }); });
+    return ort4(19.5) + 4;
+  }
+
   /* ---------- Lichterkette und Glocke ---------- */
   var knopf = null, spielt = null;
   function zonen() { return Math.max(8, Math.min(15, Math.floor(kette.clientWidth / 44))); }
@@ -499,17 +552,18 @@
     if (!spielt) return;
     clearInterval(spielt.takt);
     for (var i = 0; i < spielt.uhren.length; i++) clearTimeout(spielt.uhren[i]);
-    var tor = spielt.tor, dauer = spielt.zustand.dauer; spielt = null;
-    try { tor.gain.setTargetAtTime(0, ton.currentTime, 0.04); } catch (e) {}
+    var tor = spielt.tor, dauer = spielt.zustand.dauer, rein = spielt.zustand.rein; spielt = null;
+    try { tor.gain.setTargetAtTime(0, ton.currentTime, 0.04); rein.gain.setTargetAtTime(0, ton.currentTime, 0.04); } catch (e) {}
     setTimeout(function () {
-      try { tor.disconnect(); } catch (e) {}
+      try { tor.disconnect(); rein.disconnect(); } catch (e) {}
       dauer.forEach(function (o) { try { o.stop(); } catch (e) {} });
     }, 600);
     if (knopf) { knopf.classList.remove('w-laeutet'); knopf.setAttribute('aria-label', 'Jingle Bells abspielen'); }
   }
   function liedAn() {
     var ctx = audio(), tor = ctx.createGain(); tor.connect(haupt);
-    var plan = ablauf(FASSUNG), e = plan.liste, t0 = ctx.currentTime + 0.12, i = 0, uhren = [], zustand = { dauer: [] }, takt;
+    var rein = ctx.createGain(); rein.connect(ctx.destination);                /* am Begrenzer vorbei: für das Klavier aus Aufnahmen */
+    var plan = ablauf(FASSUNG), e = plan.liste, t0 = ctx.currentTime + 0.12, i = 0, uhren = [], zustand = { dauer: [], rein: rein }, takt;
     function vor() {                               /* legt nur an, was in der nächsten Drittelsekunde erklingt */
       var bis = ctx.currentTime + (d.hidden ? 1.6 : 0.35);
       while (i < e.length && t0 + e[i][0] * SCHLAG < bis) {
@@ -523,6 +577,7 @@
     takt = setInterval(vor, 60);
     spielt = { tor: tor, takt: takt, uhren: uhren, zustand: zustand };
     vor();
+    if (FASSUNG === 5) ladeKlavier(ctx);                        /* die Aufnahmen des Flügels holen (einmal) */
     if (FASSUNG === 4) toene4().forEach(function (m, nr) {      /* die Klaviertöne nach und nach vorausberechnen */
       uhren.push(setTimeout(function () { fluegel(ctx, m); }, 1500 + nr * 280));
     });

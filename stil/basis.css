@@ -60,6 +60,17 @@ body{
 .logo{display:flex;width:fit-content;align-items:center;gap:.5rem;margin:0 0 .6rem;color:var(--text);text-decoration:none}
 .logo img{display:block;width:2.1rem;height:2.1rem;border-radius:22%}
 .logo span{font-weight:700;font-size:1.05rem}
+/* Der Smiley zwinkert (Entscheidung 28.11.2026, auf Dauer und auf jeder Seite des Gerüsts): gut 28 Sekunden nach dem
+   Aufruf der Seite und dann alle 40 Sekunden schließt er für eine Viertelsekunde das rechte Auge. Ein Fleck im Blau
+   des Symbols deckt das Auge ab, darüber liegt ein kleiner Bogen (Maße wie in _werkzeuge/symbol.svg, 0 bis 100);
+   das Bild des Symbols bleibt unverändert. Wer am Gerät Bewegung reduziert hat, sieht kein Zwinkern. */
+.logo{position:relative}
+.logo::after{content:"";position:absolute;left:0;top:0;width:2.1rem;height:2.1rem;opacity:0;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cellipse cx='57.2' cy='28.7' rx='8.6' ry='11' transform='rotate(-8 57.2 28.7)' fill='%230072B2'/%3E%3Cpath d='M51,32 Q56.4,23.4 63.6,28.2' fill='none' stroke='%23fff' stroke-width='4.4' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+  animation:zwinkern 40s linear 6s infinite}
+@keyframes zwinkern{0%,56.3%{opacity:0}56.5%,57.2%{opacity:1}57.4%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.logo::after{animation:none}}
+@media print{.logo::after{display:none}}
 /* Link eine Ebene höher: rechts in der Zeile des Logos, spart auf dem Handy eine Zeile
    (Entscheidung 11.11.2026). Ist er zu lang, bricht er rechtsbündig neben dem Logo um. */
 .kopfleiste{display:flex;align-items:center;justify-content:space-between;gap:.8rem;margin:0 0 .6rem}

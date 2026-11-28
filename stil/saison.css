@@ -134,18 +134,15 @@ html.weihnachten .klassen li{position:relative}
 html.weihnachten .logo{position:relative}
 .w-muetze{position:absolute;left:-.45rem;top:-1.025rem;width:3.0375rem;height:1.775rem;pointer-events:none}
 .w-muetze svg{display:block;width:100%;height:100%;overflow:visible}
-/* … und zwinkert kurz mit dem rechten Auge, gleich nachdem der Schlitten aus dem Bild gefahren ist
-   (gleiche Dauer und gleicher Beginn wie w-fahrt: Der Schlitten ist bei 55 % draußen) */
-.w-zwinker{position:absolute;left:0;top:0;width:2.1rem;height:2.1rem;opacity:0;pointer-events:none;animation:w-zwinker 40s linear 6s infinite}
-.w-zwinker svg{display:block;width:100%;height:100%}
-@keyframes w-zwinker{0%,56.3%{opacity:0}56.5%,57.2%{opacity:1}57.4%,100%{opacity:0}}
+/* Das Zwinkern des Smileys steht seit 28.11.2026 in basis.css (dauerhaft); es fällt mit Absicht auf den Moment,
+   in dem der Schlitten gerade aus dem Bild gefahren ist (gleiche Dauer und gleicher Beginn wie w-fahrt). */
 
 @media (prefers-reduced-motion:reduce){
-  .w-schnee,.w-schnee i,.w-leds i,.w-kerze b,.w-kerze u,.w-kugeln,.w-trab,.w-arm,.w-zuegel,.w-glocke svg,.w-zwinker{animation:none}
+  .w-schnee,.w-schnee i,.w-leds i,.w-kerze b,.w-kerze u,.w-kugeln,.w-trab,.w-arm,.w-zuegel,.w-glocke svg{animation:none}
   .w-schlitten{animation:none;left:56%}
 }
 
 }
 
 /* Im Druck bleibt alles wie außerhalb der Saison */
-@media print{.w-himmel,.w-oben,.w-glocke,.w-schneedecke,.w-kugeln,.w-figur,.w-kranz,.w-bahn,.w-boden,.w-muetze,.w-zwinker{display:none}}
+@media print{.w-himmel,.w-oben,.w-glocke,.w-schneedecke,.w-kugeln,.w-figur,.w-kranz,.w-bahn,.w-boden,.w-muetze{display:none}}

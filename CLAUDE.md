@@ -665,6 +665,15 @@ Skript; eine Änderung daran macht in der Regel die HappyMatty Werkstatt und pr�
   - Übersicht einer Themeneinheit, Probeklassenarbeit, Klassenarbeit: zurück zum Thema („← Lineare Funktionen“).
   - Datenschutzerklärung: nur das Logo; die Kopfzeile bleibt leer (nur die blaue Linie), weil der
     Name schon im Logo steht.
+- **Der Smiley zwinkert** (Entscheidung Patrick 28.11.2026, entstanden in der Weihnachtszeit: „Ist
+  cool, das lassen wir generell für die Webseite bestehen“, „Das übernehmen wir dann in die
+  eigentliche Seite“): Auf jeder Seite des Gerüsts schließt der Smiley im Logo gut 28 Sekunden nach
+  dem Aufruf und dann alle 40 Sekunden für eine Viertelsekunde das rechte Auge. Ein Fleck im Blau
+  des Symbols deckt das Auge ab, darüber liegt ein kleiner Bogen (`.logo::after` in `basis.css`,
+  Maße wie in `_werkzeuge/symbol.svg`); das Bild des Symbols bleibt unverändert. Wer am Gerät
+  Bewegung reduziert hat, sieht kein Zwinkern; im Druck erscheint es nicht. Die interaktiven
+  Seiten laden `basis.css` nicht und zwinkern deshalb nicht. Ändert sich das Symbol, ziehen Fleck
+  und Bogen nach.
 - Auf den Einstiegsseiten der Bildungsgänge steht in der Kopfzeile der volle Name (grau),
   die Überschrift ist das Kürzel („BF2“). Kacheln der Bildungsgänge auf der Startseite in
   Akzentlila: Rand oben, Kürzel fett, Füllung `#EBE5EF`.
@@ -838,11 +847,10 @@ später denselben Weg nutzen.
     nach rechts, die Bommel sitzt frei an seinem Ende, mit Abstand zum weißen Rand (Patrick
     28.11.2026 zur zweiten Fassung: „eckig“, „'n bisschen technisch“, „2 verschiedene Rots“, die
     Bommel „hängt da zu sehr am weißen Rand“).
-  - Der Smiley zwinkert: Gleich nachdem der Schlitten aus dem Bild gefahren ist, also alle 40
-    Sekunden, schließt er für gut eine Viertelsekunde das rechte Auge (Patricks Idee 28.11.2026,
-    mit Vorbehalt: Das Logo soll erkennbar bleiben). Ein Fleck im Blau des Symbols deckt das Auge
-    ab, darüber liegt ein kleiner Bogen (`w-zwinker`); das Bild des Symbols bleibt unverändert, und
-    außerhalb der Saison gibt es das Zwinkern nicht.
+  - Das Zwinkern des Smileys ist in der Weihnachtszeit entstanden und gilt seit 28.11.2026 das
+    ganze Jahr (Abschnitt „Gestaltung“). In der Saison fällt es auf den Moment, in dem der
+    Schlitten gerade aus dem Bild gefahren ist; dafür haben beide dieselbe Dauer und denselben
+    Beginn (`w-fahrt` in `saison.css`, `zwinkern` in `basis.css`).
 - **Einfach bleiben** (Patrick 28.11.2026: „es soll einfach bleiben“; Claude soll bremsen, wenn
   etwas zu viel, zu aufwendig oder zu fehlerträchtig wird). Kein Schmuck verdeckt Inhalt. Auf dem
   Handy rutscht nichts tiefer: Girlande und Mütze brauchen oben 26 Pixel, dafür rücken die Überschriften
@@ -871,8 +879,8 @@ später denselben Weg nutzen.
   - Nur auf der Startseite hängt in der Mitte der Girlande eine goldene Glocke (Patrick: ein Lied
     nur „vorne auf der ersten Seite“). Antippen spielt einmal den Kehrreim von Jingle Bells (1857,
     gemeinfrei), die Lichter leuchten nach der Tonhöhe mit, noch einmal Antippen hält an.
-  - Das Lied gibt es in vier Fassungen; **Fassung 4 ist die Grundfassung**, die älteren bleiben zum
-    Zurückgreifen erhalten (`?klang=1`, `?klang=2`, `?klang=3`; Patrick 28.11.2026: „lass sie bitte
+  - Das Lied gibt es in fünf Fassungen; **Fassung 5 ist die Grundfassung**, die älteren bleiben zum
+    Zurückgreifen erhalten (`?klang=1` bis `?klang=4`; Patrick 28.11.2026: „lass sie bitte
     bestehen“, zu Fassung 2: „da ich noch nicht ganz entschieden habe“).
     Alle haben 136 Schläge in der Minute und hören von selbst auf (gewollt).
   - Fassung 1 (Patrick 28.11.2026: Glockenspiel behalten, klassisch anfangen, dann Bass, dann „mehr
@@ -914,16 +922,31 @@ später denselben Weg nutzen.
     C-Dur-Akkord auf dem Klavier; Ende nach gut 74 Sekunden. Die Klaviertöne werden beim Start des
     Lieds berechnet und dann wie Aufnahmen abgespielt (`fluegel`): bis zu 16 Teiltöne, leicht
     gespreizt wie bei echten Saiten, die hohen leiser und schneller verklingend, kein Filter, kein
-    Verzerrer. Eine Aufnahme eines echten Flügels wäre der nächste Schritt, wenn das nicht reicht;
-    dafür bräuchte es frei lizenzierte Tondateien (oder eigene) und eine Quellenangabe.
-  - Die Töne entstehen im Browser, nichts wird geladen oder gespeichert. Es erklingt nie etwas von
+    Verzerrer. Patrick dazu: „schon ganz gut“, „Die könnten wir nehmen für die Hauptseite“, aber
+    das Klavier klinge „natürlich nicht echt“, „immer noch ziemlich künstlich“ und „ein bisschen
+    verzerrt“.
+  - Fassung 5 (Patrick 28.11.2026: „versucht doch mal die Version 4 mit echten Klaviertönen. Dann
+    wird es noch ein bisschen klarer und ruhiger“): alles wie Fassung 4, aber das Klavier spielt
+    Aufnahmen eines echten Flügels und geht am Begrenzer vorbei direkt zum Lautsprecher, damit
+    nichts am Klang zieht. Die Aufnahmen stammen aus dem „Salamander Grand Piano V3“ von Alexander
+    Holm, Lizenz CC BY 3.0 (`stil/weihnachten/klavier/`, 13 Töne im Abstand kleiner Terzen als MP3,
+    zusammen 570 Kilobyte, mit `QUELLE.txt`); die Töne dazwischen entstehen, indem der Nachbarton
+    einen Halbton schneller oder langsamer läuft. Geladen werden sie vom eigenen Server und erst,
+    wenn jemand die Glocke antippt; fehlt eine Aufnahme, spielt an ihrer Stelle der berechnete Ton
+    aus Fassung 4. Die MP3-Dateien entstehen mit `python3 _werkzeuge/weihnachten/klavier.py
+    <Ordner mit den flac-Dateien> stil/weihnachten/klavier`: je Ton nur das nähere der beiden
+    Mikrofone (zusammengelegt löschen sie sich bei manchen Tönen fast aus), auf 3,6 Sekunden gekürzt
+    und ausgeblendet, alle gleich laut. **Die Lizenz verlangt die Namensnennung**: Sie steht im
+    Impressum unter „Quellen“ und bleibt dort, solange die Dateien auf der Website liegen.
+  - Die Töne entstehen im Browser; nur die Klaviertöne von Fassung 5 sind Aufnahmen vom eigenen
+    Server. Nichts wird gespeichert, nichts von fremden Servern geladen. Es erklingt nie etwas von
     selbst, deshalb gibt es keinen Ausschalter.
   - **Töne erst kurz vor ihrem Einsatz anlegen** (`liedAn`, `vor`): In der ersten Fassung waren alle
     Töne des Lieds auf einmal vorbereitet, bis zu 300 Tongeber; das überlastete den Ton in Safari
     und knarzte in den ersten 15 Sekunden (Patrick am Mac, 28.11.2026). Im Drop laufen Bass und
     Synthesizer deshalb auf fünf Tongebern durch und bekommen je Ton nur neue Stellwerte (`werk`).
-  - Bis Patrick den Klang freigibt, gibt es ihn nur mit `?klang=4` hinter der Adresse (`?klang=1`
-    bis `?klang=3` für die älteren Fassungen); danach wird er in `saison.js` fest eingeschaltet,
+  - Bis Patrick den Klang freigibt, gibt es ihn nur mit `?klang=5` hinter der Adresse (`?klang=1`
+    bis `?klang=4` für die älteren Fassungen); danach wird er in `saison.js` fest eingeschaltet,
     mit der Fassung, die Patrick wählt. Beim Bau hört niemand mit; geprüft sind rechnerisch Tonhöhen, Lautstärke und
     Spitzen je Abschnitt.
 
@@ -936,6 +959,10 @@ später denselben Weg nutzen.
   happymatty.de@gmail.com. Neue Seiten bekommen die Fußzeile mit Datenschutzerklärung und
   Impressum (Link `/impressum/`, im selben Grau und mit derselben Gestaltung); auf den
   interaktiven Seiten steht sie am Fuß der Startseite, die Links öffnen dort einen neuen Tab.
+- Fremde Inhalte brauchen eine freie Lizenz und werden im Impressum unter „Quellen“ genannt
+  (erster Fall 28.11.2026: die Klaviertöne im Weihnachtslied, Salamander Grand Piano V3 von
+  Alexander Holm, CC BY 3.0, mit Link zur Lizenz und zur Quelle; Patrick: „Müssen wir ja
+  benennen“). Die Dateien liegen auf dem eigenen Server, nicht bei der Quelle.
 - Nichts über Claude oder darüber, wie die Seiten entstehen.
 
 ## Herkunft der Seiten

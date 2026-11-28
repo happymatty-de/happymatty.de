@@ -1,0 +1,13 @@
+Klaviertöne im Weihnachtslied von happymatty.de
+
+Die Dateien in diesem Ordner stammen aus dem „Salamander Grand Piano V3“ von Alexander Holm
+(Aufnahmen eines Yamaha-C5-Flügels, 48 kHz, 24 Bit).
+
+Lizenz:  Creative Commons Namensnennung 3.0 Unported (CC BY 3.0)
+         https://creativecommons.org/licenses/by/3.0/
+Quelle:  https://github.com/sfzinstruments/SalamanderGrandPiano
+         (ursprünglich https://archive.org/details/SalamanderGrandPianoV3)
+
+Für die Webseite verändert: je Ton nur ein Mikrofon (mono), auf 3,6 Sekunden gekürzt und ausgeblendet,
+in der Lautstärke angeglichen, in MP3 (44,1 kHz, 96 kbit/s) umgewandelt.
+Verwendet sind die Töne C2, F#2, A2, C3, D#3, F#3, A3, C4, D#4, F#4 (Anschlagstufe 6) und C5, D#5, F#5 (Anschlagstufe 8).
