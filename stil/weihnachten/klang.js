@@ -18,7 +18,8 @@
      Klavier (nachgebildet) mit Glöckchen (gut 70 Sekunden);
      4 ist wie 3, aber der Beat geht ohne Schlussschlag direkt in ein reines Klavier über (berechnete Töne), und
      nach dem Glöckchen kommt ein tiefer Schlussakkord (gut 70 Sekunden);
-     5 ist die Grundfassung: wie 4, das Klavier aber aus Aufnahmen eines echten Flügels.
+     5 ist die Fassung für alle (Freigabe Patrick 28.11.2026): wie 4, das Klavier aber aus Aufnahmen eines echten
+     Flügels, und nach dem Beat erklingt nur noch Klavier (auch der helle Akkord vor dem Schluss).
      ?klang=1 bis ?klang=4 holen die älteren Fassungen zurück. */
   var WAHL = (/[?&]klang=(\d)/.exec(location.search) || [])[1], FASSUNG = WAHL > 0 && WAHL < 5 ? +WAHL : 5;
   var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -151,12 +152,12 @@
     q.connect(g); g.connect(ziel); q.start(t); q.stop(t + dauer + 0.02);
   }
   /* Klavier aus Aufnahmen (Fassung 5): Töne eines echten Flügels, „Salamander Grand Piano V3“ von Alexander Holm,
-     CC BY 3.0 (Quelle und Änderungen in klavier/QUELLE.txt, Namensnennung im Impressum). 13 Töne im Abstand kleiner
+     CC BY 3.0 (Quelle und Änderungen in klavier/QUELLE.txt, Namensnennung im Impressum). 14 Töne im Abstand kleiner
      Terzen liegen als MP3 auf dem eigenen Server; die Töne dazwischen entstehen, indem der Nachbarton einen Halbton
      schneller oder langsamer läuft. Geladen wird erst, wenn jemand die Glocke antippt. Fehlt eine Aufnahme (kein
      Netz, alter Browser), spielt an ihrer Stelle der berechnete Ton (fluegel). */
   var AUFNAHME = { 36: ['C2', 0], 43: ['Fs2', 1], 45: ['A2', 0], 48: ['C3', 0], 52: ['Ds3', 1], 53: ['Fs3', -1], 55: ['Fs3', 1], 57: ['A3', 0],
-    59: ['C4', -1], 60: ['C4', 0], 64: ['Ds4', 1], 65: ['Fs4', -1], 72: ['C5', 0], 74: ['Ds5', -1], 76: ['Ds5', 1], 79: ['Fs5', 1] };
+    59: ['C4', -1], 60: ['C4', 0], 64: ['Ds4', 1], 65: ['Fs4', -1], 72: ['C5', 0], 74: ['Ds5', -1], 76: ['Ds5', 1], 79: ['Fs5', 1], 84: ['C6', 0] };
   var aufnahmen = {}, laedt = false;
   function ladeKlavier(c) {
     if (laedt || !window.fetch) return;
@@ -512,7 +513,7 @@
      und „ein bisschen verzerrt“; mit echten Klaviertönen werde es „noch ein bisschen klarer und ruhiger“): alles wie
      Fassung 4, aber das Klavier spielt Aufnahmen eines echten Flügels (klavierTon) und geht am Begrenzer vorbei
      direkt zum Lautsprecher (zustand.rein), damit nichts mehr am Klang zieht. */
-  var AUFN_R = 0.5, AUFN_L = 0.3, AUFN_S = 0.36;   /* Lautstärke: rechte Hand, linke Hand, Schlussakkord */
+  var AUFN_R = 0.5, AUFN_L = 0.3, AUFN_B = 0.32, AUFN_S = 0.36;   /* Lautstärke: rechte Hand, linke Hand, „Bing“, Schlussakkord */
   function drop5(dazu) {
     grund(dazu);
     dazu(KLAVIER4, function (c, z, t, s) { s.dauer.forEach(function (o) { try { o.stop(t + 0.2); } catch (e) {} }); });
@@ -521,7 +522,9 @@
       dazu(ort4(n[0]), function (c, z, t, s) { klavierTon(c, s.rein || z, n[1], t, dauer, AUFN_R); }, n[3]);
     });
     LINKS4.forEach(function (n) { dazu(ort4(n[0]), function (c, z, t, s) { klavierTon(c, s.rein || z, n[1], t, n[0] >= 16 ? 3.5 : 2.6, AUFN_L); }); });
-    [0, 2, 4, 7].forEach(function (st) { dazu(ort4(18), function (c, z, t) { glocke(c, z, hoehe(st), t, 0.14); }, st); });
+    /* das „Bing“: derselbe helle Akkord wie bisher bei den Glöckchen, jetzt auch auf dem Klavier (Patrick 28.11.2026:
+       am Ende „nur noch Klavier“); die Lichter leuchten wie bei den Glöckchen mit */
+    [72, 76, 79, 84].forEach(function (m, i) { dazu(ort4(18) + i * 0.04, function (c, z, t, s) { klavierTon(c, s.rein || z, m, t, 3.2, AUFN_B); }, [0, 2, 4, 7][i]); });
     SCHLUSS4.forEach(function (m, i) { dazu(ort4(19.5) + i * 0.09, function (c, z, t, s) { klavierTon(c, s.rein || z, m, t, 3.5, AUFN_S); }); });
     return ort4(19.5) + 4;
   }

@@ -111,7 +111,7 @@ html.weihnachten .klassen li{position:relative}
 .w-bahn{position:absolute;left:0;right:0;bottom:calc(100% + 1px);height:34px;z-index:1;overflow:hidden;pointer-events:none;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%);
   mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%)}
-.w-schlitten{position:absolute;bottom:1.5px;left:-120px;width:116px;height:30px;animation:w-fahrt 40s linear 6s infinite}
+.w-schlitten{position:absolute;bottom:3.5px;left:-120px;width:116px;height:30px;animation:w-fahrt 40s linear 6s infinite}
 .w-schlitten svg{display:block;overflow:visible}
 @keyframes w-fahrt{from{left:-120px}55%,to{left:100%}}
 .w-trab{animation:w-trab .52s ease-in-out infinite alternate}

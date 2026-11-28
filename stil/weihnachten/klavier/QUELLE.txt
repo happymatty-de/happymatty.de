@@ -10,4 +10,4 @@ Quelle:  https://github.com/sfzinstruments/SalamanderGrandPiano
 
 Für die Webseite verändert: je Ton nur ein Mikrofon (mono), auf 3,6 Sekunden gekürzt und ausgeblendet,
 in der Lautstärke angeglichen, in MP3 (44,1 kHz, 96 kbit/s) umgewandelt.
-Verwendet sind die Töne C2, F#2, A2, C3, D#3, F#3, A3, C4, D#4, F#4 (Anschlagstufe 6) und C5, D#5, F#5 (Anschlagstufe 8).
+Verwendet sind die Töne C2, F#2, A2, C3, D#3, F#3, A3, C4, D#4, F#4 (Anschlagstufe 6) und C5, D#5, F#5, C6 (Anschlagstufe 8).

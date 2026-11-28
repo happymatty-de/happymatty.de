@@ -803,12 +803,13 @@ später denselben Weg nutzen.
     auf der Fußlinie; das prüft `saison.js` auf jeder Seite und bei jeder Breite selbst.
   - An der ersten Kachel jeder Seite (nie an den Klassen-Kacheln) hängen drei Kugeln. Eine Kugel,
     die Schrift oder ein Kennzeichen verdecken würde, bleibt weg.
-  - **Schnee statt der Fußlinie** (Versuch seit 28.11.2026, Patrick: „Ich will mir mal angucken, wie
-    das aussieht“; bis dahin lag der Schnee auf der ersten Kachel jeder Seite): Auf jeder Seite
+  - **Schnee statt der Fußlinie** (seit 28.11.2026, als Versuch begonnen: „Ich will mir mal angucken,
+    wie das aussieht“; bis dahin lag der Schnee auf der ersten Kachel jeder Seite; Patrick hat ihn
+    behalten und nur den Schlitten darin höher setzen lassen): Auf jeder Seite
     liegt dort, wo sonst die Fußlinie ist, ein Streifen Schnee, der an beiden Enden weich ausläuft
     (`schneeboden.svg`, Klasse `w-boden`). Er liegt vor dem Schlitten und hinter dem Adventskranz.
-    Entscheidet Patrick sich dagegen, kommt der Schnee zurück auf die Kachel (`schneedecke.svg` und
-    die Regel `w-schneedecke` liegen noch bereit); entscheidet er sich dafür, entfallen beide.
+    Der frühere Schnee für die Kachel (`schneedecke.svg`, Regel `w-schneedecke`, `schneedecke()` im
+    Bildskript) ist unbenutzt und kann beim nächsten Aufräumen entfallen.
   - Auf der ersten Kachel unter jeder weiteren Überschrift (`themenkopf`) sitzt rechts eine kleine
     Figur: Schneemann, Laterne, Tannenbaum, Geschenke, Rotkehlchen, je Seite in anderer Reihenfolge
     (auf der Startseite der Tannenbaum bei „Training“). Reicht die Überschrift bis unter die
@@ -837,7 +838,8 @@ später denselben Weg nutzen.
     irgendwann ankommen“); das vordere Rentier hat eine rote Nase, die Rentiere traben, und der
     Weihnachtsmann bewegt die Zügel im Takt. Steht der Kranz auf der Fußlinie, fährt der Schlitten
     hinter ihm durch. Er fährt hinter dem Schnee der Fußlinie und sinkt mit den Kufen etwas ein
-    (dafür sitzt er 3,5 Pixel höher als vorher). Er kommt erst sechs Sekunden nach dem Aufruf der Seite hervor und bleibt
+    (dafür sitzt er 5,5 Pixel höher als ohne Schnee; Patrick 28.11.2026: Er saß „noch ziemlich tief
+    im Schnee drin“). Er kommt erst sechs Sekunden nach dem Aufruf der Seite hervor und bleibt
     nach jeder Fahrt 18 Sekunden weg, bevor er wiederkommt (Patrick 28.11.2026: „nochmal so ein
     kleiner Aha-Moment“, die Seite hat schon viele Elemente).
   - Der Smiley im Logo trägt eine Weihnachtsmütze: über die ganze Breite des Logos, an den Seiten
@@ -869,8 +871,9 @@ später denselben Weg nutzen.
 - **Prüfen an einem anderen Tag:** `?datum=2026-12-20` hinter der Adresse zeigt die Seite wie an
   diesem Tag (vier Kerzen), `?datum=2026-07-01` wie außerhalb der Saison. Das Datum wandert über
   die Links der Seite mit.
-- **Klang** (eingebaut 28.11.2026, **noch nicht für alle eingeschaltet**), in
-  `stil/weihnachten/klang.js`, das `saison.js` nachlädt:
+- **Klang** (eingebaut und für alle eingeschaltet am 28.11.2026; Patrick: „dann kannst du die
+  Fassung online schalten“), in `stil/weihnachten/klang.js`, das `saison.js` auf jeder Seite des
+  Gerüsts nachlädt:
   - Die Lichterkette ist ein Glockenspiel: Wer sie antippt, hört einen Ton der C-Dur-Tonleiter, von
     links nach rechts aufsteigend, und die Lichter an dieser Stelle leuchten auf. Mit der Maus
     genügt es, über die Lichter zu streichen (jede neue Stelle klingt); wer nur zur Leiste des
@@ -879,7 +882,7 @@ später denselben Weg nutzen.
   - Nur auf der Startseite hängt in der Mitte der Girlande eine goldene Glocke (Patrick: ein Lied
     nur „vorne auf der ersten Seite“). Antippen spielt einmal den Kehrreim von Jingle Bells (1857,
     gemeinfrei), die Lichter leuchten nach der Tonhöhe mit, noch einmal Antippen hält an.
-  - Das Lied gibt es in fünf Fassungen; **Fassung 5 ist die Grundfassung**, die älteren bleiben zum
+  - Das Lied gibt es in fünf Fassungen; **Fassung 5 ist die Fassung für alle**, die älteren bleiben zum
     Zurückgreifen erhalten (`?klang=1` bis `?klang=4`; Patrick 28.11.2026: „lass sie bitte
     bestehen“, zu Fassung 2: „da ich noch nicht ganz entschieden habe“).
     Alle haben 136 Schläge in der Minute und hören von selbst auf (gewollt).
@@ -928,15 +931,17 @@ später denselben Weg nutzen.
   - Fassung 5 (Patrick 28.11.2026: „versucht doch mal die Version 4 mit echten Klaviertönen. Dann
     wird es noch ein bisschen klarer und ruhiger“): alles wie Fassung 4, aber das Klavier spielt
     Aufnahmen eines echten Flügels und geht am Begrenzer vorbei direkt zum Lautsprecher, damit
-    nichts am Klang zieht. Die Aufnahmen stammen aus dem „Salamander Grand Piano V3“ von Alexander
-    Holm, Lizenz CC BY 3.0 (`stil/weihnachten/klavier/`, 13 Töne im Abstand kleiner Terzen als MP3,
-    zusammen 570 Kilobyte, mit `QUELLE.txt`); die Töne dazwischen entstehen, indem der Nachbarton
+    nichts am Klang zieht. Nach dem Beat erklingt nur noch Klavier: Auch das „Bing“ vor dem
+    Schlussakkord spielt der Flügel (derselbe helle Akkord, vorher Glöckchen; Patrick 28.11.2026:
+    „Ja, prima. Jetzt haben wir ein richtiges Klavier“, am Ende „nur noch Klavier“). Die Aufnahmen stammen aus dem „Salamander Grand Piano V3“ von Alexander
+    Holm, Lizenz CC BY 3.0 (`stil/weihnachten/klavier/`, 14 Töne im Abstand kleiner Terzen als MP3,
+    zusammen 614 Kilobyte, mit `QUELLE.txt`); die Töne dazwischen entstehen, indem der Nachbarton
     einen Halbton schneller oder langsamer läuft. Geladen werden sie vom eigenen Server und erst,
     wenn jemand die Glocke antippt; fehlt eine Aufnahme, spielt an ihrer Stelle der berechnete Ton
     aus Fassung 4. Die MP3-Dateien entstehen mit `python3 _werkzeuge/weihnachten/klavier.py
     <Ordner mit den flac-Dateien> stil/weihnachten/klavier`: je Ton nur das nähere der beiden
     Mikrofone (zusammengelegt löschen sie sich bei manchen Tönen fast aus), auf 3,6 Sekunden gekürzt
-    und ausgeblendet, alle gleich laut. **Die Lizenz verlangt die Namensnennung**: Sie steht im
+    und ausgeblendet, alle gleich laut und ohne zu übersteuern. **Die Lizenz verlangt die Namensnennung**: Sie steht im
     Impressum unter „Quellen“ und bleibt dort, solange die Dateien auf der Website liegen.
   - Die Töne entstehen im Browser; nur die Klaviertöne von Fassung 5 sind Aufnahmen vom eigenen
     Server. Nichts wird gespeichert, nichts von fremden Servern geladen. Es erklingt nie etwas von
@@ -945,10 +950,10 @@ später denselben Weg nutzen.
     Töne des Lieds auf einmal vorbereitet, bis zu 300 Tongeber; das überlastete den Ton in Safari
     und knarzte in den ersten 15 Sekunden (Patrick am Mac, 28.11.2026). Im Drop laufen Bass und
     Synthesizer deshalb auf fünf Tongebern durch und bekommen je Ton nur neue Stellwerte (`werk`).
-  - Bis Patrick den Klang freigibt, gibt es ihn nur mit `?klang=5` hinter der Adresse (`?klang=1`
-    bis `?klang=4` für die älteren Fassungen); danach wird er in `saison.js` fest eingeschaltet,
-    mit der Fassung, die Patrick wählt. Beim Bau hört niemand mit; geprüft sind rechnerisch Tonhöhen, Lautstärke und
-    Spitzen je Abschnitt.
+  - Für alle spielt die Glocke Fassung 5; `?klang=1` bis `?klang=4` hinter der Adresse spielen die
+    älteren Fassungen (die Angabe wandert über die Links der Seite mit). Beim Bau hört niemand mit;
+    geprüft sind rechnerisch Tonhöhen, Lautstärke und Spitzen je Abschnitt, gehört und freigegeben
+    hat Patrick.
 
 ## Inhalte auf den öffentlichen Seiten
 

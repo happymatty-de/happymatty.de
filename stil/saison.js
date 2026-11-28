@@ -4,7 +4,8 @@
    Es wird nichts gespeichert und nichts von fremden Servern geladen.
    Zum Prüfen lässt sich das Datum in der Adresse vorgeben: ?datum=2026-12-06
    Klang (Lichterkette als Glockenspiel, Glocke mit Jingle Bells auf der Startseite) steht in weihnachten/klang.js
-   und wird vorerst nur zum Probehören geladen: ?klang=1 hinter der Adresse. Es erklingt nie etwas von selbst. */
+   und wird auf jeder Seite nachgeladen (für alle seit 28.11.2026); ?klang=1 bis ?klang=4 hinter der Adresse spielen
+   die älteren Fassungen des Lieds. Es erklingt nie etwas von selbst. */
 (function () {
   var d = document, html = d.documentElement, suche = location.search;
   var heute = new Date(), probe = /[?&]datum=(\d{4})-(\d\d)-(\d\d)/.exec(suche);
@@ -232,7 +233,7 @@
     function ordnen() { kranzPlatz(); platz(); kugelnPlatz(); }
     ordnen();
     if (d.fonts && d.fonts.ready) d.fonts.ready.then(ordnen);
-    if (klang) { var k = d.createElement('script'); k.src = BILD + 'klang.js?v=6'; d.head.appendChild(k); }
+    var k = d.createElement('script'); k.src = BILD + 'klang.js?v=7'; d.head.appendChild(k);      /* Klang für alle (Freigabe Patrick 28.11.2026) */
     var warten;
     window.addEventListener('resize', function () { clearTimeout(warten); warten = setTimeout(function () { leds(kette); ordnen(); }, 150); });
   });
