@@ -35,7 +35,11 @@ Kennungen im Kopf jeder Seite (früher stil_version.py): An jeden Verweis auf /s
 auf das Symbol der Website (favicon.ico, stil/icon-32.png, apple-touch-icon.png) kommt eine
 Kennung aus dem Inhalt der Datei (?v=…). Ändert sich die Datei, ändert sich die Adresse, und die
 Browser laden sie neu, statt die alte aus dem Zwischenspeicher zu zeigen (Anlässe 10. und
-11.11.2026: Safari zeigte alte Abstände und das alte Symbol)."""
+11.11.2026: Safari zeigte alte Abstände und das alte Symbol).
+
+Saison (Weihnachtszeit, seit 28.11.2026): Jede Seite, die /stil/basis.css lädt, bekommt dahinter
+die Verweise auf /stil/saison.css und /stil/saison.js, ebenfalls mit Kennung. Interaktive Seiten
+laden basis.css nicht und bleiben ohne Saison."""
 import datetime
 import hashlib
 import html
@@ -70,6 +74,8 @@ KOPF = '''<!DOCTYPE html>
 <link rel="icon" type="image/png" sizes="32x32" href="/stil/icon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="stylesheet" href="/stil/basis.css">
+<link rel="stylesheet" href="/stil/saison.css">
+<script src="/stil/saison.js"></script>
 </head>
 <body>
 <main class="seite">
@@ -876,6 +882,11 @@ SYMBOL = ('<link rel="icon" href="/favicon.ico" sizes="any">\n'
           '<link rel="icon" type="image/png" sizes="32x32" href="/stil/icon-32.png">\n'
           '<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n')
 BILDER = ('favicon.ico', 'stil/icon-32.png', 'apple-touch-icon.png')
+# Saison (Weihnachtszeit, CLAUDE.md): Jede Seite, die basis.css lädt, lädt auch saison.css und saison.js.
+# Interaktive Seiten laden basis.css nicht und bleiben deshalb ohne Saison.
+SAISON = ('<link rel="stylesheet" href="/stil/saison.css">\n'
+          '<script src="/stil/saison.js"></script>\n')
+SAISON_DATEIEN = ('stil/saison.css', 'stil/saison.js')
 
 
 def kennung(datei):
@@ -883,9 +894,14 @@ def kennung(datei):
 
 
 def kennungen(text):
-    """Hängt an basis.css und die Symbol-Verweise im Kopf die Kennung aus dem Dateiinhalt an und
-    ergänzt fehlende Symbol-Verweise direkt nach dem <title>."""
+    """Hängt an basis.css, saison.css, saison.js und die Symbol-Verweise im Kopf die Kennung aus dem
+    Dateiinhalt an, ergänzt fehlende Symbol-Verweise direkt nach dem <title> und fehlende
+    Saison-Verweise direkt nach basis.css."""
     text = re.sub(r'/stil/basis\.css(\?v=[0-9a-f]+)?', f'/stil/basis.css?v={kennung("stil/basis.css")}', text)
+    if '/stil/basis.css' in text and '/stil/saison.css' not in text:
+        text = re.sub(r'(<link rel="stylesheet" href="/stil/basis\.css[^>]*>)\n?', lambda m: m.group(1) + '\n' + SAISON, text, count=1)
+    for datei in SAISON_DATEIEN:
+        text = re.sub('/' + re.escape(datei) + r'(\?v=[0-9a-f]+)?', f'/{datei}?v={kennung(datei)}', text)
     if 'apple-touch-icon' not in text:
         text = re.sub(r'</title>\n?', lambda m: '</title>\n' + SYMBOL, text, count=1)
     muster = re.compile(r'(<link\b[^>]*\bhref="/)(' + '|'.join(re.escape(b) for b in BILDER)

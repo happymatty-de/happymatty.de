@@ -1,0 +1,95 @@
+/* Saison auf happymatty.de (CLAUDE.md, Abschnitt „Saison“).
+   Weihnachtszeit, 24. November bis 6. Januar: saison.js setzt dann die Klasse „weihnachten“ an <html>
+   und fügt Himmel, Girlande, Kerzen und den Schmuck der Kacheln ein. Außerhalb der Saison greift hier nichts.
+   Nur das Gerüst der Website wird geschmückt; interaktive Seiten und PDFs laden diese Datei nicht. */
+
+@media screen{
+
+/* ---------- Nacht: Hintergrund und Schrift außerhalb der Kacheln ---------- */
+html.weihnachten{background:#0B1E40}
+html.weihnachten body{
+  background:transparent;
+  --text:#EEF2F8;     /* Schrift auf dem Nachthimmel: die Farben der Website, aufgehellt */
+  --grau:#BAC6D8;
+  --blau:#9CCDF0;
+  --gruen:#8ED07C;
+  --lila:#CDB4E0;
+  --orange:#F3A56E;
+}
+/* Kacheln und Kennzeichen bleiben, wie sie sind: Sie bekommen die Farben der Website zurück */
+html.weihnachten .liste a,html.weihnachten .liste .gesperrt,html.weihnachten .klassen a,html.weihnachten .badge{
+  --text:#1F2933;--grau:#6E6E6E;--blau:#0072B2;--gruen:#26870C;--lila:#85609E;--orange:#D55E00;
+}
+html.weihnachten .liste a,html.weihnachten .liste .gesperrt,html.weihnachten .klassen a{color:#1F2933}
+html.weihnachten .logo{color:#fff}
+html.weihnachten .kopf{border-bottom-color:#59A3CD}
+html.weihnachten footer{border-top-color:#59A3CD}
+html.weihnachten .fliesstext .kasten{background:rgba(156,205,240,.13)}
+
+/* Die Girlande braucht oben Platz; Überschriften rücken dafür etwas zusammen, damit am Handy nichts tiefer rutscht */
+html.weihnachten .seite{padding-top:3rem}
+html.weihnachten h1{margin-top:1.1rem}
+html.weihnachten .themenkopf{margin-top:2rem}
+
+/* ---------- Himmel mit Schnee (liegt fest hinter der Seite) ---------- */
+.w-himmel{position:fixed;left:0;top:0;width:100%;height:100vh;height:100lvh;z-index:-1;overflow:hidden;pointer-events:none;
+  background:linear-gradient(180deg,#07122A 0,#0E2850 42%,#163B6C 100%)}
+.w-schnee{position:absolute;left:-12px;right:-12px;top:0;bottom:0;animation:w-wiegen 7s ease-in-out infinite alternate}
+.w-schnee i{position:absolute;left:0;right:0;top:-560px;bottom:0;background:url(weihnachten/schnee.png) repeat;background-size:420px 560px;
+  animation:w-fallen 37s linear infinite;will-change:transform}
+.w-schnee-2{opacity:.55;animation-duration:9s;animation-delay:-3s}
+.w-schnee-2 i{top:-364px;background-size:273px 364px;background-position:90px 0;animation-name:w-fallen-2;animation-duration:40s}
+@keyframes w-fallen{to{transform:translateY(560px)}}
+@keyframes w-fallen-2{to{transform:translateY(364px)}}
+@keyframes w-wiegen{from{transform:translateX(-7px)}to{transform:translateX(7px)}}
+
+/* ---------- Oberer Rand: Girlande, feine Lichterkette, Adventskerzen ---------- */
+.w-oben{position:absolute;left:0;top:0;width:100%;height:48px;z-index:2;pointer-events:none}
+.w-girlande{position:absolute;left:0;top:0;width:100%;height:36px;background:url(weihnachten/girlande.png) center top/350px 36px repeat-x}
+.w-leds{position:absolute;left:0;top:0;width:100%;height:36px}
+.w-leds i{position:absolute;width:3px;height:3px;margin:-1.5px 0 0 -1.5px;border-radius:50%;background:#FFF6DA;
+  box-shadow:0 0 3px 1px rgba(255,226,150,.95),0 0 9px 3px rgba(255,190,90,.45);animation:w-funkeln 3s ease-in-out infinite}
+.w-leds i.w-blitz{animation-name:w-blitzen}
+@keyframes w-funkeln{0%,100%{opacity:.5;transform:scale(.8)}45%{opacity:1;transform:scale(1.2)}62%{opacity:.8;transform:scale(1)}}
+@keyframes w-blitzen{0%,68%,100%{opacity:.65;transform:scale(.9)}74%{opacity:1;transform:scale(1.9)}80%{opacity:.3;transform:scale(.8)}87%{opacity:1;transform:scale(1.5)}}
+
+/* Adventskerzen in der Mitte: Ab jedem Adventssonntag brennt eine mehr, und sie brennen langsam herunter */
+.w-kranz{position:absolute;left:50%;top:0;width:124px;height:48px;margin-left:-62px}
+.w-kranz-gruen{position:absolute;left:0;bottom:0;width:124px;height:20px;background:url(weihnachten/kranz.png) center/124px 20px no-repeat}
+.w-kerze{position:absolute;bottom:8px;width:9px;margin-left:-4.5px;border-radius:2px 2px 0 0;
+  background:linear-gradient(90deg,#A91E1E 0,#E24A3E 36%,#CC2B28 62%,#8E1B1B 100%)}
+.w-kerze::before{content:"";position:absolute;left:50%;top:-3.5px;width:1.4px;height:4px;margin-left:-.7px;border-radius:1px;background:#3A2A22}
+.w-kerze::after{content:"";position:absolute;left:0;right:0;top:-1.5px;height:3px;border-radius:50%;background:#EC7468}
+.w-kerze b{position:absolute;left:50%;bottom:100%;width:12px;height:12px;margin:0 0 2.5px -6px;transform-origin:50% 100%;
+  animation:w-flackern 1.7s ease-in-out infinite}
+.w-kerze b i{position:absolute;left:2px;top:3px;width:8px;height:8px;border-radius:0 62% 55% 62%;transform:rotate(45deg);
+  background:radial-gradient(circle at 66% 66%,#FFFDF0 0,#FFE889 26%,#FFB93F 58%,#FF8A1F 100%)}
+.w-kerze u{position:absolute;left:50%;bottom:100%;width:44px;height:44px;margin:0 0 -13px -22px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,205,110,.55) 0,rgba(255,185,85,.2) 38%,rgba(255,170,70,0) 70%);
+  animation:w-schein 2.6s ease-in-out infinite alternate}
+@keyframes w-flackern{
+  0%{transform:rotate(-2deg) scale(1,1)}12%{transform:rotate(3deg) scale(.95,1.08)}27%{transform:rotate(-1.5deg) scale(1.04,.93)}
+  41%{transform:rotate(4deg) scale(.94,1.12)}58%{transform:rotate(-3.5deg) scale(1.03,.96)}73%{transform:rotate(1.5deg) scale(.96,1.06)}
+  88%{transform:rotate(-3deg) scale(1.03,.95)}100%{transform:rotate(-2deg) scale(1,1)}}
+@keyframes w-schein{from{opacity:.75;transform:scale(.94)}to{opacity:1;transform:scale(1.06)}}
+
+/* ---------- Schmuck der Kacheln ---------- */
+html.weihnachten .liste li{position:relative}
+/* Schnee und drei Kugeln an der ersten Kachel der Seite */
+.w-schneedecke{position:absolute;left:-3px;right:-3px;top:-9px;height:24px;z-index:2;border-radius:9px;overflow:hidden;pointer-events:none;
+  background:url(weihnachten/schneedecke.svg) left top/200px 24px repeat-x}
+.w-kugeln{position:absolute;right:.7rem;top:-1px;width:88px;height:48px;z-index:1;pointer-events:none;transform-origin:50% 0;
+  animation:w-pendeln 5s ease-in-out infinite alternate}
+.w-kugeln svg{display:block}
+@keyframes w-pendeln{from{transform:rotate(-1.5deg)}to{transform:rotate(1.5deg)}}
+/* Eine kleine Figur sitzt auf der ersten Kachel unter jeder weiteren Überschrift */
+.w-figur{position:absolute;right:.9rem;bottom:100%;margin-bottom:-4px;z-index:1;pointer-events:none}
+
+@media (prefers-reduced-motion:reduce){
+  .w-schnee,.w-schnee i,.w-leds i,.w-kerze b,.w-kerze u,.w-kugeln{animation:none}
+}
+
+}
+
+/* Im Druck bleibt alles wie außerhalb der Saison */
+@media print{.w-himmel,.w-oben,.w-schneedecke,.w-kugeln,.w-figur{display:none}}

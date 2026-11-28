@@ -180,7 +180,8 @@ Es bricht ab, ohne etwas zu schreiben, wenn
 - Es baut nicht und ändert nicht: interaktive Seiten, Datenschutzerklärung, Impressum,
   Weiterleitungen. Bei ihnen erneuert es nur die Kennungen `?v=…` im Kopf (siehe „Startseite,
   Themenseiten und Bildungsgänge“, letzter Absatz) und ergänzt dort fehlende Verweise auf das
-  Symbol der Website.
+  Symbol der Website und, wo die Seite `basis.css` lädt (Datenschutzerklärung, Impressum), auf
+  `saison.css` und `saison.js` (Abschnitt „Saison: Weihnachtszeit“).
 - PDFs erzeugt es nie. Fehlt einem freigegebenen PDF der Titel (siehe „Gestaltung“,
   Seitentitel), trägt es ihn ein; Inhalt und Aussehen bleiben gleich.
 - Es ersetzt die früheren Werkzeuge `stil_version.py` und `pdf_titel.py`.
@@ -602,7 +603,8 @@ eine Seite, baut die HappyMatty Werkstatt den Seitentyp ins Skript ein und fragt
 Adresse und Aufbau (Entscheidung 23.11.2026, vorher Claude Code).
 
 Reservierte Ordner, nie als Thema: `stil`, `bf1`, `bf2`, `bgy`, `fstm`, `dbos`, `datenschutz`,
-`impressum`, `themen`, `trainings`. Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften).
+`impressum`, `themen`, `trainings`. Gemeinsame Gestaltung liegt in `stil/` (`basis.css` und die Schriften;
+für die Saison `saison.css`, `saison.js` und der Ordner `weihnachten/`).
 
 **Kennungen im Kopf:** Das Skript hängt an jeden Verweis auf `/stil/basis.css` eine Kennung aus dem
 Inhalt der Datei an (`?v=…`) und ergänzt fehlende Verweise auf das Symbol der Website. Sonst
@@ -611,7 +613,8 @@ zeigen Browser bis zu einigen Stunden die alte Gestaltung aus dem Zwischenspeich
 Die Verweise auf das Symbol im Kopf der Seite (`favicon.ico`, `stil/icon-32.png`,
 `apple-touch-icon.png`) bekommen ebenso eine Kennung aus dem Inhalt der Bilddatei
 (Anlass 11.11.2026: Safari auf dem iPad zeigte nach dem Wechsel zum Smiley weiter das alte „hm“,
-auch nach dem Löschen des Verlaufs). Nach jeder Änderung an `basis.css` oder am Symbol und bei
+auch nach dem Löschen des Verlaufs). `saison.css` und `saison.js` bekommen dieselbe Kennung. Nach
+jeder Änderung an `basis.css`, an den Saison-Dateien oder am Symbol und bei
 jeder neuen Seite (auch jeder Übernahme eines Artifacts) läuft deshalb das Skript.
 Ordner und Dateien, die mit `_` beginnen, veröffentlicht GitHub Pages nicht.
 
@@ -762,6 +765,58 @@ Skript; eine Änderung daran macht in der Regel die HappyMatty Werkstatt und pr�
   `stil/icon-32.png`, `stil/icon-192.png`; alle quadratisch ohne runde Ecken, die Seiten und
   Geräte runden selbst. Nach dem Ersetzen läuft das Skript (Kennungen im Kopf).
 - Ändern sich die Farben oder die Kopfzeile im Skill `mathe`, zieht die Website nach.
+
+## Saison: Weihnachtszeit
+
+Vom 24. November bis einschließlich 6. Januar sieht das Gerüst der Website weihnachtlich aus, jedes
+Jahr von selbst (Entscheidung Patrick 28.11.2026: „ab dem 24. November jeden Jahres soll ein
+Schalter umgelegt werden“, „mit Ablauf des 6. Januar schalten wir dann wieder ab“). Ostern kann
+später denselben Weg nutzen.
+
+- **Was geschmückt wird:** nur das Gerüst, also jede Seite, die `stil/basis.css` lädt (die gebauten
+  Übersichten, Datenschutzerklärung, Impressum). **Interaktive Seiten und PDFs bleiben, wie sie
+  sind** (Patrick: „PDFs, Trainings und so weiter bauen wir auf keinen Fall um“); sie laden die
+  Saison-Dateien nicht, auch nicht auf ihrer Startseite.
+- **Nacht** (Fassung C aus drei Entwürfen; Patrick: „weil wir da mal aus dem Weiß rauskommen“):
+  Hintergrund Nachtblau mit langsam fallendem Schnee. Die Schrift außerhalb der Kacheln trägt die
+  Farben der Website, aufgehellt (Variablen am Anfang von `saison.css`), „happymatty.de“ ist weiß.
+  Kacheln und Kennzeichen bleiben unverändert.
+- **Schmuck:**
+  - Oben eine Tannengirlande mit feiner Lichterkette: kleine warmweiße LEDs, jede funkelt in ihrem
+    eigenen Takt.
+  - In der Mitte der Girlande vier rote Adventskerzen, auf jeder Seite gleich: Ab jedem
+    Adventssonntag brennt eine mehr (der vierte Advent ist der letzte Sonntag bis zum 24. Dezember),
+    die Flammen flackern, und jede Kerze brennt von Woche zu Woche etwas herunter. Vor dem ersten
+    Advent stehen sie ohne Flamme da. Neben „happymatty.de“ ist dafür kein Platz: Auf Themenseite
+    und Themeneinheit steht dort der Zurück-Link.
+  - Auf der ersten Kachel jeder Seite (nie auf den Klassen-Kacheln) liegt Schnee, und an ihr
+    hängen drei Kugeln. Eine Kugel, die Schrift oder ein Kennzeichen verdecken würde, bleibt weg.
+  - Auf der ersten Kachel unter jeder weiteren Überschrift (`themenkopf`) sitzt rechts eine kleine
+    Figur: Schneemann, Laterne, Tannenbaum, Geschenke, Rotkehlchen, je Seite in anderer Reihenfolge
+    (auf der Startseite der Tannenbaum bei „Training“). Reicht die Überschrift bis unter die
+    Figur, etwa auf einem schmalen Handy, bleibt sie weg.
+- **Einfach bleiben** (Patrick 28.11.2026: „es soll einfach bleiben“; Claude soll bremsen, wenn
+  etwas zu viel, zu aufwendig oder zu fehlerträchtig wird). Kein Schmuck verdeckt Inhalt. Auf dem
+  Handy rutscht nichts tiefer: Die Girlande braucht oben 29 Pixel, dafür rücken die Überschriften
+  in der Saison etwas zusammen (auf der Startseite bleibt „Interaktive Trainings“ sichtbar wie
+  vorher). Verworfen: Lichterketten an den Seiten und am Fuß (am Handy kein Rand, unten doppelt),
+  Klang beim Antippen einer Kachel (die Seite wechselt sofort), ein Ausschalter für Ton (er müsste
+  im Browser speichern).
+- **Technik:** `stil/saison.js` steht im Kopf jeder Seite des Gerüsts, setzt vor dem ersten Bild
+  die Klasse `weihnachten` an `<html>` und fügt den Schmuck ein. `stil/saison.css` enthält das
+  Aussehen; alles hängt an `html.weihnachten`, außerhalb der Saison sieht jede Seite aus wie
+  vorher. Die Bilder liegen in `stil/weihnachten/` und entstehen mit
+  `python3 _werkzeuge/weihnachten/bilder.py`; ändert sich ein Bild, bekommt es einen neuen
+  Dateinamen. Nichts wird gespeichert, nichts von fremden Servern geladen; die
+  Datenschutzerklärung bleibt davon unberührt. Wer am Gerät Bewegung reduziert hat, sieht alles
+  ruhend; im Druck erscheint nichts davon.
+- **Prüfen an einem anderen Tag:** `?datum=2026-12-20` hinter der Adresse zeigt die Seite wie an
+  diesem Tag (vier Kerzen), `?datum=2026-07-01` wie außerhalb der Saison. Das Datum wandert über
+  die Links der Seite mit.
+- **Noch geplant** (Stand 28.11.2026, mit Patrick besprochen): ein Schlitten mit Weihnachtsmann,
+  der langsam auf der Fußlinie durchfährt; eine Weihnachtsmütze für den Smiley im Logo; die
+  Lichterkette als Glockenspiel und Jingle Bells nur auf der Startseite. Ton erklingt nie von
+  selbst, nur wenn jemand etwas antippt.
 
 ## Inhalte auf den öffentlichen Seiten
 
