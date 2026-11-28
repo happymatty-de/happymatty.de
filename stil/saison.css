@@ -23,7 +23,7 @@ html.weihnachten .liste a,html.weihnachten .liste .gesperrt,html.weihnachten .kl
 html.weihnachten .liste a,html.weihnachten .liste .gesperrt,html.weihnachten .klassen a{color:#1F2933}
 html.weihnachten .logo{color:#fff}
 html.weihnachten .kopf{border-bottom-color:#59A3CD}
-html.weihnachten footer{border-top-color:#59A3CD}
+html.weihnachten footer{border-top-color:transparent}      /* statt der Fußlinie liegt dort Schnee (w-boden) */
 html.weihnachten .fliesstext .kasten{background:rgba(156,205,240,.13)}
 
 /* Die Girlande braucht oben Platz; Überschriften rücken dafür etwas zusammen, damit am Handy nichts tiefer rutscht */
@@ -67,7 +67,7 @@ html.weihnachten .themenkopf{margin-top:2rem}
 /* Adventskranz: steht rechts auf der Linie der Kopfzeile, sonst rechts auf der Fußlinie (saison.js, kranzPlatz).
    Ab jedem Adventssonntag brennt eine Kerze mehr, und sie brennen langsam herunter. */
 html.weihnachten .kopf,html.weihnachten footer{position:relative}
-.w-kranz{position:absolute;right:0;width:124px;height:48px;z-index:2;pointer-events:none}
+.w-kranz{position:absolute;right:0;width:124px;height:48px;z-index:3;pointer-events:none}
 .w-kranz-kopf{bottom:-3px}
 .w-kranz-fuss{bottom:100%;margin-bottom:-2px}
 .w-kranz-gruen{position:absolute;left:0;bottom:0;width:124px;height:20px;background:url(weihnachten/kranz.png) center/124px 20px no-repeat}
@@ -90,7 +90,8 @@ html.weihnachten .kopf,html.weihnachten footer{position:relative}
 
 /* ---------- Schmuck der Kacheln ---------- */
 html.weihnachten .liste li{position:relative}
-/* Schnee und drei Kugeln an der ersten Kachel der Seite */
+/* Drei Kugeln an der ersten Kachel der Seite. Der Schnee lag bis 28.11.2026 auf dieser Kachel (w-schneedecke) und
+   liegt versuchsweise auf der Fußlinie (w-boden, unten); die Regel bleibt, bis Patrick entschieden hat. */
 .w-schneedecke{position:absolute;left:-3px;right:-3px;top:-9px;height:24px;z-index:2;border-radius:9px;overflow:hidden;pointer-events:none;
   background:url(weihnachten/schneedecke.svg) left top/200px 24px repeat-x}
 .w-kugeln{position:absolute;right:.7rem;top:-1px;width:88px;height:48px;z-index:1;pointer-events:none;transform-origin:50% 0;
@@ -110,7 +111,7 @@ html.weihnachten .klassen li{position:relative}
 .w-bahn{position:absolute;left:0;right:0;bottom:calc(100% + 1px);height:34px;z-index:1;overflow:hidden;pointer-events:none;
   -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%);
   mask-image:linear-gradient(90deg,transparent 0,#000 26px,#000 calc(100% - 26px),transparent 100%)}
-.w-schlitten{position:absolute;bottom:-2px;left:-120px;width:116px;height:30px;animation:w-fahrt 40s linear 6s infinite}
+.w-schlitten{position:absolute;bottom:1.5px;left:-120px;width:116px;height:30px;animation:w-fahrt 40s linear 6s infinite}
 .w-schlitten svg{display:block;overflow:visible}
 @keyframes w-fahrt{from{left:-120px}55%,to{left:100%}}
 .w-trab{animation:w-trab .52s ease-in-out infinite alternate}
@@ -122,17 +123,29 @@ html.weihnachten .klassen li{position:relative}
 @keyframes w-arm{from{transform:rotate(-11deg)}to{transform:rotate(9deg)}}
 @keyframes w-zuegel{from{transform:rotate(2.9deg)}to{transform:rotate(-1.2deg)}}
 
+/* Schnee statt der Fußlinie: liegt vor dem Schlitten (der fährt dahinter durch und sinkt mit den Kufen etwas ein)
+   und hinter dem Adventskranz, läuft an beiden Enden weich aus. Im Bild liegt die Linie bei y = 10. */
+.w-boden{position:absolute;left:-4px;right:-4px;top:-10.5px;height:16px;z-index:2;pointer-events:none;
+  background:url(weihnachten/schneeboden.svg) left top/240px 16px repeat-x;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 16px),transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 16px,#000 calc(100% - 16px),transparent 100%)}
+
 /* ---------- Der Smiley im Logo trägt eine Weihnachtsmütze ---------- */
 html.weihnachten .logo{position:relative}
 .w-muetze{position:absolute;left:-.45rem;top:-1.025rem;width:3.0375rem;height:1.775rem;pointer-events:none}
 .w-muetze svg{display:block;width:100%;height:100%;overflow:visible}
+/* … und zwinkert kurz mit dem rechten Auge, gleich nachdem der Schlitten aus dem Bild gefahren ist
+   (gleiche Dauer und gleicher Beginn wie w-fahrt: Der Schlitten ist bei 55 % draußen) */
+.w-zwinker{position:absolute;left:0;top:0;width:2.1rem;height:2.1rem;opacity:0;pointer-events:none;animation:w-zwinker 40s linear 6s infinite}
+.w-zwinker svg{display:block;width:100%;height:100%}
+@keyframes w-zwinker{0%,56.3%{opacity:0}56.5%,57.2%{opacity:1}57.4%,100%{opacity:0}}
 
 @media (prefers-reduced-motion:reduce){
-  .w-schnee,.w-schnee i,.w-leds i,.w-kerze b,.w-kerze u,.w-kugeln,.w-trab,.w-arm,.w-zuegel,.w-glocke svg{animation:none}
+  .w-schnee,.w-schnee i,.w-leds i,.w-kerze b,.w-kerze u,.w-kugeln,.w-trab,.w-arm,.w-zuegel,.w-glocke svg,.w-zwinker{animation:none}
   .w-schlitten{animation:none;left:56%}
 }
 
 }
 
 /* Im Druck bleibt alles wie außerhalb der Saison */
-@media print{.w-himmel,.w-oben,.w-glocke,.w-schneedecke,.w-kugeln,.w-figur,.w-kranz,.w-bahn,.w-muetze{display:none}}
+@media print{.w-himmel,.w-oben,.w-glocke,.w-schneedecke,.w-kugeln,.w-figur,.w-kranz,.w-bahn,.w-boden,.w-muetze,.w-zwinker{display:none}}

@@ -792,8 +792,14 @@ später denselben Weg nutzen.
     Girlande sah es aus, als zündeten die Kerzen die Zweige an). Trägt die Kopfzeile dort Schrift
     (Bildungsgang, Thema, Teilthema) oder reicht Logo oder Zurück-Link bis dorthin, steht er rechts
     auf der Fußlinie; das prüft `saison.js` auf jeder Seite und bei jeder Breite selbst.
-  - Auf der ersten Kachel jeder Seite (nie auf den Klassen-Kacheln) liegt Schnee, und an ihr
-    hängen drei Kugeln. Eine Kugel, die Schrift oder ein Kennzeichen verdecken würde, bleibt weg.
+  - An der ersten Kachel jeder Seite (nie an den Klassen-Kacheln) hängen drei Kugeln. Eine Kugel,
+    die Schrift oder ein Kennzeichen verdecken würde, bleibt weg.
+  - **Schnee statt der Fußlinie** (Versuch seit 28.11.2026, Patrick: „Ich will mir mal angucken, wie
+    das aussieht“; bis dahin lag der Schnee auf der ersten Kachel jeder Seite): Auf jeder Seite
+    liegt dort, wo sonst die Fußlinie ist, ein Streifen Schnee, der an beiden Enden weich ausläuft
+    (`schneeboden.svg`, Klasse `w-boden`). Er liegt vor dem Schlitten und hinter dem Adventskranz.
+    Entscheidet Patrick sich dagegen, kommt der Schnee zurück auf die Kachel (`schneedecke.svg` und
+    die Regel `w-schneedecke` liegen noch bereit); entscheidet er sich dafür, entfallen beide.
   - Auf der ersten Kachel unter jeder weiteren Überschrift (`themenkopf`) sitzt rechts eine kleine
     Figur: Schneemann, Laterne, Tannenbaum, Geschenke, Rotkehlchen, je Seite in anderer Reihenfolge
     (auf der Startseite der Tannenbaum bei „Training“). Reicht die Überschrift bis unter die
@@ -812,14 +818,17 @@ später denselben Weg nutzen.
     liegen lassen „'ne Zeit lang“; das Aufrichten „fand ich cool“). In der Laterne bewegt sich nur
     die Flamme der Kerze; der Schein um die Laterne steht ruhig auf hellster Stufe (Patrick
     28.11.2026: kein pulsierendes Licht; vorher zuckte der Schein wie im Luftzug). Am Tannenbaum
-    funkeln die Lichter abwechselnd, der Stern leuchtet. Das Rotkehlchen trägt eine Bommelmütze,
+    funkeln die Lichter abwechselnd, der Stern leuchtet, und er wiegt sich ganz leicht im Wind:
+    unten ruhig, die Mitte ein wenig, die Spitze mit dem Stern am meisten, höchstens gut einen
+    Pixel (Patrick 28.11.2026: „nur ganz leicht“, „besonders in der oberen Hälfte“). Das Rotkehlchen trägt eine Bommelmütze,
     hüpft ab und zu und wippt mit dem Schwanz. Nicht zu viele Einzelheiten: Am Handy sind die
     Figuren klein.
   - Auf der Fußlinie fährt der Weihnachtsmann mit Schlitten und zwei Rentieren langsam von links
     nach rechts durch, immer wieder, die ganze Saison (Patrick: „Der muss ja auch zu Weihnachten
     irgendwann ankommen“); das vordere Rentier hat eine rote Nase, die Rentiere traben, und der
     Weihnachtsmann bewegt die Zügel im Takt. Steht der Kranz auf der Fußlinie, fährt der Schlitten
-    hinter ihm durch. Er kommt erst sechs Sekunden nach dem Aufruf der Seite hervor und bleibt
+    hinter ihm durch. Er fährt hinter dem Schnee der Fußlinie und sinkt mit den Kufen etwas ein
+    (dafür sitzt er 3,5 Pixel höher als vorher). Er kommt erst sechs Sekunden nach dem Aufruf der Seite hervor und bleibt
     nach jeder Fahrt 18 Sekunden weg, bevor er wiederkommt (Patrick 28.11.2026: „nochmal so ein
     kleiner Aha-Moment“, die Seite hat schon viele Elemente).
   - Der Smiley im Logo trägt eine Weihnachtsmütze: über die ganze Breite des Logos, an den Seiten
@@ -829,6 +838,11 @@ später denselben Weg nutzen.
     nach rechts, die Bommel sitzt frei an seinem Ende, mit Abstand zum weißen Rand (Patrick
     28.11.2026 zur zweiten Fassung: „eckig“, „'n bisschen technisch“, „2 verschiedene Rots“, die
     Bommel „hängt da zu sehr am weißen Rand“).
+  - Der Smiley zwinkert: Gleich nachdem der Schlitten aus dem Bild gefahren ist, also alle 40
+    Sekunden, schließt er für gut eine Viertelsekunde das rechte Auge (Patricks Idee 28.11.2026,
+    mit Vorbehalt: Das Logo soll erkennbar bleiben). Ein Fleck im Blau des Symbols deckt das Auge
+    ab, darüber liegt ein kleiner Bogen (`w-zwinker`); das Bild des Symbols bleibt unverändert, und
+    außerhalb der Saison gibt es das Zwinkern nicht.
 - **Einfach bleiben** (Patrick 28.11.2026: „es soll einfach bleiben“; Claude soll bremsen, wenn
   etwas zu viel, zu aufwendig oder zu fehlerträchtig wird). Kein Schmuck verdeckt Inhalt. Auf dem
   Handy rutscht nichts tiefer: Girlande und Mütze brauchen oben 26 Pixel, dafür rücken die Überschriften
@@ -857,8 +871,9 @@ später denselben Weg nutzen.
   - Nur auf der Startseite hängt in der Mitte der Girlande eine goldene Glocke (Patrick: ein Lied
     nur „vorne auf der ersten Seite“). Antippen spielt einmal den Kehrreim von Jingle Bells (1857,
     gemeinfrei), die Lichter leuchten nach der Tonhöhe mit, noch einmal Antippen hält an.
-  - Das Lied gibt es in drei Fassungen; **Fassung 3 ist die Grundfassung**, die älteren bleiben zum
-    Zurückgreifen erhalten (`?klang=1`, `?klang=2`; Patrick 28.11.2026: „lass sie bitte bestehen“).
+  - Das Lied gibt es in vier Fassungen; **Fassung 4 ist die Grundfassung**, die älteren bleiben zum
+    Zurückgreifen erhalten (`?klang=1`, `?klang=2`, `?klang=3`; Patrick 28.11.2026: „lass sie bitte
+    bestehen“, zu Fassung 2: „da ich noch nicht ganz entschieden habe“).
     Alle haben 136 Schläge in der Minute und hören von selbst auf (gewollt).
   - Fassung 1 (Patrick 28.11.2026: Glockenspiel behalten, klassisch anfangen, dann Bass, dann „mehr
     Beat“, „Electronic“, „Synthesizer“, schneller, „nicht gleich komplett in Techno“): 24 Takte, gut
@@ -887,17 +902,29 @@ später denselben Weg nutzen.
     61. Nach kurzem Atemholen spielt ein Klavier allein, etwas langsamer und zum Ende hin ruhiger
     werdend, „Jingle bells, jingle bells, jingle all the way“ und schließt mit E, D, C; bei Sekunde
     71 erklingt der Akkord der Glöckchen als Schlusszeichen. Gut 70 Sekunden. Das Klavier ist
-    nachgebildet (zwölf Teiltöne, zwei leicht verstimmte Saiten), keine Aufnahme; eine Aufnahme
-    wäre eine Datei von einigen hundert Kilobyte mehr.
+    nachgebildet (zwölf Teiltöne, zwei leicht verstimmte Saiten), keine Aufnahme. Patrick dazu:
+    „noch mal besser“, „erst mal so behalten“.
+  - Fassung 4 (Patrick 28.11.2026 zu Fassung 3: der Übergang vom Beat zur ruhigen Phase „direkter“,
+    da sei „noch so 'n Klang dazwischen“; die ruhige Phase „nahezu reines Klavier“, „Classic, Piano,
+    reiner Klang, nicht verzerrt“, „nicht mehr Synthesizer“, „weniger von Instrumenten“; nach dem
+    „Bing“ am Ende fehle „noch mal so 'n tieferer Dreiklang oder Vierklang“): Aufbau und Drop wie in
+    Fassung 3. Der Drop endet mit seinem letzten Takt, ohne Wirbel und ohne Schlussschlag; auf dem
+    nächsten Schlag (Sekunde 61) beginnt das Klavier allein, die linke Hand nur noch mit einem
+    Basston und einem Akkord je Takt. Bei Sekunde 70 das Glöckchen, eine Sekunde später ein tiefer
+    C-Dur-Akkord auf dem Klavier; Ende nach gut 74 Sekunden. Die Klaviertöne werden beim Start des
+    Lieds berechnet und dann wie Aufnahmen abgespielt (`fluegel`): bis zu 16 Teiltöne, leicht
+    gespreizt wie bei echten Saiten, die hohen leiser und schneller verklingend, kein Filter, kein
+    Verzerrer. Eine Aufnahme eines echten Flügels wäre der nächste Schritt, wenn das nicht reicht;
+    dafür bräuchte es frei lizenzierte Tondateien (oder eigene) und eine Quellenangabe.
   - Die Töne entstehen im Browser, nichts wird geladen oder gespeichert. Es erklingt nie etwas von
     selbst, deshalb gibt es keinen Ausschalter.
   - **Töne erst kurz vor ihrem Einsatz anlegen** (`liedAn`, `vor`): In der ersten Fassung waren alle
     Töne des Lieds auf einmal vorbereitet, bis zu 300 Tongeber; das überlastete den Ton in Safari
     und knarzte in den ersten 15 Sekunden (Patrick am Mac, 28.11.2026). Im Drop laufen Bass und
     Synthesizer deshalb auf fünf Tongebern durch und bekommen je Ton nur neue Stellwerte (`werk`).
-  - Bis Patrick den Klang freigibt, gibt es ihn nur mit `?klang=3` hinter der Adresse (`?klang=1`
-    und `?klang=2` für die älteren Fassungen); danach wird er in `saison.js` fest eingeschaltet,
-    mit Fassung 3. Beim Bau hört niemand mit; geprüft sind rechnerisch Tonhöhen, Lautstärke und
+  - Bis Patrick den Klang freigibt, gibt es ihn nur mit `?klang=4` hinter der Adresse (`?klang=1`
+    bis `?klang=3` für die älteren Fassungen); danach wird er in `saison.js` fest eingeschaltet,
+    mit der Fassung, die Patrick wählt. Beim Bau hört niemand mit; geprüft sind rechnerisch Tonhöhen, Lautstärke und
     Spitzen je Abschnitt.
 
 ## Inhalte auf den öffentlichen Seiten

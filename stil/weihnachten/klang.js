@@ -13,9 +13,12 @@
   var ton = null, haupt = null;
   /* Fassung des Lieds: 1 endet nach dem Kehrreim mit Beat (24 Takte, gut 40 Sekunden);
      2 hängt vier Takte Aufbau und den Drop über den ganzen Kehrreim an (44 Takte, knapp 80 Sekunden);
-     3 ist die Grundfassung: kürzerer Aufbau, der Drop nur über die erste Hälfte, zum Schluss ein ruhiges Klavier
-     und das Glöckchen (gut 70 Sekunden). ?klang=1 und ?klang=2 holen die älteren Fassungen zurück. */
-  var WAHL = (/[?&]klang=(\d)/.exec(location.search) || [])[1], FASSUNG = WAHL === '1' ? 1 : WAHL === '2' ? 2 : 3;
+     3 hat einen kürzeren Aufbau, den Drop nur über die erste Hälfte, einen Schlussschlag und danach ein ruhiges
+     Klavier (nachgebildet) mit Glöckchen (gut 70 Sekunden);
+     4 ist die Grundfassung: wie 3, aber der Beat geht ohne Schlussschlag direkt in ein reines Klavier über
+     (berechnete Töne), und nach dem Glöckchen kommt ein tiefer Schlussakkord (gut 70 Sekunden).
+     ?klang=1, ?klang=2 und ?klang=3 holen die älteren Fassungen zurück. */
+  var WAHL = (/[?&]klang=(\d)/.exec(location.search) || [])[1], FASSUNG = WAHL === '1' ? 1 : WAHL === '2' ? 2 : WAHL === '3' ? 3 : 4;
   var ruhig = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function ausgang(ctx) {                       /* Summe mit sanftem Begrenzer, damit nichts übersteuert */
@@ -104,6 +107,47 @@
     fl.connect(g); g.connect(ziel);
   }
   function midi(m) { return 440 * Math.pow(2, (m - 69) / 12); }
+
+  /* Klavier für den Schluss von Fassung 4, als reiner Klang ohne Filter und Verzerrer: Jeder Ton wird einmal
+     berechnet und dann wie eine Aufnahme abgespielt. Er besteht aus bis zu 16 Teiltönen, leicht gespreizt wie bei
+     echten Saiten; die hohen sind leiser und verklingen schneller, jeder Ton hat zwei kaum gegeneinander
+     verstimmte, ungleich laute Saiten (sonst löschen sie sich nach zwei Sekunden kurz aus) und einen kurzen, weichen Anschlag. Gerechnet wird mit einem Zeiger, der sich je Abtastwert
+     ein Stück dreht (kein Sinus in der Schleife), damit auch ein Handy das nebenher schafft. */
+  var FLUEGEL_SEK = 3.2;
+  function fluegel(c, m) {
+    var bank = c.hmFluegel || (c.hmFluegel = {});
+    if (bank[m]) return bank[m];
+    var sr = c.sampleRate, f0 = midi(m), n = Math.floor(sr * FLUEGEL_SEK), puffer = c.createBuffer(1, n, sr), x = puffer.getChannelData(0);
+    var spreiz = 0.00005 * Math.pow(2, (m - 36) / 12), K = Math.max(4, Math.min(16, Math.floor(9000 / f0))), lage = 261.63 / f0;
+    var t1 = 0.42 * Math.pow(lage, 0.35), t2 = 3 * Math.pow(lage, 0.5), k, s, i, spitze = 0;
+    for (k = 1; k <= K; k++) {
+      var fk = k * f0 * Math.sqrt(1 + spreiz * k * k);
+      var a = Math.pow(k, -1.6) * Math.abs(Math.sin(k * Math.PI / 8.3)) * Math.exp(-fk / 4200);
+      var d1 = Math.exp(-(1 + 0.3 * (k - 1)) / (sr * t1)), d2 = Math.exp(-(1 + 0.14 * (k - 1)) / (sr * t2));
+      for (s = 0; s < 2; s++) {
+        var w = 2 * Math.PI * fk * (s ? 1.00005 : 0.99995) / sr, cw = Math.cos(w), sw = Math.sin(w), re = 1, im = 0, st = s ? 0.33 : 0.67, a1 = a * 0.6 * st, a2 = a * 0.4 * st, r;
+        for (i = 0; i < n; i++) {
+          x[i] += im * (a1 + a2);
+          r = re * cw - im * sw; im = re * sw + im * cw; re = r;
+          a1 *= d1; a2 *= d2;
+        }
+      }
+    }
+    var an = Math.floor(sr * 0.0025), aus = Math.floor(sr * 0.06), tief = 0, hammer = Math.floor(sr * 0.03);
+    for (i = 0; i < hammer; i++) { tief += 0.1 * (Math.random() * 2 - 1 - tief); x[i] += tief * 0.12 * Math.exp(-i / (sr * 0.007)); }   /* der Anschlag */
+    for (i = 0; i < an; i++) x[i] *= 0.5 - 0.5 * Math.cos(Math.PI * i / an);
+    for (i = 0; i < aus; i++) x[n - 1 - i] *= i / aus;
+    for (i = 0; i < n; i++) if (Math.abs(x[i]) > spitze) spitze = Math.abs(x[i]);
+    for (i = 0; i < n; i++) x[i] *= 0.9 / spitze;
+    return (bank[m] = puffer);
+  }
+  function fluegelTon(c, ziel, m, t, dauer, laut) {
+    var q = c.createBufferSource(), g = c.createGain();
+    dauer = Math.min(dauer, FLUEGEL_SEK - 0.05);
+    q.buffer = fluegel(c, m);
+    g.gain.setValueAtTime(laut, t); g.gain.setValueAtTime(laut, t + dauer - 0.3); g.gain.linearRampToValueAtTime(0.0001, t + dauer);
+    q.connect(g); g.connect(ziel); q.start(t); q.stop(t + dauer + 0.02);
+  }
 
   /* ---------- Nur für den Drop (Fassung 2) ---------- */
   /* Verzerrer: rundet Spitzen weich ab; Bass und Bassdrum bekommen dadurch Obertöne und klingen auch
@@ -246,6 +290,7 @@
     })(takt);
     if (fassung === 2) ende = drop(dazu);
     else if (fassung === 3) ende = drop3(dazu);
+    else if (fassung === 4) ende = drop4(dazu);
     else dazu(ERSTE, function (c, z, t) {          /* Schluss: ein Schlag und ein C-Dur-Akkord aus Glocken */
       kick(c, z, t, 0.6); [0, 2, 4, 7].forEach(function (st) { glocke(c, z, hoehe(st), t, 0.16); });
     });
@@ -340,7 +385,7 @@
     [8, 76, 1, 2], [9, 79, 1, 4], [10, 72, 1.5, 0], [11.5, 74, 0.5, 1], [12, 76, 2, 2], [14, 74, 2, 1], [16, 72, 4, 0]];
   var LINKS = [[0, 48], [1, 55], [2, 64], [3, 55], [4, 45], [5, 52], [6, 60], [7, 52], [8, 52], [9, 60], [10, 53], [11, 57],
     [12, 43], [13, 60], [13, 64], [14, 43], [15, 59], [15, 65], [16, 36], [16, 48], [16.1, 60], [16.2, 64], [16.3, 67]];
-  function drop3(dazu) {
+  function grund(dazu) {                          /* Aufbau und Drop, gemeinsam für die Fassungen 3 und 4 */
     var k, nr, sch;
     /* Aufbau: Schlussakkord der ersten Runde, ein Takt Glocken über G7, dann Wirbel, Lauf nach oben, ein halber Schlag Stille */
     dazu(ERSTE, function (c, z, t) {
@@ -374,6 +419,9 @@
       sch += lang;
     });
     for (nr = 0; nr < 8; nr++) takt(dazu, DROP3 + nr * 4, nr, nr >= 4, false);
+  }
+  function drop3(dazu) {
+    grund(dazu);
     wirbel(dazu, DROP3 + 31, DROP3 + 32, 0.25, 0.14, 0.26);
     dazu(DROP3 + 32, function (c, z, t, s) {       /* ein letzter Schlag mit Becken und tiefem C; danach schweigen Bass und Synthesizer */
       var w = werk(c, z, s);
@@ -392,6 +440,38 @@
     return ort(18) + 3;
   }
   var KLAVIER_R = 0.13, KLAVIER_L = 0.06;          /* Lautstärke der rechten und der linken Hand */
+
+  /* Fassung 4, die Grundfassung (Patrick 28.11.2026 zu Fassung 3: der Übergang „direkter“, ohne „Klang dazwischen“;
+     die ruhige Phase „nahezu reines Klavier“, „Classic, Piano, reiner Klang, nicht verzerrt“, weniger Töne; nach dem
+     „Bing“ am Ende noch ein tieferer Akkord). Aufbau und Drop wie in Fassung 3. Der Drop endet mit seinem letzten
+     Takt, ohne Wirbel und ohne Schlussschlag; auf dem nächsten Schlag beginnt das Klavier allein (berechnete Töne,
+     fluegel), die linke Hand nur noch mit einem Basston und einem Akkord je Takt. Am Ende das Glöckchen und danach
+     ein tiefer C-Dur-Akkord auf dem Klavier. */
+  var KLAVIER4 = DROP3 + 32;
+  function ort4(b) { var x = Math.max(0, b - 12); return KLAVIER4 + 1.1 * b + 0.03125 * x * x; }
+  var LINKS4 = [[0, 48], [2, 55], [2, 64], [4, 45], [6, 52], [6, 60], [8, 52], [10, 53], [10, 57],
+    [12, 43], [12, 60], [14, 55], [14, 59], [14, 65], [16, 48], [16, 55], [16, 64]];
+  var SCHLUSS4 = [36, 43, 48, 52, 55, 60];        /* C, G, c, e, g, c': von unten nach oben leicht gebrochen */
+  var FLUEGEL_R = 0.2, FLUEGEL_L = 0.11, FLUEGEL_S = 0.18;
+  function toene4() {                             /* alle Töne, die das Klavier braucht (zum Vorausberechnen) */
+    var t = {}, i;
+    for (i = 0; i < RECHTS.length; i++) t[RECHTS[i][1]] = 1;
+    for (i = 0; i < LINKS4.length; i++) t[LINKS4[i][1]] = 1;
+    for (i = 0; i < SCHLUSS4.length; i++) t[SCHLUSS4[i]] = 1;
+    return Object.keys(t).map(Number);
+  }
+  function drop4(dazu) {
+    grund(dazu);
+    dazu(KLAVIER4, function (c, z, t, s) { s.dauer.forEach(function (o) { try { o.stop(t + 0.2); } catch (e) {} }); });   /* Bass und Synthesizer schweigen */
+    RECHTS.forEach(function (n) {
+      var dauer = n[0] === 16 ? 3.1 : (ort4(n[0] + n[2]) - ort4(n[0])) * SCHLAG + 1.2;
+      dazu(ort4(n[0]), function (c, z, t) { fluegelTon(c, z, n[1], t, dauer, FLUEGEL_R); }, n[3]);
+    });
+    LINKS4.forEach(function (n) { dazu(ort4(n[0]), function (c, z, t) { fluegelTon(c, z, n[1], t, n[0] >= 16 ? 3.1 : 2.4, FLUEGEL_L); }); });
+    [0, 2, 4, 7].forEach(function (st) { dazu(ort4(18), function (c, z, t) { glocke(c, z, hoehe(st), t, 0.14); }, st); });      /* das „Bing“ */
+    SCHLUSS4.forEach(function (m, i) { dazu(ort4(19.5) + i * 0.09, function (c, z, t) { fluegelTon(c, z, m, t, 3.1, FLUEGEL_S); }); });   /* der tiefe Schlussakkord */
+    return ort4(19.5) + 4;
+  }
 
   /* ---------- Lichterkette und Glocke ---------- */
   var knopf = null, spielt = null;
@@ -443,6 +523,9 @@
     takt = setInterval(vor, 60);
     spielt = { tor: tor, takt: takt, uhren: uhren, zustand: zustand };
     vor();
+    if (FASSUNG === 4) toene4().forEach(function (m, nr) {      /* die Klaviertöne nach und nach vorausberechnen */
+      uhren.push(setTimeout(function () { fluegel(ctx, m); }, 1500 + nr * 280));
+    });
     knopf.classList.add('w-laeutet'); knopf.setAttribute('aria-label', 'Jingle Bells anhalten');
   }
 

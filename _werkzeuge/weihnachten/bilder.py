@@ -8,7 +8,8 @@ drei PNG-Kacheln; die SVG-Dateien schreibt das Skript selbst.
   girlande.png      Tannengirlande, kachelbar (350 x 36), liegt am oberen Rand jeder Seite
   kranz.png         Tannengrün vor den Füßen der vier Adventskerzen (124 x 20)
   schnee.png        Schneeflocken, kachelbar (420 x 560)
-  schneedecke.svg   Schnee auf der ersten Kachel einer Seite, kachelbar (200 x 24)
+  schneedecke.svg   Schnee auf der ersten Kachel einer Seite, kachelbar (200 x 24); seit 28.11.2026 versuchsweise nicht benutzt
+  schneeboden.svg   Schnee auf der Fußlinie, kachelbar (240 x 16); der Schlitten fährt dahinter durch
   figur-*.svg       kleine Figuren, die auf der ersten Kachel unter einer Überschrift sitzen
 
 Die drei Kugeln an der ersten Kachel zeichnet saison.js selbst.
@@ -100,6 +101,23 @@ def schneedecke():
     return svg(B, H, f'<path d="{form}" fill="#fff"/><path d="{schatten}" fill="none" stroke="#BCD2E8" stroke-width="1.3"/>')
 
 
+def schneeboden():
+    """Schnee, der auf der Fußlinie liegt, kachelbar (240 x 16); die Linie liegt bei y = 10.
+    Oben flache Verwehungen (der Schlitten fährt dahinter durch), unten ein weicher Rand."""
+    B, H, P = 240, 16, 2 * math.pi / 240
+    def oben(x):
+        return 4.6 + 0.9 * math.sin(P * 2 * x + 0.6) + 0.6 * math.sin(P * 5 * x + 2.1) + 0.3 * math.sin(P * 11 * x)
+    def unten(x):
+        return 12.7 + 0.9 * math.sin(P * 3 * x + 1.2) + 0.6 * math.sin(P * 7 * x + 0.3)
+    xs = list(range(0, B + 1, 2))
+    form = (f'M0,{oben(0):.1f} ' + ' '.join(f'L{x},{oben(x):.1f}' for x in xs[1:]) + ' '
+            + ' '.join(f'L{x},{unten(x):.1f}' for x in reversed(xs)) + ' Z')
+    schatten = 'M' + ' L'.join(f'{x},{unten(x) - 0.6:.1f}' for x in xs)
+    glanz = 'M' + ' L'.join(f'{x},{oben(x) + 2.2 + 0.5 * math.sin(P * 4 * x):.1f}' for x in xs)
+    return svg(B, H, f'<path d="{form}" fill="#fff"/><path d="{schatten}" fill="none" stroke="#BCD2E8" stroke-width="1.3"/>'
+                     f'<path d="{glanz}" fill="none" stroke="#E6EEF7" stroke-width="1" stroke-dasharray="9 17"/>')
+
+
 def huegel(cx, y, rx):
     """Kleiner Schneehügel, auf dem eine Figur steht."""
     return (f'<ellipse cx="{cx}" cy="{y}" rx="{rx}" ry="3.6" fill="#fff"/>'
@@ -172,29 +190,37 @@ def schneemann():
 
 # Die Figuren bewegen sich ganz leicht; die Bewegung steht in der SVG-Datei selbst (als Bild eingebunden läuft sie mit).
 FIGUREN = {
-    # Tannenbaum: geschwungene Zweige, Lametta, Lichter, die abwechselnd funkeln, der Stern leuchtet
+    # Tannenbaum: geschwungene Zweige, Lametta, Lichter, die abwechselnd funkeln, der Stern leuchtet.
+    # Er wiegt sich ganz leicht im Wind: unten ruhig, die Mitte ein wenig, die Spitze mit dem Stern am meisten
+    # (zwei verschiedene Takte, damit es nicht wie ein Pendel aussieht)
     'figur-baum': (48, 55, '<style>.a{animation:f 2.6s ease-in-out infinite}.b{animation:f 2.6s ease-in-out -1.3s infinite}'
                            '.g{animation:g 3.2s ease-in-out infinite alternate}'
-                           '@keyframes f{0%,100%{opacity:.35}50%{opacity:1}}@keyframes g{from{opacity:.45}to{opacity:1}}' + RUHE + '</style>'
+                           '.w{animation:w 4.6s ease-in-out infinite alternate}.o{animation:o 3.1s ease-in-out infinite alternate}'
+                           '@keyframes f{0%,100%{opacity:.35}50%{opacity:1}}@keyframes g{from{opacity:.45}to{opacity:1}}'
+                           '@keyframes w{from{transform:rotate(-1.1deg)}to{transform:rotate(1.1deg)}}'
+                           '@keyframes o{from{transform:rotate(-2deg)}to{transform:rotate(2deg)}}' + RUHE + '</style>'
                            '<defs><radialGradient id="b-stern"><stop offset="0" stop-color="#FFE9A0" stop-opacity=".95"/><stop offset=".45" stop-color="#FFD772" stop-opacity=".4"/><stop offset="1" stop-color="#FFD772" stop-opacity="0"/></radialGradient></defs>'
                            '<g transform="translate(0,3)">' + huegel(24, 49, 19) + '''
 <rect x="22" y="41" width="4" height="8" fill="#7A4A21"/>
 <path d="M24,19 L42,43.4 Q37.4,41 33,43.4 Q28.6,41 24,43.4 Q19.4,41 15,43.4 Q10.6,41 6,43.4 Z" fill="#23803C"/>
-<path d="M24,11 L38,31.4 Q34.4,29.2 31,31.4 Q27.6,29.2 24,31.4 Q20.4,29.2 17,31.4 Q13.6,29.2 10,31.4 Z" fill="#2E9449"/>
-<path d="M24,4 L34,19.4 Q31.4,17.6 29,19.4 Q26.6,17.6 24,19.4 Q21.4,17.6 19,19.4 Q16.6,17.6 14,19.4 Z" fill="#3BA858"/>
-<path d="M24,19 L29.5,26.4 Q24,30 18.5,26.4 Z" fill="#1F6B34" opacity=".55"/><path d="M24,11 L28.6,17.6 Q24,20.6 19.4,17.6 Z" fill="#237339" opacity=".55"/>
 <path d="M12.4,35.4 Q24,41 35.6,35" fill="none" stroke="#F4C542" stroke-width="1.1" stroke-linecap="round"/>
-<path d="M15.4,24.4 Q24,29 32.6,24" fill="none" stroke="#F4C542" stroke-width="1.1" stroke-linecap="round"/>
-<path d="M19,13.6 Q24,16.6 29,13.4" fill="none" stroke="#F4C542" stroke-width="1" stroke-linecap="round"/>
 <ellipse cx="8" cy="42.6" rx="3.6" ry="1.5" fill="#fff"/><ellipse cx="40" cy="42.6" rx="3.6" ry="1.5" fill="#fff"/>
+<circle cx="18.6" cy="33.4" r="2.1" fill="#E0453A"/><circle cx="30.4" cy="38.6" r="2.1" fill="#59A3CD"/>
+<g fill="#FFF3C4"><circle class="a" cx="14.6" cy="37.2" r="1.3"/><circle class="b" cx="24" cy="38.6" r="1.3"/><circle class="a" cx="33.6" cy="36.6" r="1.3"/></g>'''
+                           + dreh(24, 31.4, 'w', '''<path d="M24,11 L38,31.4 Q34.4,29.2 31,31.4 Q27.6,29.2 24,31.4 Q20.4,29.2 17,31.4 Q13.6,29.2 10,31.4 Z" fill="#2E9449"/>
+<path d="M24,19 L29.5,26.4 Q24,30 18.5,26.4 Z" fill="#1F6B34" opacity=".55"/>
+<path d="M15.4,24.4 Q24,29 32.6,24" fill="none" stroke="#F4C542" stroke-width="1.1" stroke-linecap="round"/>
 <ellipse cx="12" cy="30.6" rx="3" ry="1.3" fill="#fff"/><ellipse cx="36" cy="30.6" rx="3" ry="1.3" fill="#fff"/>
+<circle cx="28.4" cy="22.6" r="1.9" fill="#E0453A"/><circle cx="21" cy="22" r="1.7" fill="#59A3CD"/>
+<g fill="#FFF3C4"><circle class="b" cx="17.6" cy="26" r="1.2"/><circle class="a" cx="24.6" cy="27.2" r="1.2"/><circle class="b" cx="31" cy="25.6" r="1.2"/></g>'''
+                                  + dreh(24, 19.4, 'o', '''<path d="M24,4 L34,19.4 Q31.4,17.6 29,19.4 Q26.6,17.6 24,19.4 Q21.4,17.6 19,19.4 Q16.6,17.6 14,19.4 Z" fill="#3BA858"/>
+<path d="M24,11 L28.6,17.6 Q24,20.6 19.4,17.6 Z" fill="#237339" opacity=".55"/>
+<path d="M19,13.6 Q24,16.6 29,13.4" fill="none" stroke="#F4C542" stroke-width="1" stroke-linecap="round"/>
 <ellipse cx="16" cy="18.6" rx="2.4" ry="1.1" fill="#fff"/><ellipse cx="32" cy="18.6" rx="2.4" ry="1.1" fill="#fff"/>
-<circle cx="18.6" cy="33.4" r="2.1" fill="#E0453A"/><circle cx="30.4" cy="38.6" r="2.1" fill="#59A3CD"/><circle cx="28.4" cy="22.6" r="1.9" fill="#E0453A"/><circle cx="21" cy="22" r="1.7" fill="#59A3CD"/>
-<g fill="#FFF3C4"><circle class="a" cx="14.6" cy="37.2" r="1.3"/><circle class="b" cx="24" cy="38.6" r="1.3"/><circle class="a" cx="33.6" cy="36.6" r="1.3"/>
-<circle class="b" cx="17.6" cy="26" r="1.2"/><circle class="a" cx="24.6" cy="27.2" r="1.2"/><circle class="b" cx="31" cy="25.6" r="1.2"/>
-<circle class="a" cx="21.4" cy="15" r="1.1"/><circle class="b" cx="26.8" cy="14.8" r="1.1"/></g>
+<g fill="#FFF3C4"><circle class="a" cx="21.4" cy="15" r="1.1"/><circle class="b" cx="26.8" cy="14.8" r="1.1"/></g>
 <circle class="g" cx="24" cy="4" r="9" fill="url(#b-stern)"/>
-<path d="M24,-2.2 L25.7,1.6 L29.8,2 L26.7,4.7 L27.6,8.8 L24,6.7 L20.4,8.8 L21.3,4.7 L18.2,2 L22.3,1.6 Z" fill="#F7CB4D" stroke="#D9A31C" stroke-width=".5" transform="translate(0,1)"/></g>'''),
+<path d="M24,-2.2 L25.7,1.6 L29.8,2 L26.7,4.7 L27.6,8.8 L24,6.7 L20.4,8.8 L21.3,4.7 L18.2,2 L22.3,1.6 Z" fill="#F7CB4D" stroke="#D9A31C" stroke-width=".5" transform="translate(0,1)"/>'''))
+                           + '</g>'),
 
     # Schneemann aus drei Kugeln: Er schmilzt langsam zu einem Haufen. Die Kugeln sacken ineinander und werden breit,
     # Augen, Mund, Knöpfe und Möhre rutschen jedes für sich weg, der Hut gleitet zur Seite, eine Pfütze entsteht.
@@ -266,6 +292,7 @@ async def pngs():
 def main():
     ZIEL.mkdir(parents=True, exist_ok=True)
     (ZIEL / 'schneedecke.svg').write_text(schneedecke(), encoding='utf-8')
+    (ZIEL / 'schneeboden.svg').write_text(schneeboden(), encoding='utf-8')
     for name, (b, h, inhalt) in FIGUREN.items():
         (ZIEL / f'{name}.svg').write_text(svg(b, h, inhalt), encoding='utf-8')
     asyncio.run(pngs())

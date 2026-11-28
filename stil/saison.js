@@ -138,7 +138,7 @@
   function figur(li, name, kopf, eng) {
     if (!li) return;
     var f = neu('img', 'w-figur' + (eng ? ' w-figur-eng' : '')); f.alt = ''; f.width = MASS[name][0]; f.height = MASS[name][1];
-    f.src = BILD + 'figur-' + name + '.svg?v=3';
+    f.src = BILD + 'figur-' + name + '.svg?v=4';
     li.appendChild(f); figuren.push([f, kopf, eng ? 2 : 6]);
   }
   function kacheln() {
@@ -147,7 +147,7 @@
     for (var i = 0; i < pfad.length; i++) nr += pfad.charCodeAt(i);       /* jede Seite beginnt mit einer anderen Figur */
     for (var j = 0; j < listen.length; j++) {
       var li = listen[j].querySelector('li'); if (!li) continue;
-      if (j === 0) { li.appendChild(neu('span', 'w-schneedecke')); kugelbild = kugeln(); li.appendChild(kugelbild); continue; }
+      if (j === 0) { kugelbild = kugeln(); li.appendChild(kugelbild); continue; }      /* der Schnee liegt seit 28.11.2026 auf der Fußlinie */
       var kopf = listen[j].previousElementSibling;
       if (kopf && /\bthemenkopf\b/.test(kopf.className)) figur(li, namen[nr++ % namen.length], kopf);
     }
@@ -219,20 +219,28 @@
       + '<g fill="#CBD8E8">' + schatten + '</g><g fill="#fff">' + weiss + '</g></svg>');
   }
 
+  /* Der Smiley zwinkert kurz mit dem rechten Auge, wenn der Schlitten gerade aus dem Bild gefahren ist: Ein Fleck
+     im Blau des Symbols deckt das Auge ab, darüber ein kleiner Bogen (Maße wie in _werkzeuge/symbol.svg, 0 bis 100).
+     Wann, steht in saison.css (w-zwinker, im Takt des Schlittens). */
+  function zwinker() {
+    return neu('span', 'w-zwinker', '<svg viewBox="0 0 100 100"><ellipse cx="57.2" cy="28.7" rx="8.6" ry="11" transform="rotate(-8 57.2 28.7)" fill="#0072B2"/>'
+      + '<path d="M51,32 Q56.4,23.4 63.6,28.2" fill="none" stroke="#fff" stroke-width="4.4" stroke-linecap="round"/></svg>');
+  }
+
   bereit(function () {
     var b = d.body, fuss = d.querySelector('footer'), logo = d.querySelector('.logo');
     var oben = neu('div', 'w-oben', '<div class="w-girlande"></div><div class="w-leds"></div>');
     b.insertBefore(oben, b.firstChild);
     b.insertBefore(neu('div', 'w-himmel', '<div class="w-schnee"><i></i></div><div class="w-schnee w-schnee-2"><i></i></div>'), b.firstChild);
     var kette = oben.querySelector('.w-leds');
-    if (logo) logo.appendChild(muetze());
-    if (fuss) fuss.appendChild(schlitten());
+    if (logo) { logo.appendChild(zwinker()); logo.appendChild(muetze()); }
+    if (fuss) { fuss.appendChild(schlitten()); fuss.appendChild(neu('span', 'w-boden')); }   /* Schnee auf der Fußlinie, vor dem Schlitten */
     kranzbild = kranz();
     leds(kette); kacheln();
     function ordnen() { kranzPlatz(); platz(); kugelnPlatz(); }
     ordnen();
     if (d.fonts && d.fonts.ready) d.fonts.ready.then(ordnen);
-    if (klang) { var k = d.createElement('script'); k.src = BILD + 'klang.js?v=4'; d.head.appendChild(k); }
+    if (klang) { var k = d.createElement('script'); k.src = BILD + 'klang.js?v=5'; d.head.appendChild(k); }
     var warten;
     window.addEventListener('resize', function () { clearTimeout(warten); warten = setTimeout(function () { leds(kette); ordnen(); }, 150); });
   });
